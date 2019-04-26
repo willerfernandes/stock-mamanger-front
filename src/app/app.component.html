@@ -19,7 +19,13 @@
 </ul>
 
 
-<div><button (click)="get_products()">GET /products</button></div>
+<div>
+  Chave <input type="text" name="key"> <br>
+  Valor <input type="text" name="value"> <br>
+  <button (click)="get_products()">GET /products</button>
+</div>
+
+
 
 <div>
   <ul>
@@ -28,6 +34,27 @@
         -- name: {{product.name}}
         -- cost: {{product.cost}}
         -- quantity: {{product.quantity}}
+      </li>
+  </ul> 
+</div>
+
+
+<div>
+  Chave <input type="text" name="key"> <br>
+  Valor <input type="text" name="value"> <br>
+  <button (click)="get_configurations()">GET /config</button>
+  <button (click)="save_configuration()">PUT /config</button>
+</div>
+
+
+
+<div>
+  <ul>
+      <li *ngFor="let configuration of configurations" >
+        -- id: {{configuration.id}}
+        -- chave: {{configuration.chave}}
+        -- valor: {{configuration.valor}}
+        -- quantity: {{configuration.quantity}}
       </li>
   </ul> 
 </div>
