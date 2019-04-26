@@ -18,4 +18,18 @@
   </li>
 </ul>
 
+
+<div><button (click)="get_products()">GET /products</button></div>
+
+<div>
+  <ul>
+      <li *ngFor="let product of products" >
+        -- id: {{product.id}}
+        -- name: {{product.name}}
+        -- cost: {{product.cost}}
+        -- quantity: {{product.quantity}}
+      </li>
+  </ul> 
+</div>
+
 <router-outlet></router-outlet>
