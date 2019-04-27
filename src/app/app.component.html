@@ -18,32 +18,14 @@
   </li>
 </ul>
 
-
 <div>
-  Chave <input type="text" name="key"> <br>
-  Valor <input type="text" name="value"> <br>
-  <button (click)="get_products()">GET /products</button>
-</div>
-
-
-
-<div>
-  <ul>
-      <li *ngFor="let product of products" >
-        -- id: {{product.id}}
-        -- name: {{product.name}}
-        -- cost: {{product.cost}}
-        -- quantity: {{product.quantity}}
-      </li>
-  </ul> 
-</div>
-
-
-<div>
-  Chave <input type="text" name="key"> <br>
-  Valor <input type="text" name="value"> <br>
-  <button (click)="get_configurations()">GET /config</button>
-  <button (click)="save_configuration()">POST /config</button>
+  Chave <input id="key" type="text" name="key"> <br>
+  Valor <input id="value" type="text" name="value"> <br>
+  <button (click)="get_all_configurations()">LISTAR TODAS</button>
+  <button (click)="get_configuration()">LISTAR PELA CHAVE</button>
+  <button (click)="save_configuration()">INSERIR</button>
+  <button (click)="update_configuration()">EDITAR</button>
+  <button (click)="delete_configuration()">EXCLUIR</button>
 </div>
 
 
@@ -54,9 +36,31 @@
         -- id: {{configuration.id}}
         -- chave: {{configuration.chave}}
         -- valor: {{configuration.valor}}
-        -- quantity: {{configuration.quantity}}
       </li>
   </ul> 
 </div>
+
+
+<h2>My Heroes</h2>
+
+<div>
+  <label>Hero name:
+    <input #heroName />
+  </label>
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button (click)="add(heroName.value); heroName.value=''">
+    add
+  </button>
+</div>
+
+<ul class="heroes">
+  <li *ngFor="let hero of heroes">
+    <a routerLink="/detail/{{hero.id}}">
+      <span class="badge">{{hero.id}}</span> {{hero.name}}
+    </a>
+    <button class="delete" title="delete hero"
+      (click)="delete(hero)">x</button>
+  </li>
+</ul>
 
 <router-outlet></router-outlet>

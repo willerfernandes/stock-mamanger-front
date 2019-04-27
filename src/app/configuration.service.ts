@@ -11,33 +11,35 @@ export class ConfigurationService {
 
 baseUrl:string = "http://localhost:8080";
 configPath:string = "/config";
+getAllPath:string = "/all";
 
  httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin' : '*'
     })
   };
-
-
- configMock: ConfigComponent;
-
 
   constructor(private httpClient : HttpClient) { }
 
   getAll(): Observable <ConfigComponent[]>{
-  	return this.httpClient.get(this.baseUrl + this.configPath);
+  	return this.httpClient.get(this.baseUrl + this.configPath + this.getAllPath);
   }
 
-  save(): Observable<ConfigComponent>{
-  	//this.configMock.id = 2;
-  	//this.configMock.chave = "teste_angular";
-  	//this.configMock.valor = "cadastrou";
-  	return this.httpClient.post(this.baseUrl + this.configPath, "{\"chave\":\"stop_low\",\"valor\":\"1\"}", this.httpOptions);
+  get(chave: string): Observable <ConfigComponent>{
+    return this.httpClient.get(this.baseUrl + this.configPath + "/" + chave);
   }
 
-  saveFromSite(employee): Observable<ConfigComponent> {
-  
-    return this.httpClient.post<ConfigComponent>(this.baseUrl + this.configPath, JSON.stringify(employee), this.httpOptions);
-  }  
+  save(configuration): ConfigComponent[]{
+  	return this.httpClient.post(this.baseUrl + this.configPath, JSON.stringify(configuration), this.httpOptions);
+  }
+
+  update(configuration): ConfigComponent{
+    return this.httpClient.put(this.baseUrl + this.configPath, JSON.stringify(configuration), this.httpOptions);
+  }
+
+   delete(chave: string): Observable <ConfigComponent>{
+    return this.httpClient.delete(this.baseUrl + this.configPath + "/" + chave);
+  }
   
 }

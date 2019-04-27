@@ -7,7 +7,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConfigComponent implements OnInit {
 
-   id: number;
    chave: string;
    valor: string;
 
