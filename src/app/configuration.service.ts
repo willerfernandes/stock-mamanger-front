@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,  HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import {ConfigComponent} from './config/config.component';
+import {Config} from './config/config';
 
 
 @Injectable({
@@ -10,8 +10,9 @@ import {ConfigComponent} from './config/config.component';
 export class ConfigurationService {
 
 baseUrl:string = "http://localhost:8080";
-configPath:string = "/config";
 getAllPath:string = "/all";
+configPath:string = "/config";
+searchPath:string = "/config/search";
 
  httpOptions = {
     headers: new HttpHeaders({
@@ -22,25 +23,29 @@ getAllPath:string = "/all";
 
   constructor(private httpClient : HttpClient) { }
 
-  getAll(): Observable <ConfigComponent[]>{
+  getAll(): Observable <Config[]>{
   	return this.httpClient.get(this.baseUrl + this.configPath + this.getAllPath);
   }
 
-  get(chave: string): Observable <ConfigComponent>{
-    return this.httpClient.get(this.baseUrl + this.configPath + "/" + chave);
+  get(id: number): Observable <Config>{
+    return this.httpClient.get(this.baseUrl + this.configPath + "/" + id);
   }
 
-  save(configuration): ConfigComponent{
+  search(chave: string): Observable <Config>{
+    return this.httpClient.get(this.baseUrl + this.searchPath + "/" + chave);
+  }
+
+  save(configuration): Config{
   	return this.httpClient.post(this.baseUrl + this.configPath, JSON.stringify(configuration), this.httpOptions);
   }
 
-  update(configuration): ConfigComponent{
+  update(configuration): Config{
     console.log("Json gerado:" + JSON.stringify(configuration));
     return this.httpClient.put(this.baseUrl + this.configPath, JSON.stringify(configuration), this.httpOptions);
   }
 
-   delete(chave: string): Observable <ConfigComponent>{
-    return this.httpClient.delete(this.baseUrl + this.configPath + "/" + chave);
+   delete(id: number): Observable <Config>{
+    return this.httpClient.delete(this.baseUrl + this.configPath + "/" + id);
   }
   
 }

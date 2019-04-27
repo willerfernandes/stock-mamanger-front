@@ -1,35 +1,41 @@
-<h2>Configurações</h2>
+<h1>Configurações</h1>
 
 <div>
-  <label>Chave:  <input #config_key /> </label>
-  <br>
+  <label><input #config_key class="form-control mr-sm-2" type="search" placeholder="entre a chave" aria-label="Search"/> </label>
+  <button (click)="find_by_chave(config_key.value)" btn btn-outline-success my-2 my-sm-0>BUSCAR</button>
+  <button (click)="get_all_configurations()">LISTAR TODAS</button>
+
+  <!--br>
   <label>Valor:  <input #config_value /> </label>
   <br>
   <button (click)="get_all_configurations()">LISTAR TODAS</button>
-  <button (click)="get_configuration(config_key.value)">LISTAR PELA CHAVE</button>
+  
   <button (click)="save_configuration(config_key.value, config_value.value)">INSERIR</button>
   <button (click)="update_configuration(config_key.value, config_value.value)">EDITAR</button>
   <button (click)="delete_configuration(config_key.value)">EXCLUIR</button>
+</div-->
+
+<div >
+	<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Chave</th>
+      <th scope="col">Valor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let configuration of configurations">
+      <th scope="row">{{configuration.id}}</th>
+      <td>{{configuration.chave}}</td>
+      <td>{{configuration.valor}}</td>
+      <td><a routerLink="/config/{{configuration.id}}"><span class="badge">EDITAR</span></a></td>
+      <td><a routerLink="config/{{configuration.id}}"><span class="badge">EXCLUIR</span></a></td>
+    </tr>
+  </tbody>
+</table>
 </div>
 
-<ul class="heroes">
-  <li *ngFor="let hero of heroes">
-    <a routerLink="/detail/{{hero.id}}">
-      <span class="badge">{{hero.id}}</span> {{hero.name}}
-    </a>
-    <button class="delete" title="delete hero"
-      (click)="delete(hero)">x</button>
-  </li>
-</ul>
-
-
-<div>
-  <ul id="config_list">
-      <li *ngFor="let configuration of configurations" >
-      	<a routerLink="/detail/{{configuration.id}}">
-  			<span class="badge">{{configuration.chave}}</span> {{configuration.valor}}
-		</a>
-    	<button class="delete" title="delete hero"(click)="delete_configuration(config_key.value)">x</button>
-      </li>
-  </ul> 
+<div class="alert alert-primary" role="alert">
+ Configurações encontradas!
 </div>

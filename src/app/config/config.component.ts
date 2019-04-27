@@ -31,14 +31,23 @@ export class ConfigComponent implements OnInit {
     });  
   }
   
-  get_configuration(key: string){
-    this.configurationService.get(key).subscribe((res) =>{
+  get_configuration(id: number){
+    this.configurationService.get(id).subscribe((res) =>{
     	this.configurations = [];
     	this.configurations.push(res);
     });
   }
 
-  save_configuration(key: string, value: string){
+
+  find_by_chave(key: string){
+  	this.configurationService.search(key).subscribe((res) =>{
+    	this.configurations = [];
+    	this.configurations.push(res);
+    	});
+  }
+
+  save_configuration(id: number, key: string, value: string){
+  	this.configuration.id = id;
     this.configuration.chave = key;
     this.configuration.valor = value;
     this.configurationService.save(this.configuration).subscribe((res) =>{
@@ -46,7 +55,8 @@ export class ConfigComponent implements OnInit {
     });
   }
 
-  update_configuration(key: string, value: string){
+  update_configuration(id: number, key: string, value: string){
+  	this.configuration.id = id;
     this.configuration.chave = key;
     this.configuration.valor = value;
     console.log(this.configuration);
@@ -55,8 +65,8 @@ export class ConfigComponent implements OnInit {
     });
   }
 
-  delete_configuration(key: string){
-    this.configurationService.delete(key).subscribe((res) =>{
+  delete_configuration(id: number){
+    this.configurationService.delete(id).subscribe((res) =>{
     this.get_all_configurations();
     });
   }
@@ -64,6 +74,7 @@ export class ConfigComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  	this.get_all_configurations();
   }
 
 }
