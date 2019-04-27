@@ -1,5 +1,5 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
+
+<!--div style="text-align:center">
   <h1>
     Welcome to {{ title }}!
   </h1>
@@ -47,7 +47,6 @@
   <label>Hero name:
     <input #heroName />
   </label>
-  <!-- (click) passes input value to add() and then clears the input -->
   <button (click)="add(heroName.value); heroName.value=''">
     add
   </button>
@@ -61,6 +60,5 @@
     <button class="delete" title="delete hero"
       (click)="delete(hero)">x</button>
   </li>
-</ul>
-
+</ul-->
 <router-outlet></router-outlet>

@@ -30,11 +30,12 @@ getAllPath:string = "/all";
     return this.httpClient.get(this.baseUrl + this.configPath + "/" + chave);
   }
 
-  save(configuration): ConfigComponent[]{
+  save(configuration): ConfigComponent{
   	return this.httpClient.post(this.baseUrl + this.configPath, JSON.stringify(configuration), this.httpOptions);
   }
 
   update(configuration): ConfigComponent{
+    console.log("Json gerado:" + JSON.stringify(configuration));
     return this.httpClient.put(this.baseUrl + this.configPath, JSON.stringify(configuration), this.httpOptions);
   }
 
