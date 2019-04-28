@@ -1,0 +1,15 @@
+<div>
+  <h2>Nova Configuração</h2>
+  <div>
+    <label>CHAVE:
+      <input #config_key>
+    </label>
+  </div>
+  <div>
+    <label>VALOR:
+      <input #config_value>
+    </label>
+  </div>
+  <button (click)="goBack()" class="btn btn-light">VOLTAR</button>
+  <button (click)="save(config_key.value, config_value.value)" class="btn btn-primary">SALVAR</button>
+</div>

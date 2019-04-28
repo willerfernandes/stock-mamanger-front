@@ -31,7 +31,7 @@
       <td>{{configuration.chave}}</td>
       <td>{{configuration.valor}}</td>
       <td><a routerLink="/config/{{configuration.id}}"><span class="badge">EDITAR</span></a></td>
-      <td><a routerLink="config/{{configuration.id}}"><span class="badge">EXCLUIR</span></a></td>
+      <td><button (click)="delete_configuration(configuration.id)" class="btn btn-light"><span class="badge">EXCLUIR</span></button></td>
     </tr>
   </tbody>
 </table>

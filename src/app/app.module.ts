@@ -7,12 +7,14 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ConfigComponent } from './config/config.component';
 import { ConfigDetailComponent } from './config-detail/config-detail.component';
+import { ConfigNewComponent } from './config-new/config-new.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ConfigComponent,
-    ConfigDetailComponent
+    ConfigDetailComponent,
+    ConfigNewComponent
   ],
   imports: [
     BrowserModule,

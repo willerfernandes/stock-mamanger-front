@@ -1,45 +1,30 @@
 import { Component, OnInit, Input } from '@angular/core';
+
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import {ConfigurationService} from './../configuration.service';
 import {Config} from './../config/config';
 
-
 @Component({
-  selector: 'app-config-detail',
-  templateUrl: './config-detail.component.html',
-  styleUrls: ['./config-detail.component.css']
+  selector: 'app-config-new',
+  templateUrl: './config-new.component.html',
+  styleUrls: ['./config-new.component.css']
 })
-export class ConfigDetailComponent implements OnInit {
+export class ConfigNewComponent implements OnInit {
 
- 	@Input() configuration: Config;
+ @Input() configuration: Config;
 
 	constructor(private configurationService: ConfigurationService, private route: ActivatedRoute, private location: Location) {}
-
-	ngOnInit() {
-			this.getConfiguration();
-		}
 
 	goBack(): void {
     this.location.back();
   	}
 
-	getConfiguration(){
-		const id = +this.route.snapshot.paramMap.get('id');
-
-		this.configurationService.get(id).subscribe((res) =>{
-    		this.configuration = res;
-    });
-	}
-
-	
-
-  	save(value: string){
-     this.configurationService.update(this.fillConfiguration(this.configuration.id, this.configuration.chave, value)).subscribe((res) =>{
+  	save(key: string, value: string){
+     this.configurationService.save(this.fillConfiguration(0 , key, value)).subscribe((res) =>{
         this.goBack()
     });
     }
-
 
 	fillConfiguration(id: number, key: string, value: string): Config {
 		var config: Config = {chave: "", valor: ""}
@@ -49,6 +34,7 @@ export class ConfigDetailComponent implements OnInit {
 		return config;
 	}
 
-	
+	ngOnInit() {
+	}
 
 }

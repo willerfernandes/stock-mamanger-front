@@ -40,7 +40,6 @@ searchPath:string = "/config/search";
   }
 
   update(configuration): Config{
-    console.log("Json gerado:" + JSON.stringify(configuration));
     return this.httpClient.put(this.baseUrl + this.configPath, JSON.stringify(configuration), this.httpOptions);
   }
 
