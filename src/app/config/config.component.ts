@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {DataService} from './../data.service';
 import {ConfigurationService} from './../configuration.service';
 import {Config} from './../config/config';
 
@@ -20,7 +19,7 @@ export class ConfigComponent implements OnInit {
   configuration: Config = {chave: "", valor: ""}
   baseUrl='http://localhost:3000'
 
-  constructor(private dataService: DataService, private configurationService: ConfigurationService){}
+  constructor(private configurationService: ConfigurationService){}
 
   get_all_configurations(){
   	
@@ -56,11 +55,7 @@ export class ConfigComponent implements OnInit {
   }
 
   update_configuration(id: number, key: string, value: string){
-  	this.configuration.id = id;
-    this.configuration.chave = key;
-    this.configuration.valor = value;
-    console.log(this.configuration);
-    this.configurationService.update(this.configuration).subscribe((res) =>{
+    this.configurationService.update(fillConfigurationnumber(id, key, value)).subscribe((res) =>{
         this.get_all_configurations()
     });
   }
@@ -70,6 +65,16 @@ export class ConfigComponent implements OnInit {
     this.get_all_configurations();
     });
   }
+
+
+  fillConfiguration(id: number, key: string, value: string): Config {
+  	config: Config = {chave: "", valor: ""}
+  	config.id = id;
+  	config.chave = key;
+  	config.valor = value;
+  	return config;
+  }
+
 
   constructor() { }
 

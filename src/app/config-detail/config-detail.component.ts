@@ -20,7 +20,6 @@ export class ConfigDetailComponent implements OnInit {
 		const id = +this.route.snapshot.paramMap.get('id');
 
 		this.configurationService.get(id).subscribe((res) =>{
-			console.log(res);
     		this.configuration = res;
     });
 	}
@@ -29,11 +28,20 @@ export class ConfigDetailComponent implements OnInit {
     this.location.back();
   	}
 
-  	save(){
-     this.configurationService.update(this.configuration).subscribe((res) =>{
-        goBack()
+  	save(value: string){
+     this.configurationService.update(this.fillConfiguration(this.configuration.id, this.configuration.chave, value)).subscribe((res) =>{
+        this.goBack()
     });
-  }
+    }
+
+
+	fillConfiguration(id: number, key: string, value: string): Config {
+		var config: Config = {chave: "", valor: ""}
+		config.id = id;
+		config.chave = key;
+		config.valor = value;
+		return config;
+	}
 
 	ngOnInit() {
 		this.getConfiguration();

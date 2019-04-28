@@ -1,11 +1,15 @@
 <div *ngIf="configuration">
   <h2>{{configuration.chave | uppercase}} Detalhes</h2>
-  <div><span>Chave: </span>{{configuration.chave}}</div>
   <div>
-    <label>VALOR:
-      <input #config_valuess value={{configuration.valor}} placeholder="valor"/>
+    <label>CHAVE:
+      <input #config_key value={{configuration.chave}}/>
     </label>
   </div>
-  <button (click)="goBack()">VOLTAR</button>
-  <button (click)="save()">SALVAR</button>
+  <div>
+    <label>VALOR:
+      <input #config_value value={{configuration.valor}}/>
+    </label>
+  </div>
+  <button (click)="goBack()" class="btn btn-light">VOLTAR</button>
+  <button (click)="save(config_value.value)" class="btn btn-primary">SALVAR</button>
 </div>
