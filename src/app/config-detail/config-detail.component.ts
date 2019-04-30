@@ -26,7 +26,6 @@ export class ConfigDetailComponent implements OnInit {
 
 	getConfiguration(){
 		const id = +this.route.snapshot.paramMap.get('id');
-
 		this.configurationService.get(id).subscribe((res) =>{
     		this.configuration = res;
     });
