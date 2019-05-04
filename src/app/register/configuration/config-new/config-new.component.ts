@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import {ConfigurationService} from './../configuration.service';
+import {ConfigurationService} from './../../../configuration.service';
 import {Config} from './../config/config';
 
 @Component({
