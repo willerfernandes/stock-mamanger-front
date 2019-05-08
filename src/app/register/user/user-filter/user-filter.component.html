@@ -1,0 +1,48 @@
+<h1>Usuário</h1>
+
+<div>
+  <label><input #nome_input class="form-control mr-sm-4" type="search" placeholder="Search" aria-label="Search"/> </label>
+  <button (click)="find_by_chave(nome_input.value)" class="btn btn-primary" type="submit" >BUSCAR</button>
+  <button (click)="get_all_users()" class="btn btn-primary" type="submit" >LISTAR TODOS</button>
+
+  <!--br>
+  <label>Valor:  <input #config_value /> </label>
+  <br>
+  <button (click)="get_all_users()">LISTAR TODAS</button>
+  
+  <button (click)="save_user(nome_input.value, config_value.value)">INSERIR</button>
+  <button (click)="update_user(nome_input.value, config_value.value)">EDITAR</button>
+  <button (click)="delete_user(nome_input.value)">EXCLUIR</button>
+</div-->
+
+<div >
+	<table class="table  table-hover table-sm" style="width: 50%">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nome</th>
+      <th scope="col"><button class="btn btn-primary" [routerLink]="['/user/new']">NOVO</button></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody >
+    <tr *ngFor="let user of users">
+      <th scope="row">{{user.id}}</th>
+      <td>{{user.nome}}</td>
+      <td style="width: 5%"><a routerLink="/user/{{user.id}}"><span class="badge">EDITAR</span></a></td>
+      <td style="width: 5%"><button (click)="delete_user(user.id)" class="btn btn-light"><span class="badge">EXCLUIR</span></button></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div *ngIf="isEmpty" class="alert alert-warning" role="alert" style="width: 50%">
+ Nenhum usurio encontrado!
+</div>
+<div *ngIf="isSuccess" class="alert alert-info" role="alert" style="width: 50%">
+ {{ users.length }} usuários encontrados!
+</div>
+<div *ngIf="isError">
+ <div class="alert alert-danger" role="alert">
+  Houve um erro ao realizar a solicitação!
+</div>
+</div>

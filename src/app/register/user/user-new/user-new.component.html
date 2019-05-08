@@ -1,0 +1,15 @@
+<div>
+  <h2>Novo Usuário</h2>
+  <div>
+    <label>Nome:
+      <input #input_name>
+    </label>
+  </div>
+  <div>
+    <label>Senha:
+      <input #input_password>
+    </label>
+  </div>
+  <button (click)="goBack()" class="btn btn-light">VOLTAR</button>
+  <button (click)="save(input_name.value, input_password.value)" class="btn btn-primary">SALVAR</button>
+</div>
