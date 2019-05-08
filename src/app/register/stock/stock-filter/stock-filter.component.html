@@ -1,3 +1,39 @@
-<p>
-  stock-filter works!
-</p>
+<h1>Papéis</h1>
+
+<div>
+  <label><input #stock_input class="form-control mr-sm-4" type="search" placeholder="Search" aria-label="Search"/> </label>
+  <button (click)="find_by_chave(stock_input.value)" class="btn btn-primary" type="submit" >BUSCAR</button>
+  <button (click)="get_all_stocks()" class="btn btn-primary" type="submit" >LISTAR TODOS</button>
+<div >
+	<table class="table  table-hover table-sm" style="width: 50%">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Código</th>
+      <th scope="col">Empresa</th>
+      <th scope="col"><button class="btn btn-primary" [routerLink]="['/stock/new']">NOVO</button></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody >
+    <tr *ngFor="let stock of stocks">
+      <th scope="row">{{stock.id}}</th>
+      <td>{{stock.codPapel}}</td>
+      <td>{{stock.empresaPapel}}</td>
+      <td style="width: 5%"><a routerLink="/stock/{{stock.id}}"><span class="badge">EDITAR</span></a></td>
+      <td style="width: 5%"><button (click)="delete_stock(stock.id)" class="btn btn-light"><span class="badge">EXCLUIR</span></button></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div *ngIf="isEmpty" class="alert alert-warning" role="alert" style="width: 50%">
+ Nenhum papel encontrado!
+</div>
+<div *ngIf="isSuccess" class="alert alert-info" role="alert" style="width: 50%">
+ {{ stocks.length }} papéis encontrados!
+</div>
+<div *ngIf="isError">
+ <div class="alert alert-danger" role="alert">
+  Houve um erro ao realizar a solicitação!
+</div>
+</div>

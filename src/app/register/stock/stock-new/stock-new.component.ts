@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import {StockService} from './../../../services/stock.service';
+import {Stock} from './../../../entities/stock';
 
 @Component({
   selector: 'app-stock-new',
@@ -7,9 +11,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StockNewComponent implements OnInit {
 
-  constructor() { }
+  @Input() stock: Stock;
 
-  ngOnInit() {
-  }
+	constructor(private StockService: StockService, private route: ActivatedRoute, private location: Location) {}
+
+	goBack(): void {
+    this.location.back();
+  	}
+
+  	save(codPapel: string, empresaPapel: string){
+     this.StockService.save(this.fillConfiguration(0 , codPapel, empresaPapel)).subscribe((res) =>{
+        this.goBack()
+    });
+    }
+
+	fillConfiguration(id: number, codPapel: string, empresaPapel: string): Stock {
+		var stock: Stock = {nome: ""}
+		stock.codPapel = codPapel;
+		stock.empresaPapel = empresaPapel;
+		return stock;
+	}
+
+	ngOnInit() {
+	}
 
 }

@@ -1,3 +1,17 @@
-<p>
-  stock-detail works!
-</p>
+<div>
+    <div>
+  <div>
+  	<h2>Detalhes</h2>
+  </div>
+  
+  <div><span>Codigo: </span>{{stock.codPapel}}</div>
+  <div>
+    <label>EMPRESA:
+      <input #input_empresa value={{stock.empresaPapel}}/>
+    </label>
+  </div>
+  <button (click)="goBack()" class="btn btn-light">VOLTAR</button>
+  <button (click)="save(input_empresa.value)" class="btn btn-primary">SALVAR</button>
+</div>
+</div>
+

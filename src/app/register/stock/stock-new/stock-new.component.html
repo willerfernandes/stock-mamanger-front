@@ -1,3 +1,15 @@
-<p>
-  stock-new works!
-</p>
+<div>
+  <h2>Novo Papél</h2>
+  <div>
+    <label>Código:
+      <input #input_code>
+    </label>
+  </div>
+  <div>
+    <label>Empresa:
+      <input #input_company>
+    </label>
+  </div>
+  <button (click)="goBack()" class="btn btn-light">VOLTAR</button>
+  <button (click)="save(input_code.value, input_company.value)" class="btn btn-primary">SALVAR</button>
+</div>
