@@ -34,13 +34,13 @@ export class ConfigDetailComponent implements OnInit {
 	
 
   	save(value: string){
-     this.configurationService.update(this.fillConfiguration(this.configuration.id, this.configuration.chave, value)).subscribe((res) =>{
+     this.configurationService.update(this.fill(this.configuration.id, this.configuration.chave, value)).subscribe((res) =>{
         this.goBack()
     });
     }
 
 
-	fillConfiguration(id: number, key: string, value: string): Config {
+	fill(id: number, key: string, value: string): Config {
 		var config: Config = {chave: "", valor: ""}
 		config.id = id;
 		config.chave = key;

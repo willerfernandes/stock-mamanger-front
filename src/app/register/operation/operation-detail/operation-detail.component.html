@@ -1,3 +1,31 @@
-<p>
-  operation-detail works!
-</p>
+<div>
+    <div>
+  <div>
+  	<h2>Detalhes</h2>
+  </div>
+  
+  <div><span>ID: </span>{{operation.guid}}</div>
+  <div><span>PAPEL: </span>{{operation.papel.codPapel}}</div>
+  <div><span>TIPO: </span>{{operation.tipoOperacao}}</div>
+  <div>
+    <label>DATA:
+      <input #input_dataOperacao value={{operation.dataOperacao}}/>
+    </label>
+    <br>
+    <label>QUANTIDADE:
+      <input #input_quantidade value={{operation.quantidade}}/>
+    </label>
+    <br>
+    <label>VALOR:
+      <input #input_valorPapel value={{operation.valorPapel}}/>
+    </label>
+    <br>
+    <label>VALOR TOTAL:
+      <input #input_valorTotal value={{operation.valorTotal}}/>
+    </label>
+  </div>
+  <button (click)="goBack()" class="btn btn-light">VOLTAR</button>
+  <button (click)="save(input_dataOperacao.value,input_quantidade.value,input_valorPapel.value, input_valorTotal.value)" class="btn btn-primary">SALVAR</button>
+</div>
+</div>
+

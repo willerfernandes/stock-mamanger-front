@@ -5,10 +5,11 @@
   <button (click)="find_by_chave(operation_input.value)" class="btn btn-primary" type="submit" >BUSCAR</button>
   <button (click)="get_all_operations()" class="btn btn-primary" type="submit" >LISTAR TODOS</button>
 <div >
-	<table class="table  table-hover table-sm" style="width: 50%">
+	<table class="table  table-hover table-sm" style="width: 100%">
   <thead class="thead-light">
     <tr>
       <th scope="col">#</th>
+      <th scope="col">Guid</th>
       <th scope="col">Papel</th>
       <th scope="col">Data</th>
       <th scope="col">Tipo</th>
@@ -23,6 +24,7 @@
   <tbody >
     <tr *ngFor="let operation of operations">
       <th scope="row">{{operation.id}}</th>
+      <th scope="row">{{operation.guid}}</th>
       <td>{{operation.papel.codPapel}}</td>
       <td>{{operation.dataOperacao}}</td>
       <td>{{operation.tipoOperacao}}</td>
@@ -36,10 +38,10 @@
   </tbody>
 </table>
 </div>
-<div *ngIf="isEmpty" class="alert alert-warning" role="alert" style="width: 50%">
+<div *ngIf="isEmpty" class="alert alert-warning" role="alert" style="width: 100%">
  Nenhuma operação encontrada!
 </div>
-<div *ngIf="isSuccess" class="alert alert-info" role="alert" style="width: 50%">
+<div *ngIf="isSuccess" class="alert alert-info" role="alert" style="width: 100%">
  {{ operations.length }} operações encontradas!
 </div>
 <div *ngIf="isError">

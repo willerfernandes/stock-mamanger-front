@@ -1,3 +1,29 @@
-<p>
-  operation-new works!
-</p>
+<div>
+    <div>
+  <div>
+  	<h2>Detalhes</h2>
+  </div>
+  
+  <div>
+    <br>
+    <label>PAPEL:
+      <input #input_codPapel/>
+    </label>
+    <br>
+    <label>TIPO:
+      <input #input_tipoOperacao/>
+    </label>
+    <br>
+    <label>QUANTIDADE:
+      <input #input_quantidade/>
+    </label>
+    <br>
+    <label>VALOR:
+      <input #input_valorPapel/>
+    </label>
+  </div>
+  <button (click)="goBack()" class="btn btn-light">VOLTAR</button>
+  <button (click)="save(input_codPapel.value, input_tipoOperacao.value, input_quantidade.value, input_valorPapel.value)" class="btn btn-primary">SALVAR</button>
+</div>
+</div>
+

@@ -16,14 +16,14 @@ export class StockDetailComponent implements OnInit {
 	constructor(private StockService: StockService, private route: ActivatedRoute, private location: Location) {}
 
 	ngOnInit() {
-			this.getUser();
+			this.getStock();
 		}
 
 	goBack(): void {
     this.location.back();
   	}
 
-	getUser(){
+	getStock(){
 		const id = +this.route.snapshot.paramMap.get('id');
 		this.StockService.get(id).subscribe((res) =>{
     		this.stock = res;
@@ -33,13 +33,13 @@ export class StockDetailComponent implements OnInit {
 	
 
   	save(empresaPapel: string){
-     this.StockService.update(this.fillConfiguration(this.stock.id, this.stock.codPapel, empresaPapel)).subscribe((res) =>{
+     this.StockService.update(this.fill(this.stock.id, this.stock.codPapel, empresaPapel)).subscribe((res) =>{
         this.goBack()
     });
     }
 
 
-	fillConfiguration(id: number, cod_papel: string, empresaPapel: string): Stock {
+	fill(id: number, cod_papel: string, empresaPapel: string): Stock {
 		var stock: Stock = {codPapel: "", empresaPapel: ""}
 		stock.id = id;
 		stock.codPapel = cod_papel;

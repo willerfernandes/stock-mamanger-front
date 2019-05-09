@@ -15,7 +15,8 @@ import {StockNewComponent} from './register/stock/stock-new/stock-new.component'
 import {AppComponent} from './app.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/config', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'home', component: AppComponent },
   { path: 'config', component: ConfigComponent },
   { path: 'config/new', component: ConfigNewComponent },
   { path: 'config/:id', component: ConfigDetailComponent },

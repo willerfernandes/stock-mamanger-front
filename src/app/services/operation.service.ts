@@ -10,7 +10,7 @@ export class OperationService {
 
 baseUrl:string = "http://localhost:8080";
 getAllPath:string = "/all";
-userPath:string = "/operacao";
+operationPath:string = "/operacao";
 searchPath:string = "/operacao/search";
 
  httpOptions = {
@@ -23,11 +23,11 @@ searchPath:string = "/operacao/search";
   constructor(private httpClient : HttpClient) { }
 
   getAll(): Observable <Operation[]>{
-  	return this.httpClient.get(this.baseUrl + this.userPath + this.getAllPath);
+  	return this.httpClient.get(this.baseUrl + this.operationPath + this.getAllPath);
   }
 
   get(id: number): Observable <Operation>{
-    return this.httpClient.get(this.baseUrl + this.userPath + "/" + id);
+    return this.httpClient.get(this.baseUrl + this.operationPath + "/" + id);
   }
 
   search(chave: string): Observable <Operation>{
@@ -35,14 +35,14 @@ searchPath:string = "/operacao/search";
   }
 
   save(operation): Operation{
-  	return this.httpClient.post(this.baseUrl + this.userPath, JSON.stringify(operation), this.httpOptions);
+  	return this.httpClient.post(this.baseUrl + this.operationPath, JSON.stringify(operation), this.httpOptions);
   }
 
   update(operation): Operation{
-    return this.httpClient.put(this.baseUrl + this.userPath, JSON.stringify(operation), this.httpOptions);
+    return this.httpClient.put(this.baseUrl + this.operationPath, JSON.stringify(operation), this.httpOptions);
   }
 
    delete(id: number): Observable <Operation>{
-    return this.httpClient.delete(this.baseUrl + this.userPath + "/" + id);
+    return this.httpClient.delete(this.baseUrl + this.operationPath + "/" + id);
   }
 }
