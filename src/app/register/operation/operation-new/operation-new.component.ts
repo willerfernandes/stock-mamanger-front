@@ -25,7 +25,20 @@ export class OperationNewComponent implements OnInit {
 	 this.OperationService.save(this.fill(0, codPapel, this.idUser, tipoOperacao, quantidade, valorPapel)).subscribe((res) =>{
 	    this.goBack()
 	});
+
+
 	}
+
+	/*private processError(response: HttpErrorResponse) {
+        this.success = null;
+        if (response.status === 400 && response.error.type === LOGIN_ALREADY_USED_TYPE) {
+            this.errorUserExists = 'ERROR';
+        } else if (response.status === 400 && response.error.type === EMAIL_ALREADY_USED_TYPE) {
+            this.errorEmailExists = 'ERROR';
+        } else {
+            this.error = 'ERROR';
+        }
+    }*/
 
 
 	fill(id: number, codPapel: string, idUser: number, tipoOperacao: string, quantidade: number, valorPapel: number): Operation {

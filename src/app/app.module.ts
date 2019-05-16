@@ -17,6 +17,11 @@ import { StockNewComponent } from './register/stock/stock-new/stock-new.componen
 import { UserFilterComponent } from './register/user/user-filter/user-filter.component';
 import { UserDetailComponent } from './register/user/user-detail/user-detail.component';
 import { UserNewComponent } from './register/user/user-new/user-new.component';
+import { NavbarComponent } from './layouts/navbar/navbar.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatMenuModule } from '@angular/material';
+import { MainNavComponent } from './main-nav/main-nav.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -32,12 +37,22 @@ import { UserNewComponent } from './register/user/user-new/user-new.component';
     StockNewComponent,
     UserFilterComponent,
     UserDetailComponent,
-    UserNewComponent
+    UserNewComponent,
+    NavbarComponent,
+    MainNavComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MatMenuModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
