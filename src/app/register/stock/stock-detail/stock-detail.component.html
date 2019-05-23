@@ -9,9 +9,13 @@
     <label>EMPRESA:
       <input #input_empresa value={{stock.empresaPapel}}/>
     </label>
+    <br>
+    <label>COD BOVESPA:
+      <input #input_bovespa value={{stock.codEmpresaBovespa}}/>
+    </label>
   </div>
   <button (click)="goBack()" class="btn btn-light">VOLTAR</button>
-  <button (click)="save(input_empresa.value)" class="btn btn-primary">SALVAR</button>
+  <button (click)="save(input_empresa.value, input_bovespa.value)" class="btn btn-primary">SALVAR</button>
 </div>
 </div>
 

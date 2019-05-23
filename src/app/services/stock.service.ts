@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient,  HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import {Stock} from './entities/stock';
+import {Stock} from './entities/stock-info';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ baseUrl:string = "http://localhost:8080";
 getAllPath:string = "/all";
 userPath:string = "/papel";
 searchPath:string = "/papel/search";
+alphavantageBaseUrl:string = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&apikey=P8014LL14K1Q6MOL&symbol=";
 
  httpOptions = {
     headers: new HttpHeaders({
@@ -44,5 +46,9 @@ searchPath:string = "/papel/search";
 
    delete(id: number): Observable <Stock>{
     return this.httpClient.delete(this.baseUrl + this.userPath + "/" + id);
+  }
+
+  stockPrices(codEmpresaBovespa: string): Observable <Stock>{
+    return this.httpClient.get(this.alphavantageBaseUrl + codEmpresaBovespa);
   }
 }

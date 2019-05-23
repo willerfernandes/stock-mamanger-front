@@ -19,16 +19,17 @@ export class StockNewComponent implements OnInit {
     this.location.back();
   	}
 
-  	save(codPapel: string, empresaPapel: string){
-     this.StockService.save(this.fillConfiguration(0 , codPapel, empresaPapel)).subscribe((res) =>{
+  	save(codPapel: string, empresaPapel: string, codEmpresaBovespa: string){
+     this.StockService.save(this.fillConfiguration(0 , codPapel, empresaPapel, codEmpresaBovespa)).subscribe((res) =>{
         this.goBack()
     });
     }
 
-	fillConfiguration(id: number, codPapel: string, empresaPapel: string): Stock {
+	fillConfiguration(id: number, codPapel: string, empresaPapel: string, codEmpresaBovespa: string): Stock {
 		var stock: Stock = {nome: ""}
 		stock.codPapel = codPapel;
 		stock.empresaPapel = empresaPapel;
+    stock.codEmpresaBovespa = codEmpresaBovespa;
 		return stock;
 	}
 

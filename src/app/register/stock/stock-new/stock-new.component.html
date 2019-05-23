@@ -9,7 +9,10 @@
     <label>Empresa:
       <input #input_company>
     </label>
+    <label>Código Bovespa:
+      <input #input_bovespa>
+    </label>
   </div>
   <button (click)="goBack()" class="btn btn-light">VOLTAR</button>
-  <button (click)="save(input_code.value, input_company.value)" class="btn btn-primary">SALVAR</button>
+  <button (click)="save(input_code.value, input_company.value, input_bovespa.value)" class="btn btn-primary">SALVAR</button>
 </div>

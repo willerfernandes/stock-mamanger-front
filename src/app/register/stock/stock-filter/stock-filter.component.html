@@ -11,8 +11,11 @@
       <th scope="col">#</th>
       <th scope="col">Código</th>
       <th scope="col">Empresa</th>
-      <th scope="col"><button class="btn btn-primary" [routerLink]="['/stock/new']">NOVO</button></th>
+      <th scope="col">Código Bovespa</th>
+      <th scope="col">Valor atual</th>
       <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"><button class="btn btn-primary" [routerLink]="['/stock/new']">NOVO</button></th>
     </tr>
   </thead>
   <tbody >
@@ -20,12 +23,16 @@
       <th scope="row">{{stock.id}}</th>
       <td>{{stock.codPapel}}</td>
       <td>{{stock.empresaPapel}}</td>
+      <td>{{stock.codEmpresaBovespa}}</td>
+      <td *ngIf="stock.stockInfo">{{stock.stockInfo.close}}</td> <td *ngIf="!stock.stockInfo">---</td>
       <td style="width: 5%"><a routerLink="/stock/{{stock.id}}"><span class="badge">EDITAR</span></a></td>
       <td style="width: 5%"><button (click)="delete_stock(stock.id)" class="btn btn-light"><span class="badge">EXCLUIR</span></button></td>
+      <td style="width: 5%"><button (click)="get_stock_info(stock.codEmpresaBovespa)" class="btn btn-light"><span class="badge">ATUALIZAR</span></button></td>
     </tr>
   </tbody>
 </table>
 </div>
+<div>API grátis permite apenas 5 chamdas para buscar valor por minuto</div>
 <div *ngIf="isEmpty" class="alert alert-warning" role="alert" style="width: 100%">
  Nenhum papel encontrado!
 </div>

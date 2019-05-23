@@ -32,18 +32,19 @@ export class StockDetailComponent implements OnInit {
 
 	
 
-  	save(empresaPapel: string){
-     this.StockService.update(this.fill(this.stock.id, this.stock.codPapel, empresaPapel)).subscribe((res) =>{
+  	save(empresaPapel: string, codEmpresaBovespa: string){
+     this.StockService.update(this.fill(this.stock.id, this.stock.codPapel, empresaPapel, codEmpresaBovespa)).subscribe((res) =>{
         this.goBack()
     });
     }
 
 
-	fill(id: number, cod_papel: string, empresaPapel: string): Stock {
-		var stock: Stock = {codPapel: "", empresaPapel: ""}
+	fill(id: number, cod_papel: string, empresaPapel: string, codEmpresaBovespa: string): Stock {
+		var stock: Stock = {codPapel: "", empresaPapel: "", codEmpresaBovespa: ""}
 		stock.id = id;
 		stock.codPapel = cod_papel;
 		stock.empresaPapel = empresaPapel;
+		stock.codEmpresaBovespa = codEmpresaBovespa;
 		return stock;
 	}
 
