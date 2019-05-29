@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient,  HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import {User} from './entities/user';
+import {UserBalance} from './entities/user-balance';
 
 
 @Injectable({
@@ -13,6 +14,7 @@ baseUrl:string = "http://localhost:8080";
 getAllPath:string = "/all";
 userPath:string = "/usuario";
 searchPath:string = "/usuario/search";
+balancePath:string = "/posicao";
 
  httpOptions = {
     headers: new HttpHeaders({
@@ -43,7 +45,11 @@ searchPath:string = "/usuario/search";
     return this.httpClient.put(this.baseUrl + this.userPath, JSON.stringify(user), this.httpOptions);
   }
 
-   delete(id: number): Observable <User>{
+  delete(id: number): Observable <>{
     return this.httpClient.delete(this.baseUrl + this.userPath + "/" + id);
+  }
+
+  getBalance(id: number): Observable <UserBalance>{
+    return this.httpClient.get(this.baseUrl + this.userPath + "/" + id + this.balancePath);
   }
 }

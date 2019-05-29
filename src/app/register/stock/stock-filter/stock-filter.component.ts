@@ -74,6 +74,9 @@ export class StockFilterComponent implements OnInit {
   get_stock_info(codEmpresaBovespa: string){
       this.StockService.stockPrices(codEmpresaBovespa).subscribe(res => {
 
+        //TODO: Salvar o papel depois de setar o valor
+        //this.StockService.save(stocks[stockIndex]).subscribe();
+
         var stockInfoResponse = res['Time Series (Daily)'][this.datePipe.transform(new Date(), 'yyyy-MM-dd')];
 
         //PRA TESTE
@@ -81,6 +84,7 @@ export class StockFilterComponent implements OnInit {
         if(stockInfoResponse)
         {
             var stockInfo = [];
+            var stockIndex;
             stockInfo.open = stockInfoResponse['1. open'];
             stockInfo.high = stockInfoResponse['2. high'];
             stockInfo.low = stockInfoResponse['3. low'];
@@ -93,12 +97,16 @@ export class StockFilterComponent implements OnInit {
             for (var i=0; i<this.stocks.length; i++) {
               if(this.stocks[i].codEmpresaBovespa == codEmpresaBovespa) {
                 this.stocks[i].stockInfo = stockInfo;
+                stockIndex = i;
+                break;
               }
             }
+
         }
        
-
       });
+
+
   }
 
 }

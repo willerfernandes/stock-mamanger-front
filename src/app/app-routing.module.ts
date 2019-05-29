@@ -12,11 +12,12 @@ import {OperationNewComponent} from './register/operation/operation-new/operatio
 import {StockFilterComponent} from './register/stock/stock-filter/stock-filter.component';
 import {StockDetailComponent} from './register/stock/stock-detail/stock-detail.component';
 import {StockNewComponent} from './register/stock/stock-new/stock-new.component';
+import {MainViewComponent} from './layouts/main-view/main-view.component';
 import {AppComponent} from './app.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: AppComponent },
+  { path: 'home', component: MainViewComponent },
   { path: 'config', component: ConfigComponent },
   { path: 'config/new', component: ConfigNewComponent },
   { path: 'config/:id', component: ConfigDetailComponent },
