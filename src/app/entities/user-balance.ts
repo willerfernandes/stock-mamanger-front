@@ -3,6 +3,7 @@ export class UserBalance {
 	quantidade:number;
 	quantidadeDisponivel:number;
 	valorMedio:number;
+	rendimentoAtual:number;
 	rendimentoPorcentagem:number;
 	rendimentoNumerico:number;
 }

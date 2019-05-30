@@ -7,4 +7,5 @@ export class Stock {
   valorMaximo: number;
   valorMinimo: number;
   stockInfo: StockInfo;
+  operations: Opertion[];
 }

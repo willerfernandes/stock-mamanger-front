@@ -12,8 +12,6 @@ import {UserBalance} from './../../entities/user-balance'
 })
 export class MainViewComponent implements OnInit {
 
-  stocks = [];
-  stock: Stock = {cod_papel: "", empresa_papel: ""};
   userBalances = []; 
   isError;
   isEmpty;
@@ -26,34 +24,27 @@ export class MainViewComponent implements OnInit {
   }
 
 
-   get_stock_info(codEmpresaBovespa: string){
-      this.StockService.stockPrices(codEmpresaBovespa).subscribe(res => {
+  get_stock_info(stock: Stock){
+	  this.StockService.stockPrices(stock).subscribe(res => {
+	        var stockInfoResponse = res['Time Series (Daily)'][this.datePipe.transform(new Date(), 'yyyy-MM-dd')];
+	        if(stockInfoResponse)
+	        {
+	        	stock.valor = stockInfoResponse['4. close'];
+	        	this.updateStock(stock);
+	        }
+	        
+	  });
+  }
 
-        var stockInfoResponse = res['Time Series (Daily)'][this.datePipe.transform(new Date(), 'yyyy-MM-dd')];
+  loadStockOperations(stock: Stock){
+  	this.StockService.getStockOperations(stock).subscribe(res => {
+  		stock.operations = res;
+  	});
 
-        //PRA TESTE
-        //var stockInfoResponse = res['Time Series (Daily)']["2019-05-22"];
-        if(stockInfoResponse)
-        {
-            var stockInfo = [];
-            stockInfo.open = stockInfoResponse['1. open'];
-            stockInfo.high = stockInfoResponse['2. high'];
-            stockInfo.low = stockInfoResponse['3. low'];
-            stockInfo.close = stockInfoResponse['4. close'];
-            stockInfo.adjustedClose = stockInfoResponse['5. adjusted close'];
-            stockInfo.volume = stockInfoResponse['6. volume'];
-            stockInfo.dividendAmount = stockInfoResponse['7. dividend amount'];
-            stockInfo.splitCoefficient = stockInfoResponse['8. split coefficient. open'];
+  }
 
-            for (var i=0; i<this.stocks.length; i++) {
-              if(this.stocks[i].codEmpresaBovespa == codEmpresaBovespa) {
-                this.stocks[i].stockInfo = stockInfo;
-              }
-            }
-        }
-       
-
-      });
+  updateStock(stock: Stock) {
+  	this.StockService.update(stock).subscribe();
   }
 
 
@@ -72,9 +63,9 @@ export class MainViewComponent implements OnInit {
   }
 
 
-  handleResponse(){
-  	this.isSuccess = this.stocks.length > 0;
-  	this.isEmpty = this.stocks.length === 0;
+  handleResponse(res){
+  	this.isSuccess = res.length > 0;
+  	this.isEmpty = res.length === 0;
   }
 
 }

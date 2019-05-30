@@ -24,10 +24,10 @@
       <td>{{stock.codPapel}}</td>
       <td>{{stock.empresaPapel}}</td>
       <td>{{stock.codEmpresaBovespa}}</td>
-      <td *ngIf="stock.stockInfo">{{stock.stockInfo.close}}</td> <td *ngIf="!stock.stockInfo">---</td>
+      <td *ngIf="stock.valor">{{stock.valor}}</td> <td *ngIf="!stock.valor">---</td>
       <td style="width: 5%"><a routerLink="/stock/{{stock.id}}"><span class="badge">EDITAR</span></a></td>
       <td style="width: 5%"><button (click)="delete_stock(stock.id)" class="btn btn-light"><span class="badge">EXCLUIR</span></button></td>
-      <td style="width: 5%"><button (click)="get_stock_info(stock.codEmpresaBovespa)" class="btn btn-light"><span class="badge">ATUALIZAR</span></button></td>
+      <td style="width: 5%"><button (click)="get_stock_info(stock)" class="btn btn-light"><span class="badge">ATUALIZAR</span></button></td>
     </tr>
   </tbody>
 </table>
