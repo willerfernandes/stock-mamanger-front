@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,  HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import {User} from './entities/user';
-import {UserBalance} from './entities/user-balance';
+import {User} from './../entities/user';
+import {UserBalance} from './../entities/user-balance';
+import {LoginInfo} from './../entities/login-info';
 
 
 @Injectable({
@@ -15,6 +16,7 @@ getAllPath:string = "/all";
 userPath:string = "/usuario";
 searchPath:string = "/usuario/search";
 balancePath:string = "/posicao";
+validateUserPath:string = "/validacao";
 
  httpOptions = {
     headers: new HttpHeaders({
@@ -52,4 +54,9 @@ balancePath:string = "/posicao";
   getBalance(id: number): Observable <UserBalance>{
     return this.httpClient.get(this.baseUrl + this.userPath + "/" + id + this.balancePath);
   }
+
+  login(loginInfo: LoginInfo): Observable<> {
+    return this.httpClient.post(this.baseUrl + this.userPath + this.validateUserPath, JSON.stringify(loginInfo), this.httpOptions)
+  }
+
 }

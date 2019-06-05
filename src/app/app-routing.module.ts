@@ -14,10 +14,14 @@ import {StockDetailComponent} from './register/stock/stock-detail/stock-detail.c
 import {StockNewComponent} from './register/stock/stock-new/stock-new.component';
 import {MainViewComponent} from './layouts/main-view/main-view.component';
 import {AppComponent} from './app.component';
+import {LoginViewComponent} from './account/login-view/login-view.component';
+import {SignupViewComponent} from './account/signup-view/signup-view.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: MainViewComponent },
+  { path: 'login', component: LoginViewComponent },
+  { path: 'signup', component: SignupViewComponent },
   { path: 'config', component: ConfigComponent },
   { path: 'config/new', component: ConfigNewComponent },
   { path: 'config/:id', component: ConfigDetailComponent },
