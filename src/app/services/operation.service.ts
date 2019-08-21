@@ -9,8 +9,8 @@ import {Operation} from './entities/operation';
 export class OperationService {
 
 baseUrl:string = "http://localhost:8080";
-getAllPath:string = "/all";
-operationPath:string = "/operacao";
+getAllPath:string = "";
+operationPath:string = "/operacoes";
 searchPath:string = "/operacao/search";
 
  httpOptions = {
@@ -39,7 +39,7 @@ searchPath:string = "/operacao/search";
   }
 
   update(operation): Operation{
-    return this.httpClient.put(this.baseUrl + this.operationPath, JSON.stringify(operation), this.httpOptions);
+    return this.httpClient.put(this.baseUrl + this.operationPath + "/" + id, JSON.stringify(operation), this.httpOptions);
   }
 
    delete(id: number): Observable <Operation>{

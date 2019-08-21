@@ -12,18 +12,21 @@ import {LoginInfo} from './../entities/login-info';
 export class UserService {
 
 baseUrl:string = "http://localhost:8080";
-getAllPath:string = "/all";
-userPath:string = "/usuario";
-searchPath:string = "/usuario/search";
+getAllPath:string = "";
+userPath:string = "/usuarios";
+searchPath:string = "/usuarios/filtro";
 balancePath:string = "/posicao";
 validateUserPath:string = "/validacao";
 
  httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin' : '*'
+      'Access-Control-Allow-Origin' : '*',
+      'login' : 'willerfernandes',
+      'senha' : '123456'
     })
   };
+
 
   constructor(private httpClient : HttpClient) { }
 
@@ -44,7 +47,7 @@ validateUserPath:string = "/validacao";
   }
 
   update(user): User{
-    return this.httpClient.put(this.baseUrl + this.userPath, JSON.stringify(user), this.httpOptions);
+    return this.httpClient.put(this.baseUrl + this.userPath + "/" + user.id, JSON.stringify(user), this.httpOptions);
   }
 
   delete(id: number): Observable <>{
@@ -56,7 +59,12 @@ validateUserPath:string = "/validacao";
   }
 
   login(loginInfo: LoginInfo): Observable<> {
-    return this.httpClient.post(this.baseUrl + this.userPath + this.validateUserPath, JSON.stringify(loginInfo), this.httpOptions)
+
+    //set não sobrescreve os valores
+    this.httpOptions.headers.set('login' , 'willerfernandes');
+    this.httpOptions.headers.set('senha' , '123456');
+    //console.log(this.httpOptions.headers.getAll());
+    return this.httpClient.get(this.baseUrl + this.userPath + this.validateUserPath, this.httpOptions);
   }
 
 }

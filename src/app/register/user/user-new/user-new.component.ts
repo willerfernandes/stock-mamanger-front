@@ -20,16 +20,18 @@ export class UserNewComponent implements OnInit {
     this.location.back();
   	}
 
-  	save(name: string, password: string){
-     this.UserService.save(this.fillConfiguration(0 , name, password)).subscribe((res) =>{
+  	save( name: string, login: string, password: string){
+     this.UserService.save(this.fillConfiguration(0 , name, login, password)).subscribe((res) =>{
         this.goBack()
     });
     }
 
-	fillConfiguration(id: number, name: string, password: string): User {
-		var user: User = {nome: ""}
+	fillConfiguration(id: number, login: string, name: string, password: string): User {
+		var user: User = {id: "", nome: "", login: ""}
 		user.id = id;
 		user.nome = name;
+    user.login = login;
+    user.senha = password;
 		return user;
 	}
 

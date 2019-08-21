@@ -6,12 +6,12 @@
   
   <div><span>Nome: </span>{{user.nome}}</div>
   <div>
-    <label>VALOR:
-      <input #input_name value={{user.senha}}/>
+    <label>SENHA:
+      <input #input_senha value={{user.senha}}/>
     </label>
   </div>
   <button (click)="goBack()" class="btn btn-light">VOLTAR</button>
-  <button (click)="save(input_name.value)" class="btn btn-primary">SALVAR</button>
+  <button (click)="save(input_senha.value)" class="btn btn-primary">SALVAR</button>
 </div>
 </div>
 

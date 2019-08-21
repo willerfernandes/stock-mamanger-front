@@ -6,10 +6,15 @@
     </label>
   </div>
   <div>
+    <label>Login:
+      <input #input_login>
+    </label>
+  </div>
+  <div>
     <label>Senha:
       <input #input_password>
     </label>
   </div>
   <button (click)="goBack()" class="btn btn-light">VOLTAR</button>
-  <button (click)="save(input_name.value, input_password.value)" class="btn btn-primary">SALVAR</button>
+  <button (click)="save(input_name.value, input_login.value, input_password.value)" class="btn btn-primary">SALVAR</button>
 </div>

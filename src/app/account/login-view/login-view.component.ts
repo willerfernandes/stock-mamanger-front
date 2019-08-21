@@ -20,7 +20,7 @@ export class LoginViewComponent implements OnInit {
 
 
   login(username: String, password: String) {
-  	var loginInfo: LoginInfo  = {username:"" , password: ""} ;
+  	var loginInfo: LoginInfo  = {login:"" , senha: ""} ;
 
   	loginInfo.login = username;
   	loginInfo.senha = password;

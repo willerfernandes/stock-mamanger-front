@@ -33,17 +33,17 @@ export class UserDetailComponent implements OnInit {
 
 	
 
-  	save(value: string){
-     this.UserService.update(this.fillConfiguration(this.user.id, value)).subscribe((res) =>{
+  	save(senha: string){
+     this.UserService.update(this.fillConfiguration(this.user.id, senha)).subscribe((res) =>{
         this.goBack()
     });
     }
 
 
-	fillConfiguration(id: number, nome: string): User {
-		var user: User = {nome: ""}
+	fillConfiguration(id: number, senha: string): User {
+		var user: User = {senha: ""}
 		user.id = id;
-		user.nome = nome;
+		user.senha = senha;
 		return user;
 	}
 

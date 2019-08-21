@@ -10,8 +10,8 @@ import {Stock} from './entities/stock-info';
 export class StockService {
 
 baseUrl:string = "http://localhost:8080";
-getAllPath:string = "/all";
-stockPath:string = "/papel";
+getAllPath:string = "";
+stockPath:string = "/papeis";
 searchPath:string = "/papel/search";
 operationPath:string = "/operacoes";
 alphavantageBaseUrl:string = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&apikey=P8014LL14K1Q6MOL&symbol=";
@@ -42,7 +42,7 @@ alphavantageBaseUrl:string = "https://www.alphavantage.co/query?function=TIME_SE
   }
 
   update(stock): Stock{
-    return this.httpClient.put(this.baseUrl + this.stockPath, JSON.stringify(stock), this.httpOptions);
+    return this.httpClient.put(this.baseUrl + this.stockPath + "/" + stock.id, JSON.stringify(stock), this.httpOptions);
   }
 
    delete(id: number): Observable <Stock>{
