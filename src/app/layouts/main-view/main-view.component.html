@@ -19,7 +19,7 @@
 <div  *ngFor="let userBalance of userBalances" style="width: 100%">
   <div>
     <mat-accordion >
-      <mat-expansion-panel (opened)="loadStockOperations(userBalance.papel)">
+      <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
             <h5>{{userBalance.papel.codPapel}}</h5>
@@ -47,7 +47,7 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
 
-        <div *ngFor="let operation of userBalance.papel.operations">
+        <div *ngFor="let operation of userBalance.papel.operacoes">
             {{operation.data}} {{operation.quantidade}} {{operation.valorPapel}}   {{operation.valorTotal}}   {{operation.tipoOperacao}}
         </div>
         

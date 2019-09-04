@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from './../../services/user.service';
 import {LoginInfo} from './../../entities/login-info';
+import { Router} from '@angular/router';
 
 @Component({
   selector: 'app-login-view',
@@ -10,7 +11,7 @@ import {LoginInfo} from './../../entities/login-info';
 export class LoginViewComponent implements OnInit {
 
   
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   isAuthorized: boolean;
   isUnauthorized: boolean;
@@ -26,11 +27,13 @@ export class LoginViewComponent implements OnInit {
   	loginInfo.senha = password;
 
   	this.userService.login(loginInfo).subscribe(res => {
-  		this.isAuthorized = res;
-  		this.isUnauthorized = !res;
+		this.isAuthorized = res;
+		this.isUnauthorized = !res;
+    if(this.isAuthorized)
+    {
+      sessionStorage.setItem('currentUser', JSON.stringify(res));
+      this.router.navigate(['/home']);
+    }
   	});
   }
-
-
-
 }

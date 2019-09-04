@@ -20,7 +20,8 @@ export class MainViewComponent implements OnInit {
   constructor(private StockService: StockService, private UserService: UserService, private datePipe: DatePipe) { }
 
   ngOnInit() {
-  	this.getUserBalance(8);
+    const auth = JSON.parse(sessionStorage.getItem('currentUser'));
+  	this.getUserBalance(auth.id);
   }
 
 
@@ -36,13 +37,6 @@ export class MainViewComponent implements OnInit {
 	        }
 	        
 	  });
-  }
-
-  loadStockOperations(stock: Stock){
-  	this.StockService.getStockOperations(stock).subscribe(res => {
-  		stock.operations = res;
-  	});
-
   }
 
   updateStock(stock: Stock) {

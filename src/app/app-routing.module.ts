@@ -18,7 +18,7 @@ import {LoginViewComponent} from './account/login-view/login-view.component';
 import {SignupViewComponent} from './account/signup-view/signup-view.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'home', component: MainViewComponent },
   { path: 'login', component: LoginViewComponent },
   { path: 'signup', component: SignupViewComponent },
