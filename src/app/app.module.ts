@@ -51,6 +51,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { ChartsModule } from 'ng2-charts-x';
 
 
 
@@ -59,6 +60,13 @@ import { MainNavComponent } from './main-nav/main-nav.component';
 import { MainViewComponent } from './layouts/main-view/main-view.component';
 import { LoginViewComponent } from './account/login-view/login-view.component';
 import { SignupViewComponent } from './account/signup-view/signup-view.component';
+import { ExpenseFilterComponent } from './register/expense/expense-filter/expense-filter.component';
+import { ExpenseDetailComponent } from './register/expense/expense-detail/expense-detail.component';
+import { ExpenseNewComponent } from './register/expense/expense-new/expense-new.component';
+import { ExpenseCategoryNewComponent } from './register/expense/expense-category-new/expense-category-new.component';
+import { ExpenseCategoryFilterComponent } from './register/expense/expense-category-filter/expense-category-filter.component';
+import { ExpenseCategoryDetailComponent } from './register/expense/expense-category-detail/expense-category-detail.component';
+import { ExpenseDashboardComponent } from './layouts/expense-dashboard/expense-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +88,13 @@ import { SignupViewComponent } from './account/signup-view/signup-view.component
     MainViewComponent,
     LoginViewComponent,
     SignupViewComponent,
+    ExpenseFilterComponent,
+    ExpenseDetailComponent,
+    ExpenseNewComponent,
+    ExpenseCategoryNewComponent,
+    ExpenseCategoryFilterComponent,
+    ExpenseCategoryDetailComponent,
+    ExpenseDashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -117,7 +132,8 @@ import { SignupViewComponent } from './account/signup-view/signup-view.component
     MatSnackBarModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    ChartsModule
 
   ],
   providers: [],

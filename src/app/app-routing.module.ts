@@ -13,13 +13,19 @@ import {StockFilterComponent} from './register/stock/stock-filter/stock-filter.c
 import {StockDetailComponent} from './register/stock/stock-detail/stock-detail.component';
 import {StockNewComponent} from './register/stock/stock-new/stock-new.component';
 import {MainViewComponent} from './layouts/main-view/main-view.component';
+import {ExpenseDashboardComponent} from './layouts/expense-dashboard/expense-dashboard.component';
 import {AppComponent} from './app.component';
 import {LoginViewComponent} from './account/login-view/login-view.component';
 import {SignupViewComponent} from './account/signup-view/signup-view.component';
+import {ExpenseCategoryFilterComponent} from  './register/expense/expense-category-filter/expense-category-filter.component';
+import {ExpenseCategoryNewComponent} from './register/expense/expense-category-new/expense-category-new.component';
+import {ExpenseCategoryDetailComponent} from './register/expense/expense-category-detail/expense-category-detail.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'stock-dashboard', component: MainViewComponent },
   { path: 'home', component: MainViewComponent },
+  { path: 'expense-dashboard', component: ExpenseDashboardComponent },
   { path: 'login', component: LoginViewComponent },
   { path: 'signup', component: SignupViewComponent },
   { path: 'config', component: ConfigComponent },
@@ -33,7 +39,10 @@ const routes: Routes = [
   { path: 'stock/:id', component: StockDetailComponent },
   { path: 'operation', component: OperationFilterComponent },
   { path: 'operation/new', component: OperationNewComponent },
-  { path: 'operation/:id', component: OperationDetailComponent }
+  { path: 'operation/:id', component: OperationDetailComponent },
+  { path: 'category', component: ExpenseCategoryFilterComponent },
+  { path: 'category/new', component: ExpenseCategoryNewComponent },
+  { path: 'category/:id', component: ExpenseCategoryDetailComponent }
   
 ];
 

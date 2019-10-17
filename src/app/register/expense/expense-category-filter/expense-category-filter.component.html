@@ -1,0 +1,41 @@
+<h1>Operações</h1>
+
+<div>
+  <label><input #category_input class="form-control mr-sm-4" type="search" placeholder="Search" aria-label="Search"/> </label>
+  <button (click)="find_by_chave(category_input.value)" class="btn btn-primary" type="submit" >BUSCAR</button>
+  <button (click)="get_all_categories()" class="btn btn-primary" type="submit" >LISTAR TODOS</button>
+<div >
+	<table class="table  table-hover table-sm" style="width: 100%">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Tipo</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Descrição</th>
+      <th scope="col"><button class="btn btn-primary" [routerLink]="['/category/new']">NOVO</button></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody >
+    <tr *ngFor="let category of categories">
+      <th scope="row">{{category.id}}</th>
+      <th scope="row">{{category.tipo}}</th>
+      <th scope="row">{{category.nome}}</th>
+      <th scope="row">{{category.descricao}}</th>
+      <td style="width: 5%"><a routerLink="/category/{{category.id}}"><span class="badge">EDITAR</span></a></td>
+      <td style="width: 5%"><button (click)="delete_category(category.id)" class="btn btn-light"><span class="badge">EXCLUIR</span></button></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div *ngIf="isEmpty" class="alert alert-warning" role="alert" style="width: 100%">
+ Nenhuma categoria encontrada!
+</div>
+<div *ngIf="isSuccess" class="alert alert-info" role="alert" style="width: 100%">
+ {{ operations.length }} categorias encontradas!
+</div>
+<div *ngIf="isError">
+ <div class="alert alert-danger" role="alert">
+  Houve um erro ao realizar a solicitação!
+</div>
+</div>

@@ -10,9 +10,9 @@ import {Config} from './../register/configuration/config/config';
 export class ConfigurationService {
 
 baseUrl:string = "http://localhost:8080";
-getAllPath:string = "/all";
-configPath:string = "/config";
-searchPath:string = "/config/search";
+getAllPath:string = "";
+configPath:string = "/configuracoes";
+searchPath:string = "/configuracoes/search";
 
  httpOptions = {
     headers: new HttpHeaders({
