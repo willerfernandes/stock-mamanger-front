@@ -19,3 +19,12 @@
   display: block;
 }
 
+.money::before
+{
+   content:"R$";
+}
+
+.percent::after
+{
+   content:"%";
+}

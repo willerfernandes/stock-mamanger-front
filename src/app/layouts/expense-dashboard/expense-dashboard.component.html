@@ -1,11 +1,70 @@
-<h4 style="text-align:center">Despesas
-  </h4>
 
-<div style="display: block">
-  <canvas baseChart
+
+<div style="display: block" style="width: 50%">
+  	<h4 style="text-align:center">Despesas </h4>
+  	<canvas baseChart
           [data]="pieChartData"
           [labels]="pieChartLabels"
           [chartType]="pieChartType"
           (chartHover)="chartHovered($event)"
-          (chartClick)="chartClicked($event)"></canvas>
+          (chartClick)="chartClicked($event)">
+    </canvas>
 </div>
+<br>
+<br>
+<div>
+  <table class="table  table-hover table-sm" style="width: 50%">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col" style="text-align:center">RESUMO DESPESAS</th>
+    </tr>
+  </thead>
+  <tbody >
+  </tbody>
+</table>
+</div>
+<div  *ngFor="let grupoLancamento of gruposLancamentos" style="width: 50%">
+<div class = "expense-category">
+    <mat-accordion>
+      <mat-expansion-panel  class="expansion">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h5>{{grupoLancamento.categoria}}</h5>
+          </mat-panel-title>
+          <mat-panel-description>
+            {{grupoLancamento.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}}
+          </mat-panel-description>
+          <mat-panel-description class="percent">
+            {{grupoLancamento.percentual.toLocaleString(undefined,{style: 'percent', minimumFractionDigits:2})}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div>
+			<table class="table  table-hover table-sm" style="width: 100%">
+			  <thead class="thead-light">
+			    <tr>
+			      <th scope="col">Lancamentos</th>
+			      <th scope="col"></th>
+			      <th scope="col"></th>
+			    </tr>
+			  </thead>
+			  <tbody >
+			    <tr *ngFor="let lancamento of grupoLancamento.lancamentos">
+			      <th scope="row">{{lancamento.descricao}}</th>
+			      <td>{{lancamento.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}}</td>
+			      <td class="date">{{ lancamento.data | date: 'dd/MM/yyyy' }}</td>
+			    </tr>
+			  </tbody>
+			</table>
+		</div>
+    </mat-expansion-panel>
+    </mat-accordion>
+   </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>

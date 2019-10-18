@@ -11,6 +11,8 @@ export class ExpenseDashboardComponent implements OnInit {
   public pieChartLabels:string[] = ['Chrome', 'Safari', 'Firefox','Internet Explorer','Other'];
   public pieChartData:number[] = [40, 20, 20 , 10,10];
   public pieChartType:string = 'pie';
+
+  gruposLancamentos;
  
   // events
   public chartClicked(e:any):void {
@@ -26,7 +28,8 @@ export class ExpenseDashboardComponent implements OnInit {
 	  this.ExpenseService.get().subscribe(res => {
 	  		console.log(res);
 	        this.pieChartLabels = res.itemGrafico.nome;
-	        this.pieChartData = res.itemGrafico.valor;        
+	        this.pieChartData = res.itemGrafico.valor;
+	        this.gruposLancamentos = res.gruposLancamentos;        
 	  });
   }
 
