@@ -1,17 +1,34 @@
 
 
 <div style="display: block" style="width: 50%">
-  	<h4 style="text-align:center">Despesas </h4>
-  	<canvas baseChart
-          [data]="pieChartData"
-          [labels]="pieChartLabels"
-          [chartType]="pieChartType"
-          (chartHover)="chartHovered($event)"
-          (chartClick)="chartClicked($event)">
-    </canvas>
+  <h4 style="text-align:center">Despesas </h4>
+  <canvas baseChart
+        [data]="pieChartData"
+        [labels]="pieChartLabels"
+        [chartType]="pieChartType"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)">
+  </canvas>
+  
+  <br>
+  <br>
 </div>
-<br>
-<br>
+
+<div > 
+  <mat-form-field style="align-content: center;">
+    <input matInput [matDatepicker]="picker1" placeholder="Data Incial" [formControl]="dataInicial">
+    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+    <mat-datepicker #picker1></mat-datepicker>
+  </mat-form-field>
+  
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker2" placeholder="Data Final"
+           [formControl]="dataFinal">
+    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+    <mat-datepicker #picker2></mat-datepicker>
+  </mat-form-field>
+</div>
+
 <div>
   <table class="table  table-hover table-sm" style="width: 50%">
   <thead class="thead-light">

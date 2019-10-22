@@ -25,7 +25,6 @@ import {MatCheckboxModule} from '@angular/material';
 import {MatButtonModule} from '@angular/material';
 import {MatInputModule} from '@angular/material/input';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatSelectModule} from '@angular/material/select';
@@ -51,7 +50,13 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatNativeDateModule} from '@angular/material/core';
+import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { ChartsModule } from 'ng2-charts-x';
+import { MatDatepickerModule } from '@angular/material';
+import { NativeDateModule } from '@angular/material';
+
 
 
 
@@ -67,6 +72,8 @@ import { ExpenseCategoryNewComponent } from './register/expense/expense-category
 import { ExpenseCategoryFilterComponent } from './register/expense/expense-category-filter/expense-category-filter.component';
 import { ExpenseCategoryDetailComponent } from './register/expense/expense-category-detail/expense-category-detail.component';
 import { ExpenseDashboardComponent } from './layouts/expense-dashboard/expense-dashboard.component';
+import { PieChartComponent } from './component/pie-chart/pie-chart.component';
+
 
 @NgModule({
   declarations: [
@@ -94,7 +101,8 @@ import { ExpenseDashboardComponent } from './layouts/expense-dashboard/expense-d
     ExpenseCategoryNewComponent,
     ExpenseCategoryFilterComponent,
     ExpenseCategoryDetailComponent,
-    ExpenseDashboardComponent
+    ExpenseDashboardComponent,
+    PieChartComponent,
   ],
   imports: [
     BrowserModule,
@@ -133,10 +141,17 @@ import { ExpenseDashboardComponent } from './layouts/expense-dashboard/expense-d
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    ChartsModule
+    ChartsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    NativeDateModule
 
   ],
-  providers: [],
+  providers: [
+    MatDatepickerModule
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

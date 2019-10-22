@@ -21,8 +21,9 @@ path:string = "/extrato";
 
   constructor(private httpClient : HttpClient) { }
 
-  get(id: number): Observable <>{
-    console.log(this.baseUrl + this.path);
-    return this.httpClient.get(this.baseUrl + this.path);
+  get(dataInicial: String, dataFinal: String): Observable <>{
+
+    console.log(this.baseUrl + this.path + '?' + 'dataInicio=' + dataInicial + '&' + 'dataFim=' + dataFinal);
+    return this.httpClient.get(this.baseUrl + this.path + '?' + 'dataInicio=' + dataInicial + '&' + 'dataFim=' + dataFinal);
   }
 }
