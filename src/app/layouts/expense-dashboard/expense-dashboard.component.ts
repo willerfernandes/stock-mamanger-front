@@ -60,6 +60,8 @@ export class ExpenseDashboardComponent implements OnInit {
 
   gruposLancamentos;
 
+  public isSuccess = true;
+
   // events
   public chartClicked(e: any): void {
     console.log(e);
@@ -70,13 +72,14 @@ export class ExpenseDashboardComponent implements OnInit {
   }
 
 
-  get_expenses_resume() {
-    this.ExpenseService.get(this.dataInicial.value.toISOString(), this.dataFinal.value.toISOString()).subscribe(res => {
+  get_expenses_resume(dataInicial: string, dataFinal: string) {
+    this.ExpenseService.get(dataInicial, dataFinal).subscribe(res => {
     console.log(res);
     this.pieChartLabels = res.itemGrafico.nome;
     this.pieChartData = res.itemGrafico.valor;
     this.gruposLancamentos = res.gruposLancamentos;
-    });
+    this.isSuccess = res.itemGrafico !== null;
+    }).orElse(this.isSuccess = false);
   }
 
   constructor(private ExpenseService: ExpenseService, private _adapter: DateAdapter<any>) { }
@@ -87,7 +90,11 @@ export class ExpenseDashboardComponent implements OnInit {
     dataInicial.setMonth(dataInicial.getMonth() - 1);
     this.dataInicial = new FormControl(dataInicial);
     this.dataFinal = new FormControl(new Date(Date.now()));
-    this.get_expenses_resume();
+    this.get_expenses_resume(this.dataInicial.value.toISOString(), this.dataFinal.value.toISOString());
   }
+
+  openModal(id: string) {
+    this.modalService.open(id);
+}
 
 }

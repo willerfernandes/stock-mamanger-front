@@ -27,12 +27,13 @@
     </tr>
   </tbody>
 </table>
+
 </div>
 <div *ngIf="isEmpty" class="alert alert-warning" role="alert" style="width: 100%">
  Nenhuma categoria encontrada!
 </div>
 <div *ngIf="isSuccess" class="alert alert-info" role="alert" style="width: 100%">
- {{ operations.length }} categorias encontradas!
+ {{ categories.length }} Categorias encontradas!
 </div>
 <div *ngIf="isError">
  <div class="alert alert-danger" role="alert">

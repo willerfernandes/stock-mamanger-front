@@ -23,7 +23,6 @@ searchPath:string = "/categorias";
   constructor(private httpClient : HttpClient) { }
 
   getAll(): Observable <Category[]>{
-    console.log(this.baseUrl + this.categoryPath + this.getAllPath);
   	return this.httpClient.get(this.baseUrl + this.categoryPath + this.getAllPath);
   }
 
