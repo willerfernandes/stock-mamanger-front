@@ -9,8 +9,8 @@ import {Expense} from './entities/expense';
 })
 export class ExpenseService {
 
-baseUrl:string = "http://localhost:8080";
-path:string = "/extrato";
+baseUrl: string = 'http://localhost:8080';
+path: string = '/extrato';
 
  httpOptions = {
     headers: new HttpHeaders({
@@ -21,7 +21,7 @@ path:string = "/extrato";
 
   constructor(private httpClient : HttpClient) { }
 
-  get(dataInicial: String, dataFinal: String): Observable <>{
+  get(dataInicial: string, dataFinal: string): Observable <>{
 
     console.log(this.baseUrl + this.path + '?' + 'dataInicio=' + dataInicial + '&' + 'dataFim=' + dataFinal);
     return this.httpClient.get(this.baseUrl + this.path + '?' + 'dataInicio=' + dataInicial + '&' + 'dataFim=' + dataFinal);

@@ -1,0 +1,11 @@
+.reloadIcon {
+  max-width:5%;
+  height:auto;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.dateRangeCentered {
+  align-content: center;
+  text-align: center;
+}

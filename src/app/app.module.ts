@@ -73,6 +73,11 @@ import { ExpenseCategoryFilterComponent } from './register/expense/expense-categ
 import { ExpenseCategoryDetailComponent } from './register/expense/expense-category-detail/expense-category-detail.component';
 import { ExpenseDashboardComponent } from './layouts/expense-dashboard/expense-dashboard.component';
 import { PieChartComponent } from './component/pie-chart/pie-chart.component';
+import { DateRangeComponent } from './component/date-range/date-range.component';
+import { ExpenseRowComponent } from './component/expense-row/expense-row.component';
+import { ExpenseGroupComponent } from './component/expense-group/expense-group.component';
+import { ExpenseTableTitleComponent } from './component/expense-table-title/expense-table-title.component';
+import { ExpenseErrorScreenComponent } from './component/expense-error-screen/expense-error-screen.component';
 
 
 @NgModule({
@@ -103,6 +108,11 @@ import { PieChartComponent } from './component/pie-chart/pie-chart.component';
     ExpenseCategoryDetailComponent,
     ExpenseDashboardComponent,
     PieChartComponent,
+    DateRangeComponent,
+    ExpenseRowComponent,
+    ExpenseGroupComponent,
+    ExpenseTableTitleComponent,
+    ExpenseErrorScreenComponent,
   ],
   imports: [
     BrowserModule,

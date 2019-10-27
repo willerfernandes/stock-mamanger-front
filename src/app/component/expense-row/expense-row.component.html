@@ -1,0 +1,21 @@
+<div>
+  <table class="table  table-hover table-sm">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Lancamentos</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let expense of expenses">
+        <th scope="row">{{expense.descricao}}</th>
+        <td>{{expense.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}}</td>
+        <td class="date">{{ expense.data | date: 'dd/MM/yyyy' }}</td>
+        <td style="width: 5%"><button (click)="delete_expense(expense.id)" class="btn btn-light"><span
+              class="badge">X</span></button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,20 @@
+<div class="center" *ngFor="let expenseGroup of expenseGroups">
+  <div class="center" class="expense-category">
+    <mat-accordion>
+      <mat-expansion-panel class="expansion">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h5>{{expenseGroup.categoria}}</h5>
+          </mat-panel-title>
+          <mat-panel-description>
+            {{expenseGroup.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}}
+          </mat-panel-description>
+          <mat-panel-description class="percent">
+            {{expenseGroup.percentual.toLocaleString(undefined,{style: 'percent', minimumFractionDigits:2})}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <app-expense-row [expenses]="expenseGroup.lancamentos" (deleteRowEvent)="onDelete($event)"></app-expense-row>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>
