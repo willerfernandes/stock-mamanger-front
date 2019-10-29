@@ -27,7 +27,7 @@ export class ExpenseCategoryFilterComponent implements OnInit {
     this.categories = [];
     this.categoryService.getAll().subscribe((res) => {
       this.categories = res;
-      this.handleResponse(res);
+      this.handleResponse();
     });
   }
 
@@ -37,11 +37,10 @@ export class ExpenseCategoryFilterComponent implements OnInit {
       this.categories = [];
       if (res != null && res.length > 0) {
         this.categories = res;
-      }
-      else {
+      } else {
         this.categories = [];
       }
-      this.handleResponse(res);
+      this.handleResponse();
     });
   }
 

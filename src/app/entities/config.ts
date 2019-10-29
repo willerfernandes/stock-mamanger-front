@@ -1,5 +1,5 @@
 export class Config {
-	id: number;
-   	chave: string;
-   	valor: string;
+  id: number;
+  chave: string;
+  valor: string;
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient,  HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import {Config} from './../register/configuration/config/config';
+import { Config } from './../register/configuration/config/config';
 
 
 @Injectable({
@@ -9,42 +9,42 @@ import {Config} from './../register/configuration/config/config';
 })
 export class ConfigurationService {
 
-baseUrl:string = "http://localhost:8080";
-getAllPath:string = "";
-configPath:string = "/configuracoes";
-searchPath:string = "/configuracoes/search";
+  baseUrl = 'http://localhost:8080';
+  getAllPath = '';
+  configPath = '/configuracoes';
+  searchPath = '/configuracoes/search';
 
- httpOptions = {
+  httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin' : '*'
+      'Access-Control-Allow-Origin': '*'
     })
   };
 
-  constructor(private httpClient : HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
-  getAll(): Observable <Config[]>{
-  	return this.httpClient.get(this.baseUrl + this.configPath + this.getAllPath);
+  getAll(): Observable<Config[]> {
+    return this.httpClient.get<Config[]>(this.baseUrl + this.configPath + this.getAllPath);
   }
 
-  get(id: number): Observable <Config>{
-    return this.httpClient.get(this.baseUrl + this.configPath + "/" + id);
+  get(id: number): Observable<Config> {
+    return this.httpClient.get<Config>(this.baseUrl + this.configPath + '/' + id);
   }
 
-  search(chave: string): Observable <Config>{
-    return this.httpClient.get(this.baseUrl + this.searchPath + "/" + chave);
+  search(chave: string): Observable<Config[]> {
+    return this.httpClient.get<Config[]>(this.baseUrl + this.searchPath + '/' + chave);
   }
 
-  save(configuration): Config{
-  	return this.httpClient.post(this.baseUrl + this.configPath, JSON.stringify(configuration), this.httpOptions);
+  save(configuration): Observable<Config> {
+    return this.httpClient.post<Config>(this.baseUrl + this.configPath, JSON.stringify(configuration), this.httpOptions);
   }
 
-  update(configuration): Config{
-    return this.httpClient.put(this.baseUrl + this.configPath, JSON.stringify(configuration), this.httpOptions);
+  update(configuration): Observable<Config> {
+    return this.httpClient.put<Config>(this.baseUrl + this.configPath, JSON.stringify(configuration), this.httpOptions);
   }
 
-   delete(id: number): Observable <Config>{
-    return this.httpClient.delete(this.baseUrl + this.configPath + "/" + id);
+  delete(id: number): Observable<Config> {
+    return this.httpClient.delete<Config>(this.baseUrl + this.configPath + '/' + id);
   }
-  
+
 }

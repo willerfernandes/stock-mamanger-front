@@ -55,8 +55,8 @@ export class ExpenseDashboardComponent implements OnInit {
     this.get_expenses_resume(this.dataInicial.value.toISOString(), this.dataFinal.value.toISOString());
   }
 
-  openModal(id: string) {
+  /*openModal(id: string) {
     this.modalService.open(id);
-}
+}*/
 
 }

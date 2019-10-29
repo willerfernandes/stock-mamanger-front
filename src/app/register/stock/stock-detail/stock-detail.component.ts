@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import {StockService} from './../../../services/stock.service';
-import {Stock} from './../../../entities/stock';
+import { StockService } from './../../../services/stock.service';
+import { Stock } from './../../../entities/stock';
 
 @Component({
   selector: 'app-stock-detail',
@@ -11,41 +11,41 @@ import {Stock} from './../../../entities/stock';
 })
 export class StockDetailComponent implements OnInit {
 
-   @Input() stock: Stock;
+  @Input() stock: Stock;
 
-	constructor(private StockService: StockService, private route: ActivatedRoute, private location: Location) {}
+  constructor(private stockService: StockService, private route: ActivatedRoute, private location: Location) { }
 
-	ngOnInit() {
-			this.getStock();
-		}
+  ngOnInit() {
+    this.getStock();
+  }
 
-	goBack(): void {
+  goBack(): void {
     this.location.back();
-  	}
+  }
 
-	getStock(){
-		const id = +this.route.snapshot.paramMap.get('id');
-		this.StockService.get(id).subscribe((res) =>{
-    		this.stock = res;
+  getStock() {
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.stockService.get(id).subscribe((res) => {
+      this.stock = res;
     });
-	}
+  }
 
-	
 
-  	save(empresaPapel: string, codEmpresaBovespa: string){
-     this.StockService.update(this.fill(this.stock.id, this.stock.codPapel, empresaPapel, codEmpresaBovespa)).subscribe((res) =>{
-        this.goBack()
+
+  save(empresaPapel: string, codEmpresaBovespa: string) {
+    this.stockService.update(this.fill(this.stock.id, this.stock.codPapel, empresaPapel, codEmpresaBovespa)).subscribe((res) => {
+      this.goBack()
     });
-    }
+  }
 
 
-	fill(id: number, cod_papel: string, empresaPapel: string, codEmpresaBovespa: string): Stock {
-		var stock: Stock = {codPapel: "", empresaPapel: "", codEmpresaBovespa: ""}
-		stock.id = id;
-		stock.codPapel = cod_papel;
-		stock.empresaPapel = empresaPapel;
-		stock.codEmpresaBovespa = codEmpresaBovespa;
-		return stock;
-	}
+  fill(id: number, codPapel: string, empresaPapel: string, codEmpresaBovespa: string): Stock {
+    var stock: Stock = {id: 0, operations: null, stockInfo: null, valor: null, valorMaximo: null, valorMinimo: null, codPapel: "", empresaPapel: "", codEmpresaBovespa: "" }
+    stock.id = id;
+    stock.codPapel = codPapel;
+    stock.empresaPapel = empresaPapel;
+    stock.codEmpresaBovespa = codEmpresaBovespa;
+    return stock;
+  }
 
 }

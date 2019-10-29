@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from './../../services/user.service';
-import {LoginInfo} from './../../entities/login-info';
-import { Router} from '@angular/router';
+import { UserService } from './../../services/user.service';
+import { LoginInfo } from './../../entities/login-info';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-view',
@@ -10,7 +10,7 @@ import { Router} from '@angular/router';
 })
 export class LoginViewComponent implements OnInit {
 
-  
+
   constructor(private userService: UserService, private router: Router) { }
 
   isAuthorized: boolean;
@@ -20,20 +20,19 @@ export class LoginViewComponent implements OnInit {
   }
 
 
-  login(username: String, password: String) {
-  	var loginInfo: LoginInfo  = {login:"" , senha: ""} ;
+  login(username: string, password: string) {
+    const loginInfo: LoginInfo = { login: '', senha: '' };
 
-  	loginInfo.login = username;
-  	loginInfo.senha = password;
+    loginInfo.login = username;
+    loginInfo.senha = password;
 
-  	this.userService.login(loginInfo).subscribe(res => {
-		this.isAuthorized = res;
-		this.isUnauthorized = !res;
-    if(this.isAuthorized)
-    {
-      sessionStorage.setItem('currentUser', JSON.stringify(res));
-      this.router.navigate(['/home']);
-    }
-  	});
+    this.userService.login(loginInfo).subscribe(res => {
+      this.isAuthorized = res != null;
+      this.isUnauthorized = !res;
+      if (this.isAuthorized) {
+        sessionStorage.setItem('currentUser', JSON.stringify(res));
+        this.router.navigate(['/home']);
+      }
+    });
   }
 }

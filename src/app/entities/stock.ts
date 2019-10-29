@@ -1,3 +1,6 @@
+import {Operation} from './operation';
+import {StockInfo} from './stock-info';
+
 export class Stock {
   id: number;
   codPapel: string;
@@ -7,5 +10,5 @@ export class Stock {
   valorMaximo: number;
   valorMinimo: number;
   stockInfo: StockInfo;
-  operations: Opertion[];
+  operations: Operation[];
 }

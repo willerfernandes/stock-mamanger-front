@@ -78,6 +78,7 @@ import { ExpenseRowComponent } from './component/expense-row/expense-row.compone
 import { ExpenseGroupComponent } from './component/expense-group/expense-group.component';
 import { ExpenseTableTitleComponent } from './component/expense-table-title/expense-table-title.component';
 import { ExpenseErrorScreenComponent } from './component/expense-error-screen/expense-error-screen.component';
+import { MainNavBarComponent } from './component/main-nav-bar/main-nav-bar.component';
 
 
 @NgModule({
@@ -113,6 +114,7 @@ import { ExpenseErrorScreenComponent } from './component/expense-error-screen/ex
     ExpenseGroupComponent,
     ExpenseTableTitleComponent,
     ExpenseErrorScreenComponent,
+    MainNavBarComponent,
   ],
   imports: [
     BrowserModule,

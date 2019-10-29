@@ -1,60 +1,60 @@
 import { Injectable } from '@angular/core';
-import { HttpClient,  HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import {Stock} from './entities/stock';
-import {Stock} from './entities/stock-info';
+import { Stock } from './../entities/stock';
+import { Operation } from '../entities/operation';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StockService {
 
-baseUrl:string = "http://localhost:8080";
-getAllPath:string = "";
-stockPath:string = "/papeis";
-searchPath:string = "/papel/search";
-operationPath:string = "/operacoes";
-alphavantageBaseUrl:string = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&apikey=P8014LL14K1Q6MOL&symbol=";
+  baseUrl = 'http://localhost:8080';
+  getAllPath = '';
+  stockPath = '/papeis';
+  searchPath = '/papel/search';
+  operationPath = '/operacoes';
+  alphavantageBaseUrl = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&apikey=P8014LL14K1Q6MOL&symbol=';
 
- httpOptions = {
+  httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin' : '*'
+      'Access-Control-Allow-Origin': '*'
     })
   };
 
-  constructor(private httpClient : HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
-  getAll(): Observable <Stock[]>{
-  	return this.httpClient.get(this.baseUrl + this.stockPath + this.getAllPath);
+  getAll(): Observable<Stock[]> {
+    return this.httpClient.get<Stock[]>(this.baseUrl + this.stockPath + this.getAllPath);
   }
 
-  get(id: number): Observable <Stock>{
-    return this.httpClient.get(this.baseUrl + this.stockPath + "/" + id);
+  get(id: number): Observable<Stock> {
+    return this.httpClient.get<Stock>(this.baseUrl + this.stockPath + '/' + id);
   }
 
-  search(chave: string): Observable <Stock>{
-    return this.httpClient.get(this.baseUrl + this.searchPath + "/" + chave);
+  search(chave: string): Observable<Stock[]> {
+    return this.httpClient.get<Stock[]>(this.baseUrl + this.searchPath + '/' + chave);
   }
 
-  save(stock): Stock{
-  	return this.httpClient.post(this.baseUrl + this.stockPath, JSON.stringify(stock), this.httpOptions);
+  save(stock): Observable<Stock> {
+    return this.httpClient.post<Stock>(this.baseUrl + this.stockPath, JSON.stringify(stock), this.httpOptions);
   }
 
-  update(stock): Stock{
-    return this.httpClient.put(this.baseUrl + this.stockPath + "/" + stock.id, JSON.stringify(stock), this.httpOptions);
+  update(stock): Observable<Stock> {
+    return this.httpClient.put<Stock>(this.baseUrl + this.stockPath + '/' + stock.id, JSON.stringify(stock), this.httpOptions);
   }
 
-   delete(id: number): Observable <Stock>{
-    return this.httpClient.delete(this.baseUrl + this.stockPath + "/" + id);
+  delete(id: number): Observable<Stock> {
+    return this.httpClient.delete<Stock>(this.baseUrl + this.stockPath + '/' + id);
   }
 
-  stockPrices(stock: Stock): Observable <Stock>{
-    return this.httpClient.get(this.alphavantageBaseUrl + stock.codEmpresaBovespa);
+  stockPrices(stock: Stock): Observable<Stock> {
+    return this.httpClient.get<Stock>(this.alphavantageBaseUrl + stock.codEmpresaBovespa);
   }
 
-  getStockOperations(stock: Stock): Observable <Operation>{
-    return this.httpClient.get(this.baseUrl + this.stockPath + "/" + stock.id + this.operationPath);
+  getStockOperations(stock: Stock): Observable<Operation> {
+    return this.httpClient.get<Operation>(this.baseUrl + this.stockPath + '/' + stock.id + this.operationPath);
   }
 
 }
