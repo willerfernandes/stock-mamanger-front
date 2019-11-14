@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {UserService} from './../../../services/user.service';
-import {User} from './../../../entities/user';
+import { UserService } from './../../../services/user.service';
+import { User } from './../../../entities/user';
 
 @Component({
   selector: 'app-user-filter',
@@ -14,53 +14,51 @@ export class UserFilterComponent implements OnInit {
 
   title = 'stock-manager-front';
   products = [];
-  users = [];
-  user: User = {chave: "", valor: ""};
-  baseUrl='http://localhost:3000';
+  users: User[] = [];
+  user: User = { id: null, nome: '', login: '', senha: '' };
+  baseUrl = 'http://localhost:3000';
   isError;
   isEmpty;
   isSuccess;
 
-  constructor(private UserService: UserService){}
+  constructor(private userService: UserService) { }
 
-  get_all_users(){
-  	
-  	this.users = [];
-    this.UserService.getAll().subscribe((res) =>{
-        this.users = res;
-        this.handleResponse(res);
-    });  
-  }
+  get_all_users() {
 
-  find_by_chave(key: string){
-  	this.UserService.search(key).subscribe((res) =>{
-    	this.users = [];
-    	if(res != null && res.length > 0) {
-    		this.users = res;
-    	}
-    	else{
-    		this.users = [];
-    	}
-    	this.handleResponse(res);
-    	});
-  }
-
-
-  delete_user(id: number){
-    this.UserService.delete(id).subscribe((res) =>{
-    this.get_all_users();
+    this.users = [];
+    this.userService.getAll().subscribe((res) => {
+      this.users = res;
+      this.handleResponse();
     });
   }
 
-  constructor() { }
-
-  ngOnInit() {
-  	this.get_all_users();
+  find_by_chave(key: string) {
+    this.userService.search(key).subscribe((res) => {
+      this.users = [];
+      if (res != null) {
+        this.users = res;
+      } else {
+        this.users = [];
+      }
+      this.handleResponse();
+    });
   }
 
-  handleResponse(){
-  	this.isSuccess = this.users.length > 0;
-  	this.isEmpty = this.users.length === 0;
+
+  delete_user(id: number) {
+    this.userService.delete(id).subscribe((res) => {
+      this.get_all_users();
+    });
+  }
+
+
+  ngOnInit() {
+    this.get_all_users();
+  }
+
+  handleResponse() {
+    this.isSuccess = this.users.length > 0;
+    this.isEmpty = this.users.length === 0;
   }
 
 }

@@ -41,7 +41,7 @@ export class ExpenseDashboardComponent implements OnInit {
     this.pieChartData = res.itemGrafico.valor;
     this.gruposLancamentos = res.gruposLancamentos;
     this.isSuccess = res.itemGrafico !== null;
-    }).orElse(this.isSuccess = false);
+    });
   }
 
   constructor(private expenseService: ExpenseService, private apapter: DateAdapter<any>) { }

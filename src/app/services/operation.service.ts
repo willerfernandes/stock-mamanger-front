@@ -1,48 +1,49 @@
 import { Injectable } from '@angular/core';
-import { HttpClient,  HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import {Operation} from './entities/operation';
+import { Operation } from '../entities/operation';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OperationService {
 
-baseUrl:string = "http://localhost:8080";
-getAllPath:string = "";
-operationPath:string = "/operacoes";
-searchPath:string = "/operacao/search";
+  baseUrl = 'http://localhost:8080';
+  getAllPath = '';
+  operationPath = '/operacoes';
+  searchPath = '/operacao/search';
 
- httpOptions = {
+  httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin' : '*'
+      'Access-Control-Allow-Origin': '*'
     })
   };
 
-  constructor(private httpClient : HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
-  getAll(): Observable <Operation[]>{
-  	return this.httpClient.get(this.baseUrl + this.operationPath + this.getAllPath);
+  getAll(): Observable<Operation[]> {
+    return this.httpClient.get<Operation[]>(this.baseUrl + this.operationPath + this.getAllPath);
   }
 
-  get(id: number): Observable <Operation>{
-    return this.httpClient.get(this.baseUrl + this.operationPath + "/" + id);
+  get(id: number): Observable<Operation> {
+    return this.httpClient.get<Operation>(this.baseUrl + this.operationPath + "/" + id);
   }
 
-  search(chave: string): Observable <Operation>{
-    return this.httpClient.get(this.baseUrl + this.searchPath + "/" + chave);
+  search(chave: string): Observable<Operation[]> {
+    return this.httpClient.get<Operation[]>(this.baseUrl + this.searchPath + "/" + chave);
   }
 
-  save(operation): Operation{
-  	return this.httpClient.post(this.baseUrl + this.operationPath, JSON.stringify(operation), this.httpOptions);
+  save(operation): Observable<Operation> {
+    return this.httpClient.post<Operation>(this.baseUrl + this.operationPath, JSON.stringify(operation), this.httpOptions);
   }
 
-  update(operation): Operation{
-    return this.httpClient.put(this.baseUrl + this.operationPath + "/" + id, JSON.stringify(operation), this.httpOptions);
+  update(operation): Observable<Operation> {
+    return this.httpClient.put<Operation>(this.baseUrl +
+      this.operationPath + '/' + operation.id, JSON.stringify(operation), this.httpOptions);
   }
 
-   delete(id: number): Observable <Operation>{
-    return this.httpClient.delete(this.baseUrl + this.operationPath + "/" + id);
+  delete(id: number): Observable<Operation> {
+    return this.httpClient.delete<Operation>(this.baseUrl + this.operationPath + "/" + id);
   }
 }

@@ -15,7 +15,7 @@ export class OperationFilterComponent implements OnInit {
   nome: string;
 
   title = 'operation-manager-front';
-  operations = [];
+  operations: Operation[] = [];
 
   user: User = { id: 0, login: '', nome: '', senha: '' };
   papel: Stock = {
@@ -45,21 +45,21 @@ export class OperationFilterComponent implements OnInit {
   isEmpty;
   isSuccess;
 
-  constructor(private OperationService: OperationService) { }
+  constructor(private operationService: OperationService) { }
 
   get_all_operations() {
 
     this.operations = [];
-    this.OperationService.getAll().subscribe((res) => {
+    this.operationService.getAll().subscribe((res) => {
       this.operations = res;
       this.handleResponse();
     });
   }
 
   find_by_chave(key: string) {
-    this.OperationService.search(key).subscribe((res) => {
+    this.operationService.search(key).subscribe((res) => {
       this.operations = [];
-      if (res != null && res.length > 0) {
+      if (res != null) {
         this.operations = res;
       } else {
         this.operations = [];
@@ -70,7 +70,7 @@ export class OperationFilterComponent implements OnInit {
 
 
   delete_operation(id: number) {
-    this.OperationService.delete(id).subscribe((res) => {
+    this.operationService.delete(id).subscribe((res) => {
       this.get_all_operations();
     });
   }

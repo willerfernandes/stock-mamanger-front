@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient,  HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import {Expense} from './entities/expense';
 
 
 @Injectable({
@@ -9,19 +8,19 @@ import {Expense} from './entities/expense';
 })
 export class ExpenseService {
 
-baseUrl: string = 'http://localhost:8080';
-path: string = '/extrato';
+  baseUrl = 'http://localhost:8080';
+  path = '/extrato';
 
- httpOptions = {
+  httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin' : '*'
+      'Access-Control-Allow-Origin': '*'
     })
   };
 
-  constructor(private httpClient : HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
-  get(dataInicial: string, dataFinal: string): Observable <>{
+  get(dataInicial: string, dataFinal: string): Observable<any> {
 
     console.log(this.baseUrl + this.path + '?' + 'dataInicio=' + dataInicial + '&' + 'dataFim=' + dataFinal);
     return this.httpClient.get(this.baseUrl + this.path + '?' + 'dataInicio=' + dataInicial + '&' + 'dataFim=' + dataFinal);

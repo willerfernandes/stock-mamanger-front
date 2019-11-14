@@ -38,8 +38,8 @@ export class UserService {
     return this.httpClient.get<User>(this.baseUrl + this.userPath + '/' + id);
   }
 
-  search(chave: string): Observable<User> {
-    return this.httpClient.get<User>(this.baseUrl + this.searchPath + '/' + chave);
+  search(chave: string): Observable<User[]> {
+    return this.httpClient.get<User[]>(this.baseUrl + this.searchPath + '/' + chave);
   }
 
   save(user): Observable<User> {

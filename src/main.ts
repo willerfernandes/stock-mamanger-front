@@ -6,8 +6,6 @@ import { environment } from './environments/environment';
 
 import 'hammerjs';
 
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-
 if (environment.production) {
   enableProdMode();
 }

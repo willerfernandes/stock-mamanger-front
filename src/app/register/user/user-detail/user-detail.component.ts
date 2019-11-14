@@ -42,7 +42,7 @@ export class UserDetailComponent implements OnInit {
 
 
   fillConfiguration(id: number, senha: string): User {
-    var user: User = { senha: "" }
+    const user: User = { id: null, nome: '', login: '', senha: '' };
     user.id = id;
     user.senha = senha;
     return user;

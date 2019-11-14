@@ -10,7 +10,7 @@ import { Category } from './../../../entities/category';
 })
 export class ExpenseCategoryFilterComponent implements OnInit {
 
-  categories = [];
+  categories: Category[] = [];
   isEmpty;
   isSuccess;
 
