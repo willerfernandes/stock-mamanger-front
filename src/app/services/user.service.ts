@@ -22,8 +22,8 @@ export class UserService {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
-      'login': '',
-      'senha': ''
+      login: '',
+      senha: ''
     })
   };
 
@@ -56,13 +56,6 @@ export class UserService {
 
   getBalance(id: number): Observable<UserBalance[]> {
     return this.httpClient.get<UserBalance[]>(this.baseUrl + this.userPath + '/' + id + this.balancePath);
-  }
-
-  login(loginInfo: LoginInfo): Observable<User> {
-
-    this.httpOptions.headers = this.httpOptions.headers.set('login', loginInfo.login);
-    this.httpOptions.headers = this.httpOptions.headers.set('senha', loginInfo.senha);
-    return this.httpClient.get<User>(this.baseUrl + this.userPath + this.validateUserPath, this.httpOptions);
   }
 
 }

@@ -17,14 +17,15 @@ import {ExpenseDashboardComponent} from './layouts/expense-dashboard/expense-das
 import {AppComponent} from './app.component';
 import {LoginViewComponent} from './account/login-view/login-view.component';
 import {SignupViewComponent} from './account/signup-view/signup-view.component';
-import {ExpenseCategoryFilterComponent} from  './register/expense/expense-category-filter/expense-category-filter.component';
+import {ExpenseCategoryFilterComponent} from './register/expense/expense-category-filter/expense-category-filter.component';
 import {ExpenseCategoryNewComponent} from './register/expense/expense-category-new/expense-category-new.component';
 import {ExpenseCategoryDetailComponent} from './register/expense/expense-category-detail/expense-category-detail.component';
+import {AuthGuard} from './account/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'stock-dashboard', component: MainViewComponent },
-  { path: 'home', component: MainViewComponent },
+  { path: 'home', component: MainViewComponent, canActivate: [AuthGuard] },
   { path: 'expense-dashboard', component: ExpenseDashboardComponent },
   { path: 'login', component: LoginViewComponent },
   { path: 'signup', component: SignupViewComponent },
@@ -43,7 +44,6 @@ const routes: Routes = [
   { path: 'category', component: ExpenseCategoryFilterComponent },
   { path: 'category/new', component: ExpenseCategoryNewComponent },
   { path: 'category/:id', component: ExpenseCategoryDetailComponent }
-  
 ];
 
 

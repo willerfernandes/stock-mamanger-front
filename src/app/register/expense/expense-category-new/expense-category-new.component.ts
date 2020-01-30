@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { CategoryService } from './../../../services/category.service';
-import { Category } from './../../../entities/Category';
+import { Category } from './../../../entities/category';
 
 
 @Component({

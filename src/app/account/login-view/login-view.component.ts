@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from './../../services/user.service';
 import { LoginInfo } from './../../entities/login-info';
 import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-login-view',
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
 export class LoginViewComponent implements OnInit {
 
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
   isAuthorized: boolean;
   isUnauthorized: boolean;
@@ -22,11 +23,10 @@ export class LoginViewComponent implements OnInit {
 
   login(username: string, password: string) {
     const loginInfo: LoginInfo = { login: '', senha: '' };
-
     loginInfo.login = username;
     loginInfo.senha = password;
 
-    this.userService.login(loginInfo).subscribe(res => {
+    this.authenticationService.login(username, password).subscribe(res => {
       this.isAuthorized = res != null;
       this.isUnauthorized = !res;
       if (this.isAuthorized) {

@@ -4,7 +4,7 @@ import { NgModule} from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ConfigComponent } from './register/configuration/config/config.component';
 import { ConfigDetailComponent } from './register/configuration/config-detail/config-detail.component';
 import { ConfigNewComponent } from './register/configuration/config-new/config-new.component';
@@ -79,6 +79,8 @@ import { ExpenseGroupComponent } from './component/expense-group/expense-group.c
 import { ExpenseTableTitleComponent } from './component/expense-table-title/expense-table-title.component';
 import { ExpenseErrorScreenComponent } from './component/expense-error-screen/expense-error-screen.component';
 import { MainNavBarComponent } from './component/main-nav-bar/main-nav-bar.component';
+import { JwtInterceptor } from './account/jwt.interceptor';
+import { ErrorInterceptor } from './account/error.interceptor';
 
 
 @NgModule({
@@ -162,7 +164,9 @@ import { MainNavBarComponent } from './component/main-nav-bar/main-nav-bar.compo
 
   ],
   providers: [
-    MatDatepickerModule
+    MatDatepickerModule,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })
