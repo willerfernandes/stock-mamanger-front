@@ -80,7 +80,7 @@ import { ExpenseTableTitleComponent } from './component/expense-table-title/expe
 import { ExpenseErrorScreenComponent } from './component/expense-error-screen/expense-error-screen.component';
 import { MainNavBarComponent } from './component/main-nav-bar/main-nav-bar.component';
 import { JwtInterceptor } from './account/jwt.interceptor';
-//import { ErrorInterceptor } from './account/error.interceptor';
+import { ErrorInterceptor } from './account/error.interceptor';
 
 
 @NgModule({
@@ -116,7 +116,7 @@ import { JwtInterceptor } from './account/jwt.interceptor';
     ExpenseGroupComponent,
     ExpenseTableTitleComponent,
     ExpenseErrorScreenComponent,
-    MainNavBarComponent,
+    MainNavBarComponent
   ],
   imports: [
     BrowserModule,
@@ -165,8 +165,8 @@ import { JwtInterceptor } from './account/jwt.interceptor';
   ],
   providers: [
     MatDatepickerModule,
-    //{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    //{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

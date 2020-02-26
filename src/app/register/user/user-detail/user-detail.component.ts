@@ -36,7 +36,7 @@ export class UserDetailComponent implements OnInit {
 
   save(senha: string) {
     this.userService.update(this.fillConfiguration(this.user.id, senha)).subscribe((res) => {
-      this.goBack()
+      this.goBack();
     });
   }
 

@@ -29,7 +29,7 @@ export class MainViewComponent implements OnInit {
   get_stock_info(stock: Stock) {
     this.stockService.stockPrices(stock).subscribe(res => {
 
-      //considera somente a data atual (De 23:59 até 10:00 não retornará valores)
+      // considera somente a data atual (De 23:59 até 10:00 não retornará valores)
       const stockInfoResponse = res['Time Series (Daily)'][this.datePipe.transform(new Date(), 'yyyy-MM-dd')];
       if (stockInfoResponse) {
         stock.valor = stockInfoResponse['4. close'];

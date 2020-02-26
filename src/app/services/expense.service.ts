@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
+import { UserAuth } from '../entities/user-auth';
 
 
 @Injectable({
@@ -21,8 +22,10 @@ export class ExpenseService {
   constructor(private httpClient: HttpClient) { }
 
   get(dataInicial: string, dataFinal: string): Observable<any> {
-
+    console.log('Calling expense report...');
     console.log(this.baseUrl + this.path + '?' + 'dataInicio=' + dataInicial + '&' + 'dataFim=' + dataFinal);
-    return this.httpClient.get(this.baseUrl + this.path + '?' + 'dataInicio=' + dataInicial + '&' + 'dataFim=' + dataFinal);
+    console.log('Done!');
+    return this.httpClient.get(
+      this.baseUrl + this.path + '?' + 'dataInicio=' + dataInicial + '&' + 'dataFim=' + dataFinal, this.httpOptions);
   }
 }

@@ -36,14 +36,12 @@ export class AuthenticationService {
     const credentials: Credentials = { login: '', senha: '' };
     credentials.login = username;
     credentials.senha = password;
-    return this.http.post<any>(`${environment.apiUrl}/login`, JSON.stringify(credentials), this.httpOptions)
+    return this.http.post<any>('http://localhost:8081/login', JSON.stringify(credentials), this.httpOptions)
       .pipe(map(user => {
         console.log('Response from ' + `${environment.apiUrl}/login` + ':');
         console.log(user.status);
-        // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(user);
-
         return user;
       }));
   }

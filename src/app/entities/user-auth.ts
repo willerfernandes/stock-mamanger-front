@@ -1,8 +1,6 @@
 export class UserAuth {
   id: number;
-  username: string;
-  password: string;
-  firstName: string;
-  lastName: string;
+  login: string;
+  nome: string;
   token?: string;
 }

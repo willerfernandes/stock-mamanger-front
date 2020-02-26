@@ -1,4 +1,4 @@
-/*import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -14,14 +14,12 @@ export class ErrorInterceptor implements HttpInterceptor {
       console.log('That was an error...');
       console.log(err);
       if (err.status === 401) {
-        // auto logout if 401 response returned from api
+        const error = err.message || err.statusText;
         console.log('Do something with unauthorized error...');
         this.authenticationService.logout();
-        // location.reload(true);
+        window.alert('Não autorizado!' + error);
       }
-      const error = err.message || err.statusText;
-      window.alert('Erro ao realizar login: ' + error);
-      return throwError(error);
+      return throwError(err);
     }));
   }
-}*/
+}
