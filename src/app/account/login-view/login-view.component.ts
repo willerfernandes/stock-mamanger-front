@@ -25,14 +25,12 @@ export class LoginViewComponent implements OnInit {
     const loginInfo: LoginInfo = { login: '', senha: '' };
     loginInfo.login = username;
     loginInfo.senha = password;
-
     this.authenticationService.login(username, password).subscribe(res => {
-      this.isAuthorized = res != null;
-      this.isUnauthorized = !res;
-      if (this.isAuthorized) {
-        sessionStorage.setItem('currentUser', JSON.stringify(res));
-        this.router.navigate(['/home']);
-      }
+      console.log(res.status);
+      this.isAuthorized = true;
+      this.isUnauthorized = false;
+      sessionStorage.setItem('currentUser', JSON.stringify(res));
+      this.router.navigate(['/home']);
     });
   }
 }
