@@ -21,11 +21,11 @@ export class ExpenseService {
 
   constructor(private httpClient: HttpClient) { }
 
-  get(dataInicial: string, dataFinal: string): Observable<any> {
+  loadExpenseReport(startDate: string, endDate: string): Observable<any> {
     console.log('Calling expense report...');
-    console.log(this.baseUrl + this.path + '?' + 'dataInicio=' + dataInicial + '&' + 'dataFim=' + dataFinal);
+    console.log(this.baseUrl + this.path + '?' + 'dataInicio=' + startDate + '&' + 'dataFim=' + endDate);
     console.log('Done!');
     return this.httpClient.get(
-      this.baseUrl + this.path + '?' + 'dataInicio=' + dataInicial + '&' + 'dataFim=' + dataFinal, this.httpOptions);
+      this.baseUrl + this.path + '?' + 'dataInicio=' + startDate + '&' + 'dataFim=' + endDate, this.httpOptions);
   }
 }

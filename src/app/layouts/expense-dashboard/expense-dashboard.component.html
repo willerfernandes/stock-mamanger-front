@@ -1,6 +1,6 @@
 <div *ngIf="isSuccess;else show_error_page">
   <app-pie-chart [pieChartLabels]="pieChartLabels" [pieChartData]="pieChartData" [pieChartTitle]="pieChartTitle"></app-pie-chart>
-  <app-date-range [startDate]="dataInicial" [endDate]="dataFinal"></app-date-range>
+  <app-date-range [startDate]="dataInicial" [endDate]="dataFinal" (reloadButtonClicked)="get_expenses_resume(dataInicial, dataFinal)"></app-date-range>
   <app-expense-table-title [title]="tableTitle"></app-expense-table-title>
   <app-expense-group [expenseGroups]="gruposLancamentos"></app-expense-group>
   <br><br><br><br>

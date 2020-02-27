@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-date-range',
@@ -13,6 +13,13 @@ export class DateRangeComponent implements OnInit {
 
   @Input()
   public endDate: string;
+
+  @Output()
+  public reloadButtonClicked = new EventEmitter();
+
+  onReloadButtonClicked(event: any) {
+    this.reloadButtonClicked.emit(event);
+  }
 
   constructor() { }
 

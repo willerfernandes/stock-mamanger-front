@@ -34,8 +34,8 @@ export class ExpenseDashboardComponent implements OnInit {
   }
 
 
-  get_expenses_resume(dataInicial: string, dataFinal: string) {
-    this.expenseService.get(dataInicial, dataFinal).subscribe(res => {
+  get_expenses_resume(startDate: string, endDate: string) {
+    this.expenseService.loadExpenseReport(startDate, endDate).subscribe(res => {
     console.log(res);
     this.pieChartLabels = res.itemGrafico.nome;
     this.pieChartData = res.itemGrafico.valor;
