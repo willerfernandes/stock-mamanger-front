@@ -34,13 +34,22 @@ export class ExpenseDashboardComponent implements OnInit {
   }
 
 
-  get_expenses_resume(startDate: string, endDate: string) {
-    this.expenseService.loadExpenseReport(startDate, endDate).subscribe(res => {
+  get_expenses_resume(startDate: any, endDate: any) {
+    console.log('Get Expense Resume!');
+    this.expenseService.loadExpenseReport(startDate.toISOString(), endDate.toISOString()).subscribe(res => {
     console.log(res);
-    this.pieChartLabels = res.itemGrafico.nome;
-    this.pieChartData = res.itemGrafico.valor;
-    this.gruposLancamentos = res.gruposLancamentos;
-    this.isSuccess = res.itemGrafico !== null;
+    if (res) {
+      this.pieChartLabels = res.itemGrafico.nome;
+      this.pieChartData = res.itemGrafico.valor;
+      this.gruposLancamentos = res.gruposLancamentos;
+      this.isSuccess = res.itemGrafico !== null;
+    } else {
+      this.pieChartLabels = null;
+      this.pieChartData = null;
+      this.gruposLancamentos = null;
+      this.isSuccess = false;
+      console.log('No content -> Fill with empty wallet image!');
+    }
     });
   }
 
@@ -52,7 +61,7 @@ export class ExpenseDashboardComponent implements OnInit {
     dataInicial.setMonth(dataInicial.getMonth() - 1);
     this.dataInicial = new FormControl(dataInicial);
     this.dataFinal = new FormControl(new Date(Date.now()));
-    this.get_expenses_resume(this.dataInicial.value.toISOString(), this.dataFinal.value.toISOString());
+    this.get_expenses_resume(this.dataInicial.value, this.dataFinal.value);
   }
 
   /*openModal(id: string) {

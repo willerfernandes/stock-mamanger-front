@@ -3,6 +3,7 @@ import { LoginInfo } from './../../entities/login-info';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { FakeService } from 'src/app/services/fake.service';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -12,6 +13,8 @@ import { FakeService } from 'src/app/services/fake.service';
 })
 export class LoginViewComponent implements OnInit {
 
+  public baseURL = 'http://localhost:4200/';
+  public registerUserPath = this.baseURL + 'signup';
 
   constructor(private authenticationService: AuthenticationService, private fakeService: FakeService, private router: Router) { }
 
