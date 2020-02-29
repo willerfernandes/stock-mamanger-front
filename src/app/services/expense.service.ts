@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { UserAuth } from '../entities/user-auth';
+import { ExpenseReport } from '../entities/expense-report';
 
 
 @Injectable({
@@ -21,11 +22,11 @@ export class ExpenseService {
 
   constructor(private httpClient: HttpClient) { }
 
-  loadExpenseReport(startDate: string, endDate: string): Observable<any> {
+  loadExpenseReport(startDate: string, endDate: string): Observable<ExpenseReport> {
     console.log('Calling expense report...');
     console.log(this.baseUrl + this.path + '?' + 'dataInicio=' + startDate + '&' + 'dataFim=' + endDate);
     console.log('Done!');
-    return this.httpClient.get(
+    return this.httpClient.get<ExpenseReport>(
       this.baseUrl + this.path + '?' + 'dataInicio=' + startDate + '&' + 'dataFim=' + endDate, this.httpOptions);
   }
 }

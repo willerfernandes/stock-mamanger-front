@@ -10,6 +10,8 @@ export class JwtInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // add authorization header with jwt token if available
+        console.log('Requesting: ' + request.urlWithParams + '...');
+        console.log(request);
         const currentUser = this.authenticationService.currentUserValue;
         if (currentUser && currentUser.token) {
             request = request.clone({
@@ -19,6 +21,12 @@ export class JwtInterceptor implements HttpInterceptor {
                 }
             });
         }
-        return next.handle(request);
+
+        const requestHadling = next.handle(request);
+
+        //log response
+        console.log('Reponse from ' + request.urlWithParams);
+        requestHadling.subscribe( res => console.log(res));
+        return requestHadling;
     }
 }

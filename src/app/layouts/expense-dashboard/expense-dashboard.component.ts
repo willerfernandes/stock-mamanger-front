@@ -3,6 +3,7 @@ import {ExpenseService} from './../../services/expense.service';
 import {DateAdapter} from '@angular/material/core';
 
 import { FormControl } from '@angular/forms';
+import { FakeService } from 'src/app/services/fake.service';
 @Component({
   selector: 'app-expense-dashboard',
   templateUrl: './expense-dashboard.component.html',
@@ -53,7 +54,7 @@ export class ExpenseDashboardComponent implements OnInit {
     });
   }
 
-  constructor(private expenseService: ExpenseService, private apapter: DateAdapter<any>) { }
+  constructor(private expenseService: ExpenseService, private fakeService: FakeService, private apapter: DateAdapter<any>) { }
 
   ngOnInit() {
     this.apapter.setLocale('br');
