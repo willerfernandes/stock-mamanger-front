@@ -60,7 +60,6 @@ import { NativeDateModule } from '@angular/material';
 
 
 
-
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { MainViewComponent } from './layouts/main-view/main-view.component';
 import { LoginViewComponent } from './account/login-view/login-view.component';
@@ -164,7 +163,10 @@ import { ButtonPrimaryIconComponent } from './component/basic/button-primary-ico
     ReactiveFormsModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    NativeDateModule
+    NativeDateModule,
+    MatCardModule,
+    MatInputModule,
+    MatButtonModule
 
   ],
   providers: [

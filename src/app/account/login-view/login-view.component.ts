@@ -29,7 +29,7 @@ export class LoginViewComponent implements OnInit {
     const loginInfo: LoginInfo = { login: '', senha: '' };
     loginInfo.login = username;
     loginInfo.senha = password;
-    this.authenticationService.login(username, password).subscribe(res => {
+    this.fakeService.login(username, password).subscribe(res => {
       this.isAuthorized = true;
       this.isUnauthorized = false;
       sessionStorage.setItem('currentUser', JSON.stringify(res));

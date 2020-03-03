@@ -1,11 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
+.color-primary {
+  color: #965af7;
+  font-family: 'Roboto';
+}
+
 .mat-snack-bar-container {
   font-weight: bold;
   min-width: 200% !important;
 }
-
 
 .snackbarStyle {
   border: 2px solid #965af7 !important;
