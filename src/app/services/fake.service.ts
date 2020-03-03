@@ -21,6 +21,11 @@ export class FakeService {
   private currentUserSubject: BehaviorSubject<UserAuth>;
   public currentUser: Observable<UserAuth>;
 
+  private loggedIn = new BehaviorSubject<boolean>(false);
+
+  get isLoggedIn() {
+    return this.loggedIn.asObservable;
+  }
 
   public get currentUserValue(): UserAuth {
     return this.currentUserSubject.value;
@@ -38,6 +43,7 @@ export class FakeService {
     };
     localStorage.setItem('currentUser', JSON.stringify(user));
     this.currentUserSubject.next(user);
+    this.loggedIn.next(true);
     return of(user);
   }
 
@@ -45,6 +51,7 @@ export class FakeService {
   loadExpenseReport(startDate: string, endDate: string): Observable<ExpenseReport> {
     console.log('Fake expense report');
 
+    // --------- EXPENSE REPORT ------------
     let report = new ExpenseReport();
     report.itemGrafico = new ItemGrafico();
     report.valorTotal = 10000;
@@ -101,5 +108,10 @@ export class FakeService {
     report.gruposLancamentos = [grupo1, grupo2];
 
     return of(report);
+    // ----------------------------------------
+
+
+    // --------- EMPTY EXPENSE REPORT ------------
+    //return of(null);
   }
 }

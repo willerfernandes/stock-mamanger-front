@@ -81,6 +81,8 @@ import { ExpenseErrorScreenComponent } from './component/expense-error-screen/ex
 import { MainNavBarComponent } from './component/main-nav-bar/main-nav-bar.component';
 import { JwtInterceptor } from './account/jwt.interceptor';
 import { ErrorInterceptor } from './account/error.interceptor';
+import { ButtonPrimaryTextComponent } from './component/basic/button-primary-text/button-primary-text.component';
+import { ButtonPrimaryIconComponent } from './component/basic/button-primary-icon/button-primary-icon.component';
 
 
 @NgModule({
@@ -116,7 +118,9 @@ import { ErrorInterceptor } from './account/error.interceptor';
     ExpenseGroupComponent,
     ExpenseTableTitleComponent,
     ExpenseErrorScreenComponent,
-    MainNavBarComponent
+    MainNavBarComponent,
+    ButtonPrimaryTextComponent,
+    ButtonPrimaryIconComponent
   ],
   imports: [
     BrowserModule,

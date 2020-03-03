@@ -5,12 +5,15 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Credentials } from '../entities/credentials';
 import { User } from '../entities/user';
+import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, public dialog: MatSnackBar) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -24,7 +27,13 @@ export class AuthenticationService {
     })
   };
 
-
+  openDialog(errorMessage: string): void {
+    this.dialog.open(errorMessage, 'OK', {
+      panelClass: ['snackbarStyle'],
+      verticalPosition: 'bottom', // 'top' | 'bottom'
+      horizontalPosition: 'left'
+    });
+  }
 
   public get currentUserValue(): User {
     return this.currentUserSubject.value;

@@ -1,16 +1,19 @@
-.reloadIcon {
-  max-width:5%;
-  height:auto;
-  cursor: pointer;
-  padding: 10px;
-}
-
 .dateRangeCentered {
   align-content: center;
   text-align: center;
 }
 
 .img {
-  width: 80%;
-  height: 80%;
+  width: 60%;
+  height: 60%;
+  padding: 0px;
+
+}
+
+
+.datePicker {
+  padding: 20px;
+  font-style: inherit;
+  font-weight: bold;
+  font-family: 'Roboto', ;
 }

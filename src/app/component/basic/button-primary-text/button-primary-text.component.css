@@ -1,0 +1,30 @@
+/*Primary Clickable Icon*/
+.primary-button-text {
+  font-family: 'Roboto';
+  font-weight: bold;
+  width: auto;
+  min-width: 70px;
+  max-width: 200px;
+  height: auto;
+  overflow: hidden;
+  cursor: pointer;
+  padding: 2px;
+  padding-right: 15px;
+  padding-left: 15px;
+  border: 2px solid #965af7;
+  border-radius: 8px;
+}
+
+
+.primary-button-text:hover {
+  background-color: #dfd1f5;
+  color: white;
+  transition: 0.2s;
+}
+
+
+.primary-button-text:active {
+  background-color: #965af7;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}

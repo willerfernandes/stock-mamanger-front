@@ -37,7 +37,7 @@ export class ExpenseDashboardComponent implements OnInit {
 
   get_expenses_resume(startDate: any, endDate: any) {
     console.log('Get Expense Resume!');
-    this.expenseService.loadExpenseReport(startDate.toISOString(), endDate.toISOString()).subscribe(res => {
+    this.fakeService.loadExpenseReport(startDate.toISOString(), endDate.toISOString()).subscribe(res => {
     console.log(res);
     if (res) {
       this.pieChartLabels = res.itemGrafico.nome;
@@ -45,9 +45,6 @@ export class ExpenseDashboardComponent implements OnInit {
       this.gruposLancamentos = res.gruposLancamentos;
       this.isSuccess = res.itemGrafico !== null;
     } else {
-      this.pieChartLabels = null;
-      this.pieChartData = null;
-      this.gruposLancamentos = null;
       this.isSuccess = false;
       console.log('No content -> Fill with empty wallet image!');
     }

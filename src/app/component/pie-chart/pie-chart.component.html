@@ -1,7 +1,12 @@
 <div>
   <h4 style="text-align:center">{{pieChartTitle}}</h4>
-  <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
-    (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+  <canvas baseChart
+        [data]="pieChartData"
+        [labels]="pieChartLabels"
+        [chartType]="pieChartType"
+        [colors]="pieChartColors"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)">
   </canvas>
   <br>
   <br>

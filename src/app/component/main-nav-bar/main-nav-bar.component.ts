@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { FakeService } from 'src/app/services/fake.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-main-nav-bar',
@@ -19,9 +21,13 @@ export class MainNavBarComponent implements OnInit {
   public categoryPath = this.baseURL + 'category';
 
 
-  constructor() { }
+  isLoggedIn$: Observable<boolean>;
+
+  constructor(private fakeService: FakeService) { }
 
   ngOnInit() {
+    console.log(this.isLoggedIn$);
+    this.isLoggedIn$ = this.fakeService.isLoggedIn();
 
   }
 

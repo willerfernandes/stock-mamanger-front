@@ -20,6 +20,12 @@ export class PieChartComponent implements OnInit {
   @Input()
   public pieChartData: number[];
 
+  public pieChartColors: Array < any > = [{
+    backgroundColor: ['#d4bbfc', '#bbbdfc', '#fcbbbb', '#fcf3bb', '#bbfcbc', '#fcd7bb'],
+    borderColor: ['white']
+ }];
+
+
   // events
   public chartClicked(e: any): void {
     console.log(e);

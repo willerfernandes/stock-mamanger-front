@@ -1,3 +1,13 @@
+.navbar {
+  background-color: #965af7;
+}
+
+
+.navbar-brand {
+    color: #965af7;
+    font: bold;
+}
+
 .dropdown {
   position: relative;
   display: inline-block;

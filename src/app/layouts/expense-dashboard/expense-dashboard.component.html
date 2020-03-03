@@ -1,5 +1,5 @@
 <div>
-  <app-pie-chart *ngIf="isSuccess;else show_error_page" [pieChartLabels]="pieChartLabels" [pieChartData]="pieChartData" [pieChartTitle]="pieChartTitle"></app-pie-chart>
+  <app-pie-chart *ngIf="isSuccess;else show_error_page" [pieChartLabels]="pieChartLabels" [pieChartData]="pieChartData" [pieChartTitle]="pieChartTitle"> </app-pie-chart>
   <app-date-range [startDate]="dataInicial" [endDate]="dataFinal" (reloadButtonClicked)="get_expenses_resume(dataInicial.value, dataFinal.value)"></app-date-range>
   <app-expense-table-title [title]="tableTitle"></app-expense-table-title>
   <app-expense-group *ngIf="isSuccess" [expenseGroups]="gruposLancamentos"></app-expense-group>
