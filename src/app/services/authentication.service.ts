@@ -27,11 +27,12 @@ export class AuthenticationService {
     })
   };
 
-  openDialog(errorMessage: string): void {
+  openDialog(errorMessage: string, durationTime: number): void {
     this.dialog.open(errorMessage, 'OK', {
       panelClass: ['snackbarStyle'],
       verticalPosition: 'bottom', // 'top' | 'bottom'
-      horizontalPosition: 'left'
+      horizontalPosition: 'left',
+      duration: durationTime == null ? null : durationTime
     });
   }
 

@@ -27,7 +27,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       } else {
         message = 'Ops! Houve um erro =/';
       }
-      this.authenticationService.openDialog(message);
+      this.authenticationService.openDialog(message, null);
       return throwError(err);
     }));
   }

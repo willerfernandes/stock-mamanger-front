@@ -10,12 +10,16 @@ export class ButtonPrimaryTextComponent implements OnInit {
   constructor() { }
 
   @Input()
+  isLoading = false;
+
+  @Input()
   public text: string;
 
   @Output()
   public clickedEvent = new EventEmitter();
 
   click() {
+    this.isLoading = true;
     this.clickedEvent.emit();
   }
 

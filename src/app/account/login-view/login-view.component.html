@@ -1,20 +1,27 @@
 <div class="container-login">
   <div class="wrap-login">
     <div class="internal-login">
-      <p>LOGIN</p>
-      <label class="color-primary" for="uname"><b>Login</b></label>
-      <input #user_name type="text" placeholder="Nome do usuário" name="uname" required>
-      <label class="color-primary" for="psw"><b>Senha</b></label>
-      <input #password type="password" placeholder="Insira a senha" name="psw" required>
+      <form>
+        <p>LOGIN</p>
+        <label class="color-primary" for="uname"><b>Login</b></label>
+        <input #user_name type="text" placeholder="{{usernamePlaceholder}}" name="uname" required
+          [style.backgroundColor]="usernamePlaceholder === 'Campo Obrigatório'? '#e1adff': 'transparent'"
+          (focus)="onTypeUsername($event)">
+        <label class="color-primary" for="psw"><b>Senha</b></label>
+        <input #password type="password" placeholder="{{passwordPlaceholder}}" name="psw" required
+          [style.backgroundColor]="passwordPlaceholder === 'Campo Obrigatório'? '#e1adff': 'transparent'"
+          (focus)="onTypePassword($event)">
 
-      <div style="padding-top: 50px; padding-bottom: 40px;  text-align: center;">
-        <app-button-primary-text [text]="'Entrar'"
-          (click)="login(user_name.value, password.value)"></app-button-primary-text>
-      </div>
-
-      <!--button type="submit" (click)="login(user_name.value, password.value)">Entrar</button-->
-      <span class="font-color-primary"> Ainda não é um usuário? Cadastre-se <a  class = "color-primary" href={{registerUserPath}}>AQUI</a></span>
+        <div style="padding-top: 50px; padding-bottom: 40px;  text-align: center;">
+          <app-button-primary-text [text]="'Entrar'" (click)="login(user_name.value, password.value)"
+            (keyup.enter)="login(user_name.value, password.value)">
+          </app-button-primary-text>
+        </div>
+        <span class="font-color-primary"> Ainda não é um usuário? Cadastre-se <a class="color-primary"
+            href={{registerUserPath}}>AQUI</a></span>
+      </form>
     </div>
+
   </div>
 </div>
 

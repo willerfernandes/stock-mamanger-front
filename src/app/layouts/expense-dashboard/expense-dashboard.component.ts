@@ -15,7 +15,6 @@ export class ExpenseDashboardComponent implements OnInit {
   public pieChartLabels: string[];
   public pieChartData: number[];
   public pieChartType = 'pie';
-  public pieChartTitle = 'Despesas';
 
   public dataInicial;
   public dataFinal;
