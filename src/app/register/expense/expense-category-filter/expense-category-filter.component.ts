@@ -13,6 +13,7 @@ export class ExpenseCategoryFilterComponent implements OnInit {
   categories: Category[] = [];
   isEmpty;
   isSuccess;
+  isError;
 
 
   constructor(private categoryService: CategoryService) { }

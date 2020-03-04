@@ -9,12 +9,12 @@ export class ButtonPrimaryIconComponent implements OnInit {
   constructor() { }
 
   @Input()
-  public imageUrl: string;
+  public imageUrl;
 
   @Output()
   public clickedEvent = new EventEmitter();
 
-  click() {
+  onClick() {
     this.clickedEvent.emit();
   }
 

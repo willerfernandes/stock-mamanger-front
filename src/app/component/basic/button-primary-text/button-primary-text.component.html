@@ -1,9 +1,9 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 
 <button type="submit" class="primary-button-text" [class.spinner]="isLoading" [disabled]="isLoading"
-  (click)=click($event)>{{text}} </button>
+  (click)=click()>{{text}} </button>
 
-<button type="submit" class="primary-button-text" (click)=click($event)>
+<button type="submit" class="primary-button-text" (click)=click()>
   <mat-icon *ngIf="isLoading" class="center" >
     <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
   </mat-icon >{{text}}
