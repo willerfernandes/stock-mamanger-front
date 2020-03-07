@@ -23,3 +23,10 @@
   color: #13032e;
   background-color: #c19ff7;
 }
+
+.center {
+  align-content: center;
+  justify-content: center;
+  text-align: center;
+  vertical-align: middle;
+}

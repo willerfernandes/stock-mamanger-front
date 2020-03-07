@@ -8,17 +8,24 @@ import { User } from '../entities/user';
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Router } from '@angular/router';
 
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
 
-  constructor(private http: HttpClient, public dialog: MatSnackBar) {
+  constructor(private http: HttpClient, public dialog: MatSnackBar, private router: Router) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
+
+  private loggedIn = new BehaviorSubject<boolean>(false); // {1}
+
+  get isLoggedIn() {
+    return this.loggedIn.asObservable(); // {2}
+  }
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -52,6 +59,7 @@ export class AuthenticationService {
         console.log(user.status);
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(user);
+        this.loggedIn.next(true);
         return user;
       }));
   }
@@ -59,6 +67,8 @@ export class AuthenticationService {
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
+    this.loggedIn.next(false);
     this.currentUserSubject.next(null);
+    this.router.navigate(['/login']);
   }
 }

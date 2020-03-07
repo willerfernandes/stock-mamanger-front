@@ -82,6 +82,8 @@ import { JwtInterceptor } from './account/jwt.interceptor';
 import { ErrorInterceptor } from './account/error.interceptor';
 import { ButtonPrimaryTextComponent } from './component/basic/button-primary-text/button-primary-text.component';
 import { ButtonPrimaryIconComponent } from './component/basic/button-primary-icon/button-primary-icon.component';
+import { HomeViewComponent } from './layouts/home-view/home-view.component';
+import { CardComponent } from './component/basic/card/card.component';
 
 
 @NgModule({
@@ -119,7 +121,9 @@ import { ButtonPrimaryIconComponent } from './component/basic/button-primary-ico
     ExpenseErrorScreenComponent,
     MainNavBarComponent,
     ButtonPrimaryTextComponent,
-    ButtonPrimaryIconComponent
+    ButtonPrimaryIconComponent,
+    HomeViewComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,

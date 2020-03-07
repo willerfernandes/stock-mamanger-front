@@ -1,0 +1,36 @@
+div.polaroid {
+  width: 250px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  text-align: center;
+}
+
+div.container {
+  padding: 10px;
+}
+
+
+
+.card-title {
+  height: 50px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  text-align: top;
+  font-weight: bold;
+  font-size: large;
+}
+
+.card-header-text {
+  border: 0.5px solid white;
+  background-color: white;
+  height: 50px;
+}
+
+.card {
+  margin: auto;
+  width: 300px;
+  height: 250px;
+  border: 0.5px solid white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 8px;
+  background-color: #965af7 ;
+  /*background-color: #ba23c2;*/
+}

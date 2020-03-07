@@ -1,10 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { LoginInfo } from './../../entities/login-info';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { FakeService } from 'src/app/services/fake.service';
 import { environment } from 'src/environments/environment';
-import { empty } from 'rxjs';
 
 
 @Component({
@@ -19,8 +17,7 @@ export class LoginViewComponent implements OnInit {
 
   constructor(private authenticationService: AuthenticationService, private fakeService: FakeService, private router: Router) { }
 
-  isAuthorized: boolean;
-  isUnauthorized: boolean;
+  isLoading = false;
 
   usernamePlaceholder = 'Nome do usuário';
   passwordPlaceholder = 'Insira a senha';
@@ -30,15 +27,17 @@ export class LoginViewComponent implements OnInit {
 
 
   login(username: string, password: string) {
+    this.isLoading = true;
     if (this.validateFields(username, password)) {
-      const loginInfo: LoginInfo = { login: '', senha: '' };
-      loginInfo.login = username;
-      loginInfo.senha = password;
       this.fakeService.login(username, password).subscribe(res => {
-        this.isAuthorized = true;
-        this.isUnauthorized = false;
         sessionStorage.setItem('currentUser', JSON.stringify(res));
+        this.isLoading = false;
         this.router.navigate(['/home']);
+      },
+      error => {
+        if (error.status === 401) {
+          this.authenticationService.openDialog('Usuário ou senha incorretos', 3000);
+        }
       });
     }
   }
@@ -51,7 +50,7 @@ export class LoginViewComponent implements OnInit {
     this.passwordPlaceholder = 'Insira a senha';
   }
 
-  private validateFields(username: string, password: string): boolean {
+  private validateFields(username: string, password: string) {
     let isAllRequiredFieldsFilled = true;
     if (username === '') {
       this.usernamePlaceholder = 'Campo Obrigatório';
@@ -62,6 +61,7 @@ export class LoginViewComponent implements OnInit {
       isAllRequiredFieldsFilled = false;
     }
     if (!isAllRequiredFieldsFilled) {
+      this.isLoading = false;
       this.authenticationService.openDialog('Existem campos obrigatórios não preenchidos', 3000);
     }
     return isAllRequiredFieldsFilled;

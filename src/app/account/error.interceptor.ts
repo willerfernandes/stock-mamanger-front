@@ -3,11 +3,12 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/c
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthenticationService } from '../services/authentication.service';
+import { Router } from '@angular/router';
 
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(catchError(err => {
@@ -19,9 +20,14 @@ export class ErrorInterceptor implements HttpInterceptor {
       if (err.status === 0) {
         message = 'Falha na tentativa de conectar ao servidor!';
       } else if (err.status === 401) {
-        message = 'Não authorizado!';
-        this.authenticationService.logout();
-        window.alert('Unauthorized!' + ' ' + error);
+        if (request.method !== 'login') {
+          message = 'Login ou senha incorretos';
+        } else {
+          message = 'Sua sessão expirou! Favor realizar o login novamente';
+          this.authenticationService.logout();
+          this.authenticationService.openDialog(message, null);
+          this.router.navigate(['/login']);
+        }
       } else if (err.status === 500) {
         message = 'Houve um erro ao buscar as informações do servidor!';
       } else {

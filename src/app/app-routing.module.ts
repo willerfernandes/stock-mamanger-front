@@ -21,12 +21,13 @@ import {ExpenseCategoryFilterComponent} from './register/expense/expense-categor
 import {ExpenseCategoryNewComponent} from './register/expense/expense-category-new/expense-category-new.component';
 import {ExpenseCategoryDetailComponent} from './register/expense/expense-category-detail/expense-category-detail.component';
 import {AuthGuard} from './account/auth.guard';
+import { HomeViewComponent } from './layouts/home-view/home-view.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'stock-dashboard', component: MainViewComponent },
-  { path: 'home', component: ExpenseDashboardComponent, canActivate: [AuthGuard] },
-  { path: 'expense-dashboard', component: ExpenseDashboardComponent },
+  { path: 'home', component: HomeViewComponent, canActivate: [AuthGuard] },
+  { path: 'expense-dashboard', component: ExpenseDashboardComponent , canActivate: [AuthGuard]},
   { path: 'login', component: LoginViewComponent },
   { path: 'signup', component: SignupViewComponent },
   { path: 'config', component: ConfigComponent },

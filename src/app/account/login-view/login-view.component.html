@@ -5,15 +5,15 @@
         <p>LOGIN</p>
         <label class="color-primary" for="uname"><b>Login</b></label>
         <input #user_name type="text" placeholder="{{usernamePlaceholder}}" name="uname" required
-          [style.backgroundColor]="usernamePlaceholder === 'Campo Obrigatório'? '#e1adff': 'transparent'"
+          [style.backgroundColor]="usernamePlaceholder === 'Campo Obrigatório'? '#f2dcff': 'transparent'"
           (focus)="onTypeUsername($event)">
         <label class="color-primary" for="psw"><b>Senha</b></label>
         <input #password type="password" placeholder="{{passwordPlaceholder}}" name="psw" required
-          [style.backgroundColor]="passwordPlaceholder === 'Campo Obrigatório'? '#e1adff': 'transparent'"
+          [style.backgroundColor]="passwordPlaceholder === 'Campo Obrigatório'? '#f2dcff': 'transparent'"
           (focus)="onTypePassword($event)">
 
         <div style="padding-top: 50px; padding-bottom: 40px;  text-align: center;">
-          <app-button-primary-text [isloadingButtonType]="true" [text]="'Entrar'" (clickedEvent)="login(user_name.value, password.value)"
+          <app-button-primary-text [isloadingButtonType]="false" [isLoading]="isLoading" [text]="'Entrar'" (clickedEvent)="login(user_name.value, password.value)"
             (keyup.enter)="login(user_name.value, password.value)">
           </app-button-primary-text>
         </div>
@@ -23,12 +23,4 @@
     </div>
 
   </div>
-</div>
-
-<div *ngIf="isAuthorized" class="alert alert-info" role="alert" style="width: 50%">
-  Login realizado com sucesso!
-</div>
-
-<div *ngIf="isUnauthorized" class="alert alert-danger" role="alert" style="width: 50%">
-  Login ou senha incorretos!
 </div>

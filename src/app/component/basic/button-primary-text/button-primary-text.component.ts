@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-button-primary-text',
@@ -8,6 +8,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class ButtonPrimaryTextComponent implements OnInit {
 
   constructor() { }
+
+  loading: boolean;
 
   @Input()
   isLoading = false;
@@ -32,5 +34,13 @@ export class ButtonPrimaryTextComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  /*ngOnChanges(changes: SimpleChanges) {
+    console.log('IsLoading current value: ' + this.isLoading );
+    console.log('IsLoading chaged value: ' + changes.isLoading.currentValue);
+    this.isLoading = changes.isLoading.currentValue;
+    console.log('IsLoading after value: ' + this.isLoading);
+
+  }*/
 
 }

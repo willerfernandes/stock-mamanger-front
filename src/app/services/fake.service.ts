@@ -3,7 +3,7 @@ import { Credentials } from '../entities/credentials';
 import { UserAuth } from '../entities/user-auth';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { ExpenseReport } from '../entities/expense-report';
 import { ItemGrafico } from '../entities/item-grafico';
 import { GrupoLancamento } from '../entities/grupo-lancamento';
@@ -21,11 +21,6 @@ export class FakeService {
   private currentUserSubject: BehaviorSubject<UserAuth>;
   public currentUser: Observable<UserAuth>;
 
-  private loggedIn = new BehaviorSubject<boolean>(false);
-
-  get isLoggedIn() {
-    return this.loggedIn.asObservable;
-  }
 
   public get currentUserValue(): UserAuth {
     return this.currentUserSubject.value;
@@ -43,10 +38,8 @@ export class FakeService {
     };
     localStorage.setItem('currentUser', JSON.stringify(user));
     this.currentUserSubject.next(user);
-    this.loggedIn.next(true);
     return of(user);
   }
-
 
   loadExpenseReport(startDate: string, endDate: string): Observable<ExpenseReport> {
     console.log('Fake expense report');

@@ -20,15 +20,9 @@ export class MainNavBarComponent implements OnInit {
   public operationPath = this.baseURL + 'operation';
   public categoryPath = this.baseURL + 'category';
 
-
-  isLoggedIn$: Observable<boolean>;
-
   constructor(private fakeService: FakeService) { }
 
   ngOnInit() {
-    console.log(this.isLoggedIn$);
-    this.isLoggedIn$ = this.fakeService.isLoggedIn();
-
   }
 
 }
