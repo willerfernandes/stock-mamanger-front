@@ -1,1 +1,7 @@
 <img [src]='imageUrl' class="primary-button-icon" (click)=onClick()>
+
+
+<button type="submit" class="primary-button-icon" [disabled]="isLoading" (click)=onClick()>
+  <img *ngIf="!isLoading" [src]='imageUrl'>
+  <mat-progress-spinner *ngIf="isLoading" style="margin:0 auto;" mode="indeterminate" diameter="20"></mat-progress-spinner>
+</button>

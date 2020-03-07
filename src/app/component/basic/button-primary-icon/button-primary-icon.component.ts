@@ -9,13 +9,24 @@ export class ButtonPrimaryIconComponent implements OnInit {
   constructor() { }
 
   @Input()
-  public imageUrl;
+  isLoading = false;
+
+  @Input()
+  isloadingButtonType = false;
+
+  @Input()
+  public imageUrl: string;
 
   @Output()
   public clickedEvent = new EventEmitter();
 
   onClick() {
-    this.clickedEvent.emit();
+    if (this.isloadingButtonType && !this.isLoading) {
+      this.isLoading = true;
+      this.clickedEvent.emit();
+    } else if (!this.isLoading) {
+      this.clickedEvent.emit();
+    }
   }
 
   ngOnInit() {

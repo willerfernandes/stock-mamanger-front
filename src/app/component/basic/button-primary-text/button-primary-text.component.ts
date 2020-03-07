@@ -13,14 +13,21 @@ export class ButtonPrimaryTextComponent implements OnInit {
   isLoading = false;
 
   @Input()
+  isloadingButtonType = false;
+
+  @Input()
   public text: string;
 
   @Output()
   public clickedEvent = new EventEmitter();
 
   click() {
-    this.isLoading = true;
-    this.clickedEvent.emit();
+    if (this.isloadingButtonType && !this.isLoading) {
+      this.isLoading = true;
+      this.clickedEvent.emit();
+    } else if (!this.isLoading) {
+      this.clickedEvent.emit();
+    }
   }
 
   ngOnInit() {

@@ -13,7 +13,7 @@
           (focus)="onTypePassword($event)">
 
         <div style="padding-top: 50px; padding-bottom: 40px;  text-align: center;">
-          <app-button-primary-text [text]="'Entrar'" (click)="login(user_name.value, password.value)"
+          <app-button-primary-text [isloadingButtonType]="true" [text]="'Entrar'" (clickedEvent)="login(user_name.value, password.value)"
             (keyup.enter)="login(user_name.value, password.value)">
           </app-button-primary-text>
         </div>

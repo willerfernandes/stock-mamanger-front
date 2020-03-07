@@ -1,10 +1,6 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 
-<button type="submit" class="primary-button-text" [class.spinner]="isLoading" [disabled]="isLoading"
-  (click)=click()>{{text}} </button>
-
-<button type="submit" class="primary-button-text" (click)=click()>
-  <mat-icon *ngIf="isLoading" class="center" >
-    <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
-  </mat-icon >{{text}}
+<button type="submit" class="primary-button-text" [disabled]="isLoading" (click)=click()>
+  <span *ngIf="!isLoading">{{text}}</span>
+  <mat-progress-spinner *ngIf="isLoading" style="margin:0 auto;" mode="indeterminate" diameter="20"></mat-progress-spinner>
 </button>
