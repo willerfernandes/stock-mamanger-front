@@ -3,3 +3,14 @@
     height:auto;
     cursor: pointer;
 }
+
+.border {
+  border-top: 1px solid #965af7;
+}
+
+
+.center {
+  text-align: center;
+  align-content: center;
+  justify-content: center;
+}
