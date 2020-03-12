@@ -1,10 +1,14 @@
 <div>
+  <div style="text-align: center;">
+    <h2 style="display: inline;"><</h2><h1 style="text-align: center; display: inline;  padding: 20px;">{{pieChartTitle}}</h1><h2 style="display: inline;">></h2>
+  </div>
+
   <div class="pie-chart">
     <app-pie-chart *ngIf="isSuccess;else show_error_page" [pieChartLabels]="pieChartLabels"
-      [pieChartData]="pieChartData" [pieChartTitle]="'DESPESAS'"> </app-pie-chart>
+      [pieChartData]="pieChartData"> </app-pie-chart>
   </div>
-  <app-date-range [startDate]="dataInicial" [endDate]="dataFinal"
-    (reloadButtonClicked)="get_expenses_resume(dataInicial.value, dataFinal.value)"></app-date-range>
+  <app-date-range [startDate]="startDate" [endDate]="endDate"
+    (reloadButtonClicked)="get_expenses_resume(startDate.value, endDate.value)"></app-date-range>
   <app-expense-table-title [title]="tableTitle"></app-expense-table-title>
   <app-expense-group *ngIf="isSuccess" [expenseGroups]="gruposLancamentos"></app-expense-group>
   <br><br><br><br>
