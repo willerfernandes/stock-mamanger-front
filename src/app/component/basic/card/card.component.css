@@ -1,21 +1,12 @@
-div.polaroid {
-  width: 250px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  text-align: center;
-}
-
-div.container {
-  padding: 10px;
-}
-
-
-
 .card-title {
   height: 30px;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  font-family: 'Montserrat', sans-serif;
   text-align: top;
   font-weight: bold;
   font-size: large;
+  /*color: #8418ba;*/
+  text-emphasis: 1px;
 }
 
 .card-subtitle {
@@ -32,6 +23,11 @@ div.container {
   z-index: 1;
 }
 
+
+.card-header-image {
+  opacity: 90%;
+}
+
 .card {
   margin: auto;
   width: 300px;
@@ -42,3 +38,19 @@ div.container {
   /*background-color: #965af7 */;
   /*background-color: #ba23c2;*/
 }
+
+.card:hover {
+  opacity: 70%;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.card:active {
+  background-color: #965af7;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+
+
+

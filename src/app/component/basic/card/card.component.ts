@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-card',
@@ -7,7 +8,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
+
+
+  @Input()
+  public title: string;
+
+  @Input()
+  public description: string;
+
+  @Input()
+  public imageUrl: string;
+
+  @Input()
+  clickUrl: string;
+
+
+  onClick() {
+    this.router.navigate([this.clickUrl]);
+  }
 
   ngOnInit() {
   }

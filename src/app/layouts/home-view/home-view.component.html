@@ -1,11 +1,88 @@
-<div class="top-header">
-  <h1 style="text-align: left; padding-top: 10px;">FINANCAS</h1>
-  <h6 style="text-align: left; padding-top: 5px;">
-    O seu APP para controle de finanças
-  </h6>
-</div>
-<div class="grid-container">
-  <div><app-card></app-card></div>
-  <div><app-card></app-card></div>
-  <div><app-card></app-card></div>
+<div style="background-color: #f9f2ff;">
+  <!--div class="top-header">
+    <h1 style="padding-top: 10px;">Finanças</h1>
+    <h6 style="padding-top: 3px;">
+      O seu APP para controle financeiro
+    </h6>
+  </div-->
+  <div style="margin-top: 20px; background-color: #8418ba; border: 2px solid;">
+    <h1 style="color: white; text-align: justify; padding-left: 60px; padding-top: 10px;
+    max-width: 70%; height: auto; text-justify: auto;">
+      Mantenha seus gastos na palma das suas mãos
+    </h1>
+    <div class="grid-container">
+      <div>
+        <app-card
+          [title]="'Controle seus gastos'"
+          [description]="'Controle seu gastos e de forma fácil'"
+          [imageUrl]="'assets/img/financas-card-image.png'"
+          [clickUrl]="'/expense-dashboard'"
+        ></app-card>
+      </div>
+      <div>
+        <app-card
+          [title]="'Gere relatórios'"
+          [description]="'Gere relatórios personalizados dos seus gastos'"
+          [imageUrl]="'assets/img/pie-chart-card-image.png'"
+          [clickUrl]="'/expense-dashboard'">
+        </app-card>
+      </div>
+      <div>
+        <app-card
+          [title]="'Consulte seu extrato'"
+          [description]="'Veja todos os seus lançamentos agrupados'"
+          [imageUrl]="'assets/img/expenses-card-image.jpeg'"
+          [clickUrl]="'/expense-dashboard'">
+        </app-card>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 20px; background-color: #6918ba; border: 2px solid; border-radius: 10px; width: 90%; margin-left: 10%; margin-right: 0px;">
+    <h1 style="color: white; text-align: right; padding-top: 10px; padding-right: 50px;">
+      Acompanhe o mercado financeiro em tempo real
+    </h1>
+    <div class="grid-container">
+      <div>
+        <app-card
+          [title]="'Acompanhe suas ações'"
+          [description]="'Acompanhe a bolsa de valores e fique de olho na valorização dos seus papéis'"
+          [imageUrl]="'assets/img/stonks-card-image.jpg'"
+          [clickUrl]="'/stock-dashboard'">
+        </app-card>
+      </div>
+      <div>
+        <app-card
+          [title]="'Controle seus rendimentos'"
+          [description]="'Verifique o rendimento dos seus papéis em tempo real'"
+          [imageUrl]="'assets/img/home-broker-card-image.jpg'"
+          [clickUrl]="'/stock-dashboard'"
+        ></app-card>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top: 20px; background-color: #8418ba; border: 2px solid;">
+    <h1 style="color: white; text-align: justify; padding-left: 60px; padding-top: 10px;
+    max-width: 70%; height: auto; text-justify: auto;">
+      Mais em breve...
+    </h1>
+    <div class="grid-container">
+      <div>
+        <app-card
+          [title]="'Quanto custa o seu carro?'"
+          [description]="'Calculadora de custos para seu veículo'"
+          [imageUrl]="'assets/img/car-card-image.png'"
+          [clickUrl]="'/expense-dashboard'"
+        ></app-card>
+      </div>
+      <div>
+        <app-card
+          [title]="'Quanto custa o seu carro?'"
+          [description]="'Calculadora de custos para seu veículo'"
+          [imageUrl]="'assets/img/car-card-image.png'"
+          [clickUrl]="'/expense-dashboard'"
+        ></app-card>
+      </div>
+    </div>
+  </div>
 </div>
