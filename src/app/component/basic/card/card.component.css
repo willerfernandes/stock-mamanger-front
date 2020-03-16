@@ -17,6 +17,7 @@
 }
 .card-header-text {
   border: 0.5px solid white;
+  border-radius: 8px;
   background-color: white;
   height: 30px;
   width: 100%;
