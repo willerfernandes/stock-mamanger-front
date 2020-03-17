@@ -10,7 +10,7 @@
     <p class="home-header-text" style="padding-bottom: 30px;">O ADMoney ajuda você a cuidar
       de suas finanças e alcançar o
       sucesso financeiro</p>
-      <app-button-primary-text [text]="'Saiba mais'"></app-button-primary-text>
+      <app-button-primary-text [text]="'Acessar'"></app-button-primary-text>
   </div>
   <div class="icon-section" style="display: inline;">
     <!--img style="width: 323px; height: 214px;" src="assets/img/logo.jpeg"-->
@@ -29,15 +29,93 @@
 
 <!-- Page content -->
 <div class="home-content">
-<h2 class="home-content-section-title">Mantenha seus gastos na palma das suas mãos</h2>
-<p class="home-content-section-subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-</p>
+  <div>
+    <h2 class="home-content-section-title">Mantenha seus gastos na palma das suas mãos</h2>
+    <p class="home-content-section-subtitle">Com o ADMoney você pode controlar suas finanças registrando as suas despesas como alimentação, tranporte, comprar, etc e obter um relatório detalhado de para onde está indo seu dinheiro.
+    </p>
+    <div style="margin-top: 20px;">
+      <div class="grid-container">
+        <div>
+          <app-card
+            [title]="'Controle seus gastos'"
+            [imageUrl]="'assets/img/financas-card-image.png'"
+            [clickUrl]="'/expense-dashboard'"
+          ></app-card>
+          <p class="home-content-card-text">Cadastre seus gastos diários e não perca o controle. A forma mais fácil de economizar é saber onde está gastando mais. Com o ADMoney é muito fácil!
+          </p>
+        </div>
+        <div>
+          <app-card
+            [title]="'Gere relatórios'"
+            [imageUrl]="'assets/img/pie-chart-card-image.png'"
+            [clickUrl]="'/expense-dashboard'">
+          </app-card>
+          <p class="home-content-card-text">Obtenha relatórios e extratos personalizados dos seus gastos por tipos de despesas, visualize seus maiores gastos em gráficos intuitivos.
+          </p>
+        </div>
+        <div>
+          <app-card
+            [title]="'Consulte seu extrato'"
+            [imageUrl]="'assets/img/expenses-card-image.jpeg'"
+            [clickUrl]="'/expense-dashboard'">
+          </app-card>
+          <p class="home-content-card-text">Consulte seu extrato de despesas do mês, meses passados ou escolha um período personalizado para ver seus lançamentos.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="background-color: #F6F1FF; padding-bottom: 100px;">
+      <h2 style="padding-top: 20px; padding-bottom: 50px;" class="home-content-section-title">Fique por dentro do que há de mais novo</h2>
+      <div class="home-home-content-flat-cards-grid">
+        <img src="assets/img/financas-card-image.png" style="width: 80%; height: auto;">
+        <img src="assets/img/financas-card-image.png" style="width: 80%; height: auto;">
+      </div>
+  </div>
+  <h2 style="margin-top: 40px;" class="home-content-section-title">Acompanhe o mercado financeiro em tempo real</h2>
+    <p class="home-content-section-subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+  </p>
+  <div class="grid-container">
+    <div>
+      <app-card
+        [title]="'Acompanhe suas ações'"
+        [imageUrl]="'assets/img/stonks-card-image.jpg'"
+        [clickUrl]="'/stock-dashboard'">
+      </app-card>
+      <p class="home-content-card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna  Lorem ipsum dolor.
+      </p>
+    </div>
+    <div>
+      <app-card
+        [title]="'Controle seus rendimentos'"
+        [imageUrl]="'assets/img/home-broker-card-image.jpg'"
+        [clickUrl]="'/stock-dashboard'"
+      ></app-card>
+      <p class="home-content-card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna  Lorem ipsum dolor.
+      </p>
+    </div>
+  </div>
 </div>
 
 
 <!-- Footer -->
-<div>
-
+<div class="footer grid-container">
+  <div style="display: initial;">
+    <h4 class="white">Sobre mim</h4>
+    <p><a href="https://willerfernandes.github.io/" target="_blank" class="white">Currículo</a></p>
+    <p><a href="https://github.com/willerfernandes" target="_blank" class="white">Github</a></p>
+  </div>
+  <div>
+    <h4 class="white">Sobre o projeto</h4>
+    <p><a href="" target="_blank" class="white">Desenho</a></p>
+    <p><a href="" target="_blank" class="white">Arquitetura</a></p>
+    <p><a href="" target="_blank" class="white">Tecnologias</a></p>
+  </div>
+  <div>
+    <h4 class="white">Contato</h4>
+    <p class="white">Contato do desenvolvedor:</p>
+    <p class="white">fernandes.willer.santos@gmail.com</p>
+  </div>
 </div>
 
 
