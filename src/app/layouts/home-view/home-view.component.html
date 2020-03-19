@@ -1,19 +1,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Top navbar-->
-<!--app-main-nav-bar></app-main-nav-bar-->
 <div class="top-navbar">
-  <!--div>
-    <img scr="assets/img/logo.png" class="inline top-navbar-text" style="height: 40px; width: auto;">
-    LOGO AQUI
-  </div-->
-  <div style="margin-right: 0;  text-align: right; padding-top: 2px;">
-    <!--img scr="assets/img/logo.png" class="inline top-navbar-text margin" style="height: 40px; width: auto; margin-left: 0px; z-index: 999; background-color: chartreuse;"-->
-    <!--a href="" style="text-align: left; margin-left: 0px;" class="inline top-navbar-text">xxx LOGO xxx</a-->
-    <a href="" class="inline top-navbar-text">Sobre o projeto</a>
-    <a href="" class="inline top-navbar-text">Contato</a>
-    <btn-secondary-blue class="inline top-navbar-text" [text]="'Cadastrar'" (clickedEvent)=onClickRegister()></btn-secondary-blue >
-    <btn-primary-blue class="inline top-navbar-text" [text]="'Entrar'" (clickedEvent)=onClickLogin()></btn-primary-blue>
-
+  <div class="topnav">
+    <img src="assets/img/logo.png" style="height: 40px; width: auto; margin-left: 0px; z-index: 999">
+    <div class="topnav-right">
+      <a href="" class="top-navbar-text">Sobre o projeto</a>
+      <a href="" class="top-navbar-text">Contato</a>
+      <btn-secondary-blue class="top-navbar-text" [text]="'Cadastrar'" (clickedEvent)=onClickRegister()></btn-secondary-blue >
+        <btn-primary-blue class="top-navbar-text" [text]="'Entrar'" (clickedEvent)=onClickLogin()></btn-primary-blue>
+    </div>
   </div>
 </div>
 

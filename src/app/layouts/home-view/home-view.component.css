@@ -13,6 +13,19 @@
 }*/
 
 /* ----- TOP NAVBAR ----------*/
+.topnav-right {
+float: right;
+padding-top: 3px;
+}
+
+.topnav {
+  height: 40px;
+  width: 100%;
+  background-color: white;
+  border-bottom: 2px solid #030091;
+  position: fixed;
+  z-index: 999;
+}
 
 .top-navbar {
   height: 40px;
@@ -25,10 +38,8 @@
 
 .top-navbar-text {
   color: #030091;
-  margin-top: 5px;
   padding-left: 10px;
   padding-right: 10px;
-  vertical-align: middle;
   font-weight: bold;
 }
 

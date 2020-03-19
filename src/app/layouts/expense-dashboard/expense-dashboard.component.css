@@ -1,7 +1,8 @@
 
 .pie-chart {
+  width: 100%;
   margin-top: 50px;
-  margin: 0px;
+  margin-left: 0px;
 }
 
 .previous {
@@ -21,7 +22,6 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 60%;
 }
 
 .detalhesLancamento {

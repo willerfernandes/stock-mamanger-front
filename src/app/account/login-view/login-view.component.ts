@@ -32,7 +32,7 @@ export class LoginViewComponent implements OnInit {
       this.fakeService.login(username, password).subscribe(res => {
         sessionStorage.setItem('currentUser', JSON.stringify(res));
         this.isLoading = false;
-        this.router.navigate(['/home']);
+        this.router.navigate(['/expense-dashboard']);
       },
       error => {
         if (error.status === 401) {
