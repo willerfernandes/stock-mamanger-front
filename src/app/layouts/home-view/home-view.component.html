@@ -1,7 +1,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Top navbar-->
-<div stye="width: 100%; height: 70px; position:fixed; background-color: white;">
-  NAVBAR
+<!--app-main-nav-bar></app-main-nav-bar-->
+<div class="top-navbar">
+  <!--div>
+    <img scr="assets/img/logo.png" class="inline top-navbar-text" style="height: 40px; width: auto;">
+    LOGO AQUI
+  </div-->
+  <div style="margin-right: 0;  text-align: right; padding-top: 2px;">
+    <!--img scr="assets/img/logo.png" class="inline top-navbar-text margin" style="height: 40px; width: auto; margin-left: 0px; z-index: 999; background-color: chartreuse;"-->
+    <!--a href="" style="text-align: left; margin-left: 0px;" class="inline top-navbar-text">xxx LOGO xxx</a-->
+    <a href="" class="inline top-navbar-text">Sobre o projeto</a>
+    <a href="" class="inline top-navbar-text">Contato</a>
+    <btn-secondary-blue class="inline top-navbar-text" [text]="'Cadastrar'" (clickedEvent)=onClickRegister()></btn-secondary-blue >
+    <btn-primary-blue class="inline top-navbar-text" [text]="'Entrar'" (clickedEvent)=onClickLogin()></btn-primary-blue>
+
+  </div>
 </div>
 
 <!-- Header-->
@@ -10,7 +23,7 @@
     <p class="home-header-text" style="padding-bottom: 30px;">O ADMoney ajuda você a cuidar
       de suas finanças e alcançar o
       sucesso financeiro</p>
-      <app-button-primary-text [text]="'Acessar'"></app-button-primary-text>
+      <btn-primary-blue-large [text]="'Acessar'" (clickedEvent)=onClickLogin()></btn-primary-blue-large>
   </div>
   <div class="icon-section" style="display: inline;">
     <!--img style="width: 323px; height: 214px;" src="assets/img/logo.jpeg"-->
@@ -73,7 +86,7 @@
       </div>
   </div>
   <h2 style="margin-top: 40px;" class="home-content-section-title">Acompanhe o mercado financeiro em tempo real</h2>
-    <p class="home-content-section-subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+    <p class="home-content-section-subtitle">Fique por dentro das novidades de mercado de ações, acompanhe as variações do seus papéis e visualize o rendimento em cada papel na sua carteira
   </p>
   <div class="grid-container">
     <div>
@@ -82,16 +95,16 @@
         [imageUrl]="'assets/img/stonks-card-image.jpg'"
         [clickUrl]="'/stock-dashboard'">
       </app-card>
-      <p class="home-content-card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna  Lorem ipsum dolor.
+      <p class="home-content-card-text">Acompanhe a variação do preço de mercado dos seus papéis.
       </p>
     </div>
     <div>
       <app-card
-        [title]="'Controle seus rendimentos'"
+        [title]="'Veja seus rendimentos'"
         [imageUrl]="'assets/img/home-broker-card-image.jpg'"
         [clickUrl]="'/stock-dashboard'"
       ></app-card>
-      <p class="home-content-card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna  Lorem ipsum dolor.
+      <p class="home-content-card-text">Acompanhe o rendimento de seus papéis em tempo real e não perca oportunidades.
       </p>
     </div>
   </div>

@@ -84,6 +84,10 @@ import { ButtonPrimaryTextComponent } from './component/basic/button-primary-tex
 import { ButtonPrimaryIconComponent } from './component/basic/button-primary-icon/button-primary-icon.component';
 import { HomeViewComponent } from './layouts/home-view/home-view.component';
 import { CardComponent } from './component/basic/card/card.component';
+import { BtnPrimaryBlueComponent } from './component/basic/btn-primary-blue/btn-primary-blue.component';
+import { BtnSecondaryBlueComponent } from './component/basic/btn-secondary-blue/btn-secondary-blue.component';
+import { BtnSecondaryBlueLargeComponent } from './component/basic/btn-secondary-blue-large/btn-secondary-blue-large.component';
+import { BtnPrimaryBlueLargeComponent } from './component/basic/btn-primary-blue-large/btn-primary-blue-large.component';
 
 
 @NgModule({
@@ -123,7 +127,11 @@ import { CardComponent } from './component/basic/card/card.component';
     ButtonPrimaryTextComponent,
     ButtonPrimaryIconComponent,
     HomeViewComponent,
-    CardComponent
+    CardComponent,
+    BtnPrimaryBlueComponent,
+    BtnSecondaryBlueComponent,
+    BtnSecondaryBlueLargeComponent,
+    BtnPrimaryBlueLargeComponent
   ],
   imports: [
     BrowserModule,

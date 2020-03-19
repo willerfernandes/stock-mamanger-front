@@ -2,7 +2,7 @@
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
 .color-primary {
-  color: #965af7;
+  color: #030091;
   font-family: 'Roboto';
 }
 
@@ -12,8 +12,8 @@
 }
 
 .snackbarStyle {
-  border: 2px solid #965af7 !important;
-  background-color: #dfd1f5;
+  border: 2px solid #030091 !important;
+  background-color: white;
   color: black;
   left: 0px;
   right: 0px;
@@ -21,7 +21,7 @@
 
 .mat-simple-snackbar-action {
   color: #13032e;
-  background-color: #c19ff7;
+  background-color: #030091;
 }
 
 .center {
