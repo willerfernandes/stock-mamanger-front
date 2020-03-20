@@ -24,7 +24,7 @@ import {AuthGuard} from './account/auth.guard';
 import { HomeViewComponent } from './layouts/home-view/home-view.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'stock-dashboard', component: MainViewComponent },
   { path: 'home', component: HomeViewComponent, canActivate: [AuthGuard] },
   { path: 'expense-dashboard', component: ExpenseDashboardComponent , canActivate: [AuthGuard]},

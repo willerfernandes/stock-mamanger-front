@@ -6,8 +6,8 @@
     <div class="topnav-right">
       <a href="" class="top-navbar-text">Sobre o projeto</a>
       <a href="" class="top-navbar-text">Contato</a>
-      <btn-secondary-blue class="top-navbar-text" [text]="'Cadastrar'" (clickedEvent)=onClickRegister()></btn-secondary-blue >
-        <btn-primary-blue class="top-navbar-text" [text]="'Entrar'" (clickedEvent)=onClickLogin()></btn-primary-blue>
+      <btn-secondary-blue class="top-navbar-text top-navbar-button" [text]="'Cadastrar'" (clickedEvent)=onClickRegister()></btn-secondary-blue >
+        <btn-primary-blue class="top-navbar-text top-navbar-button" [text]="'Entrar'" (clickedEvent)=onClickLogin()></btn-primary-blue>
     </div>
   </div>
 </div>
@@ -15,12 +15,10 @@
 <!-- Header-->
 <div class="home-header home-header-grid">
   <div class="text-section" style="display: inline">
-    <p class="home-header-text" style="padding-bottom: 30px;">O ADMoney ajuda você a cuidar
-      de suas finanças e alcançar o
-      sucesso financeiro</p>
+    <p class="home-header-text" style="padding-bottom: 30px;">O ADMoney ajuda você a cuidar de suas finanças e alcançar o sucesso financeiro</p>
       <btn-primary-blue-large [text]="'Acessar'" (clickedEvent)=onClickLogin()></btn-primary-blue-large>
   </div>
-  <div class="icon-section" style="display: inline;">
+  <div class="icon-section">
     <!--img style="width: 323px; height: 214px;" src="assets/img/logo.jpeg"-->
     <svg width="316" height="108" viewBox="0 0 316 108" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <rect width="316" height="108" fill="url(#pattern0)"/>
@@ -73,11 +71,11 @@
       </div>
     </div>
   </div>
-  <div style="background-color: #F6F1FF; padding-bottom: 100px;">
+  <div class="home-content-flat-cards">
       <h2 style="padding-top: 20px; padding-bottom: 50px;" class="home-content-section-title">Fique por dentro do que há de mais novo</h2>
       <div class="home-home-content-flat-cards-grid">
-        <img src="assets/img/financas-card-image.png" style="width: 80%; height: auto;">
-        <img src="assets/img/financas-card-image.png" style="width: 80%; height: auto;">
+        <img src="assets/img/financas-card-image.png" class="flat-cards">
+        <img src="assets/img/financas-card-image.png" class="flat-cards">
       </div>
   </div>
   <h2 style="margin-top: 40px;" class="home-content-section-title">Acompanhe o mercado financeiro em tempo real</h2>
