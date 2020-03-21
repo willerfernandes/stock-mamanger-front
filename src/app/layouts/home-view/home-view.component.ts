@@ -21,4 +21,8 @@ export class HomeViewComponent implements OnInit {
     this.router.navigate(['/register']);
   }
 
+  jumpToFooter() {
+    window.location.hash = 'footer';
+  }
+
 }

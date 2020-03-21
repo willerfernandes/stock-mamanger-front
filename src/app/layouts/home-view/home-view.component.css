@@ -7,26 +7,23 @@
 .topnav {
   height: 40px;
   width: 100%;
-  background-color: white;
-  border-bottom: 2px solid #030091;
+  background-color: #030091;
   position: fixed;
-  z-index: 999;
+  z-index: 998;
 }
 
-.top-navbar {
-  height: 40px;
-  width: 100%;
-  background-color: white;
-  border-bottom: 2px solid #030091;
-  position: fixed;
-  z-index: 999;
-}
 
 .top-navbar-text {
-  color: #030091;
+  color: white;
   padding-left: 10px;
   padding-right: 10px;
   font-weight: bold;
+  z-index: 999;
+}
+
+.top-navbar-text:hover {
+  text-decoration-line: underline;
+  cursor: pointer;
 }
 
 .inline {
@@ -63,10 +60,11 @@
 }
 
 .home-header-text {
+  font-family: 'Roboto';
   color: white;
   font-weight: bold;
   font-size: 36px;
-  max-width: 70%;
+  padding-bottom: 30px;
 }
 
 /* ------ HOME CONTENT ------------ */
@@ -88,6 +86,19 @@
   color: #030091;
 }
 
+.home-content-section-flat-cards-title {
+  padding-left: 10px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 25px;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  color: #030091;
+}
+
 .home-content-section-subtitle {
   padding-top: 10px;
   padding-left: 30px;
@@ -103,7 +114,8 @@
 }
 
 .flat-cards {
-
+  height: auto;
+  width: 90%;
 }
 
 .home-content-flat-cards {
@@ -165,23 +177,14 @@
 
   .topnav {
     width: 100%;
-    background-color: white;
-    border-bottom: 2px solid #030091;
+    background-color: #030091;
     position: fixed;
     z-index: 999;
   }
 
-  .top-navbar {
-    height: 40px;
-    width: 100%;
-    background-color: white;
-    border-bottom: 2px solid #030091;
-    position: fixed;
-    z-index: 999;
-  }
 
   .top-navbar-text {
-    color: #030091;
+    color: white;
     padding-left: 10px;
     padding-right: 10px;
     font-weight: bold;
@@ -206,9 +209,7 @@
 
   .home-header-grid {
     width: 100%;
-    display: grid;
-    grid: auto / auto;
-    gap: 40px;
+    gap: 0px;
   }
 
   .text-section {
@@ -222,6 +223,7 @@
     color: white;
     font-weight: bold;
     font-size: 24px;
+    padding-bottom: 0px;
   }
 
   .icon-section {
@@ -234,26 +236,39 @@
   }
 
   .home-content-section-title {
-    padding-left: 30px;
-    font-family: Roboto;
+    padding-left: 10px;
+    font-family: 'Roboto';
     font-style: normal;
     font-weight: bold;
-    font-size: 30px;
-    line-height: 35px;
+    font-size: 20px;
+    line-height: 25px;
     display: flex;
     align-items: center;
-    text-align: center;
+    text-align: left;
+    color: #030091;
+  }
+
+  .home-content-section-flat-cards-title {
+    padding-left: 10px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 25px;
+    line-height: 25px;
+    display: flex;
+    align-items: center;
+    text-align: left;
     color: #030091;
   }
 
   .home-content-section-subtitle {
     width: 100%;
-    padding-top: 10px;
-    padding-left: 30px;
+    padding-top: 8px;
+    padding-left: 10px;
     font-family: Roboto;
     font-style: normal;
     font-weight: normal;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 21px;
     display: flex;
     align-items: center;
@@ -277,24 +292,24 @@
     width: 100%;
   }
 
+
   .grid-container {
     display: grid;
-    grid: auto / auto auto auto;
-    overflow-x: scroll;
-    gap: 40px;
+    grid: auto / auto;
+    gap: 80px;
     text-align: center;
     padding: 20px;
   }
 
   .home-content-card-text {
     margin: auto;
-    width: 300px;
-    height: 100px;
+    width: 280px;
+    height: 80px;
     padding-top: 10px;
-    font-family: Roboto;
+    font-family: 'Roboto';
     font-style: normal;
     font-weight: normal;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 21px;
     text-align: justify;
     text-justify: inter-word;
@@ -305,9 +320,14 @@
 
   .footer {
     background-color: #030091;
-    height: 200px;
+    height: auto;
     width: 100%;
+    display: grid;
+    grid: auto / auto auto auto;
+    gap: 40px;
     text-align: left;
+    overflow: auto;
+    padding: 10px;
   }
 
   .white {

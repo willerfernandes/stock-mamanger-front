@@ -1,22 +1,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+
 <!-- Top navbar-->
-<div class="top-navbar">
   <div class="topnav">
     <img src="assets/img/logo.png" style="height: 40px; width: auto; margin-left: 0px; z-index: 999">
+    <button (click)="jumpToFooter()" style="background:none; border:none;" class="top-navbar-text">Sobre o projeto</button>
+    <button (click)="jumpToFooter()" style="background:none; border:none;"  class="top-navbar-text">Contato</button>
     <div class="topnav-right">
-      <a href="" class="top-navbar-text">Sobre o projeto</a>
-      <a href="" class="top-navbar-text">Contato</a>
-      <btn-secondary-blue class="top-navbar-text top-navbar-button" [text]="'Cadastrar'" (clickedEvent)=onClickRegister()></btn-secondary-blue >
-        <btn-primary-blue class="top-navbar-text top-navbar-button" [text]="'Entrar'" (clickedEvent)=onClickLogin()></btn-primary-blue>
+      <button (click)="onClickRegister()" style="background:none; border:none;"  class="top-navbar-text top-navbar-button">Cadastrar</button>
+      <btn-secondary-blue class="top-navbar-text top-navbar-button" [text]="'Entrar'" (clickedEvent)=onClickLogin()></btn-secondary-blue>
     </div>
   </div>
-</div>
 
 <!-- Header-->
 <div class="home-header home-header-grid">
   <div class="text-section" style="display: inline">
-    <p class="home-header-text" style="padding-bottom: 30px;">O ADMoney ajuda você a cuidar de suas finanças e alcançar o sucesso financeiro</p>
-      <btn-primary-blue-large [text]="'Acessar'" (clickedEvent)=onClickLogin()></btn-primary-blue-large>
+    <p class="home-header-text">O ADMoney ajuda você a cuidar de suas finanças e alcançar o sucesso financeiro</p>
+      <btn-secondary-blue [text]="'Acessar'" (clickedEvent)=onClickLogin()></btn-secondary-blue>
   </div>
   <div class="icon-section">
     <!--img style="width: 323px; height: 214px;" src="assets/img/logo.jpeg"-->
@@ -72,14 +72,14 @@
     </div>
   </div>
   <div class="home-content-flat-cards">
-      <h2 style="padding-top: 20px; padding-bottom: 50px;" class="home-content-section-title">Fique por dentro do que há de mais novo</h2>
+      <h2 style="padding-top: 20px;" class="home-content-section-title">Fique por dentro do que há de mais novo</h2>
       <div class="home-home-content-flat-cards-grid">
         <img src="assets/img/financas-card-image.png" class="flat-cards">
         <img src="assets/img/financas-card-image.png" class="flat-cards">
       </div>
   </div>
   <h2 style="margin-top: 40px;" class="home-content-section-title">Acompanhe o mercado financeiro em tempo real</h2>
-    <p class="home-content-section-subtitle">Fique por dentro das novidades de mercado de ações, acompanhe as variações do seus papéis e visualize o rendimento em cada papel na sua carteira
+    <p class="home-content-section-subtitle subtitle-text">Fique por dentro das novidades de mercado de ações, acompanhe as variações do seus papéis e visualize o rendimento em cada papel na sua carteira
   </p>
   <div class="grid-container">
     <div>
@@ -105,7 +105,7 @@
 
 
 <!-- Footer -->
-<div class="footer grid-container">
+<div id="footer" class="footer grid-container">
   <div style="display: initial;">
     <h4 class="white">Sobre mim</h4>
     <p><a href="https://willerfernandes.github.io/" target="_blank" class="white">Currículo</a></p>
@@ -123,101 +123,3 @@
     <p class="white">fernandes.willer.santos@gmail.com</p>
   </div>
 </div>
-
-
-
-
-
-
-
-
-<!--div style="background-color: #f9f2ff;">
-  <!--div class="top-header">
-    <h1 style="padding-top: 10px;">Finanças</h1>
-    <h6 style="padding-top: 3px;">
-      O seu APP para controle financeiro
-    </h6>
-  </div>
-  <div style="margin-top: 20px; background-color: #8418ba; border: 2px solid;">
-    <h1 style="color: rgb(226, 79, 79); text-align: justify; padding-left: 60px; padding-top: 10px;
-    max-width: 70%; height: auto; text-justify: auto;">
-      Mantenha seus gastos na palma das suas mãos
-    </h1>
-    <div class="grid-container">
-      <div>
-        <app-card
-          [title]="'Controle seus gastos'"
-          [description]="'Controle seu gastos e de forma fácil'"
-          [imageUrl]="'assets/img/financas-card-image.png'"
-          [clickUrl]="'/expense-dashboard'"
-        ></app-card>
-      </div>
-      <div>
-        <app-card
-          [title]="'Gere relatórios'"
-          [description]="'Gere relatórios personalizados dos seus gastos'"
-          [imageUrl]="'assets/img/pie-chart-card-image.png'"
-          [clickUrl]="'/expense-dashboard'">
-        </app-card>
-      </div>
-      <div>
-        <app-card
-          [title]="'Consulte seu extrato'"
-          [description]="'Veja todos os seus lançamentos agrupados'"
-          [imageUrl]="'assets/img/expenses-card-image.jpeg'"
-          [clickUrl]="'/expense-dashboard'">
-        </app-card>
-      </div>
-    </div>
-  </div>
-
-  <div style="margin-top: 20px; background-color: #6918ba; border: 2px solid; border-radius: 10px; width: 90%; margin-left: 10%; margin-right: 0px;">
-    <h1 style="color: white; text-align: right; padding-top: 10px; padding-right: 50px;">
-      Acompanhe o mercado financeiro em tempo real
-    </h1>
-    <div class="grid-container">
-      <div>
-        <app-card
-          [title]="'Acompanhe suas ações'"
-          [description]="'Acompanhe a bolsa de valores e fique de olho na valorização dos seus papéis'"
-          [imageUrl]="'assets/img/stonks-card-image.jpg'"
-          [clickUrl]="'/stock-dashboard'">
-        </app-card>
-      </div>
-      <div>
-        <app-card
-          [title]="'Controle seus rendimentos'"
-          [description]="'Verifique o rendimento dos seus papéis em tempo real'"
-          [imageUrl]="'assets/img/home-broker-card-image.jpg'"
-          [clickUrl]="'/stock-dashboard'"
-        ></app-card>
-      </div>
-    </div>
-  </div>
-  <div style="margin-top: 20px; background-color: #8418ba; border: 2px solid;">
-    <h1 style="color: white; text-align: justify; padding-left: 60px; padding-top: 10px;
-    max-width: 70%; height: auto; text-justify: auto;">
-      Mais em breve...
-    </h1>
-    <div class="grid-container">
-      <div>
-        <app-card
-          [title]="'Quanto custa o seu carro?'"
-          [description]="'Calculadora de custos para seu veículo'"
-          [imageUrl]="'assets/img/car-card-image.png'"
-          [clickUrl]="'/expense-dashboard'"
-        ></app-card>
-      </div>
-      <div>
-        <app-card
-          [title]="'Quanto custa o seu carro?'"
-          [description]="'Calculadora de custos para seu veículo'"
-          [imageUrl]="'assets/img/car-card-image.png'"
-          [clickUrl]="'/expense-dashboard'"
-        ></app-card>
-      </div>
-    </div>
-  </div>
-</div-->
-
-
