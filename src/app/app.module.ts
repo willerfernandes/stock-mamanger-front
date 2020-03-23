@@ -88,6 +88,7 @@ import { BtnPrimaryBlueComponent } from './component/basic/btn-primary-blue/btn-
 import { BtnSecondaryBlueComponent } from './component/basic/btn-secondary-blue/btn-secondary-blue.component';
 import { BtnSecondaryBlueLargeComponent } from './component/basic/btn-secondary-blue-large/btn-secondary-blue-large.component';
 import { BtnPrimaryBlueLargeComponent } from './component/basic/btn-primary-blue-large/btn-primary-blue-large.component';
+import { UnderConstructionComponent } from './layouts/under-construction/under-construction.component';
 
 
 @NgModule({
@@ -131,7 +132,8 @@ import { BtnPrimaryBlueLargeComponent } from './component/basic/btn-primary-blue
     BtnPrimaryBlueComponent,
     BtnSecondaryBlueComponent,
     BtnSecondaryBlueLargeComponent,
-    BtnPrimaryBlueLargeComponent
+    BtnPrimaryBlueLargeComponent,
+    UnderConstructionComponent
   ],
   imports: [
     BrowserModule,

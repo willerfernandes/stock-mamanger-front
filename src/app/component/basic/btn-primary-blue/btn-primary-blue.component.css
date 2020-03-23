@@ -1,0 +1,36 @@
+/*Primary Clickable Icon*/
+.primary-button-text {
+  font-family: 'Roboto';
+  font-weight: bold;
+  min-width: 100px;
+  max-width: 300px;
+  overflow: hidden;
+  cursor: pointer;
+  padding-right: 15px;
+  padding-left: 15px;
+  border: 2px solid #030091;
+  border-radius: 8px;
+  color: white;
+  background-color: #030091;
+}
+
+
+.primary-button-text:hover {
+  background-color: #b9b5ff;
+  color: #030091;
+  transition: 0.2s;
+}
+
+
+.primary-button-text:active {
+  background-color: #b9b5ff;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.primary-button-text:disabled {
+  background-color: #a2a0a3;
+  color: #242424;
+  cursor: not-allowed;
+  pointer-events: none;
+}

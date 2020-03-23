@@ -1,0 +1,15 @@
+h1 {
+ padding-top: 40px;
+ font-family: 'Roboto';
+ text-align: center;
+ font-weight: bolder;
+}
+
+h2 {
+  text-align: center;
+}
+
+img {
+  width: 100%;
+  text-align: center;
+}

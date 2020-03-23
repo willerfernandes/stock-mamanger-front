@@ -87,11 +87,11 @@
 }
 
 .home-content-section-flat-cards-title {
-  padding-left: 10px;
+  padding: 20px;
   font-family: 'Roboto';
   font-style: normal;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 28px;
   line-height: 25px;
   display: flex;
   align-items: center;
@@ -140,8 +140,8 @@
 
 .home-content-card-text {
   margin: auto;
-  width: 300px;
-  height: 250px;
+  width: 280px;
+  height: 120px;
   padding-top: 10px;
   font-family: Roboto;
   font-style: normal;
@@ -249,6 +249,7 @@
   }
 
   .home-content-section-flat-cards-title {
+    padding: 0px;
     padding-left: 10px;
     font-family: 'Roboto';
     font-style: normal;
