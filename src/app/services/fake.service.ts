@@ -8,6 +8,7 @@ import { ExpenseReport } from '../entities/expense-report';
 import { ItemGrafico } from '../entities/item-grafico';
 import { GrupoLancamento } from '../entities/grupo-lancamento';
 import { Lancamento } from '../entities/lancamento';
+import { User } from '../entities/user';
 
 @Injectable({
   providedIn: 'root'
@@ -41,11 +42,15 @@ export class FakeService {
     return of(user);
   }
 
+  save(user): Observable<User> {
+    return of(user);
+  }
+
   loadExpenseReport(startDate: string, endDate: string): Observable<ExpenseReport> {
     console.log('Fake expense report');
 
     // --------- EXPENSE REPORT ------------
-    let report = new ExpenseReport();
+    const report = new ExpenseReport();
     report.itemGrafico = new ItemGrafico();
     report.valorTotal = 10000;
     report.itemGrafico.nome = ['Despesa 1', 'Despesa 2'];

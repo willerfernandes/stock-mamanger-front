@@ -5,9 +5,7 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Credentials } from '../entities/credentials';
 import { User } from '../entities/user';
-import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Router } from '@angular/router';
 
 
@@ -36,7 +34,7 @@ export class AuthenticationService {
 
   openDialog(errorMessage: string, durationTime: number): void {
     this.dialog.open(errorMessage, 'OK', {
-      panelClass: ['snackbarStyle'],
+      panelClass : 'snackbarStyle',
       verticalPosition: 'bottom', // 'top' | 'bottom'
       horizontalPosition: 'left',
       duration: durationTime == null ? null : durationTime

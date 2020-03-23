@@ -3,7 +3,7 @@
 /* Full-width input fields */
   input[type=text], input[type=password] {
   width: 100%;
-  padding: 15px;
+  padding: 10px;
   margin: 5px 0 22px 0;
   display: inline-block;
   border: none;
@@ -50,7 +50,15 @@ button:hover {
 
 /* Add padding to container elements */
 .container {
-  padding: 16px;
+  padding-top: 30px;
+  width: 600px;
+  height: auto;
+}
+
+.inner-container {
+  padding: 50px;
+  border: 1px solid #030091;
+  border-radius: 8px;
 }
 
 /* Clear floats */
@@ -60,9 +68,85 @@ button:hover {
   display: table;
 }
 
-/* Change styles for cancel button and signup button on extra small screens */
-@media screen and (max-width: 300px) {
-  .cancelbtn, .signupbtn {
+h2 {
+  color: #030091;
+  text-align: center;
+}
+
+
+.footer {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  height: 60px;
+  background-color: #030091;
+}
+
+.header {
+  width: 100%;
+  height: 100px;
+  background-color: #030091;
+  padding-top: 4px;
+}
+
+.header-text {
+  padding: 10px;
+  font-weight: bold;
+  font-size: x-large;
+  color: white;
+}
+
+.center {
+  text-align: center;
+  font-family: 'Roboto';
+  font-size: xx-large;
+  font-weight: bolder;
+}
+
+input[type=text], input[type=password] {
+  width: 100%;
+  padding-left: 12px;
+  padding: 02px 05px;
+  display: -webkit-box;
+  background-color: white;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px ridge #030091;
+  background-color: transparent;
+}
+
+input:active {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+	border-bottom: 1px ridge #030091;
+}
+
+
+input:focus {
+  background-color: transparent;
+}
+
+.text-center {
+  text-align: center;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 600px) {
+  .header-text {
+    font-size: large;
+  }
+
+  .container {
     width: 100%;
+    padding-top: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .inner-container {
+    padding: 10px;
+    border: none;
   }
 }

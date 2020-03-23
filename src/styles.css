@@ -8,7 +8,16 @@
 
 .mat-snack-bar-container {
   font-weight: bold;
-  min-width: 200% !important;
+  max-width: 100% !important;
+  min-width: 100% !important;
+}
+
+@media only screen and (max-width: 600px) {
+  .mat-snack-bar-container {
+    font-weight: bold;
+    min-width: 0% !important;
+    width: 100%;
+  }
 }
 
 .snackbarStyle {
@@ -20,8 +29,9 @@
 }
 
 .mat-simple-snackbar-action {
+  border: 2px solid #030091;
   color: #13032e;
-  background-color: #030091;
+  background-color: white;
 }
 
 .center {
