@@ -20,9 +20,9 @@
           <btn-primary-blue [isloadingButtonType]="false" [isLoading]="isLoading" [text]="'Entrar'" (clickedEvent)="login(user_name.value, password.value)"
             (keyup.enter)="login(user_name.value, password.value)">
           </btn-primary-blue>
-        </div>
-        <span> Ainda não é usuário? Cadastre-se <a class="color-primary"
-            href={{registerUserPath}}>AQUI</a></span>
+        </div>o
+        <span> Ainda não é usuário? Cadastre-se <button style="background:none; border:none; color: black; font-family: 'Roboto';"
+            (click)="navSignUpPage()">AQUI</button></span>
       </form>
     </div>
 

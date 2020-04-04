@@ -23,7 +23,7 @@ export class SignupViewComponent implements OnInit {
   ngOnInit() {
   }
 
-  public signUp(login: string, password: string, repeatPsw: string, name: string, email: string) {
+  public signUp(login: string, password: string, repeatPsw: string, name: string) {
     if (this.validateFields()) {
       const user = new User();
       user.id = 0;

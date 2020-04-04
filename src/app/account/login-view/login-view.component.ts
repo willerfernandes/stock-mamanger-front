@@ -12,8 +12,8 @@ import { environment } from 'src/environments/environment';
 })
 export class LoginViewComponent implements OnInit {
 
-  public baseURL = 'http://localhost:4200/';
-  public registerUserPath = this.baseURL + 'signup';
+  public baseURL = 'http://localhost:4200';
+  public registerUserPath = this.baseURL + '/signup';
 
   constructor(private authenticationService: AuthenticationService, private fakeService: FakeService, private router: Router) { }
 
@@ -40,6 +40,11 @@ export class LoginViewComponent implements OnInit {
         }
       });
     }
+  }
+
+
+  navSignUpPage() {
+    this.router.navigate(['/signup']);
   }
 
   onTypeUsername(event: any) {
