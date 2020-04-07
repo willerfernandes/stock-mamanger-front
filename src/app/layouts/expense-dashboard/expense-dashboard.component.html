@@ -1,3 +1,5 @@
+
+<link href='https://fonts.googleapis.com/css?family=Roboto Condensed' rel='stylesheet'>
 <div>
   <app-main-nav-bar></app-main-nav-bar>
   <div class="top-message-container">
@@ -13,16 +15,25 @@
   <app-pie-chart *ngIf="isSuccess;else show_error_page" [pieChartLabels]="pieChartLabels"
   [pieChartData]="pieChartData"> </app-pie-chart>
 
-  <div class="financial-statement-container">
-    <div>
-      <label style="float: left;">Despesas no período</label><label class="financial-statement-expense">R$ -2870,00</label>
-      <label style="float: left;">Despesas no período</label><label class="financial-statement-receipt">R$ +4870,00</label>
-
-    </div>
+  <div   class="financial-statement-container">
+      <div>
+        <label>Despesas no período</label><label class="financial-statement-values color-green">{{expenseReport.valorTotal | currency:'BRL'}}</label>
+      </div>
+      <div style="border-bottom: 1px solid black;">
+        <label>Receitas no período</label><label class="financial-statement-values color-red">{{totalReceipt | currency:'BRL':true}}</label>
+      </div>
+      <div>
+        <label>Total</label><label class="financial-statement-values"  [style.color]="getFinancialStatement() > 0 ? '#4BC949': '#D00000'">{{getFinancialStatement() | currency:'BRL':true}}</label>
+      </div>
   </div>
 
-  <app-expense-table-title [title]="tableTitle"></app-expense-table-title>
+  <div style="margin-top: 40px; text-align: center; font-weight: bold; font-size: 16px;">
+    <label>LANÇAMENTOS</label>
+  </div>
   <app-expense-group *ngIf="isSuccess" [expenseGroups]="gruposLancamentos"></app-expense-group>
+  <div>
+    <button>+Expense</button>
+  </div>
   <br><br><br><br>
 </div>
 

@@ -1,0 +1,10 @@
+.header {
+  background-color: #030091;
+}
+
+.grid {
+  width: 100%;
+  display: grid;
+  grid: auto / auto auto;
+  gap: 5px;
+}

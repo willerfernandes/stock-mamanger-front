@@ -4,6 +4,9 @@ import { DateAdapter } from '@angular/material/core';
 
 import { FormControl } from '@angular/forms';
 import { FakeService } from 'src/app/services/fake.service';
+import { GrupoLancamento } from 'src/app/entities/grupo-lancamento';
+import { ExpenseReport } from 'src/app/entities/expense-report';
+import { LOCALE_ID } from '@angular/core';
 @Component({
   selector: 'app-expense-dashboard',
   templateUrl: './expense-dashboard.component.html',
@@ -11,27 +14,32 @@ import { FakeService } from 'src/app/services/fake.service';
 })
 export class ExpenseDashboardComponent implements OnInit {
 
+
+  /// $$$$$ REFACTOR TO USE RES ON SINGLE VARIABLE OF TYPE EXPENSE REPORT $$$$$ ///
+
   // Pie
   public pieChartLabels: string[];
   public pieChartData: number[];
   public pieChartType = 'pie';
   public pieChartTitle = '';
 
+  // Dates
   public startDate: any;
   public endDate: any;
+
+
+  public gruposLancamentos: GrupoLancamento[];
+  public tableTitle = 'RESUMO DESPESAS';
+  public isSuccess = true;
+
+
+  public expenseReport: ExpenseReport;
+  public totalReceipt = 0;
+
 
   monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio',
   'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
-  /*, "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
-];*/
-
-
-  gruposLancamentos;
-  tableTitle = 'RESUMO DESPESAS';
-
-  public isSuccess = true;
 
   // events
   public chartClicked(e: any): void {
@@ -42,6 +50,9 @@ export class ExpenseDashboardComponent implements OnInit {
     console.log(e);
   }
 
+  public getFinancialStatement(): number {
+    return this.expenseReport.valorTotal - this.totalReceipt;
+  }
 
   setCurrentTile() {
     const startDate: Date = new Date(this.startDate.value.toISOString());
@@ -68,6 +79,7 @@ export class ExpenseDashboardComponent implements OnInit {
     this.fakeService.loadExpenseReport(startDate.toISOString(), endDate.toISOString()).subscribe(res => {
       console.log(res);
       if (res) {
+        this.expenseReport = res;
         this.pieChartLabels = res.itemGrafico.nome;
         this.pieChartData = res.itemGrafico.valor;
         this.gruposLancamentos = res.gruposLancamentos;
