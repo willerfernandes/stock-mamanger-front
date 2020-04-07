@@ -1,10 +1,71 @@
 
-.pie-chart {
-  width: 100%;
-  margin-top: 50px;
-  margin-left: 0px;
+/*------- TOP MESSAGE ------- */
+.top-message-container {
+  margin-top: 10px;
 }
 
+.top-message-icon {
+  padding-right: 30px;
+  margin-left: 20px;
+}
+/*---------------------------- */
+
+
+/*------- EXPENSE TITLE ------ */
+
+.pie-chart-title-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.pie-chart-title {
+display: inline;
+font-family: 'Roboto', 'sans-serif';
+vertical-align: middle;
+padding-left: 100px;
+padding-right: 100px;
+
+font-style: normal;
+font-weight: normal;
+font-size: 24px;
+line-height: 28px;
+align-items: center;
+text-align: center;
+
+color: #000000;
+}
+/*---------------------------- */
+
+/*------- FINANCIAL STATEMENT ------ */
+.financial-statement-container {
+  width: 300px;
+  height: auto;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.financial-statement-expense {
+  float: right;
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 21px;
+  color: #D00000;
+
+}
+
+.financial-statement-receipt {
+  float: right;
+  font-family: Roboto Condensed;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 21px;
+  color: #4BC949;
+}
+
+/*---------------------------- */
 .previous {
   display: inline;
   position: inherit;

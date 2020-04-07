@@ -1,6 +1,7 @@
-<div>
-  <h4 style="text-align:center">{{pieChartTitle}}</h4>
+<div class="pie-chart-container">
   <canvas baseChart
+        height="8"
+        width="8"
         [data]="pieChartData"
         [labels]="pieChartLabels"
         [chartType]="pieChartType"
@@ -8,6 +9,5 @@
         (chartHover)="chartHovered($event)"
         (chartClick)="chartClicked($event)">
   </canvas>
-  <br>
-  <br>
+
 </div>

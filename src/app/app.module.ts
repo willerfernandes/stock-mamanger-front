@@ -60,7 +60,6 @@ import { NativeDateModule } from '@angular/material';
 
 
 
-import { MainNavComponent } from './main-nav/main-nav.component';
 import { MainViewComponent } from './layouts/main-view/main-view.component';
 import { LoginViewComponent } from './account/login-view/login-view.component';
 import { SignupViewComponent } from './account/signup-view/signup-view.component';
@@ -89,6 +88,7 @@ import { BtnSecondaryBlueComponent } from './component/basic/btn-secondary-blue/
 import { BtnSecondaryBlueLargeComponent } from './component/basic/btn-secondary-blue-large/btn-secondary-blue-large.component';
 import { BtnPrimaryBlueLargeComponent } from './component/basic/btn-primary-blue-large/btn-primary-blue-large.component';
 import { UnderConstructionComponent } from './layouts/under-construction/under-construction.component';
+import { TopNavbarComponent } from './component/top-navbar/top-navbar.component';
 
 
 @NgModule({
@@ -107,7 +107,6 @@ import { UnderConstructionComponent } from './layouts/under-construction/under-c
     UserDetailComponent,
     UserNewComponent,
     NavbarComponent,
-    MainNavComponent,
     MainViewComponent,
     LoginViewComponent,
     SignupViewComponent,
@@ -133,7 +132,8 @@ import { UnderConstructionComponent } from './layouts/under-construction/under-c
     BtnSecondaryBlueComponent,
     BtnSecondaryBlueLargeComponent,
     BtnPrimaryBlueLargeComponent,
-    UnderConstructionComponent
+    UnderConstructionComponent,
+    TopNavbarComponent
   ],
   imports: [
     BrowserModule,

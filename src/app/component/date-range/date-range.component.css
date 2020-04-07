@@ -1,6 +1,5 @@
-.dateRangeCentered {
-  align-content: center;
-  text-align: center;
+/*.date-range-container {
+  margin-top: 10px;
 }
 
 .img {
@@ -12,8 +11,32 @@
 
 
 .datePicker {
-  padding: 20px;
+  padding: 0px;
   font-style: inherit;
   font-weight: bold;
   font-family: 'Roboto', ;
+}*/
+
+@media only screen and (max-width: 600px) {
+  .date-range-container {
+    margin-top: 10px;
+    width: 100%;
+    margin-left: 10%;
+  }
+
+  .img {
+    width: 60%;
+    height: 60%;
+    padding: 0px;
+
+  }
+
+
+  .datePicker {
+    padding: 10px;
+    width: 110px;
+    font-style: inherit;
+    font-weight: bold;
+    font-family: 'Roboto', ;
+  }
 }

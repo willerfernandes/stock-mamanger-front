@@ -1,12 +1,7 @@
 .navbar {
-  background-color:transparent;
+  background-color:#030091;
   border-bottom: 1px ridge #965af7;
-}
-
-
-.navbar-brand {
-    font: bold;
-    color: #965af7;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.5);
 }
 
 .dropdown {

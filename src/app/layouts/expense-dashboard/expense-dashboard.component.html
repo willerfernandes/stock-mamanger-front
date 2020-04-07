@@ -1,14 +1,26 @@
 <div>
-  <div style="text-align: center;">
-    <h1 style="display: inline;"><</h1><h1 style="text-align: center; display: inline;  padding: 20px;">{{pieChartTitle}}</h1><h1 style="display: inline;">></h1>
+  <app-main-nav-bar></app-main-nav-bar>
+  <div class="top-message-container">
+    <img src='./assets/img/icone-calendario.svg' class="top-message-icon">
+     <label >Veja suas despesas desse mês!</label>
   </div>
-
-  <div class="pie-chart">
-    <app-pie-chart *ngIf="isSuccess;else show_error_page" [pieChartLabels]="pieChartLabels"
-      [pieChartData]="pieChartData"> </app-pie-chart>
+  <div class="pie-chart-title-container">
+    <img src='./assets/img/arrow-backward.svg' style="display: inline;"><label class="pie-chart-title">{{pieChartTitle}}</label><img src='./assets/img/arrow-forward.svg' style="display: inline;">
   </div>
   <app-date-range [startDate]="startDate" [endDate]="endDate"
     (reloadButtonClicked)="get_expenses_resume(startDate.value, endDate.value)"></app-date-range>
+
+  <app-pie-chart *ngIf="isSuccess;else show_error_page" [pieChartLabels]="pieChartLabels"
+  [pieChartData]="pieChartData"> </app-pie-chart>
+
+  <div class="financial-statement-container">
+    <div>
+      <label style="float: left;">Despesas no período</label><label class="financial-statement-expense">R$ -2870,00</label>
+      <label style="float: left;">Despesas no período</label><label class="financial-statement-receipt">R$ +4870,00</label>
+
+    </div>
+  </div>
+
   <app-expense-table-title [title]="tableTitle"></app-expense-table-title>
   <app-expense-group *ngIf="isSuccess" [expenseGroups]="gruposLancamentos"></app-expense-group>
   <br><br><br><br>
