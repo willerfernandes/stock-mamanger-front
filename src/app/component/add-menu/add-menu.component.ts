@@ -11,12 +11,15 @@ export class AddMenuComponent implements OnInit {
 
   @Input()
 
-  public isAddMenuActive: boolean;
+  public isAddMenuActive = false;
   public isAddMenuActiveChange = new EventEmitter<boolean>();
 
 
   @Output()
-  public menuDismissed = new EventEmitter();
+  public isAddMenuDismissedTrue = new EventEmitter();
+
+  @Output()
+  public isAddMenuDismissedFalse = new EventEmitter();
 
   public onLostMenuFocus(event: any): void {
     console.log('lost focus emitted');
@@ -25,17 +28,16 @@ export class AddMenuComponent implements OnInit {
   }
 
   public onAddButtonClicked(event: any): void {
-    if (!this.isAddMenuActive) {
+    if (this.isAddMenuActive === false) {
       console.log('isMenuActiveNow');
       this.isAddMenuActive = true;
-      this.menuDismissed.emit(true);
+      this.isAddMenuDismissedTrue.emit(true);
       this.isAddMenuActiveChange.emit(true);
       console.log(this.isAddMenuActive);
-    }
-    else {
+    } else {
 
       this.isAddMenuActive = false;
-      this.menuDismissed.emit(false);
+      this.isAddMenuDismissedFalse.emit(false);
       this.isAddMenuActiveChange.emit(false);
       console.log('isMenuDisabledNow. isAddMenuActive =');
       console.log(this.isAddMenuActive);

@@ -66,10 +66,23 @@ export class ExpenseDashboardComponent implements OnInit {
   }
 
   public onMenuDismissed(): void {
-    //document.getElementById('mainDiv').style.opacity = '1';
+    console.log('Returning Opacity!');
+    document.getElementById('mainDiv').style.opacity = '1.0';
     this.isAddMenuActive = false;
     console.log('Menu Dismissed!');
     this.ref.detectChanges();
+  }
+
+  returnNornalOpacity(isMenuActive: boolean) {
+      console.log('Returning Opacity!');
+      document.getElementById('mainDiv').style.opacity = '1.0';
+      document.getElementById('mainDiv').style.pointerEvents = 'auto';
+  }
+
+  setOpacity() {
+    console.log('Setting Opacity!');
+    document.getElementById('mainDiv').style.opacity = '0.2';
+    document.getElementById('mainDiv').style.pointerEvents = 'none';
   }
 
   public getFinancialStatement(): number {

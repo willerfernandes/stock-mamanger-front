@@ -1,6 +1,6 @@
 
 <link href='https://fonts.googleapis.com/css?family=Roboto Condensed' rel='stylesheet'>
-<div id="mainDiv" [style.opacity] = 'isAddMenuActive ? 0.2: 1' (click)="onMenuDismissed()">
+<div id="mainDiv" [style.opacity] = 'isAddMenuActive ? 0.2: 1.0' (click)="onMenuDismissed()">
   <app-main-nav-bar></app-main-nav-bar>
   <div class="top-message-container">
     <img src='./assets/img/icone-calendario.svg' class="top-message-icon">
@@ -40,8 +40,8 @@
     [(twoWayActive)]="isActiveTwoWay">
   </app-add-menu-->
   <app-add-menu
-    (click)="onButtonAddClick()"
-    (menuDismissed)="onMenuDismissed()"
+    (isAddMenuDismissedTrue)="setOpacity($event)"
+    (isAddMenuDismissedFalse)="returnNornalOpacity($event)"
     ([isAddMenuActive])="isAddMenuActive">
 
   </app-add-menu>
