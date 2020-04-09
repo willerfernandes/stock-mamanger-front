@@ -1,6 +1,6 @@
 
 <link href='https://fonts.googleapis.com/css?family=Roboto Condensed' rel='stylesheet'>
-<div>
+<div id="mainDiv" [style.opacity] = 'isAddMenuActive ? 0.2: 1' (click)="onMenuDismissed()">
   <app-main-nav-bar></app-main-nav-bar>
   <div class="top-message-container">
     <img src='./assets/img/icone-calendario.svg' class="top-message-icon">
@@ -17,26 +17,36 @@
 
   <div   class="financial-statement-container">
       <div>
-        <label>Despesas no período</label><label class="financial-statement-values color-green">{{expenseReport.valorTotal | currency:'BRL'}}</label>
+        <label>Despesas no período</label><label class="financial-statement-values color-green">{{expenseReport.valorTotal | currency:'BRL':'symbol'}}</label>
       </div>
       <div style="border-bottom: 1px solid black;">
-        <label>Receitas no período</label><label class="financial-statement-values color-red">{{totalReceipt | currency:'BRL':true}}</label>
+        <label>Receitas no período</label><label class="financial-statement-values color-red">{{totalReceipt | currency:'BRL':'symbol'}}</label>
       </div>
       <div>
         <label>Total</label><label class="financial-statement-values"  [style.color]="getFinancialStatement() > 0 ? '#4BC949': '#D00000'">{{getFinancialStatement() | currency:'BRL':true}}</label>
       </div>
   </div>
-
   <div style="margin-top: 40px; text-align: center; font-weight: bold; font-size: 16px;">
     <label>LANÇAMENTOS</label>
   </div>
   <app-expense-group *ngIf="isSuccess" [expenseGroups]="gruposLancamentos"></app-expense-group>
-  <div>
-    <button>+Expense</button>
-  </div>
   <br><br><br><br>
 </div>
+<div class="add-button">
+  <!--app-add-menu
+    (click)="onButtonAddClick()"
+    (cancelClicked)="inactivateMenu()"
+    (focusLost)="inactivateMenu()"
+    [(twoWayActive)]="isActiveTwoWay">
+  </app-add-menu-->
+  <app-add-menu
+    (click)="onButtonAddClick()"
+    (menuDismissed)="onMenuDismissed()"
+    ([isAddMenuActive])="isAddMenuActive">
 
+  </app-add-menu>
+</div>
+<div  *ngIf="isAddMenuActive">THIS IS WHEN TWO WAY ACTIVE WITH VALUE= <label>{{isAddMenuActive}}</label></div>
 
 
 <ng-template #show_error_page>

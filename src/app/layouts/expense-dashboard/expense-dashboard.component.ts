@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ExpenseService } from './../../services/expense.service';
 import { DateAdapter } from '@angular/material/core';
 
@@ -37,9 +37,15 @@ export class ExpenseDashboardComponent implements OnInit {
   public totalReceipt = 0;
 
 
+  public isAddMenuActive: boolean;
+
   monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio',
   'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
+  constructor(private ref: ChangeDetectorRef,
+              private expenseService: ExpenseService,
+              private fakeService: FakeService,
+              private apapter: DateAdapter<any>) { }
 
   // events
   public chartClicked(e: any): void {
@@ -48,6 +54,22 @@ export class ExpenseDashboardComponent implements OnInit {
 
   public chartHovered(e: any): void {
     console.log(e);
+  }
+
+  public inactivateMenu(): void {
+    console.log('inactivated');
+    this.isAddMenuActive = false;
+  }
+
+  public onButtonAddClick(): void {
+    this.isAddMenuActive = true;
+  }
+
+  public onMenuDismissed(): void {
+    //document.getElementById('mainDiv').style.opacity = '1';
+    this.isAddMenuActive = false;
+    console.log('Menu Dismissed!');
+    this.ref.detectChanges();
   }
 
   public getFinancialStatement(): number {
@@ -72,7 +94,6 @@ export class ExpenseDashboardComponent implements OnInit {
 
   }
 
-
   get_expenses_resume(startDate: any, endDate: any) {
     this.setCurrentTile();
     console.log('Get Expense Resume!');
@@ -91,7 +112,6 @@ export class ExpenseDashboardComponent implements OnInit {
     });
   }
 
-  constructor(private expenseService: ExpenseService, private fakeService: FakeService, private apapter: DateAdapter<any>) { }
 
   ngOnInit() {
     this.apapter.setLocale('br');

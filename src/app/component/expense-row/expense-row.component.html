@@ -1,7 +1,7 @@
 <div>
-  <label>Lancamentos</label>
+  <!--label>Lancamentos</label-->
   <table class="table  table-hover table-sm">
-    <thead class="thead-light">
+    <thead>
       <tr>
         <th scope="col"></th>
         <th scope="col"></th>
@@ -14,8 +14,7 @@
         <th scope="row">{{expense.descricao}}</th>
         <td>{{expense.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}}</td>
         <td class="date">{{ expense.data | date: 'dd/MM/yyyy' }}</td>
-        <td style="width: 5%"><button (click)="delete_expense(expense.id)" class="btn btn-light"><span
-              class="badge">X</span></button></td>
+        <td><button class="delete-row-button"  (click)="delete_expense(expense.id)">x</button></td>
       </tr>
     </tbody>
   </table>

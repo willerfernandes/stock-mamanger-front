@@ -1,0 +1,16 @@
+<div (focusout)="onLostMenuFocus()" [style.display]="isAddMenuActive ? 'initial' : 'none'" style="float: right;">
+  <div class="menu-itens-container">
+    <label>Ganhos</label> <img class="menu-item" [src]="'./assets/img/add-menu-receipt.svg'">
+  </div>
+  <br>
+  <div class="menu-itens-container">
+    <label>Despesas</label><img class="menu-item" [src]="'./assets/img/add-menu-expense.svg'">
+  </div>
+</div>
+<div>
+  <img style="float: right;"
+  [src]="isAddMenuActive ? './assets/img/add-menu-button-cancel.svg' : './assets/img/add-button-img.svg'"
+  (click)="onAddButtonClicked()">
+</div>
+
+

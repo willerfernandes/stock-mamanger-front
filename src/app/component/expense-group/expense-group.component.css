@@ -8,3 +8,9 @@
   grid: auto / auto auto;
   gap: 5px;
 }
+
+.expense-category {
+  margin-top: 5px;
+  margin-left: 3px;
+  margin-right: 3px;
+}

@@ -1,0 +1,14 @@
+.grid {
+  width: 100%;
+  display: grid;
+  grid: auto / auto auto;
+  gap: 5px;
+}
+
+.menu-item {
+  float: right;
+}
+.menu-itens-container:hover {
+  float: right;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
