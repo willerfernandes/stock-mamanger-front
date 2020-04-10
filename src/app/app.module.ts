@@ -20,8 +20,9 @@ import { UserNewComponent } from './register/user/user-new/user-new.component';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
 import { LayoutModule } from '@angular/cdk/layout';
 
+import { CommonModule, CurrencyPipe} from '@angular/common';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatCheckboxModule} from '@angular/material';
+import {MatCheckboxModule, MatBottomSheetModule} from '@angular/material';
 import {MatButtonModule} from '@angular/material';
 import {MatInputModule} from '@angular/material/input';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
@@ -90,7 +91,8 @@ import { BtnPrimaryBlueLargeComponent } from './component/basic/btn-primary-blue
 import { UnderConstructionComponent } from './layouts/under-construction/under-construction.component';
 import { TopNavbarComponent } from './component/top-navbar/top-navbar.component';
 import { AddMenuComponent } from './component/add-menu/add-menu.component';
-
+import { ExpenseBottomSheetComponent } from './component/expense-bottom-sheet/expense-bottom-sheet.component';
+import { NewExpenseViewComponent } from './layouts/new-expense-view/new-expense-view.component';
 
 @NgModule({
   declarations: [
@@ -135,7 +137,12 @@ import { AddMenuComponent } from './component/add-menu/add-menu.component';
     BtnPrimaryBlueLargeComponent,
     UnderConstructionComponent,
     TopNavbarComponent,
-    AddMenuComponent
+    AddMenuComponent,
+    ExpenseBottomSheetComponent,
+    NewExpenseViewComponent
+  ],
+  entryComponents: [
+    NewExpenseViewComponent
   ],
   imports: [
     BrowserModule,
@@ -182,13 +189,15 @@ import { AddMenuComponent } from './component/add-menu/add-menu.component';
     NativeDateModule,
     MatCardModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatBottomSheetModule
 
   ],
   providers: [
     MatDatepickerModule,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    CurrencyPipe
   ],
   bootstrap: [AppComponent]
 })

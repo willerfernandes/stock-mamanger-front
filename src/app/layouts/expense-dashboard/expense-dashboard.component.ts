@@ -1,12 +1,13 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ExpenseService } from './../../services/expense.service';
 import { DateAdapter } from '@angular/material/core';
+import {MatBottomSheet} from '@angular/material/bottom-sheet';
 
 import { FormControl } from '@angular/forms';
 import { FakeService } from 'src/app/services/fake.service';
 import { GrupoLancamento } from 'src/app/entities/grupo-lancamento';
 import { ExpenseReport } from 'src/app/entities/expense-report';
-import { LOCALE_ID } from '@angular/core';
+import { NewExpenseViewComponent } from '../new-expense-view/new-expense-view.component';
 @Component({
   selector: 'app-expense-dashboard',
   templateUrl: './expense-dashboard.component.html',
@@ -39,13 +40,16 @@ export class ExpenseDashboardComponent implements OnInit {
 
   public isAddMenuActive: boolean;
 
+  public expenseClicked = false;
+
   monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio',
   'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
   constructor(private ref: ChangeDetectorRef,
               private expenseService: ExpenseService,
               private fakeService: FakeService,
-              private apapter: DateAdapter<any>) { }
+              private apapter: DateAdapter<any>,
+              private bottomSheet: MatBottomSheet) { }
 
   // events
   public chartClicked(e: any): void {
@@ -54,6 +58,19 @@ export class ExpenseDashboardComponent implements OnInit {
 
   public chartHovered(e: any): void {
     console.log(e);
+  }
+
+
+  public activeExpense(): void {
+    this.expenseClicked = true;
+    console.log('expenseClicked');
+    document.getElementById('mainDiv').style.opacity = '1.0';
+    document.getElementById('mainDiv').style.pointerEvents = 'auto';
+    this.openBottomSheet();
+  }
+
+  openBottomSheet(): void {
+    this.bottomSheet.open(NewExpenseViewComponent);
   }
 
   public inactivateMenu(): void {
@@ -73,7 +90,7 @@ export class ExpenseDashboardComponent implements OnInit {
     this.ref.detectChanges();
   }
 
-  returnNornalOpacity(isMenuActive: boolean) {
+  returnNornalOpacity() {
       console.log('Returning Opacity!');
       document.getElementById('mainDiv').style.opacity = '1.0';
       document.getElementById('mainDiv').style.pointerEvents = 'auto';
@@ -81,7 +98,7 @@ export class ExpenseDashboardComponent implements OnInit {
 
   setOpacity() {
     console.log('Setting Opacity!');
-    document.getElementById('mainDiv').style.opacity = '0.2';
+    document.getElementById('mainDiv').style.opacity = '0.1';
     document.getElementById('mainDiv').style.pointerEvents = 'none';
   }
 

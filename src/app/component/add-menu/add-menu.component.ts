@@ -21,30 +21,53 @@ export class AddMenuComponent implements OnInit {
   @Output()
   public isAddMenuDismissedFalse = new EventEmitter();
 
+  @Output()
+  public expenseClicked = new EventEmitter();
+
+  @Output()
+  public receiptClicked = new EventEmitter();
+
   public onLostMenuFocus(event: any): void {
     console.log('lost focus emitted');
     this.isAddMenuActive = false;
     this.isAddMenuActiveChange.emit(false);
   }
 
-  public onAddButtonClicked(event: any): void {
+  public onAddButtonClicked(): void {
     if (this.isAddMenuActive === false) {
-      console.log('isMenuActiveNow');
-      this.isAddMenuActive = true;
-      this.isAddMenuDismissedTrue.emit(true);
-      this.isAddMenuActiveChange.emit(true);
-      console.log(this.isAddMenuActive);
+      this.activateMenu();
     } else {
-
-      this.isAddMenuActive = false;
-      this.isAddMenuDismissedFalse.emit(false);
-      this.isAddMenuActiveChange.emit(false);
-      console.log('isMenuDisabledNow. isAddMenuActive =');
-      console.log(this.isAddMenuActive);
+      this.deactivateMenu();
     }
+  }
 
+  private deactivateMenu() {
+    this.isAddMenuActive = false;
+    this.isAddMenuDismissedFalse.emit(false);
+    this.isAddMenuActiveChange.emit(false);
+    console.log('isMenuDisabledNow. isAddMenuActive =');
+    console.log(this.isAddMenuActive);
+  }
+
+  private activateMenu() {
+    console.log('isMenuActiveNow');
+    this.isAddMenuActive = true;
+    this.isAddMenuDismissedTrue.emit(true);
+    this.isAddMenuActiveChange.emit(true);
+    console.log(this.isAddMenuActive);
+  }
+
+  public onExpenseClicked() {
+    this.expenseClicked.emit();
+    this.deactivateMenu();
+  }
+
+  public onReceiptClicked() {
+    this.receiptClicked.emit();
+    this.deactivateMenu();
 
   }
+
 
   ngOnInit() {
   }
