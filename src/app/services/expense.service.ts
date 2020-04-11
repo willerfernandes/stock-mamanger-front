@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { UserAuth } from '../entities/user-auth';
 import { ExpenseReport } from '../entities/expense-report';
+import { Lancamento } from '../entities/lancamento';
+import { CategoriaLancamento } from '../entities/categoria-lancamento';
 
 
 @Injectable({
@@ -11,7 +12,8 @@ import { ExpenseReport } from '../entities/expense-report';
 export class ExpenseService {
 
   baseUrl = 'http://localhost:8080';
-  path = '/extrato';
+  expenseReportPath = '/extrato';
+  entryPath = '/lancamentos';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -24,9 +26,21 @@ export class ExpenseService {
 
   public loadExpenseReport(startDate: string, endDate: string): Observable<ExpenseReport> {
     console.log('Calling expense report...');
-    console.log(this.baseUrl + this.path + '?' + 'dataInicio=' + startDate + '&' + 'dataFim=' + endDate);
+    console.log(this.baseUrl + this.expenseReportPath + '?' + 'dataInicio=' + startDate + '&' + 'dataFim=' + endDate);
     console.log('Done!');
     return this.httpClient.get<ExpenseReport>(
-       + this.path + '?' + 'dataInicio=' + startDate + '&' + 'dataFim=' + endDate, this.httpOptions);
+     this.baseUrl  + this.expenseReportPath + '?' + 'dataInicio=' + startDate + '&' + 'dataFim=' + endDate, this.httpOptions);
+  }
+
+  public saveEntry(entry: Lancamento): Observable<Lancamento> {
+    return this.httpClient.post<Lancamento>(this.baseUrl + this.entryPath, JSON.stringify(entry));
+  }
+
+  public deleteEntry(id: number): Observable<Lancamento> {
+    return this.httpClient.delete<Lancamento>(this.baseUrl + this.entryPath + '/' + id);
+  }
+
+  public loadEntryGroups(): Observable<CategoriaLancamento[]> {
+    return this.httpClient.get<CategoriaLancamento[]>(this.baseUrl + this.entryPath);
   }
 }

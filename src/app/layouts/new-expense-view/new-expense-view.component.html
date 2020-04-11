@@ -7,7 +7,7 @@
   <div class="containter-wraper">
     <label class="color-primary input-label-large">Valor:</label>
     <label class="color-gray input-label padding-large">R$</label>
-    <input
+    <input #amount
     type="number" placeholder="0000,00"
     (blur)="transformAmount($event)" [(ngModel)]="formattedAmount"
     class="input-small padding-small" >
@@ -15,19 +15,22 @@
   </div>
 <div class="container">
   <label class="color-primary input-label">Tipo:</label>
-  <input class="input-medium padding-large" type="text">
+  <select #entryGroupSelect class="input-medium padding-large" #entryGroupSelect>
+    <option value="0">---</option>
+    <option *ngFor="let entryGroup of allEntryGroups" [value]="entryGroup.id">{{entryGroup.nome}}</option>
+  </select>
 </div>
 <div class="container">
   <label class="color-primary input-label">Descrição:</label>
-  <input class= "input-large" type="text">
+  <textarea #description class= "input-large" type="text"></textarea>
 </div>
 <div class="container">
   <mat-form-field class="datePicker">
-    <input class="color-primary input-label" matInput [matDatepicker]="picker1" placeholder="Data" [formControl]="date">
+    <input #date class="color-primary input-label" matInput [matDatepicker]="picker1" placeholder="Data">
     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
     <mat-datepicker #picker1></mat-datepicker>
   </mat-form-field>
 </div>
 <div style="display: flex; justify-content: center;" class="container">
-  <btn-primary-blue [text]="'OK'" (click)="saveExpense($event)" ></btn-primary-blue>
+  <btn-primary-blue [text]="'OK'" (click)="saveExpense($event, entryGroupSelect.value, date.value, description.value, amount.value)" ></btn-primary-blue>
 </div>

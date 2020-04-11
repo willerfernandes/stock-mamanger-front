@@ -8,6 +8,7 @@ import { FakeService } from 'src/app/services/fake.service';
 import { GrupoLancamento } from 'src/app/entities/grupo-lancamento';
 import { ExpenseReport } from 'src/app/entities/expense-report';
 import { NewExpenseViewComponent } from '../new-expense-view/new-expense-view.component';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 @Component({
   selector: 'app-expense-dashboard',
   templateUrl: './expense-dashboard.component.html',
@@ -45,7 +46,8 @@ export class ExpenseDashboardComponent implements OnInit {
   monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio',
   'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
-  constructor(private ref: ChangeDetectorRef,
+  constructor(private authService: AuthenticationService,
+              private ref: ChangeDetectorRef,
               private expenseService: ExpenseService,
               private fakeService: FakeService,
               private apapter: DateAdapter<any>,
@@ -60,6 +62,10 @@ export class ExpenseDashboardComponent implements OnInit {
     console.log(e);
   }
 
+  public entryDeleted(): void {
+    this.authService.openDialog('Lançamento excluido com sucesso', 2000);
+    this.ngOnInit();
+  }
 
   public activeExpense(): void {
     this.expenseClicked = true;
@@ -70,7 +76,11 @@ export class ExpenseDashboardComponent implements OnInit {
   }
 
   openBottomSheet(): void {
-    this.bottomSheet.open(NewExpenseViewComponent);
+    const bottomSheet = this.bottomSheet.open(NewExpenseViewComponent);
+
+    bottomSheet.afterDismissed().subscribe(() => {
+      this.ngOnInit();
+    });
   }
 
   public inactivateMenu(): void {
@@ -155,8 +165,5 @@ export class ExpenseDashboardComponent implements OnInit {
     this.endDate = new FormControl(dataFinal);
     this.get_expenses_resume(this.startDate.value, this.endDate.value);
   }
-
-
-
 
 }

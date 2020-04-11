@@ -1,4 +1,5 @@
 import { Component, OnInit, Input , EventEmitter, Output} from '@angular/core';
+import { ExpenseService } from 'src/app/services/expense.service';
 
 @Component({
   selector: 'app-expense-row',
@@ -13,9 +14,10 @@ export class ExpenseRowComponent implements OnInit {
   @Output()
   deleteRowEvent = new EventEmitter();
 
-  constructor() { }
+  constructor(private expenseService: ExpenseService) { }
 
-  delete_expense(id: any) {
+  deleteExpense(id: any) {
+    this.expenseService.deleteEntry(id);
     this.deleteRowEvent.emit(id);
   }
 

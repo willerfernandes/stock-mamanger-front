@@ -9,6 +9,7 @@ import { ItemGrafico } from '../entities/item-grafico';
 import { GrupoLancamento } from '../entities/grupo-lancamento';
 import { Lancamento } from '../entities/lancamento';
 import { User } from '../entities/user';
+import { CategoriaLancamento } from '../entities/categoria-lancamento';
 
 @Injectable({
   providedIn: 'root'
@@ -52,9 +53,9 @@ export class FakeService {
     // --------- EXPENSE REPORT ------------
     const report = new ExpenseReport();
     report.itemGrafico = new ItemGrafico();
-    report.valorTotal = 10000;
-    report.itemGrafico.nome = ['Despesa 1', 'Despesa 2'];
-    report.itemGrafico.valor = [45000.12, 10321.55];
+    report.valorTotal = 503.67;
+    report.itemGrafico.nome = ['Alimentação', 'Transporte'];
+    report.itemGrafico.valor = [400.12, 103.55];
 
     //grupo 1
     const grupo1 = new GrupoLancamento();
@@ -102,6 +103,7 @@ export class FakeService {
     lancamento4.descricao = 'Almoço no trabalho na sexta';
 
     grupo1.lancamentos = [lancamento1, lancamento2];
+    grupo2.lancamentos = [lancamento3, lancamento4];
 
     report.gruposLancamentos = [grupo1, grupo2];
 
@@ -111,5 +113,38 @@ export class FakeService {
 
     // --------- EMPTY EXPENSE REPORT ------------
     //return of(null);
+  }
+
+  public saveEntry(entry: Lancamento): Observable<Lancamento> {
+    return of(entry);
+  }
+
+  public deleteEntry(id: number): Observable<Lancamento> {
+    const entry = new Lancamento();
+    return of(entry);
+  }
+
+  public loadEntryGroups(): Observable<CategoriaLancamento[]> {
+    const entryGroup1 = new CategoriaLancamento();
+    entryGroup1.id = 1;
+    entryGroup1.nome = 'Alimentacao';
+    entryGroup1.descricao = 'Despesas com alimentação';
+    entryGroup1.tipo = 'DESPESA';
+
+    const entryGroup2 = new CategoriaLancamento();
+    entryGroup2.id = 2;
+    entryGroup2.nome = 'Uber';
+    entryGroup2.descricao = 'Despesas com transporte de Uber';
+    entryGroup2.tipo = 'DESPESA';
+
+    const entryGroup3 = new CategoriaLancamento();
+    entryGroup3.id = 3;
+    entryGroup3.nome = 'Roupas';
+    entryGroup3.descricao = 'Despesas com roupas';
+    entryGroup3.tipo = 'DESPESA';
+
+    const allEntries = [entryGroup1, entryGroup2, entryGroup3];
+
+    return of(allEntries);
   }
 }

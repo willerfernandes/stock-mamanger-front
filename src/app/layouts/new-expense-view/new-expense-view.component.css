@@ -63,7 +63,7 @@
   width: 250px;
 }
 
-input[type=text], input[type=number], input[type=password] {
+textarea, select, input[type=text], input[type=number], input[type=password] {
   padding-left: 12px;
   padding: 02px 05px;
   background-color: white;
@@ -71,7 +71,7 @@ input[type=text], input[type=number], input[type=password] {
   border-left: none;
   border-right: none;
   border-bottom: 1px ridge #030091;
-  font-size: 20px;
+  font-size: 16px;
 
 }
 

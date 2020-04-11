@@ -14,7 +14,7 @@
         <th scope="row">{{expense.descricao}}</th>
         <td>{{expense.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}}</td>
         <td class="date">{{ expense.data | date: 'dd/MM/yyyy' }}</td>
-        <td><button class="delete-row-button"  (click)="delete_expense(expense.id)">x</button></td>
+        <td><button class="delete-row-button"  (click)="deleteExpense(expense.id)">x</button></td>
       </tr>
     </tbody>
   </table>

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ExpenseService } from 'src/app/services/expense.service';
 
 @Component({
   selector: 'app-expense-group',
@@ -15,7 +16,7 @@ export class ExpenseGroupComponent implements OnInit {
 
   constructor() { }
 
-  onDelete(event: any) {
+  onDelete(event: any, id: number) {
     this.deleteRowEvent.emit(event);
   }
 

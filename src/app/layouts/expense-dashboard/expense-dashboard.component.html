@@ -29,15 +29,9 @@
   <div style="margin-top: 40px; text-align: center; font-weight: bold; font-size: 16px;">
     <label>LANÇAMENTOS</label>
   </div>
-  <app-expense-group *ngIf="isSuccess" [expenseGroups]="gruposLancamentos"></app-expense-group>
+  <app-expense-group *ngIf="isSuccess" [expenseGroups]="gruposLancamentos" (deleteRowEvent)="entryDeleted()"></app-expense-group>
 </div>
 <div class="add-button">
-  <!--app-add-menu
-    (click)="onButtonAddClick()"
-    (cancelClicked)="inactivateMenu()"
-    (focusLost)="inactivateMenu()"
-    [(twoWayActive)]="isActiveTwoWay">
-  </app-add-menu-->
   <app-add-menu
     (isAddMenuDismissedTrue)="setOpacity()"
     (isAddMenuDismissedFalse)="returnNornalOpacity()"
@@ -46,7 +40,6 @@
 
   </app-add-menu>
 </div>
-<!--div  *ngIf="isAddMenuActive">THIS IS WHEN TWO WAY ACTIVE WITH VALUE= <label>{{isAddMenuActive}}</label></div-->
 <div *ngIf="expenseClicked">
   WOW!
 </div>
