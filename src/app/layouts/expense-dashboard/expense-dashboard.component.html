@@ -7,7 +7,7 @@
      <label >Veja suas despesas desse mês!</label>
   </div>
   <div class="pie-chart-title-container">
-    <img src='./assets/img/arrow-backward.svg' style="display: inline;"><label class="pie-chart-title">{{pieChartTitle}}</label><img src='./assets/img/arrow-forward.svg' style="display: inline;">
+    <img src='./assets/img/arrow-backward.svg' style="display: inline;" (click)="clickArrowPrevious()"><label class="pie-chart-title">{{pieChartTitle}}</label><img src='./assets/img/arrow-forward.svg' style="display: inline;" (click)="clickArrowNext()">
   </div>
   <app-date-range [startDate]="startDate" [endDate]="endDate"
     (reloadButtonClicked)="get_expenses_resume(startDate.value, endDate.value)"></app-date-range>

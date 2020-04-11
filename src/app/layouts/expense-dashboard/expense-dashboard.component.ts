@@ -62,6 +62,32 @@ export class ExpenseDashboardComponent implements OnInit {
     console.log(e);
   }
 
+  public clickArrowPrevious(): void {
+    const startDate: Date = new Date(this.startDate.value.toISOString());
+
+    startDate.setMonth(startDate.getMonth() - 1);
+    startDate.setDate(1);
+
+    const newEndDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0);
+
+    this.startDate = new FormControl(startDate);
+    this.endDate = new FormControl(newEndDate);
+    this.get_expenses_resume(this.startDate.value, this.endDate.value);
+  }
+
+  public clickArrowNext(): void {
+    const startDate: Date = new Date(this.startDate.value.toISOString());
+
+    startDate.setMonth(startDate.getMonth() + 1);
+    startDate.setDate(1);
+
+    const newEndDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0);
+
+    this.startDate = new FormControl(startDate);
+    this.endDate = new FormControl(newEndDate);
+    this.get_expenses_resume(this.startDate.value, this.endDate.value);
+  }
+
   public entryDeleted(): void {
     this.authService.openDialog('Lançamento excluido com sucesso', 2000);
     this.ngOnInit();
@@ -124,8 +150,8 @@ export class ExpenseDashboardComponent implements OnInit {
       const consideredStartDate = new Date(startDate.getFullYear(), startDate.getMonth(), 1);
       const consideredEndDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0);
       this.pieChartTitle = this.monthNames[startDate.getMonth()];
-      if (startDate === consideredStartDate && endDate === consideredEndDate) {
-        console.log('Mesma data');
+      if (startDate.getTime() === consideredStartDate.getTime()
+      && endDate.getTime() === consideredEndDate.getTime()) {
         //this.setCurrentTile = this.monthNames[startDate.getMonth()];
       }
     } else {
