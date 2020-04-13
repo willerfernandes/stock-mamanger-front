@@ -1,7 +1,7 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 
 <div class="container">
-  <label class="top-label">Aqui voçê registra suas despesas</label>
+  <label class="top-label">Despesas</label><img src='./assets/img/close-gray-icon.svg' (click)="closeButtonClicked()" style="float: right;">
 </div>
 <div class="container">
   <div class="containter-wraper">
@@ -15,10 +15,22 @@
   </div>
 <div class="container">
   <label class="color-primary input-label">Tipo:</label>
-  <select #entryGroupSelect class="input-medium padding-large" #entryGroupSelect>
+  <select #entryGroupSelect (change)="selectValueChanged(entryGroupSelect)" class="input-medium padding-large" #entryGroupSelect>
     <option value="0">---</option>
     <option *ngFor="let entryGroup of allEntryGroups" [value]="entryGroup.id">{{entryGroup.nome}}</option>
+    <option style="font-weight: bold;" value="new">*Criar Novo*</option>
   </select>
+  <div *ngIf="isNewEntryGroup" >
+      <div>
+        <label class="color-primary input-label">Nome do grupo:</label>
+        <input #newEntryGroupName type="text" class="input-small padding-small"><input>
+      </div>
+      <div>
+        <label class="color-primary input-label">Descrição do grupo:</label>
+        <input #newEntryGroupDescription type="text" class="input-small padding-small"><input>
+      </div>
+  </div>
+
 </div>
 <div class="container">
   <label class="color-primary input-label">Descrição:</label>
@@ -26,11 +38,11 @@
 </div>
 <div class="container">
   <mat-form-field class="datePicker">
-    <input #date class="color-primary input-label" matInput [matDatepicker]="picker1" placeholder="Data">
+    <input  #date class="color-primary input-label" matInput [matDatepicker]="picker1" placeholder="Data">
     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-    <mat-datepicker #picker1></mat-datepicker>
+    <mat-datepicker id="dateInput" [startAt]="initialDate" #picker1></mat-datepicker>
   </mat-form-field>
 </div>
 <div style="display: flex; justify-content: center;" class="container">
-  <btn-primary-blue [text]="'OK'" (click)="saveExpense($event, entryGroupSelect.value, picker1, description.value, amount.value)" ></btn-primary-blue>
+  <btn-primary-blue [text]="'OK'" (click)="saveExpense($event, entryGroupSelect.value, newEntryGroupName?.value, newEntryGroupDescription?.value, picker1, description.value, amount.value)" ></btn-primary-blue>
 </div>

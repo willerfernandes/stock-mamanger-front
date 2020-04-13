@@ -16,17 +16,18 @@ export class JwtInterceptor implements HttpInterceptor {
         if (currentUser && currentUser.token) {
             request = request.clone({
                 setHeaders: {
-                    //Authorization: `Bearer ${currentUser.token}`
-                    'security-token': `${currentUser.token}`
+                  'Content-Type': 'application/json',
+                  'Access-Control-Allow-Origin': '*',
+                  'security-token': `${currentUser.token}`
                 }
             });
         }
 
         const requestHadling = next.handle(request);
 
-        //log response
-        console.log('Reponse from ' + request.urlWithParams);
-        requestHadling.subscribe( res => console.log(res));
+        // log response - calling endpoint again - should be fixed to log reponses
+        // console.log('Reponse from ' + request.urlWithParams);
+        // requestHadling.subscribe( res => console.log(res));
         return requestHadling;
     }
 }

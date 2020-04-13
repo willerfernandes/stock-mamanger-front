@@ -87,7 +87,6 @@ export class ExpenseDashboardComponent implements OnInit {
 
   public activeExpense(): void {
     this.expenseClicked = true;
-    console.log('expenseClicked');
     document.getElementById('mainDiv').style.opacity = '1.0';
     document.getElementById('mainDiv').style.pointerEvents = 'auto';
     this.openBottomSheet();
@@ -96,13 +95,13 @@ export class ExpenseDashboardComponent implements OnInit {
   openBottomSheet(): void {
     const bottomSheet = this.bottomSheet.open(NewExpenseViewComponent);
 
-    bottomSheet.afterDismissed().subscribe(() => {
+    bottomSheet.instance.entrySaved.subscribe( () => {
       this.ngOnInit();
     });
+
   }
 
   public inactivateMenu(): void {
-    console.log('inactivated');
     this.isAddMenuActive = false;
   }
 
@@ -111,21 +110,17 @@ export class ExpenseDashboardComponent implements OnInit {
   }
 
   public onMenuDismissed(): void {
-    console.log('Returning Opacity!');
     document.getElementById('mainDiv').style.opacity = '1.0';
     this.isAddMenuActive = false;
-    console.log('Menu Dismissed!');
     this.ref.detectChanges();
   }
 
   returnNornalOpacity() {
-      console.log('Returning Opacity!');
       document.getElementById('mainDiv').style.opacity = '1.0';
       document.getElementById('mainDiv').style.pointerEvents = 'auto';
   }
 
   setOpacity() {
-    console.log('Setting Opacity!');
     document.getElementById('mainDiv').style.opacity = '0.1';
     document.getElementById('mainDiv').style.pointerEvents = 'none';
   }
@@ -144,7 +139,7 @@ export class ExpenseDashboardComponent implements OnInit {
       this.pieChartTitle = this.monthNames[startDate.getMonth()];
       if (startDate.getTime() === consideredStartDate.getTime()
       && endDate.getTime() === consideredEndDate.getTime()) {
-        //this.setCurrentTile = this.monthNames[startDate.getMonth()];
+        // this.setCurrentTile = this.monthNames[startDate.getMonth()];
       }
     } else {
       this.pieChartTitle = 'Personalizado';
@@ -154,7 +149,6 @@ export class ExpenseDashboardComponent implements OnInit {
 
   get_expenses_resume(startDate: any, endDate: any) {
     this.setCurrentTile();
-    console.log('Get Expense Resume!');
     this.expenseService.loadExpenseReport(startDate.toISOString(), endDate.toISOString()).subscribe(res => {
       console.log(res);
       if (res) {
@@ -166,7 +160,6 @@ export class ExpenseDashboardComponent implements OnInit {
         this.isEmptyResult = this.totalExpenses === 0;
       } else {
         this.isSuccess = false;
-        console.log('No content -> Fill with empty wallet image!');
       }
     });
   }

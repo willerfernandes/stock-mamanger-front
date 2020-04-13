@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 export class AppComponent implements OnInit {
 
   isLoggedIn$: Observable<boolean>;
+  title = 'GovPredict';
 
   constructor(private authenticationService: AuthenticationService, private activeRouter: Router) {}
 

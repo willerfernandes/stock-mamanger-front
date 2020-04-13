@@ -15,12 +15,11 @@ export class ErrorInterceptor implements HttpInterceptor {
       console.log('Error calling api ' + request.urlWithParams + '...');
       const error = err.message || err.statusText;
       console.log(error);
-      console.log(err);
       let message: string;
       if (err.status === 0) {
         message = 'Falha na tentativa de conectar ao servidor!';
       } else if (err.status === 401) {
-        if (request.method !== 'login') {
+        if (request.method === 'login') {
           message = 'Login ou senha incorretos';
         } else {
           message = 'Sua sessão expirou! Favor realizar o login novamente';

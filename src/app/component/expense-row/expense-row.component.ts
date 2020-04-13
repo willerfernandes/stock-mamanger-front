@@ -1,5 +1,6 @@
 import { Component, OnInit, Input , EventEmitter, Output} from '@angular/core';
 import { ExpenseService } from 'src/app/services/expense.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-expense-row',
@@ -14,11 +15,15 @@ export class ExpenseRowComponent implements OnInit {
   @Output()
   deleteRowEvent = new EventEmitter();
 
-  constructor(private expenseService: ExpenseService) { }
+  constructor(private authenticationService: AuthenticationService, private expenseService: ExpenseService) { }
 
-  deleteExpense(id: any) {
-    this.expenseService.deleteEntry(id);
-    this.deleteRowEvent.emit(id);
+  public deleteExpense(id: any) {
+     this.expenseService.deleteEntry(id).subscribe( async () => {
+      this.deleteRowEvent.emit();
+    },
+    err => {
+      this.authenticationService.openDialog('Ops! Tivemos um erro ao excluir seu lançamento.', 3000);
+    });
   }
 
   ngOnInit() {

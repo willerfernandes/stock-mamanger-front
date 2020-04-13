@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import {MatBottomSheetRef} from '@angular/material/bottom-sheet';
 import {CurrencyPipe} from '@angular/common';
 import { ExpenseService } from 'src/app/services/expense.service';
@@ -6,6 +6,7 @@ import { FakeService } from 'src/app/services/fake.service';
 import { Lancamento } from 'src/app/entities/lancamento';
 import { CategoriaLancamento } from 'src/app/entities/categoria-lancamento';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-new-expense-view',
@@ -14,10 +15,14 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 })
 export class NewExpenseViewComponent implements OnInit {
 
-  public date: Date;
-  formattedAmount;
-  amount;
+  public isNewEntryGroup = false;
+  public initialDate = new FormControl(new Date());
+  public formattedAmount;
+  public amount;
   public allEntryGroups: CategoriaLancamento[];
+
+  @Output()
+  public entrySaved = new EventEmitter();
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -28,13 +33,22 @@ export class NewExpenseViewComponent implements OnInit {
 
     saveExpense(
       event: MouseEvent,
-      entryGroupId: number,
+      entryGroupId: string,
+      newEntryGroupName: string,
+      newEntryGroupDescription: string,
       date: any,
       description: string,
       value: number): void {
 
     const entryGroup = new CategoriaLancamento();
-    entryGroup.id = entryGroupId;
+    if (entryGroupId == null) {
+      entryGroup.nome = newEntryGroupName;
+      entryGroup.descricao = newEntryGroupDescription;
+      entryGroup.tipo = 'DESPESA';
+    } else {
+      entryGroup.id =  Number.parseInt(entryGroupId, 10);
+    }
+
 
     const entry = new Lancamento();
     entry.categoria = entryGroup;
@@ -42,12 +56,10 @@ export class NewExpenseViewComponent implements OnInit {
     entry.descricao = description;
     entry.tipo = 'DESPESA';
     entry.valor = value;
-
-    console.log(entry);
-
     this.bottomSheetRef.dismiss();
-    this.expenseService.saveEntry(entry).subscribe( res => {
+    this.expenseService.saveEntry(entry).subscribe(async res => {
       this.authenticationService.openDialog('Salvo com sucesso', 2000);
+      this.entrySaved.emit();
     },
     err => {
       this.authenticationService.openDialog('Ops! Tivemos um erro ao salvar seu lançamento.', 3000);
@@ -59,6 +71,14 @@ export class NewExpenseViewComponent implements OnInit {
     /*this.formattedAmount = this.currencyPipe.transform(this.formattedAmount, 'BRL');
 
     element.target.value = this.formattedAmount;*/
+  }
+
+  public selectValueChanged(entryGroupSelect: any): void {
+    this.isNewEntryGroup = entryGroupSelect.value === 'new';
+  }
+
+  public closeButtonClicked() {
+    this.bottomSheetRef.dismiss();
   }
 
   private loadEntryGroups() {

@@ -16,13 +16,6 @@ export class ExpenseService {
   entryPath = '/api/v1/lancamentos';
   entryGroupPath = '/api/v1/categorias';
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
-    })
-  };
-
   constructor(private httpClient: HttpClient) { }
 
   public loadExpenseReport(startDate: string, endDate: string): Observable<ExpenseReport> {
@@ -30,18 +23,18 @@ export class ExpenseService {
     console.log(this.baseUrl + this.expenseReportPath + '?' + 'dataInicio=' + startDate + '&' + 'dataFim=' + endDate);
     console.log('Done!');
     return this.httpClient.get<ExpenseReport>(
-     this.baseUrl  + this.expenseReportPath + '?' + 'dataInicio=' + startDate + '&' + 'dataFim=' + endDate, this.httpOptions);
+     this.baseUrl  + this.expenseReportPath + '?' + 'dataInicio=' + startDate + '&' + 'dataFim=' + endDate);
   }
 
   public saveEntry(entry: Lancamento): Observable<Lancamento> {
-    return this.httpClient.post<Lancamento>(this.baseUrl + this.entryPath, JSON.stringify(entry), this.httpOptions);
+    return this.httpClient.post<Lancamento>(this.baseUrl + this.entryPath, JSON.stringify(entry));
   }
 
   public deleteEntry(id: number): Observable<Lancamento> {
-    return this.httpClient.delete<Lancamento>(this.baseUrl + this.entryPath + '/' + id, this.httpOptions);
+    return this.httpClient.delete<Lancamento>(this.baseUrl + this.entryPath + '/' + id);
   }
 
   public loadEntryGroups(): Observable<CategoriaLancamento[]> {
-    return this.httpClient.get<CategoriaLancamento[]>(this.baseUrl + this.entryGroupPath, this.httpOptions);
+    return this.httpClient.get<CategoriaLancamento[]>(this.baseUrl + this.entryGroupPath);
   }
 }
