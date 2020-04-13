@@ -107,12 +107,12 @@ export class FakeService {
 
     report.gruposLancamentos = [grupo1, grupo2];
 
-    return of(report);
+    // return of(report);
     // ----------------------------------------
 
 
     // --------- EMPTY EXPENSE REPORT ------------
-    //return of(null);
+    return of(null);
   }
 
   public saveEntry(entry: Lancamento): Observable<Lancamento> {

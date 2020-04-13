@@ -1,15 +1,16 @@
 .center {
-  text-align: center;
-  align-content: center;
-  align-items: center;
-  vertical-align: middle;
+  display: flex;
+  justify-content: center;
 }
 
 .errorMessage {
-  font-family: 'Oxanium';
-  font-size: x-large;
-  color: #965ef7;
-  font-style: inherit;
-  font-weight: bold;
-  padding-bottom: 20px;
+margin-top: 20px;
+font-family: 'Roboto';
+font-style: normal;
+font-weight: normal;
+font-size: 16px;
+line-height: 19px;
+align-items: center;
+text-align: center;
+color: #000000;
 }

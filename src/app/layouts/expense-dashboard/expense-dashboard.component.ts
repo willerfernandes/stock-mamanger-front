@@ -32,12 +32,12 @@ export class ExpenseDashboardComponent implements OnInit {
 
   public gruposLancamentos: GrupoLancamento[];
   public tableTitle = 'RESUMO DESPESAS';
+
   public isSuccess = true;
+  public isEmptyResult = false;
 
-
-  public expenseReport: ExpenseReport;
   public totalReceipt = 0;
-
+  public totalExpenses = 0;
 
   public isAddMenuActive: boolean;
 
@@ -63,26 +63,18 @@ export class ExpenseDashboardComponent implements OnInit {
   }
 
   public clickArrowPrevious(): void {
-    const startDate: Date = new Date(this.startDate.value.toISOString());
-
-    startDate.setMonth(startDate.getMonth() - 1);
-    startDate.setDate(1);
-
-    const newEndDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0);
-
-    this.startDate = new FormControl(startDate);
-    this.endDate = new FormControl(newEndDate);
-    this.get_expenses_resume(this.startDate.value, this.endDate.value);
+    this.getExpenseReportAddMonth(-1);
   }
 
   public clickArrowNext(): void {
+    this.getExpenseReportAddMonth(1);
+  }
+
+  private getExpenseReportAddMonth(addMonths: number) {
     const startDate: Date = new Date(this.startDate.value.toISOString());
-
-    startDate.setMonth(startDate.getMonth() + 1);
+    startDate.setMonth(startDate.getMonth() + addMonths);
     startDate.setDate(1);
-
     const newEndDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0);
-
     this.startDate = new FormControl(startDate);
     this.endDate = new FormControl(newEndDate);
     this.get_expenses_resume(this.startDate.value, this.endDate.value);
@@ -139,7 +131,7 @@ export class ExpenseDashboardComponent implements OnInit {
   }
 
   public getFinancialStatement(): number {
-    return this.expenseReport.valorTotal - this.totalReceipt;
+    return this.totalExpenses - this.totalReceipt;
   }
 
   setCurrentTile() {
@@ -163,14 +155,15 @@ export class ExpenseDashboardComponent implements OnInit {
   get_expenses_resume(startDate: any, endDate: any) {
     this.setCurrentTile();
     console.log('Get Expense Resume!');
-    this.fakeService.loadExpenseReport(startDate.toISOString(), endDate.toISOString()).subscribe(res => {
+    this.expenseService.loadExpenseReport(startDate.toISOString(), endDate.toISOString()).subscribe(res => {
       console.log(res);
       if (res) {
-        this.expenseReport = res;
+        this.totalExpenses = res.valorTotal;
         this.pieChartLabels = res.itemGrafico.nome;
         this.pieChartData = res.itemGrafico.valor;
         this.gruposLancamentos = res.gruposLancamentos;
         this.isSuccess = res.itemGrafico !== null;
+        this.isEmptyResult = this.totalExpenses === 0;
       } else {
         this.isSuccess = false;
         console.log('No content -> Fill with empty wallet image!');

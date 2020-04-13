@@ -29,7 +29,7 @@ export class NewExpenseViewComponent implements OnInit {
     saveExpense(
       event: MouseEvent,
       entryGroupId: number,
-      date: string,
+      date: any,
       description: string,
       value: number): void {
 
@@ -38,7 +38,7 @@ export class NewExpenseViewComponent implements OnInit {
 
     const entry = new Lancamento();
     entry.categoria = entryGroup;
-    entry.data = date;
+    entry.data = date._selected.toISOString();
     entry.descricao = description;
     entry.tipo = 'DESPESA';
     entry.valor = value;
@@ -46,7 +46,7 @@ export class NewExpenseViewComponent implements OnInit {
     console.log(entry);
 
     this.bottomSheetRef.dismiss();
-    this.fakeService.saveEntry(entry).subscribe( res => {
+    this.expenseService.saveEntry(entry).subscribe( res => {
       this.authenticationService.openDialog('Salvo com sucesso', 2000);
     },
     err => {
@@ -62,7 +62,7 @@ export class NewExpenseViewComponent implements OnInit {
   }
 
   private loadEntryGroups() {
-    this.fakeService.loadEntryGroups().subscribe( res => {
+    this.expenseService.loadEntryGroups().subscribe( res => {
       this.allEntryGroups = res;
     });
   }
