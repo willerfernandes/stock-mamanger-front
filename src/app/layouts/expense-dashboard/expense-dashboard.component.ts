@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ExpenseService } from './../../services/expense.service';
 import { DateAdapter } from '@angular/material/core';
-import {MatBottomSheet} from '@angular/material/bottom-sheet';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 import { FormControl } from '@angular/forms';
 import { FakeService } from 'src/app/services/fake.service';
@@ -9,6 +9,8 @@ import { GrupoLancamento } from 'src/app/entities/grupo-lancamento';
 import { ExpenseReport } from 'src/app/entities/expense-report';
 import { NewExpenseViewComponent } from '../new-expense-view/new-expense-view.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { catchError } from 'rxjs/operators';
+import { of, throwError } from 'rxjs';
 @Component({
   selector: 'app-expense-dashboard',
   templateUrl: './expense-dashboard.component.html',
@@ -33,7 +35,7 @@ export class ExpenseDashboardComponent implements OnInit {
   public gruposLancamentos: GrupoLancamento[];
   public tableTitle = 'RESUMO DESPESAS';
 
-  public isSuccess = true;
+  public isSuccess = false;
   public isEmptyResult = false;
 
   public totalReceipt = 0;
@@ -44,14 +46,13 @@ export class ExpenseDashboardComponent implements OnInit {
   public expenseClicked = false;
 
   monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio',
-  'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+    'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
   constructor(private authService: AuthenticationService,
-              private ref: ChangeDetectorRef,
-              private expenseService: ExpenseService,
-              private fakeService: FakeService,
-              private apapter: DateAdapter<any>,
-              private bottomSheet: MatBottomSheet) { }
+    private expenseService: ExpenseService,
+    private fakeService: FakeService,
+    private apapter: DateAdapter<any>,
+    private bottomSheet: MatBottomSheet) { }
 
   // events
   public chartClicked(e: any): void {
@@ -95,7 +96,7 @@ export class ExpenseDashboardComponent implements OnInit {
   openBottomSheet(): void {
     const bottomSheet = this.bottomSheet.open(NewExpenseViewComponent);
 
-    bottomSheet.instance.entrySaved.subscribe( () => {
+    bottomSheet.instance.entrySaved.subscribe(() => {
       this.ngOnInit();
     });
 
@@ -112,12 +113,11 @@ export class ExpenseDashboardComponent implements OnInit {
   public onMenuDismissed(): void {
     document.getElementById('mainDiv').style.opacity = '1.0';
     this.isAddMenuActive = false;
-    this.ref.detectChanges();
   }
 
   returnNornalOpacity() {
-      document.getElementById('mainDiv').style.opacity = '1.0';
-      document.getElementById('mainDiv').style.pointerEvents = 'auto';
+    document.getElementById('mainDiv').style.opacity = '1.0';
+    document.getElementById('mainDiv').style.pointerEvents = 'auto';
   }
 
   setOpacity() {
@@ -133,12 +133,12 @@ export class ExpenseDashboardComponent implements OnInit {
     const startDate: Date = new Date(this.startDate.value.toISOString());
     const endDate: Date = new Date(this.endDate.value.toISOString());
     if (startDate.getMonth() === endDate.getMonth() &&
-    startDate.getFullYear() === endDate.getFullYear()) {
+      startDate.getFullYear() === endDate.getFullYear()) {
       const consideredStartDate = new Date(startDate.getFullYear(), startDate.getMonth(), 1);
       const consideredEndDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0);
       this.pieChartTitle = this.monthNames[startDate.getMonth()];
       if (startDate.getTime() === consideredStartDate.getTime()
-      && endDate.getTime() === consideredEndDate.getTime()) {
+        && endDate.getTime() === consideredEndDate.getTime()) {
         // this.setCurrentTile = this.monthNames[startDate.getMonth()];
       }
     } else {
@@ -149,19 +149,26 @@ export class ExpenseDashboardComponent implements OnInit {
 
   get_expenses_resume(startDate: any, endDate: any) {
     this.setCurrentTile();
-    this.expenseService.loadExpenseReport(startDate.toISOString(), endDate.toISOString()).subscribe(res => {
-      console.log(res);
-      if (res) {
-        this.totalExpenses = res.valorTotal;
-        this.pieChartLabels = res.itemGrafico.nome;
-        this.pieChartData = res.itemGrafico.valor;
-        this.gruposLancamentos = res.gruposLancamentos;
-        this.isSuccess = res.itemGrafico !== null;
-        this.isEmptyResult = this.totalExpenses === 0;
-      } else {
-        this.isSuccess = false;
-      }
-    });
+    this.expenseService.loadExpenseReport(startDate.toISOString(), endDate.toISOString())
+      .subscribe( async res => {
+        console.log('in');
+        if (res) {
+          console.log(res);
+          this.totalExpenses = res.valorTotal;
+          this.pieChartLabels = res.itemGrafico.nome;
+          this.pieChartData = res.itemGrafico.valor;
+          this.gruposLancamentos = res.gruposLancamentos;
+          this.isSuccess = true;
+          this.isEmptyResult = false;
+        } else {
+          this.isSuccess = true;
+          this.isEmptyResult = true;
+        }
+      },
+        err => {
+          this.isSuccess = false;
+          this.isEmptyResult = true;
+        });
   }
 
 

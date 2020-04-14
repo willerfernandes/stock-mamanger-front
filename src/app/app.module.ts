@@ -93,6 +93,7 @@ import { TopNavbarComponent } from './component/top-navbar/top-navbar.component'
 import { AddMenuComponent } from './component/add-menu/add-menu.component';
 import { ExpenseBottomSheetComponent } from './component/expense-bottom-sheet/expense-bottom-sheet.component';
 import { NewExpenseViewComponent } from './layouts/new-expense-view/new-expense-view.component';
+import { ExpenseNoResultsFoundComponent } from './component/expense-no-results-found/expense-no-results-found.component';
 
 @NgModule({
   declarations: [
@@ -139,7 +140,8 @@ import { NewExpenseViewComponent } from './layouts/new-expense-view/new-expense-
     TopNavbarComponent,
     AddMenuComponent,
     ExpenseBottomSheetComponent,
-    NewExpenseViewComponent
+    NewExpenseViewComponent,
+    ExpenseNoResultsFoundComponent
   ],
   entryComponents: [
     NewExpenseViewComponent

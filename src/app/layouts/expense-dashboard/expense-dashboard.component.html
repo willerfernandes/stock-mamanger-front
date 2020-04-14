@@ -12,7 +12,7 @@
   <app-date-range [startDate]="startDate" [endDate]="endDate"
     (reloadButtonClicked)="get_expenses_resume(startDate.value, endDate.value)"></app-date-range>
 
-  <div  *ngIf="isSuccess && !isEmptyResult;else show_error_page">
+  <div *ngIf="isSuccess && !isEmptyResult">
     <app-pie-chart [pieChartLabels]="pieChartLabels"
     [pieChartData]="pieChartData"> </app-pie-chart>
 
@@ -32,6 +32,12 @@
     </div>
     <app-expense-group *ngIf="isSuccess" [expenseGroups]="gruposLancamentos" (deleteRowEvent)="entryDeleted()"></app-expense-group>
   </div>
+  <div *ngIf="!isSuccess">
+    <app-expense-error-screen></app-expense-error-screen>
+  </div>
+  <div *ngIf="isSuccess && isEmptyResult">
+    <app-expense-no-results-found></app-expense-no-results-found>
+  </div>
 </div>
 <div class="add-button">
   <app-add-menu
@@ -43,6 +49,5 @@
   </app-add-menu>
 </div>
 
-<ng-template #show_error_page>
-  <app-expense-error-screen></app-expense-error-screen>
-</ng-template>
+
+
