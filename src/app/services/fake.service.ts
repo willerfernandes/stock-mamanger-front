@@ -113,18 +113,15 @@ export class FakeService {
     const allEntries: Lancamento[] = JSON.parse(localStorage.getItem('entries'));
     const entryClasses: CategoriaLancamento[] = JSON.parse(localStorage.getItem('entryGroups'));
 
+    if (allEntries == null || allEntries.length === 0) {
+      return of(null);
+    }
+
     const filterStartDate: Date = new Date(startDate);
     const filterEndDate: Date = new Date(endDate);
 
     const entries = allEntries.filter(entry => new Date(entry.data) > filterStartDate && new Date(entry.data) < filterEndDate );
 
-
-
-
-
-    if (entries == null || entries.length === 0) {
-      return of(null);
-    }
     const report: ExpenseReport = new ExpenseReport();
     const entryGroupList: GrupoLancamento[] = [];
 
