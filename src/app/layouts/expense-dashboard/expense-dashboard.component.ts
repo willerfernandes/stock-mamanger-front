@@ -32,11 +32,13 @@ export class ExpenseDashboardComponent implements OnInit {
   public endDate: any;
 
 
-  public gruposLancamentos: GrupoLancamento[];
+  public gruposLancamentosDespesas: GrupoLancamento[];
+  public gruposLancamentosReceitas: GrupoLancamento[];
   public tableTitle = 'RESUMO DESPESAS';
 
   public isSuccess = false;
   public isEmptyResult = false;
+  public isLoading = false;
 
   public totalReceipt = 0;
   public totalExpenses = 0;
@@ -49,10 +51,10 @@ export class ExpenseDashboardComponent implements OnInit {
     'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
   constructor(private authService: AuthenticationService,
-    private expenseService: ExpenseService,
-    private fakeService: FakeService,
-    private apapter: DateAdapter<any>,
-    private bottomSheet: MatBottomSheet) { }
+              private expenseService: ExpenseService,
+              private fakeService: FakeService,
+              private apapter: DateAdapter<any>,
+              private bottomSheet: MatBottomSheet) { }
 
   // events
   public chartClicked(e: any): void {
@@ -138,7 +140,7 @@ export class ExpenseDashboardComponent implements OnInit {
   }
 
   public getFinancialStatement(): number {
-    return this.totalExpenses - this.totalReceipt;
+    return this.totalReceipt - this.totalExpenses;
   }
 
   setCurrentTile() {
@@ -161,25 +163,32 @@ export class ExpenseDashboardComponent implements OnInit {
 
   get_expenses_resume(startDate: any, endDate: any) {
     this.setCurrentTile();
+    this.isLoading = true;
+    console.log('isLoading=true');
     this.fakeService.loadExpenseReport(startDate.toISOString(), endDate.toISOString())
       .subscribe(async res => {
         console.log('in');
         if (res) {
           console.log(res);
-          this.totalExpenses = res.valorTotal;
+          this.totalExpenses = res.valorTotalDespesas;
+          this.totalReceipt = res.valorTotalReceitas;
           this.pieChartLabels = res.itemGrafico.nome;
           this.pieChartData = res.itemGrafico.valor;
-          this.gruposLancamentos = res.gruposLancamentos;
+          this.gruposLancamentosDespesas = res.gruposLancamentosDespesas;
+          this.gruposLancamentosReceitas = res.gruposLancamentosReceitas;
           this.isSuccess = true;
           this.isEmptyResult = false;
+          this.isLoading = false;
         } else {
           this.isSuccess = true;
           this.isEmptyResult = true;
+          this.isLoading = false;
         }
       },
         err => {
           this.isSuccess = false;
           this.isEmptyResult = true;
+          this.isLoading = false;
         });
   }
 

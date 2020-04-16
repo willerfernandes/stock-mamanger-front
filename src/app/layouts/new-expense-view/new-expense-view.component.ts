@@ -18,7 +18,7 @@ export class NewExpenseViewComponent implements OnInit {
   public isNewEntryGroup = false;
   public initialDate = new FormControl(new Date());
   public formattedAmount;
-  public amount;
+  public amount = '';
   public allEntryGroups: CategoriaLancamento[];
 
   @Output()
@@ -70,6 +70,22 @@ export class NewExpenseViewComponent implements OnInit {
   }
 
 
+  public changedInputAmountValue(event: any) {
+    /*const key = event.key;
+    if (key === '.' || key === ',') {
+      return;
+    }
+    const oldAmount = this.amount ;
+    if (oldAmount.length === 0) {
+      this.amount = ',0';
+    }
+    document.getElementById('input-currency').value = this.amount;
+    console.log(document.getElementById('input-currency').value );
+    User key pressed still apears on input after the value set
+    */
+  }
+
+
   public validateFields(
     entryGroupId: string,
     newEntryGroupName: string,
@@ -118,6 +134,7 @@ export class NewExpenseViewComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.loadEntryGroups();
   }
 }

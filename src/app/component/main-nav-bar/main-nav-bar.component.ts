@@ -3,6 +3,7 @@ import { FakeService } from 'src/app/services/fake.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { UserAuth } from 'src/app/entities/user-auth';
 
 @Component({
   selector: 'app-main-nav-bar',
@@ -25,6 +26,8 @@ export class MainNavBarComponent implements OnInit {
 
   public isMenuActive = false;
 
+  public loggedUser;
+
   constructor(private authService: AuthenticationService, private router: Router, private fakeService: FakeService) { }
 
   public toogleMenu(): void {
@@ -40,6 +43,8 @@ export class MainNavBarComponent implements OnInit {
   }
 
   ngOnInit() {
+    const user: UserAuth = this.fakeService.currentUserValue;
+    this.loggedUser = user.login;
   }
 
 }

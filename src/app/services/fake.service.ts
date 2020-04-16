@@ -29,14 +29,18 @@ export class FakeService {
     return this.currentUserSubject.value;
   }
 
+  public get isLoggedIn(): boolean {
+    return this.currentUserValue != null;
+  }
+
 
   login(username: string, password: string): Observable<UserAuth> {
     // ao remover o fake service, remover também do auth guard
     console.log('Fake authorization! Aways logging');
     const user: UserAuth = {
       id: 1,
-      login: 'willerfernandes',
-      nome: 'Willer Santos',
+      login: username,
+      nome: 'Fake User',
       token: '9123jhasdjaqs812318dajsd8q1j219e3j121234=çfasd.1//a~]-=dlaspiodmjapismda9da89ujd9q'
     };
     localStorage.setItem('currentUser', JSON.stringify(user));
@@ -48,70 +52,15 @@ export class FakeService {
     return of(user);
   }
 
+  private delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+}
+
   loadExpenseReport(startDate: string, endDate: string): Observable<ExpenseReport> {
     console.log('Local Storage expense report');
 
-    // --------- EXPENSE REPORT ------------
-    /*const report = new ExpenseReport();
-    report.itemGrafico = new ItemGrafico();
-    report.valorTotal = 503.67;
-    report.itemGrafico.nome = ['Alimentação', 'Transporte'];
-    report.itemGrafico.valor = [400.12, 103.55];
-
-    //grupo 1
-    const grupo1 = new GrupoLancamento();
-    grupo1.id = 1;
-    grupo1.categoria = 'Alimentacao';
-    grupo1.valor = 37.68;
-    grupo1.percentual = 0.75;
-
-    const lancamento1 = new Lancamento();
-    lancamento1.id = 1;
-    lancamento1.tipo = 'DESPESA';
-    lancamento1.valor = 12.56;
-    lancamento1.data = '2020-01-22T04:31:01.315+0000';
-    lancamento1.descricao = 'Almoço no trabalho';
-
-    const lancamento2 = new Lancamento();
-    lancamento2.id = 2;
-    lancamento2.tipo = 'DESPESA';
-    lancamento2.valor = 15.56;
-    lancamento2.data = '2020-02-22T04:31:01.315+0000';
-    lancamento2.descricao = 'Almoço no trabalho na sexta';
-
-    grupo1.lancamentos = [lancamento1, lancamento2];
-
-
-    //grupo 2
-    const grupo2 = new GrupoLancamento();
-    grupo1.id = 2;
-    grupo2.categoria = 'Uber';
-    grupo2.valor = 555.68;
-    grupo2.percentual = 0.15;
-
-    const lancamento3 = new Lancamento();
-    lancamento3.id = 3;
-    lancamento3.tipo = 'DESPESA';
-    lancamento3.valor = 11.56;
-    lancamento3.data = '2020-01-25T04:31:01.315+0000';
-    lancamento3.descricao = 'Almoço no trabalho';
-
-    const lancamento4 = new Lancamento();
-    lancamento4.id = 4;
-    lancamento4.tipo = 'DESPESA';
-    lancamento4.valor = 10.56;
-    lancamento4.data = '2020-02-23T04:31:01.315+0000';
-    lancamento4.descricao = 'Almoço no trabalho na sexta';
-
-    grupo1.lancamentos = [lancamento1, lancamento2];
-    grupo2.lancamentos = [lancamento3, lancamento4];
-
-    report.gruposLancamentos = [grupo1, grupo2];*/
-
-    // return of(report);
-    // ----------------------------------------
     const allEntries: Lancamento[] = JSON.parse(localStorage.getItem('entries'));
-    const entryClasses: CategoriaLancamento[] = JSON.parse(localStorage.getItem('entryGroups'));
+    const entryClasses: CategoriaLancamento[] = JSON.parse(localStorage.getItem('entryClasses'));
 
     if (allEntries == null || allEntries.length === 0) {
       return of(null);
@@ -123,10 +72,12 @@ export class FakeService {
     const entries = allEntries.filter(entry => new Date(entry.data) > filterStartDate && new Date(entry.data) < filterEndDate );
 
     const report: ExpenseReport = new ExpenseReport();
-    const entryGroupList: GrupoLancamento[] = [];
+    const entryGroupExpenseList: GrupoLancamento[] = [];
+    const entryGroupReceiptList: GrupoLancamento[] = [];
 
     let entryGroupId = 1;
-    let totalValue = 0;
+    let totalValueExpenses = 0;
+    let totalValueReceipt = 0;
     entryClasses.forEach(entryClass => {
       const entriesOfThisClass = entries.filter(entry => entry.categoria.nome === entryClass.nome);
       if (entriesOfThisClass.length !== 0) {
@@ -137,11 +88,18 @@ export class FakeService {
         entriesOfThisClass.forEach(entryOfThiClass => {
           totalGroupValue += entryOfThiClass.valor;
         });
-        totalValue += totalGroupValue;
+
         newEntryGroup.valor = totalGroupValue;
         newEntryGroup.id = entryGroupId;
 
-        entryGroupList.push(newEntryGroup);
+        if (entryClass.tipo === 'DESPESA') {
+          totalValueExpenses += totalGroupValue;
+          entryGroupExpenseList.push(newEntryGroup);
+        } else if (entryClass.tipo === 'RECEITA') {
+          totalValueReceipt += totalGroupValue;
+          entryGroupReceiptList.push(newEntryGroup);
+        }
+
 
         entryGroupId++;
       }
@@ -149,14 +107,16 @@ export class FakeService {
 
     const graphInfoNames: string[] = [];
     const graphInfoValues: number[] = [];
-    entryGroupList.forEach(entryGroup => {
-      entryGroup.percentual = entryGroup.valor / totalValue;
+    entryGroupExpenseList.forEach(entryGroup => {
+      entryGroup.percentual = entryGroup.valor / totalValueExpenses;
       graphInfoNames.push(entryGroup.categoria);
       graphInfoValues.push(entryGroup.valor);
     });
 
-    report.gruposLancamentos = entryGroupList;
-    report.valorTotal = totalValue;
+    report.gruposLancamentosDespesas = entryGroupExpenseList;
+    report.gruposLancamentosReceitas = entryGroupReceiptList;
+    report.valorTotalDespesas = totalValueExpenses;
+    report.valorTotalReceitas = totalValueReceipt;
     report.itemGrafico = new ItemGrafico();
     report.itemGrafico.nome = graphInfoNames;
     report.itemGrafico.valor = graphInfoValues;
@@ -169,7 +129,7 @@ export class FakeService {
 
   public saveEntry(entry: Lancamento): Observable<Lancamento> {
     let entries: Lancamento[] = JSON.parse(localStorage.getItem('entries'));
-    let entryClasses: CategoriaLancamento[] = JSON.parse(localStorage.getItem('entryGroups'));
+    let entryClasses: CategoriaLancamento[] = JSON.parse(localStorage.getItem('entryClasses'));
 
     if (entries == null || entries.length === 0) {
       entries = [];
@@ -189,7 +149,7 @@ export class FakeService {
       }
 
       entryClasses.push(newEntryClass);
-      localStorage.setItem('entryGroups', JSON.stringify(entryClasses));
+      localStorage.setItem('entryClasses', JSON.stringify(entryClasses));
 
     } else {
       const classWithEntryId = entryClasses.find(entryClass => entryClass.id === entry.categoria.id);
@@ -232,8 +192,8 @@ export class FakeService {
     const allEntries = [entryGroup1, entryGroup2, entryGroup3];
     return of(allEntries);*/
 
-    const entryClasses: CategoriaLancamento[] = JSON.parse(localStorage.getItem('entryGroups'));
-    if(entryClasses == null) {
+    const entryClasses: CategoriaLancamento[] = JSON.parse(localStorage.getItem('entryClasses'));
+    if (entryClasses == null) {
       return of(null);
     }
     return of(entryClasses.filter(entryClass => entryClass.tipo === type));

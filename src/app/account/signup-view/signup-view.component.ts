@@ -21,6 +21,9 @@ export class SignupViewComponent implements OnInit {
               private router: Router, private fakeService: FakeService) { }
 
   ngOnInit() {
+    if (this.fakeService.isLoggedIn) {
+      this.router.navigate(['/expense-dashboard']);
+    }
   }
 
   public signUp(login: string, password: string, repeatPsw: string, name: string) {

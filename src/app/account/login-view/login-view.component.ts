@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { FakeService } from 'src/app/services/fake.service';
 import { environment } from 'src/environments/environment';
+import { User } from 'src/app/entities/user';
 
 
 @Component({
@@ -23,6 +24,9 @@ export class LoginViewComponent implements OnInit {
   passwordPlaceholder = 'Insira a senha';
 
   ngOnInit() {
+    if (this.fakeService.isLoggedIn) {
+      this.router.navigate(['/expense-dashboard']);
+    }
   }
 
 
@@ -30,7 +34,7 @@ export class LoginViewComponent implements OnInit {
     this.isLoading = true;
     if (this.validateFields(username, password)) {
       this.fakeService.login(username, password).subscribe(res => {
-        sessionStorage.setItem('currentUser', JSON.stringify(res));
+        localStorage.setItem('currentUser', JSON.stringify(res));
         this.isLoading = false;
         this.router.navigate(['/expense-dashboard']);
       },

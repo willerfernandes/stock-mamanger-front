@@ -8,7 +8,7 @@
           <mat-panel-description>
             <div class="grid">
               <div>{{expenseGroup.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}}</div>
-              <div>{{expenseGroup.percentual.toLocaleString(undefined,{style: 'percent', minimumFractionDigits:1})}}</div>
+              <div>{{expenseGroup.percentual?.toLocaleString(undefined,{style: 'percent', minimumFractionDigits:1})}}</div>
             </div>
           </mat-panel-description>
         </mat-expansion-panel-header>

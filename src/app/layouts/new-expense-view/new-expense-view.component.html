@@ -6,11 +6,12 @@
   </div>
 </div>
 <div class="container containter-wraper" style="margin-top: 20px;">
-    <img [src]="'./assets/img/credit-card-icon.svg'" style="margin-right: 10px; vertical-align: middle;"><label class="red-text">*</label><label class="color-primary input-label">Valor:</label><label class="color-gray" style="font-size: 21px; margin: 0px;">R$</label>
-    <input #amount autofocus
-    type="number" placeholder="000,00"
+    <img  [src]="'./assets/img/credit-card-icon.svg'" style="margin-right: 10px; vertical-align: middle;"><label class="red-text">*</label><label class="color-primary input-label">Valor:</label>
+    <input id="input-currency" #amount autofocus type="number" placeholder="000,00"
+    (keypress)="changedInputAmountValue($event)"
     class="input-medium padding-small" style="font-size: 24px; font-weight: bold;">
 </div>
+
 <hr>
 <div class="container">
   <img [src]="'./assets/img/credit-card-icon.svg'" style="margin-right: 10px; vertical-align: middle;"> <label class="red-text">*</label><label class="color-primary input-label">Categoria:</label>

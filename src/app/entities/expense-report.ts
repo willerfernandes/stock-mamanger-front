@@ -2,8 +2,9 @@ import { ItemGrafico } from './item-grafico';
 import { GrupoLancamento } from './grupo-lancamento';
 
 export class ExpenseReport {
-  valorTotal: number;
+  valorTotalDespesas: number;
+  valorTotalReceitas: number;
   itemGrafico: ItemGrafico;
-  gruposLancamentos: GrupoLancamento[];
-
+  gruposLancamentosDespesas: GrupoLancamento[];
+  gruposLancamentosReceitas: GrupoLancamento[];
 }
