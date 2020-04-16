@@ -11,13 +11,13 @@ import { NewExpenseViewComponent } from '../new-expense-view/new-expense-view.co
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { catchError } from 'rxjs/operators';
 import { of, throwError } from 'rxjs';
+import { NewReceiptViewComponent } from 'src/app/component/new-receipt-view/new-receipt-view.component';
 @Component({
   selector: 'app-expense-dashboard',
   templateUrl: './expense-dashboard.component.html',
   styleUrls: ['./expense-dashboard.component.css']
 })
 export class ExpenseDashboardComponent implements OnInit {
-
 
   /// $$$$$ REFACTOR TO USE RES ON SINGLE VARIABLE OF TYPE EXPENSE REPORT $$$$$ ///
 
@@ -90,16 +90,28 @@ export class ExpenseDashboardComponent implements OnInit {
     this.expenseClicked = true;
     document.getElementById('mainDiv').style.opacity = '1.0';
     document.getElementById('mainDiv').style.pointerEvents = 'auto';
-    this.openBottomSheet();
+    this.openBottomSheetExpense();
   }
 
-  openBottomSheet(): void {
-    const bottomSheet = this.bottomSheet.open(NewExpenseViewComponent);
+  public activeReceipt(): void {
+    this.expenseClicked = true;
+    document.getElementById('mainDiv').style.opacity = '1.0';
+    document.getElementById('mainDiv').style.pointerEvents = 'auto';
+    this.openBottomSheetReceipt();
+  }
 
+  openBottomSheetExpense(): void {
+    const bottomSheet = this.bottomSheet.open(NewExpenseViewComponent);
     bottomSheet.instance.entrySaved.subscribe(() => {
       this.ngOnInit();
     });
+  }
 
+  openBottomSheetReceipt(): void {
+    const bottomSheet = this.bottomSheet.open(NewReceiptViewComponent);
+    bottomSheet.instance.entrySaved.subscribe(() => {
+      this.ngOnInit();
+    });
   }
 
   public inactivateMenu(): void {
@@ -150,7 +162,7 @@ export class ExpenseDashboardComponent implements OnInit {
   get_expenses_resume(startDate: any, endDate: any) {
     this.setCurrentTile();
     this.expenseService.loadExpenseReport(startDate.toISOString(), endDate.toISOString())
-      .subscribe( async res => {
+      .subscribe(async res => {
         console.log('in');
         if (res) {
           console.log(res);
@@ -184,5 +196,4 @@ export class ExpenseDashboardComponent implements OnInit {
     this.endDate = new FormControl(dataFinal);
     this.get_expenses_resume(this.startDate.value, this.endDate.value);
   }
-
 }

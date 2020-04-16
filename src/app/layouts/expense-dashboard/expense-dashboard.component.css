@@ -13,6 +13,11 @@
 
 /*------- EXPENSE TITLE ------ */
 
+.date-range-container {
+  width: 300px;
+  margin: 10px auto auto auto;
+}
+
 .pie-chart-title-container {
   text-align: center;
   margin-top: 20px;

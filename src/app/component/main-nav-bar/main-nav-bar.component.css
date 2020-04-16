@@ -1,4 +1,6 @@
-.navbar {
+
+
+/*.navbar {
   background-color:#030091;
   border-bottom: 1px ridge #965af7;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.5);
@@ -21,4 +23,61 @@
 
 .dropdown:hover .dropdown-content {
   display: block;
+}*/
+.navbar-header-container{
+  background-color:#030091;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.navbar-header-wrapper{
+  padding: 10px;
+}
+
+#menu-icon {
+  height: 30px;
+  width: auto;
+}
+
+#menu-bars {
+  float: right;
+}
+
+#menu-bars:hover, #menu-bars:active {
+  border-radius: 0.3px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.menu-content-container{
+  position: absolute;
+  right: 5px;
+  margin-top: -5px;
+  box-sizing: border-box;
+  max-width: 60%;
+  min-width: 40%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 4px 4px 4px 4px;
+  float: right;
+  z-index: 5;
+}
+
+.menu-content-wrapper {
+  padding: 10px 10px;
+}
+
+.user-info {
+  font-size: small;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+.menu-item {
+  height: 50px;
+  line-height:50px;
+}
+
+.menu-item:active {
+  background-color: rgb(240, 240, 240);
 }

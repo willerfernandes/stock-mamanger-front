@@ -94,6 +94,7 @@ import { AddMenuComponent } from './component/add-menu/add-menu.component';
 import { ExpenseBottomSheetComponent } from './component/expense-bottom-sheet/expense-bottom-sheet.component';
 import { NewExpenseViewComponent } from './layouts/new-expense-view/new-expense-view.component';
 import { ExpenseNoResultsFoundComponent } from './component/expense-no-results-found/expense-no-results-found.component';
+import { NewReceiptViewComponent } from './component/new-receipt-view/new-receipt-view.component';
 
 @NgModule({
   declarations: [
@@ -141,10 +142,12 @@ import { ExpenseNoResultsFoundComponent } from './component/expense-no-results-f
     AddMenuComponent,
     ExpenseBottomSheetComponent,
     NewExpenseViewComponent,
-    ExpenseNoResultsFoundComponent
+    ExpenseNoResultsFoundComponent,
+    NewReceiptViewComponent
   ],
   entryComponents: [
-    NewExpenseViewComponent
+    NewExpenseViewComponent,
+    NewReceiptViewComponent
   ],
   imports: [
     BrowserModule,

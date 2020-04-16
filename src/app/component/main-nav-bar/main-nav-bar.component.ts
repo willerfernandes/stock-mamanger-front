@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FakeService } from 'src/app/services/fake.service';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-main-nav-bar',
@@ -20,7 +22,22 @@ export class MainNavBarComponent implements OnInit {
   public operationPath = this.baseURL + 'operation';
   public categoryPath = this.baseURL + 'category';
 
-  constructor(private fakeService: FakeService) { }
+
+  public isMenuActive = false;
+
+  constructor(private authService: AuthenticationService, private router: Router, private fakeService: FakeService) { }
+
+  public toogleMenu(): void {
+    this.isMenuActive = !this.isMenuActive;
+  }
+
+  public navigateToHome(): void {
+    this.router.navigate(['./home']);
+  }
+
+  public logout(): void {
+    this.authService.logout();
+  }
 
   ngOnInit() {
   }

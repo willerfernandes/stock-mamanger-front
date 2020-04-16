@@ -9,8 +9,10 @@
   <div class="pie-chart-title-container">
     <img src='./assets/img/arrow-backward.svg' style="display: inline;" (click)="clickArrowPrevious()"><label class="pie-chart-title">{{pieChartTitle}}</label><img src='./assets/img/arrow-forward.svg' style="display: inline;" (click)="clickArrowNext()">
   </div>
-  <app-date-range [startDate]="startDate" [endDate]="endDate"
+  <div class="date-range-container" >
+    <app-date-range [startDate]="startDate" [endDate]="endDate"
     (reloadButtonClicked)="get_expenses_resume(startDate.value, endDate.value)"></app-date-range>
+  </div>
 
   <div *ngIf="isSuccess && !isEmptyResult">
     <app-pie-chart [pieChartLabels]="pieChartLabels"
@@ -39,11 +41,12 @@
     <app-expense-no-results-found></app-expense-no-results-found>
   </div>
 </div>
-<div class="add-button">
+<div id="menu" class="add-button" draggable="true">
   <app-add-menu
     (isAddMenuDismissedTrue)="setOpacity()"
     (isAddMenuDismissedFalse)="returnNornalOpacity()"
     (expenseClicked)="activeExpense()"
+    (receiptClicked)="activeReceipt()"
     ([isAddMenuActive])="isAddMenuActive">
 
   </app-add-menu>
