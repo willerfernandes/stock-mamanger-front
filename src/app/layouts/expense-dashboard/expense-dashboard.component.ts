@@ -161,7 +161,7 @@ export class ExpenseDashboardComponent implements OnInit {
 
   get_expenses_resume(startDate: any, endDate: any) {
     this.setCurrentTile();
-    this.expenseService.loadExpenseReport(startDate.toISOString(), endDate.toISOString())
+    this.fakeService.loadExpenseReport(startDate.toISOString(), endDate.toISOString())
       .subscribe(async res => {
         console.log('in');
         if (res) {

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input , EventEmitter, Output} from '@angular/core';
 import { ExpenseService } from 'src/app/services/expense.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { FakeService } from 'src/app/services/fake.service';
 
 @Component({
   selector: 'app-expense-row',
@@ -15,10 +16,11 @@ export class ExpenseRowComponent implements OnInit {
   @Output()
   deleteRowEvent = new EventEmitter();
 
-  constructor(private authenticationService: AuthenticationService, private expenseService: ExpenseService) { }
+  constructor(private authenticationService: AuthenticationService, private expenseService: ExpenseService,
+              private fakeService: FakeService) { }
 
   public deleteExpense(id: any) {
-     this.expenseService.deleteEntry(id).subscribe( async () => {
+     this.fakeService.deleteEntry(id).subscribe( async () => {
       this.deleteRowEvent.emit();
     },
     err => {

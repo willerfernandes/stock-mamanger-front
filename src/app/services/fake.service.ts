@@ -10,6 +10,7 @@ import { GrupoLancamento } from '../entities/grupo-lancamento';
 import { Lancamento } from '../entities/lancamento';
 import { User } from '../entities/user';
 import { CategoriaLancamento } from '../entities/categoria-lancamento';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -48,10 +49,10 @@ export class FakeService {
   }
 
   loadExpenseReport(startDate: string, endDate: string): Observable<ExpenseReport> {
-    console.log('Fake expense report');
+    console.log('Local Storage expense report');
 
     // --------- EXPENSE REPORT ------------
-    const report = new ExpenseReport();
+    /*const report = new ExpenseReport();
     report.itemGrafico = new ItemGrafico();
     report.valorTotal = 503.67;
     report.itemGrafico.nome = ['Alimentação', 'Transporte'];
@@ -105,27 +106,115 @@ export class FakeService {
     grupo1.lancamentos = [lancamento1, lancamento2];
     grupo2.lancamentos = [lancamento3, lancamento4];
 
-    report.gruposLancamentos = [grupo1, grupo2];
+    report.gruposLancamentos = [grupo1, grupo2];*/
 
     // return of(report);
     // ----------------------------------------
+    const allEntries: Lancamento[] = JSON.parse(localStorage.getItem('entries'));
+    const entryClasses: CategoriaLancamento[] = JSON.parse(localStorage.getItem('entryGroups'));
 
+    const filterStartDate: Date = new Date(startDate);
+    const filterEndDate: Date = new Date(endDate);
+
+    const entries = allEntries.filter(entry => new Date(entry.data) > filterStartDate && new Date(entry.data) < filterEndDate );
+
+
+
+
+
+    if (entries == null || entries.length === 0) {
+      return of(null);
+    }
+    const report: ExpenseReport = new ExpenseReport();
+    const entryGroupList: GrupoLancamento[] = [];
+
+    let entryGroupId = 1;
+    let totalValue = 0;
+    entryClasses.forEach(entryClass => {
+      const entriesOfThisClass = entries.filter(entry => entry.categoria.nome === entryClass.nome);
+      if (entriesOfThisClass.length !== 0) {
+        const newEntryGroup: GrupoLancamento = new GrupoLancamento();
+        newEntryGroup.lancamentos = entriesOfThisClass;
+        newEntryGroup.categoria = entryClass.nome;
+        let totalGroupValue = 0;
+        entriesOfThisClass.forEach(entryOfThiClass => {
+          totalGroupValue += entryOfThiClass.valor;
+        });
+        totalValue += totalGroupValue;
+        newEntryGroup.valor = totalGroupValue;
+        newEntryGroup.id = entryGroupId;
+
+        entryGroupList.push(newEntryGroup);
+
+        entryGroupId++;
+      }
+    });
+
+    const graphInfoNames: string[] = [];
+    const graphInfoValues: number[] = [];
+    entryGroupList.forEach(entryGroup => {
+      entryGroup.percentual = entryGroup.valor / totalValue;
+      graphInfoNames.push(entryGroup.categoria);
+      graphInfoValues.push(entryGroup.valor);
+    });
+
+    report.gruposLancamentos = entryGroupList;
+    report.valorTotal = totalValue;
+    report.itemGrafico = new ItemGrafico();
+    report.itemGrafico.nome = graphInfoNames;
+    report.itemGrafico.valor = graphInfoValues;
 
     // --------- EMPTY EXPENSE REPORT ------------
-    return of(null);
+    console.log('localStorage');
+    console.log(localStorage);
+    return of(report);
   }
 
   public saveEntry(entry: Lancamento): Observable<Lancamento> {
+    let entries: Lancamento[] = JSON.parse(localStorage.getItem('entries'));
+    let entryClasses: CategoriaLancamento[] = JSON.parse(localStorage.getItem('entryGroups'));
+
+    if (entries == null || entries.length === 0) {
+      entries = [];
+    }
+
+    entry.id = entries.length  + 1;
+
+    if (entry.categoria.id == null) {
+      const newEntryClass = new CategoriaLancamento();
+      newEntryClass.id = entries.length + 1;
+      newEntryClass.nome = entry.categoria.nome;
+      newEntryClass.descricao = entry.categoria.descricao;
+      newEntryClass.tipo = entry.categoria.tipo;
+
+      if (entryClasses == null || entryClasses.length === 0) {
+        entryClasses = [];
+      }
+
+      entryClasses.push(newEntryClass);
+      localStorage.setItem('entryGroups', JSON.stringify(entryClasses));
+
+    } else {
+      const classWithEntryId = entryClasses.find(entryClass => entryClass.id === entry.categoria.id);
+      entry.categoria = classWithEntryId;
+    }
+
+
+    entries.push(entry);
+    localStorage.setItem('entries', JSON.stringify(entries));
     return of(entry);
   }
 
   public deleteEntry(id: number): Observable<Lancamento> {
-    const entry = new Lancamento();
-    return of(entry);
+    const entries: Lancamento[] = JSON.parse(localStorage.getItem('entries'));
+    const toBeDeleted = entries.findIndex(entry => entry.id === id);
+    const deleted = entries.splice(toBeDeleted, 1);
+    localStorage.setItem('entries', JSON.stringify(entries));
+    return of(deleted[0]);
   }
 
-  public loadEntryGroups(): Observable<CategoriaLancamento[]> {
-    const entryGroup1 = new CategoriaLancamento();
+  public loadEntryGroups(type: string): Observable<CategoriaLancamento[]> {
+    /*const entryGroup1 = new CategoriaLancamento();
     entryGroup1.id = 1;
     entryGroup1.nome = 'Alimentacao';
     entryGroup1.descricao = 'Despesas com alimentação';
@@ -144,7 +233,13 @@ export class FakeService {
     entryGroup3.tipo = 'DESPESA';
 
     const allEntries = [entryGroup1, entryGroup2, entryGroup3];
+    return of(allEntries);*/
 
-    return of(allEntries);
+    const entryClasses: CategoriaLancamento[] = JSON.parse(localStorage.getItem('entryGroups'));
+    if(entryClasses == null) {
+      return of(null);
+    }
+    return of(entryClasses.filter(entryClass => entryClass.tipo === type));
+
   }
 }

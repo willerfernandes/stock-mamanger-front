@@ -59,7 +59,7 @@ export class NewExpenseViewComponent implements OnInit {
     entry.tipo = 'DESPESA';
     entry.valor = Number.parseFloat(value);
     this.bottomSheetRef.dismiss();
-    this.expenseService.saveEntry(entry).subscribe(async res => {
+    this.fakeService.saveEntry(entry).subscribe(async res => {
       this.authenticationService.openDialog('Salvo com sucesso', 2000);
       this.entrySaved.emit();
     },
@@ -112,7 +112,7 @@ export class NewExpenseViewComponent implements OnInit {
   }
 
   private loadEntryGroups() {
-    this.expenseService.loadEntryGroups('DESPESA').subscribe(res => {
+    this.fakeService.loadEntryGroups('DESPESA').subscribe(res => {
       this.allEntryGroups = res;
     });
   }
