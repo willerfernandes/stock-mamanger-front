@@ -19,16 +19,17 @@
 }
 
 .pie-chart-title-container {
+  box-sizing: border-box;
   text-align: center;
   margin-top: 20px;
+  width: 85%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .pie-chart-title {
-display: inline;
 font-family: 'Roboto', 'sans-serif';
 vertical-align: middle;
-padding-left: 100px;
-padding-right: 100px;
 
 font-style: normal;
 font-weight: normal;

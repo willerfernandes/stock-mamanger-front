@@ -2,6 +2,11 @@
   <img src="assets/img/logo.png">
   <h2 class="header-text">O seu APP de finanças pessoais</h2>
 </div>
+<div *ngIf="isFakeServer">
+  <app-alert-on-screen
+    [title]="'Servidor não conectado.'"
+    [message]="'Utilizando armazenamento do seu Browser. Ao limpar os dados do navegador, seus dados serão apagados.'">
+</app-alert-on-screen>
 <div class="container-login">
   <div class="wrap-login">
     <div class="internal-login">
@@ -20,9 +25,9 @@
           <btn-primary-blue [isloadingButtonType]="false" [isLoading]="isLoading" [text]="'Entrar'" (clickedEvent)="login(user_name.value, password.value)"
             (keyup.enter)="login(user_name.value, password.value)">
           </btn-primary-blue>
-        </div>o
-        <span> Ainda não é usuário? Cadastre-se <button style="background:none; border:none; color: black; font-family: 'Roboto';"
-            (click)="navSignUpPage()">AQUI</button></span>
+        </div>
+        <span> Não é usuário? Cadastre-se <button style="background:none; border:none; color: #030091; font-family: 'Roboto';"
+           (click)="navSignUpPage()">AQUI</button></span>
       </form>
     </div>
 

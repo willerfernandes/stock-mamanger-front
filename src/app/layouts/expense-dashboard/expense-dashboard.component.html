@@ -2,12 +2,18 @@
 <link href='https://fonts.googleapis.com/css?family=Roboto Condensed' rel='stylesheet'>
 <div id="mainDiv"  (click)="onMenuDismissed()">
   <app-main-nav-bar></app-main-nav-bar>
+  <div *ngIf="isFakeServer">
+    <app-alert-on-screen
+      [title]="'Servidor não conectado.'"
+      [message]="'Utilizando armazenamento do seu Browser. Ao limpar os dados do navegador, seus dados serão apagados.'">
+  </app-alert-on-screen>
+  </div>
   <div class="top-message-container">
     <img src='./assets/img/icone-calendario.svg' class="top-message-icon">
      <label >Veja suas despesas desse mês!</label>
   </div>
   <div class="pie-chart-title-container">
-    <img src='./assets/img/arrow-backward.svg' style="display: inline;" (click)="clickArrowPrevious()"><label class="pie-chart-title">{{pieChartTitle}}</label><img src='./assets/img/arrow-forward.svg' style="display: inline;" (click)="clickArrowNext()">
+    <img src='./assets/img/arrow-backward.svg' (click)="clickArrowPrevious()" style="float: left;"><label class="pie-chart-title">{{pieChartTitle}}</label> <img src='./assets/img/arrow-forward.svg'  (click)="clickArrowNext()" style="float: right;">
   </div>
   <div class="date-range-container" >
     <app-date-range [startDate]="startDate" [endDate]="endDate"
@@ -32,18 +38,23 @@
     <div style="margin-top: 40px; text-align: center; font-weight: bold; font-size: 16px;">
       <label>LANÇAMENTOS</label>
     </div>
-    <p style="font-size: small; color: #cacaca;">Despesas</p>
     <div>
+    <p *ngIf="gruposLancamentosDespesas.length > 0" style="font-size: small; color: #cacaca;">Despesas</p>
       <div>
         <app-expense-group *ngIf="isSuccess" [expenseGroups]="gruposLancamentosDespesas" (deleteRowEvent)="entryDeleted()"></app-expense-group>
       </div>
       <br>
-      <p style="font-size: small; color: #cacaca;">Receitas</p>
+      <p *ngIf="gruposLancamentosReceitas.length > 0" style="font-size: small; color: #cacaca;">Receitas</p>
       <div>
         <app-expense-group *ngIf="isSuccess" [expenseGroups]="gruposLancamentosReceitas" (deleteRowEvent)="entryDeleted()"></app-expense-group>
       </div>
       <br>
     </div>
+    <p *ngIf="gruposLancamentosReceitas.length > 0" style="font-size: small; color: #cacaca;">Últimos lançamentos</p>
+    <div>
+      <app-entry-table [entryGroups]=gruposLancamentosReceitas.concat(gruposLancamentosDespesas)></app-entry-table>
+    </div>
+    <p *ngIf="gruposLancamentosReceitas.length > 0" style="font-size: small; font-weight: bold; color: #030091; text-decoration: underline;">Ver mais</p>
   </div>
   <div *ngIf="isLoading" style="width: 80%; height: 400px; margin: auto; box-sizing: border-box;">
     <img src='/assets/img/loading.gif' style="width: 100px; height: auto; display: block; margin: auto; padding: 100px 0px;">

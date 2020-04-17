@@ -95,6 +95,8 @@ import { ExpenseBottomSheetComponent } from './component/expense-bottom-sheet/ex
 import { NewExpenseViewComponent } from './layouts/new-expense-view/new-expense-view.component';
 import { ExpenseNoResultsFoundComponent } from './component/expense-no-results-found/expense-no-results-found.component';
 import { NewReceiptViewComponent } from './component/new-receipt-view/new-receipt-view.component';
+import { AlertOnScreenComponent } from './component/alert-on-screen/alert-on-screen.component';
+import { EntryTableComponent } from './component/entry-table/entry-table.component';
 
 @NgModule({
   declarations: [
@@ -143,7 +145,9 @@ import { NewReceiptViewComponent } from './component/new-receipt-view/new-receip
     ExpenseBottomSheetComponent,
     NewExpenseViewComponent,
     ExpenseNoResultsFoundComponent,
-    NewReceiptViewComponent
+    NewReceiptViewComponent,
+    AlertOnScreenComponent,
+    EntryTableComponent
   ],
   entryComponents: [
     NewExpenseViewComponent,

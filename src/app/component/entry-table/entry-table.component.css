@@ -1,0 +1,52 @@
+.grid {
+  width: 100%;
+  display: grid;
+  grid: 50px / 20% 10% 70%;
+  gap: 5px;
+}
+
+
+
+/*table {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+}
+
+td {
+  border-bottom: 0.5px solid #032ba3;
+  max-height: 30px;
+  text-overflow: ellipsis;
+  overflow-y: hidden;
+}
+
+th {
+  width: 25%;
+  max-height: 30px;
+  background-color: #032ba3;
+  color: white;
+  font-size: medium;
+  font-weight: bold;
+}
+
+.entryClass {
+  font-size: small;
+}
+.description {
+  font-size: smaller;
+}
+.date {
+  font-size: small;
+}
+.value {
+
+}
+
+.expense-class {
+
+}
+
+.receipt-class {
+
+}*/

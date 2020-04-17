@@ -20,10 +20,13 @@ export class LoginViewComponent implements OnInit {
 
   isLoading = false;
 
+  public isFakeServer = false;
+
   usernamePlaceholder = 'Nome do usuário';
   passwordPlaceholder = 'Insira a senha';
 
   ngOnInit() {
+    this.isFakeServer = this.fakeService.isFakeServer;
     if (this.fakeService.isLoggedIn) {
       this.router.navigate(['/expense-dashboard']);
     }

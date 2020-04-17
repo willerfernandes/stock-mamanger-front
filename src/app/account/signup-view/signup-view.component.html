@@ -2,7 +2,11 @@
   <img src="assets/img/logo.png">
   <h2 class="header-text">O seu APP de finanças pessoais</h2>
 </div>
-
+<div *ngIf="isFakeServer">
+  <app-alert-on-screen
+    [title]="'Servidor não conectado.'"
+    [message]="'Utilizando armazenamento do seu Browser. Ao limpar os dados do navegador, seus dados serão apagados.'">
+</app-alert-on-screen>
 <form action="action_page.php" style="border:1px solid #ccc">
   <div class="container">
     <h2>Cadastrar</h2>
@@ -13,7 +17,7 @@
       <label #login for="login" class="color-primary"><b>*Login</b></label>
       <input type="text" placeholder="Entre seu login" name="login" required>
 
-      <label #psw for="psw" class="color-primary"><b>*Repita a senha</b></label>
+      <label #psw for="psw" class="color-primary"><b>*Crie uma senha</b></label>
       <input type="password" placeholder="Entre a senha" name="psw" required>
 
       <label #repeatPsw for="psw-repeat" class="color-primary"><b>*Repita a senha</b></label>

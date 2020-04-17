@@ -39,7 +39,7 @@ export class MainNavBarComponent implements OnInit {
   }
 
   public logout(): void {
-    this.authService.logout();
+    this.fakeService.logout();
   }
 
   ngOnInit() {

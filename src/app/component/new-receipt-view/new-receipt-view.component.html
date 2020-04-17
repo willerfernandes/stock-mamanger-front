@@ -1,0 +1,52 @@
+<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+
+<div class="container" style="margin-top: 5px;">
+  <div>
+    <label class = "menu-item-text green-text">Receitas</label> <img [src]="'./assets/img/add-menu-receipt.svg'"><img src='./assets/img/close-gray-icon.svg' (click)="closeButtonClicked()" style="float: right;">
+  </div>
+</div>
+<div class="container containter-wraper" style="margin-top: 20px;">
+    <img [src]="'./assets/img/piggy-bank-icon.svg'" style="margin-right: 10px; vertical-align: middle;"><label class="red-text">*</label><label class="color-primary input-label">Valor:</label><label class="color-gray" style="font-size: 21px; margin: 0px;">R$</label>
+    <input id="input-currency"  #amount autofocus
+    type="number" placeholder="000,00"
+    class="input-medium padding-small" style="font-size: 24px; font-weight: bold;">
+</div>
+<hr>
+<div class="container">
+  <img [src]="'./assets/img/piggy-bank-icon.svg'" style="margin-right: 10px; vertical-align: middle;"> <label class="red-text">*</label><label class="color-primary input-label">Categoria:</label>
+  <select #entryGroupSelect (change)="selectValueChanged(entryGroupSelect)" class="input-medium" #entryGroupSelect>
+    <option value='---'>---</option>
+    <option *ngFor="let entryGroup of allEntryGroups" [value]="entryGroup.id">{{entryGroup.nome}}</option>
+    <option style="font-weight: bold;" value="new">*Nova*</option>
+  </select>
+  <span [hidden]="!isNewEntryGroup" class="hint-text" style="padding-left: 150px; max-width: 300px;">*Uma nova categoria será criada com as informações</span>
+  <div [hidden]="!isNewEntryGroup">
+    <span class="hint-text">Nova Categoria</span>
+      <div>
+        <label class="red-text">*</label><label class="color-primary input-label-small">Nome:</label>
+        <input #newEntryGroupName type="text" class="input-medium">
+      </div>
+      <div>
+        <label class="red-text">*</label><label class="color-primary input-label-small">Descrição:</label>
+        <input #newEntryGroupDescription type="text" class="input-medium padding-small">
+      </div>
+  </div>
+</div>
+<hr>
+<div class="container">
+  <img [src]="'./assets/img/piggy-bank-icon.svg'" style="margin-right: 10px; vertical-align: middle;"><label class="color-primary input-label">Descrição:</label>
+  <input #description class= "input-medium" type="text">
+</div>
+<hr>
+<div class="container">
+  <img [src]="'./assets/img/piggy-bank-icon.svg'" style="margin-right: 10px; vertical-align: middle;"> <label class="red-text">*</label><label class="color-primary input-label">Data:</label>
+    <mat-form-field class="datePicker" style="max-width: 150px;">
+      <input  #date class="color-primary input-label" matInput [matDatepicker]="picker1" [formControl]="initialDate">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker id="dateInput" #picker1></mat-datepicker>
+    </mat-form-field>
+  </div>
+<hr>
+<div style="display: flex; justify-content: center;" class="container">
+  <btn-primary-blue [text]="'OK'" (click)="saveReceipt($event, entryGroupSelect?.value, newEntryGroupName?.value, newEntryGroupDescription?.value, picker1, description?.value, amount?.value)" ></btn-primary-blue>
+</div>

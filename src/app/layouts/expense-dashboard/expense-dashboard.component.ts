@@ -46,6 +46,7 @@ export class ExpenseDashboardComponent implements OnInit {
   public isAddMenuActive: boolean;
 
   public expenseClicked = false;
+  public isFakeServer = false;
 
   monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio',
     'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
@@ -150,10 +151,12 @@ export class ExpenseDashboardComponent implements OnInit {
       startDate.getFullYear() === endDate.getFullYear()) {
       const consideredStartDate = new Date(startDate.getFullYear(), startDate.getMonth(), 1);
       const consideredEndDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0);
-      this.pieChartTitle = this.monthNames[startDate.getMonth()];
+      //this.pieChartTitle = this.monthNames[startDate.getMonth()];
       if (startDate.getTime() === consideredStartDate.getTime()
         && endDate.getTime() === consideredEndDate.getTime()) {
-        // this.setCurrentTile = this.monthNames[startDate.getMonth()];
+        this.pieChartTitle = this.monthNames[startDate.getMonth()];
+      } else {
+        this.pieChartTitle = 'Personalizado';
       }
     } else {
       this.pieChartTitle = 'Personalizado';
@@ -167,7 +170,6 @@ export class ExpenseDashboardComponent implements OnInit {
     console.log('isLoading=true');
     this.fakeService.loadExpenseReport(startDate.toISOString(), endDate.toISOString())
       .subscribe(async res => {
-        console.log('in');
         if (res) {
           console.log(res);
           this.totalExpenses = res.valorTotalDespesas;
@@ -194,6 +196,7 @@ export class ExpenseDashboardComponent implements OnInit {
 
 
   ngOnInit() {
+    this.isFakeServer = this.fakeService.isFakeServer;
     this.apapter.setLocale('br');
     let dataInicial = new Date(Date.now());
     dataInicial = new Date(dataInicial.getFullYear(), dataInicial.getMonth(), 1);

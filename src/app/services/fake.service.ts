@@ -11,13 +11,16 @@ import { Lancamento } from '../entities/lancamento';
 import { User } from '../entities/user';
 import { CategoriaLancamento } from '../entities/categoria-lancamento';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FakeService {
 
-  constructor(private http: HttpClient) {
+  public isFakeServer = true;
+
+  constructor(private http: HttpClient, private router: Router) {
     this.currentUserSubject = new BehaviorSubject<UserAuth>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -45,7 +48,41 @@ export class FakeService {
     };
     localStorage.setItem('currentUser', JSON.stringify(user));
     this.currentUserSubject.next(user);
+
+    this.generateMockedDefaultEntryClassesData();
+
     return of(user);
+  }
+
+  private generateMockedDefaultEntryClassesData(): void {
+    const entryGroup1 = new CategoriaLancamento();
+    entryGroup1.id = 1;
+    entryGroup1.nome = 'Alimentacao';
+    entryGroup1.descricao = 'Despesas com alimentação';
+    entryGroup1.tipo = 'DESPESA';
+
+    const entryGroup2 = new CategoriaLancamento();
+    entryGroup2.id = 2;
+    entryGroup2.nome = 'Transporte';
+    entryGroup2.descricao = 'Despesas com transporte';
+    entryGroup2.tipo = 'DESPESA';
+
+    const entryGroup3 = new CategoriaLancamento();
+    entryGroup3.id = 3;
+    entryGroup3.nome = 'Lazer';
+    entryGroup3.descricao = 'Despesas com lazer';
+    entryGroup3.tipo = 'DESPESA';
+
+    const entryGroup4 = new CategoriaLancamento();
+    entryGroup4.id = 4;
+    entryGroup4.nome = 'Salário';
+    entryGroup4.descricao = 'Recebimento do salário';
+    entryGroup4.tipo = 'RECEITA';
+
+    const allEntries = [entryGroup1, entryGroup2, entryGroup3, entryGroup4];
+
+    localStorage.setItem('entryClasses', JSON.stringify(allEntries));
+
   }
 
   save(user): Observable<User> {
@@ -70,6 +107,10 @@ export class FakeService {
     const filterEndDate: Date = new Date(endDate);
 
     const entries = allEntries.filter(entry => new Date(entry.data) > filterStartDate && new Date(entry.data) < filterEndDate );
+
+    if (entries == null || entries.length === 0) {
+      return of(null);
+    }
 
     const report: ExpenseReport = new ExpenseReport();
     const entryGroupExpenseList: GrupoLancamento[] = [];
@@ -179,18 +220,17 @@ export class FakeService {
 
     const entryGroup2 = new CategoriaLancamento();
     entryGroup2.id = 2;
-    entryGroup2.nome = 'Uber';
-    entryGroup2.descricao = 'Despesas com transporte de Uber';
+    entryGroup2.nome = 'Trasporte';
+    entryGroup2.descricao = 'Despesas com transporte';
     entryGroup2.tipo = 'DESPESA';
 
     const entryGroup3 = new CategoriaLancamento();
     entryGroup3.id = 3;
-    entryGroup3.nome = 'Roupas';
-    entryGroup3.descricao = 'Despesas com roupas';
+    entryGroup3.nome = 'Lazer';
+    entryGroup3.descricao = 'Despesas com lazer';
     entryGroup3.tipo = 'DESPESA';
 
-    const allEntries = [entryGroup1, entryGroup2, entryGroup3];
-    return of(allEntries);*/
+    const allEntries = [entryGroup1, entryGroup2, entryGroup3];*/
 
     const entryClasses: CategoriaLancamento[] = JSON.parse(localStorage.getItem('entryClasses'));
     if (entryClasses == null) {
@@ -198,5 +238,15 @@ export class FakeService {
     }
     return of(entryClasses.filter(entryClass => entryClass.tipo === type));
 
+  }
+
+
+  logout() {
+    // remove user from local storage to log user out
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('entryClasses');
+    localStorage.removeItem('entries');
+    this.currentUserSubject.next(null);
+    this.router.navigate(['/login']);
   }
 }

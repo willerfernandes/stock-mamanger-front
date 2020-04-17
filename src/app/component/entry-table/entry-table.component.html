@@ -1,0 +1,61 @@
+<!--div>
+  <table>
+    <tr >
+      <th *ngFor="let column of displayedColumns">{{column}}</th>
+    </tr>
+    <tr [style.class]="entry.tipo === 'DESPESA' ? 'expense-class' : 'receipt-class'" *ngFor="let entry of entries">
+      <td class="entryClass">{{entry.categoria.nome}}</td>
+      <td class="description">{{entry.descricao}}</td>
+      <td class="date">{{entry.data | date: 'dd/MM/yyyy HH:mm'}}</td>
+      <td class="value">{{entry.valor}}</td>
+    </tr>
+  </table>
+</div-->
+
+<div class="grid">
+  <div>
+    <p style="padding-left: 10px;line-height: 15px; margin: 0px; font-size: smaller; color: #585858;">QUI</p>
+    <p style="padding-left: 10px;line-height: 15px; margin: 0px; font-size: large; ">16</p>
+    <p style="padding-left: 10px;line-height: 15px; margin: 0px; font-size: smaller; color: #585858;">ABR</p>
+  </div>
+  <div >
+    <p style=" line-height: 20px; position: relative; right: 5px; top: 0px; font-size: 50px; color: red; text-align: right;">-</p>
+  </div>
+  <div>
+    <p style="font-weight: bolder; font-size: large; margin: 0px;">R$ 140,34</p>
+    <p style="display: block; margin: 0px; line-height: 20px; font-size: small; color: #585858;">DESPESAS COM ALIMETAÇÃO APÓS O ALMOÇO</p>
+  </div>
+</div>
+<hr>
+<div class="grid">
+  <div>
+    <p style="padding-left: 10px;line-height: 15px; margin: 0px; font-size: smaller; color: #585858;">QUI</p>
+    <p style="padding-left: 10px;line-height: 15px; margin: 0px; font-size: large; ">16</p>
+    <p style="padding-left: 10px;line-height: 15px; margin: 0px; font-size: smaller; color: #585858;">ABR</p>
+  </div>
+  <div >
+    <p style=" line-height: 20px; position: relative; right: 5px; top: 0px; font-size: 50px; color: red; text-align: right;">-</p>
+  </div>
+  <div>
+    <p style="font-weight: bolder; font-size: large; margin: 0px;">R$ 140,34</p>
+    <p style="display: block; margin: 0px; line-height: 20px; font-size: small; color: #585858;">DESPESAS COM ALIMETAÇÃO APÓS O ALMOÇO</p>
+  </div>
+</div>
+<hr>
+<div class="grid">
+  <div>
+    <p style="padding-left: 10px;line-height: 15px; margin: 0px; font-size: smaller; color: #585858;">QUI</p>
+    <p style="padding-left: 10px;line-height: 15px; margin: 0px; font-size: large; ">16</p>
+    <p style="padding-left: 10px;line-height: 15px; margin: 0px; font-size: smaller; color: #585858;">ABR</p>
+  </div>
+  <div >
+    <p style=" line-height: 20px; position: relative; right: 5px; top: 0px; font-size: 40px; color: green; text-align: right;">+</p>
+  </div>
+  <div>
+    <p style="font-weight: bolder; font-size: large; margin: 0px;">R$ 140,34</p>
+    <p style="display: block; margin: 0px; line-height: 20px; font-size: small; color: #585858;">SALÁRIO DE ABRIL</p>
+  </div>
+</div>
+<hr>
+
+

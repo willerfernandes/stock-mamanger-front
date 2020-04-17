@@ -1,0 +1,8 @@
+<div [style.display]="dismissed ? 'none' : 'block'" style="width: 100%; background-color: #ff3a3a;
+border: 2px solid #ffc1c1;  border-radius:0px 0px 8px 8px; box-sizing: border-box;">
+  <button (click)="dismiss()" style="display:inline-block; position: absolute; right: 5px; padding-right: 5px;">x</button>
+  <p style="display: inline; padding: 5px; color: white; font-size: small;">
+    <strong>{{title}}</strong>
+    <br>
+    {{message}}</p>
+<div>

@@ -17,10 +17,13 @@ export class SignupViewComponent implements OnInit {
 
   successMessage = 'Cadstrado com sucesso';
 
+  public isFakeServer  = false;
+
   constructor(private userService: UserService, private authService: AuthenticationService,
               private router: Router, private fakeService: FakeService) { }
 
   ngOnInit() {
+    this.isFakeServer = this.fakeService.isFakeServer;
     if (this.fakeService.isLoggedIn) {
       this.router.navigate(['/expense-dashboard']);
     }
