@@ -57,7 +57,7 @@ export class FakeService {
   private generateMockedDefaultEntryClassesData(): void {
     const entryGroup1 = new CategoriaLancamento();
     entryGroup1.id = 1;
-    entryGroup1.nome = 'Alimentacao';
+    entryGroup1.nome = 'Alimentação';
     entryGroup1.descricao = 'Despesas com alimentação';
     entryGroup1.tipo = 'DESPESA';
 
@@ -106,7 +106,7 @@ export class FakeService {
     const filterStartDate: Date = new Date(startDate);
     const filterEndDate: Date = new Date(endDate);
 
-    const entries = allEntries.filter(entry => new Date(entry.data) > filterStartDate && new Date(entry.data) < filterEndDate );
+    const entries = allEntries.filter(entry => new Date(entry.data) >= filterStartDate && new Date(entry.data) <= filterEndDate );
 
     if (entries == null || entries.length === 0) {
       return of(null);

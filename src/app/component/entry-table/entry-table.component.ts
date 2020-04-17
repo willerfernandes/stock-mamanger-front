@@ -16,6 +16,11 @@ export class EntryTableComponent implements OnInit {
 
   public entries: Lancamento[] = [];
 
+  monthNames = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI',
+    'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
+
+    weekDayNames = ['SEG', 'TER', 'QUA', 'QUI', 'SEX','SAB', 'DOM'];
+
   constructor() { }
 
   ngOnInit() {
@@ -27,5 +32,19 @@ export class EntryTableComponent implements OnInit {
       this.entries = this.entries.concat(group.lancamentos);
     });
   }
+
+  public getEntryMonthName(data: string): string {
+
+    return this.monthNames[new Date(data).getMonth()];
+  }
+
+  public getEntryDateMonthDay(data: string): number {
+    return new Date(data).getDate();
+  }
+
+  public getEntryDateWeekDayName(data: string): string {
+    return this.weekDayNames[new Date(data).getDay() - 1];
+  }
+
 
 }

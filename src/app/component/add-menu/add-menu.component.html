@@ -1,10 +1,19 @@
-<div [style.display]="isAddMenuActive ? 'initial' : 'none'" style="float: right;">
-  <div class="menu-itens-container">
-    <label class = "menu-item-text green-text">Ganhos</label> <img class="menu-item" [src]="'./assets/img/add-menu-receipt.svg'" (click)="onReceiptClicked()">
+<div class="grid" [style.display]="isAddMenuActive ? 'initial' : 'none'" style="float: right;">
+  <div class="grid menu-itens-container">
+    <div class="center">
+      <label class = "menu-item-text green-text">Ganhos</label>
+    </div>
+    <div class="center">
+      <img class="menu-item-icon" [src]="'./assets/img/add-menu-receipt.svg'" (click)="onReceiptClicked()">
+    </div>
   </div>
-  <br>
-  <div class="menu-itens-container">
-    <label class="menu-item-text red-text">Despesas</label><img class="menu-item" [src]="'./assets/img/add-menu-expense.svg'" (click)="onExpenseClicked()">
+  <div class="grid menu-itens-container">
+    <div class="center">
+      <label class="menu-item-text red-text">Despesas</label>
+    </div>
+    <div class="center">
+      <img class="menu-item-icon" [src]="'./assets/img/add-menu-expense.svg'" (click)="onExpenseClicked()">
+    </div>
   </div>
 </div>
 <div>

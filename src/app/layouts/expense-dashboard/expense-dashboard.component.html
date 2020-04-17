@@ -44,17 +44,17 @@
         <app-expense-group *ngIf="isSuccess" [expenseGroups]="gruposLancamentosDespesas" (deleteRowEvent)="entryDeleted()"></app-expense-group>
       </div>
       <br>
-      <p *ngIf="gruposLancamentosReceitas.length > 0" style="font-size: small; color: #cacaca;">Receitas</p>
+      <p style="font-size: small; color: #cacaca;">Receitas</p>
       <div>
         <app-expense-group *ngIf="isSuccess" [expenseGroups]="gruposLancamentosReceitas" (deleteRowEvent)="entryDeleted()"></app-expense-group>
       </div>
       <br>
     </div>
-    <p *ngIf="gruposLancamentosReceitas.length > 0" style="font-size: small; color: #cacaca;">Últimos lançamentos</p>
+    <p *ngIf="gruposLancamentosDespesas.length > 0" style="font-size: small; color: #cacaca;">Últimos lançamentos</p>
     <div>
       <app-entry-table [entryGroups]=gruposLancamentosReceitas.concat(gruposLancamentosDespesas)></app-entry-table>
     </div>
-    <p *ngIf="gruposLancamentosReceitas.length > 0" style="font-size: small; font-weight: bold; color: #030091; text-decoration: underline;">Ver mais</p>
+    <p *ngIf="gruposLancamentosDespesas.length > 0" style="font-size: small; font-weight: bold; color: #777777; text-align: center; text-decoration: underline;">MOSTRAR MAIS</p>
   </div>
   <div *ngIf="isLoading" style="width: 80%; height: 400px; margin: auto; box-sizing: border-box;">
     <img src='/assets/img/loading.gif' style="width: 100px; height: auto; display: block; margin: auto; padding: 100px 0px;">
@@ -66,6 +66,17 @@
     <app-expense-no-results-found></app-expense-no-results-found>
   </div>
 </div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <div id="menu" class="add-button" draggable="true">
   <app-add-menu
     (isAddMenuDismissedTrue)="setOpacity()"
