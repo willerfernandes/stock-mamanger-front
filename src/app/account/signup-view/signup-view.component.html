@@ -14,17 +14,17 @@
     <hr>
 
     <div class="inner-container">
-      <label #login for="login" class="color-primary"><b>*Login</b></label>
-      <input type="text" placeholder="Entre seu login" name="login" required>
+      <label style="color: red;">*</label><label  for="login" class="color-primary"><b>Login</b></label>
+      <input #login type="text" placeholder="Entre seu login" name="login" required>
 
-      <label #psw for="psw" class="color-primary"><b>*Crie uma senha</b></label>
-      <input type="password" placeholder="Entre a senha" name="psw" required>
+      <label style="color: red;">*</label><label  for="psw" class="color-primary"><b>Crie uma senha</b></label>
+      <input #psw type="password" placeholder="Entre a senha" name="psw" required>
 
-      <label #repeatPsw for="psw-repeat" class="color-primary"><b>*Repita a senha</b></label>
-      <input type="password" placeholder="Repita a senha" name="psw-repeat" required>
+      <label style="color: red;">*</label><label  for="psw-repeat" class="color-primary"><b>Repita a senha</b></label>
+      <input #repeatPsw type="password" placeholder="Repita a senha" name="psw-repeat" required>
 
-      <label #name for="name" class="color-primary"><b>Nome</b></label>
-      <input type="text" placeholder="Seu nome" name="name" >
+      <label style="color: red;">*</label><label for="name" class="color-primary"><b>Nome</b></label>
+      <input #name type="text" placeholder="Seu nome" name="name" >
     </div>
 
 

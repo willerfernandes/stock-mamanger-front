@@ -23,8 +23,6 @@
 
 
 .primary-button-text:active {
-  background-color: #b9b5ff;
-  box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
 

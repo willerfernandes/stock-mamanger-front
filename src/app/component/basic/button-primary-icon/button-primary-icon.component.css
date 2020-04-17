@@ -9,11 +9,10 @@
 }
 
 .primary-button-icon:hover {
-  transition: 0.3s;
+  cursor: pointer;
 }
 
 
 .primary-button-icon:active {
-  box-shadow: 0 5px #666;
   transform: translateY(4px);
 }

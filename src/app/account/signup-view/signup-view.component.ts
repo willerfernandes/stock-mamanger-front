@@ -30,24 +30,35 @@ export class SignupViewComponent implements OnInit {
   }
 
   public signUp(login: string, password: string, repeatPsw: string, name: string) {
-    if (this.validateFields()) {
-      const user = new User();
-      user.id = 0;
-      user.login = login;
-      user.nome = name;
-      user.senha = password;
-      this.fakeService.save(user).subscribe(res => {
-        this.authService.openDialog(this.successMessage, 3000);
-        this.router.navigate(['/login']);
-      },
-        err => {
-          this.router.navigate(['/homr']);
-        });
-    }
+    this.validateFields(login, password, repeatPsw, name);
+    const user = new User();
+    user.id = 0;
+    user.login = login;
+    user.nome = name;
+    user.senha = password;
+    this.fakeService.save(user).subscribe(res => {
+      this.authService.openDialog(this.successMessage, 3000);
+      this.router.navigate(['/login']);
+    },
+      err => {
+        this.router.navigate(['/homr']);
+      });
+
   }
 
-  private validateFields(): boolean {
-    // TODO: validade fields
+  private validateFields(login: string, password: string, repeatPsw: string, name: string): boolean {
+    if (login == null || password == null || repeatPsw == null || name == null
+        || login === '' || password === '' || repeatPsw === '' || name === '' ) {
+      this.authService.openDialog('Preencha todos os campos obrigatórios', 3000);
+      throw new Error('Preencha todos os campos obrigatórios');
+    }
+
+    if (password !== repeatPsw) {
+      this.authService.openDialog('Os valores digitados nos campos \'Senha\' e \'Repita sua Senha\' não são iguais!', 3000);
+      throw new Error('Os valores digitados nos campos \'Senha\' e \'Repita sua Senha\' não são iguais!');
+    }
+
+
     return true;
   }
 
