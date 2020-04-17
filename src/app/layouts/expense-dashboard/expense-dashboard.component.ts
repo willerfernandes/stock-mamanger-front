@@ -6,12 +6,10 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { FormControl } from '@angular/forms';
 import { FakeService } from 'src/app/services/fake.service';
 import { GrupoLancamento } from 'src/app/entities/grupo-lancamento';
-import { ExpenseReport } from 'src/app/entities/expense-report';
 import { NewExpenseViewComponent } from '../new-expense-view/new-expense-view.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { catchError } from 'rxjs/operators';
-import { of, throwError } from 'rxjs';
 import { NewReceiptViewComponent } from 'src/app/component/new-receipt-view/new-receipt-view.component';
+import { Lancamento } from 'src/app/entities/lancamento';
 @Component({
   selector: 'app-expense-dashboard',
   templateUrl: './expense-dashboard.component.html',
@@ -20,6 +18,9 @@ import { NewReceiptViewComponent } from 'src/app/component/new-receipt-view/new-
 export class ExpenseDashboardComponent implements OnInit {
 
   /// $$$$$ REFACTOR TO USE RES ON SINGLE VARIABLE OF TYPE EXPENSE REPORT $$$$$ ///
+
+
+  private NUMBER_OF_ELEMENTS_TO_SHOW_ON_LAST_ENTRIES = 10;
 
   // Pie
   public pieChartLabels: string[];
@@ -32,8 +33,8 @@ export class ExpenseDashboardComponent implements OnInit {
   public endDate: any;
 
 
-  public gruposLancamentosDespesas: GrupoLancamento[];
-  public gruposLancamentosReceitas: GrupoLancamento[];
+  public gruposLancamentosDespesas: GrupoLancamento[] = [];
+  public gruposLancamentosReceitas: GrupoLancamento[] = [];
   public tableTitle = 'RESUMO DESPESAS';
 
   public isSuccess = false;
@@ -47,6 +48,8 @@ export class ExpenseDashboardComponent implements OnInit {
 
   public expenseClicked = false;
   public isFakeServer = false;
+
+  public allEntries: Lancamento[] = [];
 
   monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio',
     'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
@@ -178,6 +181,8 @@ export class ExpenseDashboardComponent implements OnInit {
           this.pieChartData = res.itemGrafico.valor;
           this.gruposLancamentosDespesas = res.gruposLancamentosDespesas;
           this.gruposLancamentosReceitas = res.gruposLancamentosReceitas;
+
+          this.allEntries = this.getEntries(res.gruposLancamentosDespesas.concat(res.gruposLancamentosReceitas));
           this.isSuccess = true;
           this.isEmptyResult = false;
           this.isLoading = false;
@@ -194,6 +199,25 @@ export class ExpenseDashboardComponent implements OnInit {
         });
   }
 
+  private getEntries(entryGroups: GrupoLancamento[]): Lancamento[] {
+    let entries: Lancamento[] = [];
+    entryGroups.forEach(group => {
+      entries = entries.concat(group.lancamentos);
+    });
+
+    // sort reversed
+    entries.sort( (a, b) => {
+      if (new Date(a.data) < new Date(b.data)) {
+        return 1;
+      } else if (new Date(a.data) > new Date(b.data)) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
+
+    return entries.slice(0, this.NUMBER_OF_ELEMENTS_TO_SHOW_ON_LAST_ENTRIES);
+  }
 
   ngOnInit() {
     this.isFakeServer = this.fakeService.isFakeServer;

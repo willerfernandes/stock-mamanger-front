@@ -12,8 +12,6 @@ export class EntryTableComponent implements OnInit {
   public displayedColumns = ['Categoria', 'Descrição', 'Data', 'Valor'];
 
   @Input()
-  public entryGroups: GrupoLancamento[] = [];
-
   public entries: Lancamento[] = [];
 
   monthNames = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI',
@@ -24,13 +22,6 @@ export class EntryTableComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.getEntries();
-  }
-
-  private getEntries(): void {
-    this.entryGroups.forEach(group => {
-      this.entries = this.entries.concat(group.lancamentos);
-    });
   }
 
   public getEntryMonthName(data: string): string {

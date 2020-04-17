@@ -51,8 +51,8 @@
       <br>
     </div>
     <p *ngIf="gruposLancamentosDespesas.length > 0" style="font-size: small; color: #cacaca;">Últimos lançamentos</p>
-    <div>
-      <app-entry-table [entryGroups]=gruposLancamentosReceitas.concat(gruposLancamentosDespesas)></app-entry-table>
+    <div *ngIf="gruposLancamentosDespesas.length > 0">
+      <app-entry-table [entries]="allEntries"></app-entry-table>
     </div>
     <p *ngIf="gruposLancamentosDespesas.length > 0" style="font-size: small; font-weight: bold; color: #777777; text-align: center; text-decoration: underline;">MOSTRAR MAIS</p>
   </div>
