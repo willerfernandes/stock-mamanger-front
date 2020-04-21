@@ -7,6 +7,9 @@ import { Lancamento } from 'src/app/entities/lancamento';
 import { CategoriaLancamento } from 'src/app/entities/categoria-lancamento';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { FormControl } from '@angular/forms';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { ThemePalette } from '@angular/material';
+
 
 @Component({
   selector: 'app-new-expense-view',
@@ -21,6 +24,9 @@ export class NewExpenseViewComponent implements OnInit {
   public amount = '';
   public allEntryGroups: CategoriaLancamento[];
 
+  public color: ThemePalette = 'accent';
+  public isInstallmentPurchase = false;
+
   @Output()
   public entrySaved = new EventEmitter();
 
@@ -30,6 +36,7 @@ export class NewExpenseViewComponent implements OnInit {
     private expenseService: ExpenseService,
     private bottomSheetRef: MatBottomSheetRef<NewExpenseViewComponent>,
     private currencyPipe: CurrencyPipe) { }
+    plots = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
 
   saveExpense(
     event: MouseEvent,
@@ -38,7 +45,8 @@ export class NewExpenseViewComponent implements OnInit {
     newEntryGroupDescription: string,
     date: any,
     description: string,
-    value: string): void {
+    value: string,
+    numberOfPlots: number): void {
 
     // TODO: validate with angular forms
     this.validateFields(entryGroupId, newEntryGroupName, newEntryGroupDescription, date, value);
@@ -52,23 +60,55 @@ export class NewExpenseViewComponent implements OnInit {
       entryGroup.id = Number.parseInt(entryGroupId, 10);
     }
 
-    const entry = new Lancamento();
-    entry.categoria = entryGroup;
-    entry.data = date._selected.toISOString();
-    entry.descricao = description;
-    entry.tipo = 'DESPESA';
-    entry.valor = Number.parseFloat(value);
-    this.bottomSheetRef.dismiss();
-    this.fakeService.saveEntry(entry).subscribe(async res => {
-      this.authenticationService.openDialog('Salvo com sucesso', 2000);
-      this.entrySaved.emit();
-    },
-      err => {
-        this.authenticationService.openDialog('Ops! Tivemos um erro ao salvar seu lançamento.', 3000);
-      });
-    event.preventDefault();
+    if (this.isInstallmentPurchase) {
+      this.createInstallmentPurchases(event, value, numberOfPlots, date, entryGroup, description);
+    } else {
+      const entry = new Lancamento();
+      entry.categoria = entryGroup;
+      entry.data = date._selected.toISOString();
+      entry.descricao = description;
+      entry.tipo = 'DESPESA';
+      entry.valor = Number.parseFloat(value);
+      this.bottomSheetRef.dismiss();
+      this.fakeService.saveEntry(entry).subscribe(async res => {
+        this.authenticationService.openDialog('Salvo com sucesso', 2000);
+        this.entrySaved.emit();
+      },
+        err => {
+          this.authenticationService.openDialog('Ops! Tivemos um erro ao salvar seu lançamento.', 3000);
+        });
+      event.preventDefault();
+    }
+
   }
 
+  private createInstallmentPurchases( event: MouseEvent,
+                                      value: string,
+                                      numberOfPlots: number,
+                                      date: any,
+                                      entryGroup: CategoriaLancamento,
+                                      description: string) {
+
+    const eachPlotValue: number = parseFloat(value) / numberOfPlots;
+    const initialDate: Date = new Date(date._selected.toISOString());
+    for (let i = 0; i < numberOfPlots; i++) {
+      const entry = new Lancamento();
+      entry.categoria = entryGroup;
+      entry.data = new Date(initialDate.getFullYear(), initialDate.getMonth() + i, initialDate.getDate()).toISOString();
+      entry.descricao = description + ' ' + '(' + (i + 1) + '/' + numberOfPlots + ')';
+      entry.tipo = 'DESPESA';
+      entry.valor = eachPlotValue;
+      this.fakeService.saveEntry(entry).subscribe();
+    }
+    this.authenticationService.openDialog('Salvo com sucesso', 2000);
+    this.entrySaved.emit();
+    event.preventDefault();
+    this.bottomSheetRef.dismiss();
+  }
+
+  public onIsInstallmentPurchaseToogleSliderChange(): void {
+      this.isInstallmentPurchase = !this.isInstallmentPurchase;
+  }
 
   public changedInputAmountValue(event: any) {
     /*const key = event.key;

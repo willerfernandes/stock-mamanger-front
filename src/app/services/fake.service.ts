@@ -178,6 +178,14 @@ export class FakeService {
 
     entry.id = entries.length  + 1;
 
+    // necessary when user creastes a new entryClass and is multiple expenses
+    if (entry.categoria.nome != null) {
+        const existingCategory: CategoriaLancamento =  entryClasses.find(entryClass => entryClass.nome === entry.categoria.nome);
+        if (existingCategory != null) {
+          entry.categoria = existingCategory;
+        }
+    }
+
     if (entry.categoria.id == null) {
       const newEntryClass = new CategoriaLancamento();
       newEntryClass.id = entries.length + 1;

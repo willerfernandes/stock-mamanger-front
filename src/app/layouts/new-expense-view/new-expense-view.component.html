@@ -46,8 +46,20 @@
       <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
       <mat-datepicker id="dateInput" #picker1></mat-datepicker>
     </mat-form-field>
-  </div>
-<hr>
+</div>
+<div class="container">
+  <!--div style="display: inline">
+    <img src='/assets/img/question-icon.png'-->
+  <label class="color-primary input-label">Compra<br>parcelada?</label>
+  <mat-slide-toggle
+    [color]="color"
+    (change)= "onIsInstallmentPurchaseToogleSliderChange()">
+  </mat-slide-toggle>
+  <select [hidden]="!isInstallmentPurchase" #numberOfPlots  style="display: inline;">
+    <option *ngFor="let plot of plots" [value]="plot">{{plot.toString() + 'x'}}</option>
+  </select>
+</div>
+
 <div style="display: flex; justify-content: center;" class="container">
-  <btn-primary-blue [text]="'OK'" (click)="saveExpense($event, entryGroupSelect?.value, newEntryGroupName?.value, newEntryGroupDescription?.value, picker1, description?.value, amount?.value)" ></btn-primary-blue>
+  <btn-primary-blue [text]="'OK'" (click)="saveExpense($event, entryGroupSelect?.value, newEntryGroupName?.value, newEntryGroupDescription?.value, picker1, description?.value, amount?.value, numberOfPlots.value)" ></btn-primary-blue>
 </div>

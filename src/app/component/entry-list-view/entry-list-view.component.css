@@ -1,0 +1,44 @@
+.grid {
+  box-sizing: border-box;
+  display: grid;
+  grid: auto / 25% 25% 25% 25%;
+  height: 45px;
+  width: 100%;
+  margin:auto;
+  background-color: #ECECEC;
+  border-radius: 20px;
+}
+
+.container {
+  width: 99%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.topic{
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  font-size: 14px;
+  color: #777777;
+  margin-top: 40px;
+  margin-left: 5px;
+}
+
+.filter-item {
+  box-sizing: border-box;
+  margin: auto;
+  font-size: small;
+}
+
+.filter-text {
+  text-align: center;
+  text-decoration: underline;
+  margin: auto;
+}
+
+p {
+  margin: 0px;
+}

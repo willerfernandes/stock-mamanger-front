@@ -2,11 +2,12 @@
 
 <div *ngFor="let entry of entries">
   <div class="grid">
-    <div>
-      <img *ngIf="entry.categoria.nome === 'Alimentação'" src='/assets/img/food-icon.png' class="entryClassIcon">
+    <div style="margin: auto;">
+      <img *ngIf="entry.categoria.nome === 'Alimentação'" style="display: block;"  src='/assets/img/food-icon.png' class="entryClassIcon">
       <img *ngIf="entry.categoria.nome === 'Transporte'" src='/assets/img/transport-icon.png' class="entryClassIcon">
       <img *ngIf="entry.categoria.nome === 'Lazer'" src='/assets/img/leisure-icon.png' class="entryClassIcon">
       <img *ngIf="entry.categoria.nome !== 'Alimentação' && entry.categoria.nome !== 'Transporte' && entry.categoria.nome !== 'Lazer'" src='/assets/img/other-classes-icon.png' class="entryClassIcon">
+      <p style="display: block; font-size: small;">{{entry.categoria.nome.substr(0, 4) + '.'}}</p>
     </div>
     <div>
       <p class="date-text">{{getEntryDateWeekDayName(entry.data)}}</p>

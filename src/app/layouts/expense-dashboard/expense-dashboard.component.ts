@@ -10,6 +10,7 @@ import { NewExpenseViewComponent } from '../new-expense-view/new-expense-view.co
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { NewReceiptViewComponent } from 'src/app/component/new-receipt-view/new-receipt-view.component';
 import { Lancamento } from 'src/app/entities/lancamento';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-expense-dashboard',
   templateUrl: './expense-dashboard.component.html',
@@ -20,7 +21,7 @@ export class ExpenseDashboardComponent implements OnInit {
   /// $$$$$ REFACTOR TO USE RES ON SINGLE VARIABLE OF TYPE EXPENSE REPORT $$$$$ ///
 
 
-  private NUMBER_OF_ELEMENTS_TO_SHOW_ON_LAST_ENTRIES = 10;
+  private NUMBER_OF_ELEMENTS_TO_SHOW_ON_LAST_ENTRIES = 5;
 
   // Pie
   public pieChartLabels: string[];
@@ -58,7 +59,8 @@ export class ExpenseDashboardComponent implements OnInit {
               private expenseService: ExpenseService,
               private fakeService: FakeService,
               private apapter: DateAdapter<any>,
-              private bottomSheet: MatBottomSheet) { }
+              private bottomSheet: MatBottomSheet,
+              private router: Router) { }
 
   // events
   public chartClicked(e: any): void {
@@ -145,6 +147,10 @@ export class ExpenseDashboardComponent implements OnInit {
 
   public getFinancialStatement(): number {
     return this.totalReceipt - this.totalExpenses;
+  }
+
+  public onShowMoreClicked(): void {
+    this.router.navigate(['/entries']);
   }
 
   setCurrentTile() {

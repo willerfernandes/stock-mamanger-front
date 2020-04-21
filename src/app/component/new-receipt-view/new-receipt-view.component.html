@@ -6,14 +6,14 @@
   </div>
 </div>
 <div class="container containter-wraper" style="margin-top: 20px;">
-    <img  [src]="'./assets/img/piggy-bank-icon.svg'" style="margin-right: 10px; vertical-align: middle;"><label class="red-text">*</label><label class="color-primary input-label">Valor:</label>
+    <img  [src]="'./assets/img/piggy-bank-icon.png'" style="margin-right: 10px; vertical-align: middle;"><label class="red-text">*</label><label class="color-primary input-label">Valor:</label>
     <input id="input-currency"  #amount autofocus
     type="number" placeholder="000,00"
     class="input-medium padding-small" style="font-size: 24px; font-weight: bold;">
 </div>
 <hr>
 <div class="container">
-  <img [src]="'./assets/img/piggy-bank-icon.svg'" style="margin-right: 10px; vertical-align: middle;"> <label class="red-text">*</label><label class="color-primary input-label">Categoria:</label>
+  <img [src]="'./assets/img/piggy-bank-icon.png'" style="margin-right: 10px; vertical-align: middle;"> <label class="red-text">*</label><label class="color-primary input-label">Categoria:</label>
   <select #entryGroupSelect (change)="selectValueChanged(entryGroupSelect)" class="input-medium" #entryGroupSelect>
     <option value='---'>---</option>
     <option *ngFor="let entryGroup of allEntryGroups" [value]="entryGroup.id">{{entryGroup.nome}}</option>
@@ -34,12 +34,12 @@
 </div>
 <hr>
 <div class="container">
-  <img [src]="'./assets/img/piggy-bank-icon.svg'" style="margin-right: 10px; vertical-align: middle;"><label class="color-primary input-label">Descrição:</label>
+  <img [src]="'./assets/img/piggy-bank-icon.png'" style="margin-right: 10px; vertical-align: middle;"><label class="color-primary input-label">Descrição:</label>
   <input #description class= "input-medium" type="text">
 </div>
 <hr>
 <div class="container">
-  <img [src]="'./assets/img/piggy-bank-icon.svg'" style="margin-right: 10px; vertical-align: middle;"> <label class="red-text">*</label><label class="color-primary input-label">Data:</label>
+  <img [src]="'./assets/img/piggy-bank-icon.png'" style="margin-right: 10px; vertical-align: middle;"> <label class="red-text">*</label><label class="color-primary input-label">Data:</label>
     <mat-form-field class="datePicker" style="max-width: 150px;">
       <input  #date class="color-primary input-label" matInput [matDatepicker]="picker1" [formControl]="initialDate">
       <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>

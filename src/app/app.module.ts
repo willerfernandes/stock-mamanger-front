@@ -97,6 +97,7 @@ import { ExpenseNoResultsFoundComponent } from './component/expense-no-results-f
 import { NewReceiptViewComponent } from './component/new-receipt-view/new-receipt-view.component';
 import { AlertOnScreenComponent } from './component/alert-on-screen/alert-on-screen.component';
 import { EntryTableComponent } from './component/entry-table/entry-table.component';
+import { EntryListViewComponent } from './component/entry-list-view/entry-list-view.component';
 
 @NgModule({
   declarations: [
@@ -147,7 +148,8 @@ import { EntryTableComponent } from './component/entry-table/entry-table.compone
     ExpenseNoResultsFoundComponent,
     NewReceiptViewComponent,
     AlertOnScreenComponent,
-    EntryTableComponent
+    EntryTableComponent,
+    EntryListViewComponent
   ],
   entryComponents: [
     NewExpenseViewComponent,

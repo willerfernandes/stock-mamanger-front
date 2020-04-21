@@ -23,6 +23,7 @@ import {ExpenseCategoryDetailComponent} from './register/expense/expense-categor
 import {AuthGuard} from './account/auth.guard';
 import { HomeViewComponent } from './layouts/home-view/home-view.component';
 import { UnderConstructionComponent } from './layouts/under-construction/under-construction.component';
+import { EntryListViewComponent } from './component/entry-list-view/entry-list-view.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -46,7 +47,8 @@ const routes: Routes = [
   { path: 'category', component: ExpenseCategoryFilterComponent },
   { path: 'category/new', component: ExpenseCategoryNewComponent },
   { path: 'category/:id', component: ExpenseCategoryDetailComponent },
-  { path: 'under-construction', component: UnderConstructionComponent }
+  { path: 'under-construction', component: UnderConstructionComponent },
+  { path: 'entries', component: EntryListViewComponent }
 ];
 
 
