@@ -38,6 +38,10 @@ export class MainNavBarComponent implements OnInit {
     this.router.navigate(['./home']);
   }
 
+  public navigateToEntryClasses(): void {
+    this.router.navigate(['/classes']);
+  }
+
   public logout(): void {
     this.fakeService.logout();
   }

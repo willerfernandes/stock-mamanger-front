@@ -1,0 +1,43 @@
+.input-label {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: bolder;
+  font-size: 18px;
+  margin: 0px;
+  vertical-align: middle;
+  max-width: 150px;
+  min-width: 100px;
+}
+
+
+.input-medium {
+  width: 250px;
+}
+
+.container {
+  width: 95%;
+  margin: auto;
+}
+
+textarea, select, input[type=text], input[type=number], input[type=password] {
+  padding-left: 12px;
+  padding: 02px 05px;
+  background-color: white;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px ridge #030091;
+  font-size: 16px;
+
+}
+
+input:active {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+	border-bottom: 1px ridge #030091;
+}
+
+.padding-medium {
+  padding-left: 20px;
+}

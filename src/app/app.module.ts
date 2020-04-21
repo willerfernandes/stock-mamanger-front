@@ -98,6 +98,8 @@ import { NewReceiptViewComponent } from './component/new-receipt-view/new-receip
 import { AlertOnScreenComponent } from './component/alert-on-screen/alert-on-screen.component';
 import { EntryTableComponent } from './component/entry-table/entry-table.component';
 import { EntryListViewComponent } from './component/entry-list-view/entry-list-view.component';
+import { EntryClassListViewComponent } from './component/entry-class-list-view/entry-class-list-view.component';
+import { EntryClassEditViewComponent } from './component/entry-class-edit-view/entry-class-edit-view.component';
 
 @NgModule({
   declarations: [
@@ -149,7 +151,9 @@ import { EntryListViewComponent } from './component/entry-list-view/entry-list-v
     NewReceiptViewComponent,
     AlertOnScreenComponent,
     EntryTableComponent,
-    EntryListViewComponent
+    EntryListViewComponent,
+    EntryClassListViewComponent,
+    EntryClassEditViewComponent
   ],
   entryComponents: [
     NewExpenseViewComponent,

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Optional } from '@angular/core';
 import { Credentials } from '../entities/credentials';
 import { UserAuth } from '../entities/user-auth';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -163,7 +163,7 @@ export class FakeService {
     report.itemGrafico.valor = graphInfoValues;
 
     // --------- EMPTY EXPENSE REPORT ------------
-    console.log('localStorage');
+    console.log('LocalStorage Data');
     console.log(localStorage);
     return of(report);
   }
@@ -188,7 +188,7 @@ export class FakeService {
 
     if (entry.categoria.id == null) {
       const newEntryClass = new CategoriaLancamento();
-      newEntryClass.id = entries.length + 1;
+      newEntryClass.id = entryClasses.length + 1;
       newEntryClass.nome = entry.categoria.nome;
       newEntryClass.descricao = entry.categoria.descricao;
       newEntryClass.tipo = entry.categoria.tipo;
@@ -219,6 +219,8 @@ export class FakeService {
     return of(deleted[0]);
   }
 
+
+
   public loadEntryGroups(type: string): Observable<CategoriaLancamento[]> {
     /*const entryGroup1 = new CategoriaLancamento();
     entryGroup1.id = 1;
@@ -248,6 +250,24 @@ export class FakeService {
 
   }
 
+  public loadEntryGroup(id: number) {
+    const entryClasses: CategoriaLancamento[] = JSON.parse(localStorage.getItem('entryClasses'));
+    return of(entryClasses.find(entryClass => entryClass.id === id));
+  }
+
+  deleteEntryClass(id: number) {
+    const entryClasses: CategoriaLancamento[] = JSON.parse(localStorage.getItem('entryClasses'));
+    const newEntryClasses = entryClasses.splice(id);
+    localStorage.setItem('entryClasses', JSON.stringify(newEntryClasses));
+    return of(null);
+  }
+
+  saveEntryClass(newEntryClass: CategoriaLancamento) {
+    const entryClasses: CategoriaLancamento[] = JSON.parse(localStorage.getItem('entryClasses'));
+    const indexOldEntryClass: number =  entryClasses.findIndex(oldClass => oldClass.id === newEntryClass.id);
+    entryClasses.splice(indexOldEntryClass, 1, newEntryClass);
+    localStorage.setItem('entryClasses', JSON.stringify(entryClasses));
+  }
 
   logout() {
     // remove user from local storage to log user out

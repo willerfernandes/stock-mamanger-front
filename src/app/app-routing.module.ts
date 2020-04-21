@@ -24,6 +24,8 @@ import {AuthGuard} from './account/auth.guard';
 import { HomeViewComponent } from './layouts/home-view/home-view.component';
 import { UnderConstructionComponent } from './layouts/under-construction/under-construction.component';
 import { EntryListViewComponent } from './component/entry-list-view/entry-list-view.component';
+import { EntryClassListViewComponent } from './component/entry-class-list-view/entry-class-list-view.component';
+import { EntryClassEditViewComponent } from './component/entry-class-edit-view/entry-class-edit-view.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -48,7 +50,9 @@ const routes: Routes = [
   { path: 'category/new', component: ExpenseCategoryNewComponent },
   { path: 'category/:id', component: ExpenseCategoryDetailComponent },
   { path: 'under-construction', component: UnderConstructionComponent },
-  { path: 'entries', component: EntryListViewComponent }
+  { path: 'entries', component: EntryListViewComponent },
+  { path: 'classes', component: EntryClassListViewComponent },
+  { path: 'classes/:id', component: EntryClassEditViewComponent }
 ];
 
 

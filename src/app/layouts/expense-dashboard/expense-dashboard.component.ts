@@ -190,7 +190,7 @@ export class ExpenseDashboardComponent implements OnInit {
 
           this.allEntries = this.getEntries(res.gruposLancamentosDespesas.concat(res.gruposLancamentosReceitas));
           this.isSuccess = true;
-          this.isEmptyResult = false;
+          this.isEmptyResult = this.gruposLancamentosDespesas.length === 0;
           this.isLoading = false;
         } else {
           this.isSuccess = true;

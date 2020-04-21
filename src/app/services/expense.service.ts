@@ -51,4 +51,9 @@ export class ExpenseService {
     this.httpOptions.params = filterParams;
     return this.httpClient.get<CategoriaLancamento[]>(this.baseUrl + this.entryGroupPath, this.httpOptions);
   }
+
+
+  public loadEntryGroup(id: number): Observable<CategoriaLancamento> {
+    return this.httpClient.get<CategoriaLancamento>(this.baseUrl + this.entryGroupPath + '/' + id, this.httpOptions);
+  }
 }
