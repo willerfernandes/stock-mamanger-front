@@ -257,8 +257,9 @@ export class FakeService {
 
   deleteEntryClass(id: number) {
     const entryClasses: CategoriaLancamento[] = JSON.parse(localStorage.getItem('entryClasses'));
-    const newEntryClasses = entryClasses.splice(id);
-    localStorage.setItem('entryClasses', JSON.stringify(newEntryClasses));
+    const oldEntryClassIndex: number = entryClasses.findIndex(entryClass => entryClass.id === id);
+    entryClasses.splice(oldEntryClassIndex, 1);
+    localStorage.setItem('entryClasses', JSON.stringify(entryClasses));
     return of(null);
   }
 

@@ -6,23 +6,24 @@
 </div>
 <div class="container">
   <div style="margin-top: 40px;">
-    <label class="input-label color-primary">Nome</label>
+    <label class="input-label color-primary">Nome:</label>
     <input type="text" class="input-medium padding-medium" #name value={{entryClass.nome}}/>
   </div>
   <div>
-    <label class="input-label color-primary">Descrição</label>
+    <label class="input-label color-primary">Descrição:</label>
     <input type="text" class="input-medium padding-medium" #description value={{entryClass.descricao}}/>
   </div>
-  <div>
-    <label class="input-label color-primary">Tipo</label>
-    <select class="input-medium padding-medium" #type selected="entryClass.tipo">
-      <option value="'RECEITA'">RECEITA</option>
-      <option value="'RECEITA'">DESPESA</option>
-  </select>
-  </div>
-  <div style="width: 50%; margin: 40px auto;">
-    <button (click)="deleteEntryClass()" class="btn btn-light">EXCLUIR</button>
-  <button (click)="save(name.value, description.valeu, type.value)" class="btn btn-primary">SALVAR</button>
+  <!--div TODO: set entry type select to load value from object>
+    <form [formGroup]="entryForm">
+      <label class="input-label color-primary">Tipo</label>
+      <select formControlName="typeControl" class="input-medium padding-medium">
+
+      </select>
+    </form>
+  </div-->
+  <div style="width: 100%; margin: 40px auto;">
+    <btn-primary-blue style="float: left;" [text]="'SALVAR'" (click)="save(name.value, description.value)"></btn-primary-blue>
+    <btn-secondary-blue style="float: right;"  [text]="'EXCLUIR'" (click)="deleteEntryClass()" ></btn-secondary-blue>
   </div>
 
 </div>

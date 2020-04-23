@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CategoriaLancamento } from 'src/app/entities/categoria-lancamento';
 import { FakeService } from 'src/app/services/fake.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { MessageService } from 'src/app/services/message.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-entry-class-edit-view',
@@ -11,9 +13,18 @@ import { Location } from '@angular/common';
 })
 export class EntryClassEditViewComponent implements OnInit {
 
+
+  entryForm: FormGroup;
+
   public entryClass: CategoriaLancamento;
 
-  constructor(private fakeService: FakeService, private route: ActivatedRoute, private location: Location) { }
+  public types = ['RECEITA', 'DESPESA'];
+
+  constructor(private fakeService: FakeService,
+              private route: ActivatedRoute,
+              private location: Location,
+              private messageService: MessageService,
+              private router: Router) {}
 
   goBack(): void {
     this.location.back();
@@ -21,21 +32,25 @@ export class EntryClassEditViewComponent implements OnInit {
 
   public deleteEntryClass(): void {
     this.fakeService.deleteEntryClass(this.entryClass.id).subscribe();
+    this.messageService.openMessageBar('Categoria removida com sucesso', 2000);
+    this.router.navigate(['/expense-dashboard']);
   }
 
-  public save(name: string, description: string, type: string) {
-
+  public save(name: string, description: string) {
     this.entryClass.nome = name;
     this.entryClass.descricao = description;
-    this.entryClass.tipo = type;
-
     this.fakeService.saveEntryClass(this.entryClass);
+    this.messageService.openMessageBar('Categoria atualizada com sucesso', 2000);
+    this.router.navigate(['/expense-dashboard']);
   }
 
   ngOnInit() {
     const id = +this.route.snapshot.paramMap.get('id');
     this.fakeService.loadEntryGroup(id).subscribe((res: CategoriaLancamento) => {
       this.entryClass = res;
+      /*this.entryForm = this.fb.group({
+        typeControl: ['DESPESA']
+      });*/
     });
   }
 
