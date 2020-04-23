@@ -32,15 +32,6 @@ export class AuthenticationService {
     })
   };
 
-  openDialog(errorMessage: string, durationTime: number): void {
-    this.dialog.open(errorMessage, 'OK', {
-      panelClass : 'snackbarStyle',
-      verticalPosition: 'bottom', // 'top' | 'bottom'
-      horizontalPosition: 'left',
-      duration: durationTime == null ? null : durationTime
-    });
-  }
-
   public get currentUserValue(): User {
     return this.currentUserSubject.value;
   }

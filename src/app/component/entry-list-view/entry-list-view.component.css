@@ -28,17 +28,30 @@
 }
 
 .filter-item {
+  width: 90%;
+  height: 90%;
+  border: 1px solid #ECECEC;
+  border-radius: 12px;
   box-sizing: border-box;
   margin: auto;
   font-size: small;
 }
 
 .filter-text {
+  display: block;
   text-align: center;
   text-decoration: underline;
   margin: auto;
+  padding: 10px;
 }
 
 p {
   margin: 0px;
+}
+
+.results-container {
+  transition-property: width;
+  transition-duration: 2s;
+  transition-timing-function: linear;
+  transition-delay: 1s;
 }

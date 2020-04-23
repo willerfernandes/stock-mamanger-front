@@ -9,6 +9,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { FormControl } from '@angular/forms';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { ThemePalette } from '@angular/material';
+import { MessageService } from 'src/app/services/message.service';
 
 
 @Component({
@@ -35,7 +36,8 @@ export class NewExpenseViewComponent implements OnInit {
     private fakeService: FakeService,
     private expenseService: ExpenseService,
     private bottomSheetRef: MatBottomSheetRef<NewExpenseViewComponent>,
-    private currencyPipe: CurrencyPipe) { }
+    private currencyPipe: CurrencyPipe,
+    private messageService: MessageService) { }
     plots = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
 
   saveExpense(
@@ -71,11 +73,11 @@ export class NewExpenseViewComponent implements OnInit {
       entry.valor = Number.parseFloat(value);
       this.bottomSheetRef.dismiss();
       this.fakeService.saveEntry(entry).subscribe(async res => {
-        this.authenticationService.openDialog('Salvo com sucesso', 2000);
+        this.messageService.openMessageBar('Salvo com sucesso', 2000);
         this.entrySaved.emit();
       },
         err => {
-          this.authenticationService.openDialog('Ops! Tivemos um erro ao salvar seu lançamento.', 3000);
+          this.messageService.openMessageBar('Ops! Tivemos um erro ao salvar seu lançamento.', 3000);
         });
       event.preventDefault();
     }
@@ -100,7 +102,7 @@ export class NewExpenseViewComponent implements OnInit {
       entry.valor = eachPlotValue;
       this.fakeService.saveEntry(entry).subscribe();
     }
-    this.authenticationService.openDialog('Salvo com sucesso', 2000);
+    this.messageService.openMessageBar('Salvo com sucesso', 2000);
     this.entrySaved.emit();
     event.preventDefault();
     this.bottomSheetRef.dismiss();
@@ -146,7 +148,7 @@ export class NewExpenseViewComponent implements OnInit {
     }
 
     if (!isValidForm) {
-      this.authenticationService.openDialog('Preencha todos os campos obrigatórios', 4000);
+      this.messageService.openMessageBar('Preencha todos os campos obrigatórios', 4000);
       throw new Error(('Campos obrigatórios não preenchidos'));
     }
 
@@ -168,7 +170,7 @@ export class NewExpenseViewComponent implements OnInit {
   }
 
   private loadEntryGroups() {
-    this.fakeService.loadEntryGroups('DESPESA').subscribe(res => {
+    this.fakeService.loadEntryClasses('DESPESA').subscribe(res => {
       this.allEntryGroups = res;
     });
   }

@@ -1,25 +1,4 @@
-/*.date-range-container {
-  margin-top: 10px;
-}
-
-.img {
-  width: 60%;
-  height: 60%;
-  padding: 0px;
-
-}
-
-
-.datePicker {
-  padding: 0px;
-  font-style: inherit;
-  font-weight: bold;
-  font-family: 'Roboto', ;
-}*/
-
-@media only screen and (max-width: 600px) {
-
-  .img {
+ .img {
     width: 60%;
     height: 60%;
     padding: 0px;
@@ -36,4 +15,4 @@
     font-size: small;
     font-family: 'Roboto', ;
   }
-}
+

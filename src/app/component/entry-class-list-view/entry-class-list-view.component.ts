@@ -22,9 +22,11 @@ export class EntryClassListViewComponent implements OnInit {
               private location: Location) { }
 
   ngOnInit() {
-    const storedEntryClasses: CategoriaLancamento[] = JSON.parse(localStorage.getItem('entryClasses'));
-    this.expensesEntryClasses = storedEntryClasses.filter(entryClass => entryClass.tipo === 'DESPESA');
-    this.receiptEntryClasses = storedEntryClasses.filter(entryClass => entryClass.tipo === 'RECEITA');
+    this.fakeService.loadEntryClasses(null).subscribe(storedEntryClasses => {
+      this.expensesEntryClasses = storedEntryClasses.filter(entryClass => entryClass.tipo === 'DESPESA');
+      this.receiptEntryClasses = storedEntryClasses.filter(entryClass => entryClass.tipo === 'RECEITA');
+    });
+
 
   }
 

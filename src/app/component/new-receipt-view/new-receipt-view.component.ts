@@ -8,6 +8,7 @@ import { MatBottomSheetRef } from '@angular/material';
 import { NewExpenseViewComponent } from 'src/app/layouts/new-expense-view/new-expense-view.component';
 import { CurrencyPipe } from '@angular/common';
 import { Lancamento } from 'src/app/entities/lancamento';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-new-receipt-view',
@@ -30,7 +31,8 @@ export class NewReceiptViewComponent implements OnInit {
     private fakeService: FakeService,
     private expenseService: ExpenseService,
     private bottomSheetRef: MatBottomSheetRef<NewExpenseViewComponent>,
-    private currencyPipe: CurrencyPipe) { }
+    private currencyPipe: CurrencyPipe,
+    private messageService: MessageService) { }
 
   saveReceipt(
     event: MouseEvent,
@@ -61,11 +63,11 @@ export class NewReceiptViewComponent implements OnInit {
     entry.valor = Number.parseFloat(value);
     this.bottomSheetRef.dismiss();
     this.fakeService.saveEntry(entry).subscribe(async res => {
-      this.authenticationService.openDialog('Salvo com sucesso', 2000);
+      this.messageService.openMessageBar('Salvo com sucesso', 2000);
       this.entrySaved.emit();
     },
       err => {
-        this.authenticationService.openDialog('Ops! Tivemos um erro ao salvar seu lançamento.', 3000);
+        this.messageService.openMessageBar('Ops! Tivemos um erro ao salvar seu lançamento.', 3000);
       });
     event.preventDefault();
   }
@@ -91,7 +93,7 @@ export class NewReceiptViewComponent implements OnInit {
     }
 
     if (!isValidForm) {
-      this.authenticationService.openDialog('Preencha todos os campos obrigatórios', 4000);
+      this.messageService.openMessageBar('Preencha todos os campos obrigatórios', 4000);
       throw new Error(('Campos obrigatórios não preenchidos'));
     }
 
@@ -113,7 +115,7 @@ export class NewReceiptViewComponent implements OnInit {
   }
 
   private loadEntryGroups() {
-    this.fakeService.loadEntryGroups('RECEITA').subscribe(res => {
+    this.fakeService.loadEntryClasses('RECEITA').subscribe(res => {
       this.allEntryGroups = res;
     });
   }

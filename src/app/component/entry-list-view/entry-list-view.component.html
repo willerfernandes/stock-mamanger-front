@@ -9,10 +9,10 @@
 
 <div class="container">
   <div class="grid">
-    <div (click)="firstFilter()" class="filter-item"><p class="filter-text">7 dias</p></div>
-    <div (click)="secondFilter()" class="filter-item"><p class="filter-text">15 dias</p></div>
-    <div (click)="thirdFilter()" class="filter-item"><p class="filter-text">No mês</p></div>
-    <div (click)="otherFilter()" class="filter-item"><p class="filter-text">Outro</p></div>
+    <div (click)="firstFilter()" [style.backgroundColor]= " isFirtsFilterSelected ? '#bfbfbf' : 'transparent'" class="filter-item"><p class="filter-text">No mês</p></div>
+    <div (click)="secondFilter()" [style.backgroundColor]= " isSecondFilterSelected ? '#bfbfbf' : 'transparent'"class="filter-item"><p class="filter-text">7 dias</p></div>
+    <div (click)="thirdFilter()" [style.backgroundColor]= " isThirdFilterSelected ? '#bfbfbf' : 'transparent'"class="filter-item"><p class="filter-text">15 dias</p></div>
+    <div (click)="otherFilter()" [style.backgroundColor]= " isOtherFilterSelected ? '#bfbfbf' : 'transparent'" class="filter-item"><p class="filter-text">Outro</p></div>
   </div>
 
   <app-date-range [hidden]="!isOtherFilterSelected" style="display: block; width: 100%; margin: auto;" [startDate]="startDate" [endDate]="endDate"
@@ -20,14 +20,17 @@
 
   <h6 style="text-align: center; margin: 30px auto auto 0px;;">LANÇAMENTOS</h6>
   <hr>
-  <app-entry-table *ngIf="!isLoading && isSuccess" style="margin-top: 30px;" [entries]="filteredEntries"></app-entry-table>
-  <div *ngIf="isLoading" style="width: 80%; height: 400px; margin: auto; box-sizing: border-box;">
-    <img src='/assets/img/loading.gif' style="width: 100px; height: auto; display: block; margin: auto; padding: 100px 0px;">
+  <div class="results-container">
+    <app-entry-table *ngIf="!isLoading && isSuccess" style="margin-top: 30px;" [entries]="filteredEntries"></app-entry-table>
+    <div *ngIf="isLoading" style="width: 80%; height: 400px; margin: auto; box-sizing: border-box;">
+      <img src='/assets/img/loading.gif' style="width: 100px; height: auto; display: block; margin: auto; padding: 100px 0px;">
+    </div>
+    <div *ngIf="!isLoading && !isSuccess">
+      <app-expense-error-screen></app-expense-error-screen>
+    </div>
+    <div *ngIf="!isLoading && isSuccess && isEmptyResult">
+      <app-expense-no-results-found></app-expense-no-results-found>
+    </div>
   </div>
-  <div *ngIf="!isLoading && !isSuccess">
-    <app-expense-error-screen></app-expense-error-screen>
-  </div>
-  <div *ngIf="!isLoading && isSuccess && isEmptyResult">
-    <app-expense-no-results-found></app-expense-no-results-found>
-  </div>
+
 </div>

@@ -26,6 +26,7 @@ import { UnderConstructionComponent } from './layouts/under-construction/under-c
 import { EntryListViewComponent } from './component/entry-list-view/entry-list-view.component';
 import { EntryClassListViewComponent } from './component/entry-class-list-view/entry-class-list-view.component';
 import { EntryClassEditViewComponent } from './component/entry-class-edit-view/entry-class-edit-view.component';
+import { AdmViewComponent } from './component/adm-view/adm-view.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -52,7 +53,8 @@ const routes: Routes = [
   { path: 'under-construction', component: UnderConstructionComponent },
   { path: 'entries', component: EntryListViewComponent },
   { path: 'classes', component: EntryClassListViewComponent },
-  { path: 'classes/:id', component: EntryClassEditViewComponent }
+  { path: 'classes/:id', component: EntryClassEditViewComponent },
+  { path: 'adm', component: AdmViewComponent }
 ];
 
 

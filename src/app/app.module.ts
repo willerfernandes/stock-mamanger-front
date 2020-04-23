@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule} from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -100,6 +100,7 @@ import { EntryTableComponent } from './component/entry-table/entry-table.compone
 import { EntryListViewComponent } from './component/entry-list-view/entry-list-view.component';
 import { EntryClassListViewComponent } from './component/entry-class-list-view/entry-class-list-view.component';
 import { EntryClassEditViewComponent } from './component/entry-class-edit-view/entry-class-edit-view.component';
+import { AdmViewComponent } from './component/adm-view/adm-view.component';
 
 @NgModule({
   declarations: [
@@ -153,7 +154,8 @@ import { EntryClassEditViewComponent } from './component/entry-class-edit-view/e
     EntryTableComponent,
     EntryListViewComponent,
     EntryClassListViewComponent,
-    EntryClassEditViewComponent
+    EntryClassEditViewComponent,
+    AdmViewComponent
   ],
   entryComponents: [
     NewExpenseViewComponent,
@@ -209,6 +211,7 @@ import { EntryClassEditViewComponent } from './component/entry-class-edit-view/e
 
   ],
   providers: [
+    Title,
     MatDatepickerModule,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

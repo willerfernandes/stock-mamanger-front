@@ -1,0 +1,17 @@
+<label>LançaCamentos</label>
+<br>
+<textarea #inputEntries style="width: 90%; height: 400px; overflow: scroll;">{{entries}}</textarea>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<label>Categorias</label>
+<br>
+<textarea #inputEntryClasses style="width: 90%; height: 400px; overflow: scroll;">{{entryClasses}}</textarea>
+<br>
+<btn-primary-blue-large [text]="'ATUALIZAR'" (click)="updateLocalStorage(inputEntries.value, inputEntryClasses.value)"></btn-primary-blue-large>
+<btn-primary-blue-large [text]="'LIMPAR BANCO'" (click)="clearLocalStorage()"></btn-primary-blue-large>
+

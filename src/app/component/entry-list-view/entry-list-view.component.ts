@@ -51,6 +51,7 @@ export class EntryListViewComponent implements OnInit {
     this.endDate = new FormControl(dataFinal);
     this.getExpenseReport(this.startDate.value, this.endDate.value);
     this.filteredEntries = this.allEntries;
+    this.isFirtsFilterSelected = true;
   }
 
   public firstFilter(): void {
@@ -59,8 +60,7 @@ export class EntryListViewComponent implements OnInit {
     this.isThirdFilterSelected = false;
     this.isOtherFilterSelected = false;
 
-    const today = new Date().getDate();
-    this.filteredEntries = this.allEntries.filter(entry => new Date(entry.data).getDate() >= today - 7);
+    this.ngOnInit();
 
   }
 
@@ -71,8 +71,7 @@ export class EntryListViewComponent implements OnInit {
     this.isOtherFilterSelected = false;
 
     const today = new Date().getDate();
-    this.filteredEntries = this.allEntries.filter(entry => new Date(entry.data).getDate() >= today - 15);
-
+    this.filteredEntries = this.allEntries.filter(entry => new Date(entry.data).getDate() >= today - 7);
   }
 
   public thirdFilter(): void {
@@ -81,7 +80,8 @@ export class EntryListViewComponent implements OnInit {
     this.isThirdFilterSelected = true;
     this.isOtherFilterSelected = false;
 
-    this.ngOnInit();
+    const today = new Date().getDate();
+    this.filteredEntries = this.allEntries.filter(entry => new Date(entry.data).getDate() >= today - 15);
   }
 
   public otherFilter(): void {

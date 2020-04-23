@@ -17,8 +17,8 @@ export class HomeViewComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  onClickRegister() {
-    this.router.navigate(['/register']);
+  onClickSignUp() {
+    this.router.navigate(['/signup']);
   }
 
   jumpToFooter() {

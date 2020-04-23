@@ -11,6 +11,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { NewReceiptViewComponent } from 'src/app/component/new-receipt-view/new-receipt-view.component';
 import { Lancamento } from 'src/app/entities/lancamento';
 import { Router } from '@angular/router';
+import { MessageService } from 'src/app/services/message.service';
 @Component({
   selector: 'app-expense-dashboard',
   templateUrl: './expense-dashboard.component.html',
@@ -60,7 +61,8 @@ export class ExpenseDashboardComponent implements OnInit {
               private fakeService: FakeService,
               private apapter: DateAdapter<any>,
               private bottomSheet: MatBottomSheet,
-              private router: Router) { }
+              private router: Router,
+              private messageService: MessageService) { }
 
   // events
   public chartClicked(e: any): void {
@@ -90,7 +92,7 @@ export class ExpenseDashboardComponent implements OnInit {
   }
 
   public entryDeleted(): void {
-    this.authService.openDialog('Lançamento excluido com sucesso', 2000);
+    this.messageService.openMessageBar('Lançamento excluido com sucesso', 2000);
     this.ngOnInit();
   }
 

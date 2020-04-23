@@ -4,6 +4,7 @@ import { UserService } from 'src/app/services/user.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Router } from '@angular/router';
 import { FakeService } from 'src/app/services/fake.service';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-signup-view',
@@ -20,7 +21,7 @@ export class SignupViewComponent implements OnInit {
   public isFakeServer  = false;
 
   constructor(private userService: UserService, private authService: AuthenticationService,
-              private router: Router, private fakeService: FakeService) { }
+              private router: Router, private fakeService: FakeService, private messageService: MessageService) { }
 
   ngOnInit() {
     this.isFakeServer = this.fakeService.isFakeServer;
@@ -37,7 +38,7 @@ export class SignupViewComponent implements OnInit {
     user.nome = name;
     user.senha = password;
     this.fakeService.save(user).subscribe(res => {
-      this.authService.openDialog(this.successMessage, 3000);
+      this.messageService.openMessageBar(this.successMessage, 3000);
       this.router.navigate(['/login']);
     },
       err => {
@@ -49,12 +50,12 @@ export class SignupViewComponent implements OnInit {
   private validateFields(login: string, password: string, repeatPsw: string, name: string): boolean {
     if (login == null || password == null || repeatPsw == null || name == null
         || login === '' || password === '' || repeatPsw === '' || name === '' ) {
-      this.authService.openDialog('Preencha todos os campos obrigatórios', 3000);
+      this.messageService.openMessageBar('Preencha todos os campos obrigatórios', 3000);
       throw new Error('Preencha todos os campos obrigatórios');
     }
 
     if (password !== repeatPsw) {
-      this.authService.openDialog('Os valores digitados nos campos \'Senha\' e \'Repita sua Senha\' não são iguais!', 3000);
+      this.messageService.openMessageBar('Os valores digitados nos campos \'Senha\' e \'Repita sua Senha\' não são iguais!', 3000);
       throw new Error('Os valores digitados nos campos \'Senha\' e \'Repita sua Senha\' não são iguais!');
     }
 

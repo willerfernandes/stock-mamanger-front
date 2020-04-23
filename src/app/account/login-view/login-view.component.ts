@@ -4,6 +4,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { FakeService } from 'src/app/services/fake.service';
 import { environment } from 'src/environments/environment';
 import { User } from 'src/app/entities/user';
+import { MessageService } from 'src/app/services/message.service';
 
 
 @Component({
@@ -16,7 +17,10 @@ export class LoginViewComponent implements OnInit {
   public baseURL = 'http://localhost:4200';
   public registerUserPath = this.baseURL + '/signup';
 
-  constructor(private authenticationService: AuthenticationService, private fakeService: FakeService, private router: Router) { }
+  constructor(private authenticationService: AuthenticationService,
+              private fakeService: FakeService,
+              private router: Router,
+              private messageService: MessageService) { }
 
   isLoading = false;
 
@@ -43,7 +47,7 @@ export class LoginViewComponent implements OnInit {
       },
       error => {
         if (error.status === 401) {
-          this.authenticationService.openDialog('Usuário ou senha incorretos', 3000);
+          this.messageService.openMessageBar('Usuário ou senha incorretos', 3000);
         }
       });
     }
@@ -74,7 +78,7 @@ export class LoginViewComponent implements OnInit {
     }
     if (!isAllRequiredFieldsFilled) {
       this.isLoading = false;
-      this.authenticationService.openDialog('Existem campos obrigatórios não preenchidos', 3000);
+      this.messageService.openMessageBar('Existem campos obrigatórios não preenchidos', 3000);
     }
     return isAllRequiredFieldsFilled;
   }

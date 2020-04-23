@@ -4,11 +4,14 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthenticationService } from '../services/authentication.service';
 import { Router } from '@angular/router';
+import { MessageService } from '../services/message.service';
 
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  constructor(private authenticationService: AuthenticationService, private router: Router) { }
+  constructor(private authenticationService: AuthenticationService,
+              private router: Router,
+              private messageService: MessageService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(catchError(err => {
@@ -24,7 +27,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         } else {
           message = 'Sua sessão expirou! Favor realizar o login novamente';
           this.authenticationService.logout();
-          this.authenticationService.openDialog(message, null);
+          this.messageService.openMessageBar(message, null);
           this.router.navigate(['/login']);
         }
       } else if (err.status === 500) {
@@ -32,7 +35,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       } else {
         message = 'Ops! Houve um erro =/';
       }
-      this.authenticationService.openDialog(message, null);
+      this.messageService.openMessageBar(message, null);
       return throwError(err);
     }));
   }

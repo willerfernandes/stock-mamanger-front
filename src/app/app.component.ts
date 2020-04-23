@@ -2,6 +2,7 @@ import { Component, OnChanges, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from './services/authentication.service';
 import { Observable } from 'rxjs';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -11,14 +12,15 @@ import { Observable } from 'rxjs';
 export class AppComponent implements OnInit {
 
   isLoggedIn$: Observable<boolean>;
-  title = 'GovPredict';
+  title = 'ADMoney';
 
-  constructor(private authenticationService: AuthenticationService, private activeRouter: Router) {}
+  constructor(private activeRouter: Router, private titleService: Title) {}
 
   url;
 
   ngOnInit() {
     this.url = this.activeRouter.url;
+    this.titleService.setTitle(this.title);
   }
 
 }

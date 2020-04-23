@@ -46,7 +46,7 @@ export class EntryClassEditViewComponent implements OnInit {
 
   ngOnInit() {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.fakeService.loadEntryGroup(id).subscribe((res: CategoriaLancamento) => {
+    this.fakeService.loadEntryClass(id).subscribe((res: CategoriaLancamento) => {
       this.entryClass = res;
       /*this.entryForm = this.fb.group({
         typeControl: ['DESPESA']

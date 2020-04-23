@@ -5,7 +5,7 @@
   <div *ngIf="isFakeServer">
     <app-alert-on-screen
       [title]="'Servidor não conectado.'"
-      [message]="'Utilizando armazenamento do seu Browser. Ao limpar os dados do navegador, seus dados serão apagados.'">
+      [message]="'Utilizando armazenamento do seu Browser. Ao fazer logout ou limpar os dados do navegador, seus dados serão apagados.'">
   </app-alert-on-screen>
   </div>
   <div class="top-message-container">
@@ -16,13 +16,20 @@
     <img src='./assets/img/arrow-backward.svg' (click)="clickArrowPrevious()" style="float: left;"><label class="pie-chart-title">{{pieChartTitle}}</label> <img src='./assets/img/arrow-forward.svg'  (click)="clickArrowNext()" style="float: right;">
   </div>
   <div class="date-range-container" >
-    <app-date-range [startDate]="startDate" [endDate]="endDate"
+    <div style="width: 330px; margin: auto; box-sizing: border-box;">
+      <app-date-range style="width: 100%; margin: auto; display: block;" [startDate]="startDate" [endDate]="endDate"
     (reloadButtonClicked)="get_expenses_resume(startDate.value, endDate.value)"></app-date-range>
+    </div>
+
+
   </div>
 
   <div *ngIf="!isLoading && isSuccess && !isEmptyResult">
-    <app-pie-chart [pieChartLabels]="pieChartLabels"
-    [pieChartData]="pieChartData"> </app-pie-chart>
+    <div style="width: 80%; box-sizing: border-box; margin: auto;">
+      <app-pie-chart [pieChartLabels]="pieChartLabels"
+      [pieChartData]="pieChartData"> </app-pie-chart>
+    </div>
+
 
     <div   class="financial-statement-container">
         <div>

@@ -14,8 +14,9 @@
 /*------- EXPENSE TITLE ------ */
 
 .date-range-container {
-  width: 300px;
-  margin: 10px auto auto auto;
+  display: block;
+  width: 80%;
+  margin: 10px auto;
 }
 
 .pie-chart-title-container {
@@ -45,7 +46,7 @@ color: #000000;
 /*------- FINANCIAL STATEMENT ------ */
 .financial-statement-container {
   display: inherit;
-  width: 300px;
+  width: 80%;
   height: auto;
   margin: auto;
   margin-top: 20px;

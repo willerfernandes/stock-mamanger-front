@@ -96,8 +96,8 @@ export class FakeService {
   loadExpenseReport(startDate: string, endDate: string): Observable<ExpenseReport> {
     console.log('Local Storage expense report');
 
-    const allEntries: Lancamento[] = JSON.parse(localStorage.getItem('entries'));
-    const entryClasses: CategoriaLancamento[] = JSON.parse(localStorage.getItem('entryClasses'));
+    const allEntries: Lancamento[] = this.getEntriesFromStorage();
+    const entryClasses: CategoriaLancamento[] = this.getEntryClassesFromStorage();
 
     if (allEntries == null || allEntries.length === 0) {
       return of(null);
@@ -169,8 +169,8 @@ export class FakeService {
   }
 
   public saveEntry(entry: Lancamento): Observable<Lancamento> {
-    let entries: Lancamento[] = JSON.parse(localStorage.getItem('entries'));
-    let entryClasses: CategoriaLancamento[] = JSON.parse(localStorage.getItem('entryClasses'));
+    let entries: Lancamento[] = this.getEntriesFromStorage();
+    let entryClasses: CategoriaLancamento[] = this.getEntryClassesFromStorage();
 
     if (entries == null || entries.length === 0) {
       entries = [];
@@ -193,81 +193,111 @@ export class FakeService {
       newEntryClass.descricao = entry.categoria.descricao;
       newEntryClass.tipo = entry.categoria.tipo;
 
+      entry.categoria = newEntryClass;
+
       if (entryClasses == null || entryClasses.length === 0) {
         entryClasses = [];
       }
 
       entryClasses.push(newEntryClass);
-      localStorage.setItem('entryClasses', JSON.stringify(entryClasses));
+      this.setEntryClassesOnStorage(entryClasses);
 
     } else {
       const classWithEntryId = entryClasses.find(entryClass => entryClass.id === entry.categoria.id);
       entry.categoria = classWithEntryId;
     }
 
-
     entries.push(entry);
-    localStorage.setItem('entries', JSON.stringify(entries));
+    this.setEntriesOnStorage(entries);
     return of(entry);
   }
 
   public deleteEntry(id: number): Observable<Lancamento> {
-    const entries: Lancamento[] = JSON.parse(localStorage.getItem('entries'));
+    const entries: Lancamento[] = this.getEntriesFromStorage();
     const toBeDeleted = entries.findIndex(entry => entry.id === id);
     const deleted = entries.splice(toBeDeleted, 1);
-    localStorage.setItem('entries', JSON.stringify(entries));
+    this.setEntriesOnStorage(entries);
     return of(deleted[0]);
   }
 
-
-
-  public loadEntryGroups(type: string): Observable<CategoriaLancamento[]> {
-    /*const entryGroup1 = new CategoriaLancamento();
-    entryGroup1.id = 1;
-    entryGroup1.nome = 'Alimentacao';
-    entryGroup1.descricao = 'Despesas com alimentação';
-    entryGroup1.tipo = 'DESPESA';
-
-    const entryGroup2 = new CategoriaLancamento();
-    entryGroup2.id = 2;
-    entryGroup2.nome = 'Trasporte';
-    entryGroup2.descricao = 'Despesas com transporte';
-    entryGroup2.tipo = 'DESPESA';
-
-    const entryGroup3 = new CategoriaLancamento();
-    entryGroup3.id = 3;
-    entryGroup3.nome = 'Lazer';
-    entryGroup3.descricao = 'Despesas com lazer';
-    entryGroup3.tipo = 'DESPESA';
-
-    const allEntries = [entryGroup1, entryGroup2, entryGroup3];*/
-
-    const entryClasses: CategoriaLancamento[] = JSON.parse(localStorage.getItem('entryClasses'));
+  public loadEntryClasses(type: string): Observable<CategoriaLancamento[]> {
+    const entryClasses: CategoriaLancamento[] = this.getEntryClassesFromStorage();
     if (entryClasses == null) {
       return of(null);
     }
-    return of(entryClasses.filter(entryClass => entryClass.tipo === type));
-
+    if (type == null) {
+      return of(entryClasses);
+    } else {
+      return of(entryClasses.filter(entryClass => entryClass.tipo === type));
+    }
   }
 
-  public loadEntryGroup(id: number) {
-    const entryClasses: CategoriaLancamento[] = JSON.parse(localStorage.getItem('entryClasses'));
+  public loadEntryClass(id: number) {
+    const entryClasses: CategoriaLancamento[] = this.getEntryClassesFromStorage();
     return of(entryClasses.find(entryClass => entryClass.id === id));
   }
 
   deleteEntryClass(id: number) {
-    const entryClasses: CategoriaLancamento[] = JSON.parse(localStorage.getItem('entryClasses'));
+    const entryClasses: CategoriaLancamento[] = this.getEntryClassesFromStorage();
     const oldEntryClassIndex: number = entryClasses.findIndex(entryClass => entryClass.id === id);
     entryClasses.splice(oldEntryClassIndex, 1);
-    localStorage.setItem('entryClasses', JSON.stringify(entryClasses));
+    this.setEntryClassesOnStorage(entryClasses);
+
+    //delete ALL entries with this class
+    const entries: Lancamento[] = this.getEntriesFromStorage();
+
+    const entriesWithoutThisClass = [];
+
+    let index = 0;
+    entries.forEach(entry => {
+      if (entry.categoria.id !== id) {
+        entriesWithoutThisClass.push(entry);
+      }
+      index++;
+    });
+
+    this.setEntriesOnStorage(entriesWithoutThisClass);
     return of(null);
   }
 
   saveEntryClass(newEntryClass: CategoriaLancamento) {
-    const entryClasses: CategoriaLancamento[] = JSON.parse(localStorage.getItem('entryClasses'));
+    const entryClasses: CategoriaLancamento[] = this.getEntryClassesFromStorage();
     const indexOldEntryClass: number =  entryClasses.findIndex(oldClass => oldClass.id === newEntryClass.id);
-    entryClasses.splice(indexOldEntryClass, 1, newEntryClass);
+    if (indexOldEntryClass === -1) /*new class*/ {
+      newEntryClass.id = entryClasses.length;
+      entryClasses.push(newEntryClass);
+    } else {
+      entryClasses.splice(indexOldEntryClass, 1, newEntryClass);
+    }
+    this.setEntryClassesOnStorage(entryClasses);
+
+    //update ALL entries with this class
+    const entries: Lancamento[] = this.getEntriesFromStorage();
+
+    entries.forEach(entry => {
+      if (entry.categoria.id === newEntryClass.id) {
+        entry.categoria = newEntryClass;
+      }
+    });
+
+    this.setEntriesOnStorage(entries);
+
+  }
+
+  private getEntryClassesFromStorage(): CategoriaLancamento[] {
+    return JSON.parse(localStorage.getItem('entryClasses'));
+  }
+
+  private getEntriesFromStorage(): Lancamento[] {
+    return JSON.parse(localStorage.getItem('entries'));
+  }
+
+  private setEntryClassesOnStorage(entryClasses: CategoriaLancamento[]) {
     localStorage.setItem('entryClasses', JSON.stringify(entryClasses));
+  }
+
+  private setEntriesOnStorage(entries: Lancamento[]) {
+    localStorage.setItem('entries', JSON.stringify(entries));
   }
 
   logout() {
@@ -278,4 +308,25 @@ export class FakeService {
     this.currentUserSubject.next(null);
     this.router.navigate(['/login']);
   }
+
+  updateEntriesOnStorage(entriesJson: string) {
+    localStorage.setItem('entries', entriesJson);
+  }
+
+  updateEntryClassesOnStorage(entryClasses: string) {
+    localStorage.setItem('entryClasses', entryClasses);
+  }
+
+  loadEntriesFromStorage(): Observable<string> {
+    return of(localStorage.getItem('entries'));
+  }
+
+  loadEntryClassesFromStorage(): Observable<string>  {
+    return of(localStorage.getItem('entryClasses'));
+  }
+
+  clearStorage() {
+    localStorage.clear();
+  }
+
 }
