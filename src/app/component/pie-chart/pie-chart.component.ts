@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ChartOptions } from 'chart.js';
+import { ChartType, ChartOptions } from 'chart.js';
+import { Label } from 'ng2-charts';
 
 @Component({
   selector: 'app-pie-chart',
@@ -15,7 +16,7 @@ export class PieChartComponent implements OnInit {
   public pieChartOptions: ChartOptions = {
     responsive: true,
     legend: {
-      position: 'left',
+      position: 'top',
     },
     plugins: {
       datalabels: {
