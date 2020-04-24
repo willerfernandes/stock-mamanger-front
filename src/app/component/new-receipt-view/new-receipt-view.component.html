@@ -1,11 +1,14 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 
-<div class="container" style="margin-top: 5px;">
-  <div>
-    <label class = "menu-item-text green-text">Receitas</label> <img [src]="'./assets/img/add-menu-receipt.svg'"><img src='./assets/img/close-gray-icon.svg' (click)="closeButtonClicked()" style="float: right;">
+
+<div>
+  <label (click)="closeButtonClicked()" style="position: absolute; top: 5px; right: 5px; font-size: x-large; font-weight: bold;">x</label>
+  <div style="position: absolute; top: 5px; left: 5px;">
+    <label class = "menu-item-text green-text">Receitas</label> <img [src]="'./assets/img/add-menu-receipt.svg'">
   </div>
 </div>
-<div class="container containter-wraper" style="margin-top: 20px;">
+
+<div class="container containter-wraper" style="margin-top: 70px;">
     <img  [src]="'./assets/img/piggy-bank-icon.png'" style="margin-right: 10px; vertical-align: middle;"><label class="red-text">*</label><label class="color-primary input-label">Valor:</label>
     <input id="input-currency"  #amount autofocus
     type="number" placeholder="000,00"

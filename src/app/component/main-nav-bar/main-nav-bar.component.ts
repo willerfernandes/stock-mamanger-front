@@ -42,6 +42,10 @@ export class MainNavBarComponent implements OnInit {
     this.router.navigate(['/classes']);
   }
 
+  public navigateToEntryListView(): void {
+    this.router.navigate(['/entries']);
+  }
+
   public logout(): void {
     this.fakeService.logout();
   }

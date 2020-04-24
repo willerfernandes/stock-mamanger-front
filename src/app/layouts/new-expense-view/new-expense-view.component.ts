@@ -25,7 +25,8 @@ export class NewExpenseViewComponent implements OnInit {
   public amount = '';
   public allEntryGroups: CategoriaLancamento[];
 
-  public color: ThemePalette = 'accent';
+  color: ThemePalette = 'primary';
+
   public isInstallmentPurchase = false;
 
   @Output()

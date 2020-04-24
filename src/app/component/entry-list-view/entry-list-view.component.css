@@ -50,6 +50,7 @@ p {
 }
 
 .results-container {
+  -webkit-transition : -webkit-filter 500ms linear;
   transition-property: width;
   transition-duration: 2s;
   transition-timing-function: linear;
