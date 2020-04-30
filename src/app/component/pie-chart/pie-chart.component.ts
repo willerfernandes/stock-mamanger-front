@@ -14,6 +14,10 @@ export class PieChartComponent implements OnInit {
   public pieChartType = 'pie';
 
   public pieChartOptions: ChartOptions = {
+
+   title : {
+      text: 'Browser market shares at a specific website, 2014'
+   },
     responsive: true,
     legend: {
       position: 'top',
@@ -38,9 +42,8 @@ export class PieChartComponent implements OnInit {
   pieChartLegend = true;
 
   public pieChartColors: Array < any > = [{
-    backgroundColor: ['#d4bbfc', '#bbbdfc', '#fcbbbb', '#fcf3bb', '#bbfcbc', '#fcd7bb'],
-    //backgroundColor: ['#9452ff', '#6352ff', '#52a0ff', '#fcf3bb', '#bbfcbc', '#fcd7bb'],
-
+    backgroundColor: ['#d4bbfc', '#bbbdfc', '#fcbbbb', '#fcf3bb', '#bbfcbc',
+    '#fcd7bb', '#3644e3', '#9836e3', '#c726af', '#c7c426', '#75c425', '#bf2462', '#a1a1a1'],
     borderColor: ['white']
  }];
 

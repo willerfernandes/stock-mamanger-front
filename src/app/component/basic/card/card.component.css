@@ -32,9 +32,9 @@
   margin: auto;
   width: 280px;
   height: 160px;
-  border: 2px solid #030091;
+  /*border: 2px solid #030091;*/
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  border-radius: 8px;
+  /*border-radius: 8px;*/
   /*background-color: #965af7 */;
   /*background-color: #ba23c2;*/
 }

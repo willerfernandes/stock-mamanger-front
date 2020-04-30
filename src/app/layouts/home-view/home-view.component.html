@@ -7,7 +7,7 @@
     <!--button (click)="jumpToFooter()" style="background:none; border:none;" class="top-navbar-text">Sobre o projeto</button>
     <button (click)="jumpToFooter()" style="background:none; border:none;"  class="top-navbar-text">Contato</button-->
     <div class="topnav-right">
-      <button (click)="onClickSignUp()" style="background:none; border:none;"  class="top-navbar-text top-navbar-button">Cadastrar</button>
+      <button (click)="onClickSignUp()" style="background:none; border:none;"  class="top-navbar-text top-navbar-button signup">Cadastrar</button>
       <btn-secondary-blue class="top-navbar-text top-navbar-button" [text]="'Entrar'" (clickedEvent)=onClickLogin()></btn-secondary-blue>
     </div>
   </div>
@@ -16,7 +16,7 @@
 <div class="home-header home-header-grid">
   <div class="text-section" style="display: inline">
     <p class="home-header-text">O ADMoney ajuda você a cuidar de suas finanças e alcançar o sucesso financeiro</p>
-      <btn-secondary-blue [text]="'Acessar'" (clickedEvent)=onClickLogin()></btn-secondary-blue>
+      <!--btn-secondary-blue [text]="'Acessar'" (clickedEvent)=onClickLogin()></btn-secondary-blue-->
   </div>
   <div class="icon-section">
     <!--img style="width: 323px; height: 214px;" src="assets/img/logo.jpeg"-->
@@ -37,7 +37,7 @@
 <div class="home-content">
   <div>
     <h2 class="home-content-section-title">Mantenha seus gastos na palma das suas mãos</h2>
-    <p class="home-content-section-subtitle subtitle-text">Com o ADMoney você pode controlar suas finanças registrando as suas despesas como alimentação, tranporte, comprar, etc e obter um relatório detalhado de para onde está indo seu dinheiro.
+    <p class="home-content-section-subtitle subtitle-text">Com o ADMoney você pode controlar suas finanças registrando as suas despesas como alimentação, tranporte, compras, etc e obter um relatório detalhado de para onde está indo seu dinheiro.
     </p>
     <div style="margin-top: 20px;">
       <div class="grid-container">
@@ -47,7 +47,8 @@
             [imageUrl]="'assets/img/financas-card-image.png'"
             [clickUrl]="'/expense-dashboard'"
           ></app-card>
-          <p class="home-content-card-text">Cadastre seus gastos diários e não perca o controle. A forma mais fácil de economizar é saber onde está gastando mais. Com o ADMoney é muito fácil!
+          <p class="home-content-card-text">Cadastre seus gastos por categorias
+            A forma mais fácil de economizar é saber onde está gastando mais. Crie categorias de gastos personalizadas para ajudar no controle. Com o ADMoney é muito fácil!
           </p>
         </div>
         <div>
@@ -72,10 +73,13 @@
     </div>
   </div>
   <div class="home-content-flat-cards">
-      <h2 style="padding-top: 20px;" class="home-content-section-flat-cards-title">Fique por dentro do que há de mais novo</h2>
+      <h2 style="padding-top: 20px;" class="home-content-section-flat-cards-title">Acesse de onde quiser</h2>
       <div class="home-home-content-flat-cards-grid">
-        <img src="assets/img/financas-card-image.png" class="flat-cards">
-        <img src="assets/img/financas-card-image.png" class="flat-cards">
+        <img src="assets/img/access-mobile3.png" class="flat-cards">
+        <!--img src="assets/img/financas-card-image.png" class="flat-cards"-->
+        <h6><b>Acesse do seu smarphone, do seu tablet ou do seu computador.</b>
+          Com um banco de dados centralizado, tenha acesso a suas informações de onde estiver.
+        </h6>
       </div>
   </div>
   <h2 style="margin-top: 40px;" class="home-content-section-title">Acompanhe o mercado financeiro em tempo real (em breve)</h2>
@@ -85,8 +89,7 @@
     <div>
       <app-card
         [title]="'Acompanhe suas ações'"
-        [imageUrl]="'assets/img/stonks-card-image.jpg'"
-        [clickUrl]="'/stock-dashboard'">
+        [imageUrl]="'assets/img/stonks-card-image.jpg'">
       </app-card>
       <p class="home-content-card-text">Acompanhe a variação do preço de mercado dos seus papéis.
       </p>
@@ -95,7 +98,6 @@
       <app-card
         [title]="'Veja seus rendimentos'"
         [imageUrl]="'assets/img/home-broker-card-image.jpg'"
-        [clickUrl]="'/stock-dashboard'"
       ></app-card>
       <p class="home-content-card-text">Acompanhe o rendimento de seus papéis em tempo real e não perca oportunidades.
       </p>
@@ -106,20 +108,19 @@
 
 <!-- Footer -->
 <div id="footer" class="footer grid-container">
-  <div style="display: initial;">
-    <h4 class="white">Sobre mim</h4>
+  <div style="display: block;">
+    <h5 class="white">Sobre mim</h5>
     <p><a href="https://willerfernandes.github.io/" target="_blank" class="white">Currículo</a></p>
     <p><a href="https://github.com/willerfernandes" target="_blank" class="white">Github</a></p>
   </div>
   <div>
-    <h4 class="white">Sobre o projeto</h4>
+    <h5 class="white">Sobre o projeto</h5>
     <p><a href="under-construction" target="_blank" class="white">Desenho</a></p>
     <p><a href="under-construction" target="_blank" class="white">Arquitetura</a></p>
     <p><a href="under-construction" target="_blank" class="white">Tecnologias</a></p>
   </div>
   <div>
-    <h4 class="white">Contato</h4>
-    <p class="white">Contato do desenvolvedor:</p>
+    <h5 class="white">Contato</h5>
     <p class="white">fernandes.willer.santos@gmail.com</p>
   </div>
 </div>

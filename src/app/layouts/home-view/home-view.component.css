@@ -120,7 +120,8 @@
 
 .home-content-flat-cards {
   background-color: #F6F1FF;
-  padding-bottom: 100px;
+  padding-bottom: 10px;
+  margin-top: 50px;
 }
 
 .home-home-content-flat-cards-grid {
@@ -281,10 +282,12 @@
     padding-right: 10px;
     display: grid;
     grid: auto / auto;
-    gap: 30px
+    gap: 10px
   }
 
   .flat-cards {
+    margin-top: 30px;
+    margin-bottom: 0px;
     height: auto;
     width: 100%;
   }
@@ -292,8 +295,8 @@
 
   .grid-container {
     display: grid;
-    grid: auto / auto;
-    gap: 80px;
+    grid: auto / 100%;
+    gap: 10px;
     text-align: center;
     padding: 20px;
   }
@@ -319,15 +322,14 @@
     background-color: #030091;
     height: auto;
     width: 100%;
-    display: grid;
-    grid: auto / auto auto auto;
-    gap: 40px;
     text-align: left;
-    overflow: auto;
-    padding: 10px;
   }
 
   .white {
     color: white;
+  }
+
+  .signup {
+    visibility: hidden;
   }
 }
