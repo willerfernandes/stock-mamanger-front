@@ -7,11 +7,33 @@ import { DateAdapter } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { GrupoLancamento } from 'src/app/entities/grupo-lancamento';
 import { Router } from '@angular/router';
+import { state, style, transition, animate, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-entry-list-view',
   templateUrl: './entry-list-view.component.html',
-  styleUrls: ['./entry-list-view.component.css']
+  styleUrls: ['./entry-list-view.component.css'],
+  animations: [
+    trigger('openClose', [
+      // ...
+      state('open', style({
+        height: '200px',
+        opacity: 1,
+        backgroundColor: 'yellow'
+      })),
+      state('closed', style({
+        height: '100px',
+        opacity: 0.5,
+        backgroundColor: 'green'
+      })),
+      transition('open => closed', [
+        animate('1s')
+      ]),
+      transition('closed => open', [
+        animate('2s')
+      ]),
+    ]),
+  ],
 })
 export class EntryListViewComponent implements OnInit {
 
@@ -32,6 +54,8 @@ export class EntryListViewComponent implements OnInit {
   public isSecondFilterSelected = false;
   public isThirdFilterSelected = false;
   public isOtherFilterSelected = false;
+
+  public filterSelected = 0;
 
   constructor(private authService: AuthenticationService,
               private expenseService: ExpenseService,
@@ -55,40 +79,32 @@ export class EntryListViewComponent implements OnInit {
   }
 
   public firstFilter(): void {
-    this.isFirtsFilterSelected = true;
-    this.isSecondFilterSelected = false;
-    this.isThirdFilterSelected = false;
-    this.isOtherFilterSelected = false;
-
+    this.filterSelected = 1;
     this.ngOnInit();
 
   }
 
   public secondFilter(): void {
-    this.isFirtsFilterSelected = false;
-    this.isSecondFilterSelected = true;
-    this.isThirdFilterSelected = false;
-    this.isOtherFilterSelected = false;
+    this.filterSelected = 2;
+
 
     const today = new Date().getDate();
     this.filteredEntries = this.allEntries.filter(entry => new Date(entry.data).getDate() >= today - 7);
+    this.isEmptyResult = this.filteredEntries.length < 0;
   }
 
   public thirdFilter(): void {
-    this.isFirtsFilterSelected = false;
-    this.isSecondFilterSelected = false;
-    this.isThirdFilterSelected = true;
-    this.isOtherFilterSelected = false;
+    this.filterSelected = 3;
+    this.isLoading = true;
 
     const today = new Date().getDate();
     this.filteredEntries = this.allEntries.filter(entry => new Date(entry.data).getDate() >= today - 15);
+    this.isEmptyResult = this.filteredEntries.length < 0;
+    this.isLoading = false;
   }
 
   public otherFilter(): void {
-    this.isFirtsFilterSelected = false;
-    this.isSecondFilterSelected = false;
-    this.isThirdFilterSelected = false;
-    this.isOtherFilterSelected = true;
+    this.filterSelected = 4;
   }
 
   public filterByDate(startDate: any, endDate: any): void {
@@ -99,6 +115,7 @@ export class EntryListViewComponent implements OnInit {
     */
     this.getExpenseReport(startDate, endDate);
     this.filteredEntries = this.allEntries;
+    this.isEmptyResult = this.filteredEntries.length < 0;
   }
 
 

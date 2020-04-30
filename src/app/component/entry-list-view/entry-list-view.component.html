@@ -1,5 +1,5 @@
 <link href='https://fonts.googleapis.com/css?family=Roboto Condensed' rel='stylesheet'>
-<div id="mainDiv">
+<div id="mainDiv" ui-view="header" autoscroll="true">
   <app-main-nav-bar></app-main-nav-bar>
 <div style="height: 40px; width: 90%; box-sizing: border-box; margin: 10px auto auto auto;">
   <img src='/assets/img/arrow-backward.svg' style="float: left;" (click)="goBack()">
@@ -7,15 +7,15 @@
 </div>
 <p class="topic">FILTROS RÁPIDOS</p>
 
-<div class="container">
+<div [@openClose]="filterSelected === 3 ? 'open' : 'closed'"  class="container">
   <div class="grid">
-    <div (click)="firstFilter()" [style.backgroundColor]= " isFirtsFilterSelected ? '#bfbfbf' : 'transparent'" class="filter-item"><p class="filter-text">No mês</p></div>
-    <div (click)="secondFilter()" [style.backgroundColor]= " isSecondFilterSelected ? '#bfbfbf' : 'transparent'"class="filter-item"><p class="filter-text">7 dias</p></div>
-    <div (click)="thirdFilter()" [style.backgroundColor]= " isThirdFilterSelected ? '#bfbfbf' : 'transparent'"class="filter-item"><p class="filter-text">15 dias</p></div>
-    <div (click)="otherFilter()" [style.backgroundColor]= " isOtherFilterSelected ? '#bfbfbf' : 'transparent'" class="filter-item"><p class="filter-text">Outro</p></div>
+    <div (click)="firstFilter()" [style.backgroundColor]= " filterSelected === 1 ? '#bfbfbf' : 'transparent'" class="filter-item"><p class="filter-text">No mês</p></div>
+    <div (click)="secondFilter()" [style.backgroundColor]= " filterSelected === 2 ? '#bfbfbf' : 'transparent'"class="filter-item"><p class="filter-text">7 dias</p></div>
+    <div (click)="thirdFilter()" [style.backgroundColor]= " filterSelected === 3 ? '#bfbfbf' : 'transparent'"class="filter-item"><p class="filter-text">15 dias</p></div>
+    <div (click)="otherFilter()" [style.backgroundColor]= " filterSelected === 4 ? '#bfbfbf' : 'transparent'" class="filter-item"><p class="filter-text">Outro</p></div>
   </div>
 
-  <app-date-range [hidden]="!isOtherFilterSelected" style="display: block; width: 100%; margin: auto;" [startDate]="startDate" [endDate]="endDate"
+  <app-date-range [hidden]="filterSelected !== 4" style="display: block; width: 100%; margin: auto;" [startDate]="startDate" [endDate]="endDate"
       (reloadButtonClicked)="filterByDate(startDate.value, endDate.value)"></app-date-range>
 
   <h6 style="text-align: center; margin: 30px auto auto 0px;;">LANÇAMENTOS</h6>
