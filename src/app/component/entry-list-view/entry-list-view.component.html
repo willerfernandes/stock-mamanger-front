@@ -7,7 +7,7 @@
 </div>
 <p class="topic">FILTROS RÁPIDOS</p>
 
-<div [@openClose]="filterSelected === 3 ? 'open' : 'closed'"  class="container">
+<div class="container">
   <div class="grid">
     <div (click)="firstFilter()" [style.backgroundColor]= " filterSelected === 1 ? '#bfbfbf' : 'transparent'" class="filter-item"><p class="filter-text">No mês</p></div>
     <div (click)="secondFilter()" [style.backgroundColor]= " filterSelected === 2 ? '#bfbfbf' : 'transparent'"class="filter-item"><p class="filter-text">7 dias</p></div>

@@ -15,9 +15,9 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(catchError(err => {
-      console.log('Error calling api ' + request.urlWithParams + '...');
+      // console.log('Error calling api ' + request.urlWithParams + '...');
       const error = err.message || err.statusText;
-      console.log(error);
+      // console.log(error);
       let message: string;
       if (err.status === 0) {
         message = 'Falha na tentativa de conectar ao servidor!';

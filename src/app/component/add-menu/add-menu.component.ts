@@ -28,7 +28,6 @@ export class AddMenuComponent implements OnInit {
   public receiptClicked = new EventEmitter();
 
   public onLostMenuFocus(event: any): void {
-    console.log('lost focus emitted');
     this.isAddMenuActive = false;
     this.isAddMenuActiveChange.emit(false);
   }
@@ -45,16 +44,13 @@ export class AddMenuComponent implements OnInit {
     this.isAddMenuActive = false;
     this.isAddMenuDismissedFalse.emit(false);
     this.isAddMenuActiveChange.emit(false);
-    console.log('isMenuDisabledNow. isAddMenuActive =');
-    console.log(this.isAddMenuActive);
+
   }
 
   private activateMenu() {
-    console.log('isMenuActiveNow');
     this.isAddMenuActive = true;
     this.isAddMenuDismissedTrue.emit(true);
     this.isAddMenuActiveChange.emit(true);
-    console.log(this.isAddMenuActive);
   }
 
   public onExpenseClicked() {

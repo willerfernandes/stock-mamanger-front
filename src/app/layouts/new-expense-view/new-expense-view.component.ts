@@ -123,7 +123,7 @@ export class NewExpenseViewComponent implements OnInit {
       this.amount = ',0';
     }
     document.getElementById('input-currency').value = this.amount;
-    console.log(document.getElementById('input-currency').value );
+    // console.log(document.getElementById('input-currency').value );
     User key pressed still apears on input after the value set
     */
   }

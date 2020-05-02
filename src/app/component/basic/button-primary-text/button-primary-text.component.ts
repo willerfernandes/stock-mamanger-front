@@ -36,10 +36,10 @@ export class ButtonPrimaryTextComponent implements OnInit {
   }
 
   /*ngOnChanges(changes: SimpleChanges) {
-    console.log('IsLoading current value: ' + this.isLoading );
-    console.log('IsLoading chaged value: ' + changes.isLoading.currentValue);
+    // console.log('IsLoading current value: ' + this.isLoading );
+    // console.log('IsLoading chaged value: ' + changes.isLoading.currentValue);
     this.isLoading = changes.isLoading.currentValue;
-    console.log('IsLoading after value: ' + this.isLoading);
+    // console.log('IsLoading after value: ' + this.isLoading);
 
   }*/
 

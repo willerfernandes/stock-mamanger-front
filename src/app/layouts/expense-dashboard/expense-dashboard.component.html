@@ -16,9 +16,9 @@
     <img src='./assets/img/arrow-backward.svg' (click)="clickArrowPrevious()" style="float: left; cursor: pointer;"><label class="pie-chart-title">{{pieChartTitle}}</label> <img src='./assets/img/arrow-forward.svg'  (click)="clickArrowNext()" style="float: right; cursor: pointer;">
   </div>
   <div class="date-range-container" >
-    <div style="width: 330px; margin: auto; box-sizing: border-box;">
+    <div style="width: 300px; margin: auto; box-sizing: border-box;">
       <app-date-range style="width: 100%; margin: auto; display: block;" [startDate]="startDate" [endDate]="endDate"
-    (reloadButtonClicked)="get_expenses_resume(startDate.value, endDate.value)"></app-date-range>
+    (reloadButtonClicked)="getExpenseReport(startDate.value, endDate.value)"></app-date-range>
     </div>
 
 
@@ -46,12 +46,12 @@
       <label>LANÇAMENTOS</label>
     </div>
     <div>
-    <p *ngIf="gruposLancamentosDespesas.length > 0" style="font-size: small; color: #cacaca;">Despesas</p>
+    <p *ngIf="gruposLancamentosDespesas.length > 0" style="font-size: small; color: #cacaca; padding-left: 5px;">Despesas</p>
       <div>
         <app-expense-group *ngIf="isSuccess" [expenseGroups]="gruposLancamentosDespesas" (deleteRowEvent)="entryDeleted()"></app-expense-group>
       </div>
       <br>
-      <p style="font-size: small; color: #cacaca;">Receitas</p>
+      <p style="font-size: small; color: #cacaca;  padding-left: 5px;">Receitas</p>
       <div>
         <app-expense-group *ngIf="isSuccess" [expenseGroups]="gruposLancamentosReceitas" (deleteRowEvent)="entryDeleted()"></app-expense-group>
       </div>

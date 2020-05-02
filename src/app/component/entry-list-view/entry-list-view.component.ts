@@ -33,6 +33,13 @@ import { state, style, transition, animate, trigger } from '@angular/animations'
         animate('2s')
       ]),
     ]),
+    trigger('items', [
+      transition(':enter', [
+        style({ transform: 'scale(0.5)', opacity: 0 }),  // initial
+        animate('1s cubic-bezier(.8, -0.6, 0.2, 1.5)',
+          style({ transform: 'scale(1)', opacity: 1 }))  // final
+      ])
+    ])
   ],
 })
 export class EntryListViewComponent implements OnInit {
@@ -149,7 +156,6 @@ export class EntryListViewComponent implements OnInit {
       .subscribe(async res => {
         if (res) {
           this.allEntries = this.getEntries(res.gruposLancamentosDespesas.concat(res.gruposLancamentosReceitas));
-          console.log(this.allEntries);
           this.isSuccess = true;
           this.isEmptyResult = false;
           this.isLoading = false;

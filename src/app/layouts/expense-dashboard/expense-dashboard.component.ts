@@ -66,11 +66,9 @@ export class ExpenseDashboardComponent implements OnInit {
 
   // events
   public chartClicked(e: any): void {
-    console.log(e);
   }
 
   public chartHovered(e: any): void {
-    console.log(e);
   }
 
   public clickArrowPrevious(): void {
@@ -88,7 +86,7 @@ export class ExpenseDashboardComponent implements OnInit {
     const newEndDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0);
     this.startDate = new FormControl(startDate);
     this.endDate = new FormControl(newEndDate);
-    this.get_expenses_resume(this.startDate.value, this.endDate.value);
+    this.getExpenseReport(this.startDate.value, this.endDate.value);
   }
 
   public entryDeleted(): void {
@@ -175,20 +173,38 @@ export class ExpenseDashboardComponent implements OnInit {
 
   }
 
-  get_expenses_resume(startDate: any, endDate: any) {
+  getExpenseReport(startDate: any, endDate: any) {
     this.setCurrentTile();
     this.isLoading = true;
-    console.log('isLoading=true');
     this.fakeService.loadExpenseReport(startDate.toISOString(), endDate.toISOString())
       .subscribe(async res => {
         if (res) {
-          console.log(res);
           this.totalExpenses = res.valorTotalDespesas;
           this.totalReceipt = res.valorTotalReceitas;
           this.pieChartLabels = res.itemGrafico.nome;
           this.pieChartData = res.itemGrafico.valor;
           this.gruposLancamentosDespesas = res.gruposLancamentosDespesas;
           this.gruposLancamentosReceitas = res.gruposLancamentosReceitas;
+
+          this.gruposLancamentosDespesas.sort((a, b) => {
+            if (a.valor < b.valor) {
+              return 1;
+            } else if (a.valor > b.valor) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
+
+          this.gruposLancamentosReceitas.sort((a, b) => {
+            if (a.valor < b.valor) {
+              return 1;
+            } else if (a.valor > b.valor) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
 
           this.allEntries = this.getEntries(res.gruposLancamentosDespesas.concat(res.gruposLancamentosReceitas));
           this.isSuccess = true;
@@ -238,6 +254,6 @@ export class ExpenseDashboardComponent implements OnInit {
 
     this.startDate = new FormControl(dataInicial);
     this.endDate = new FormControl(dataFinal);
-    this.get_expenses_resume(this.startDate.value, this.endDate.value);
+    this.getExpenseReport(this.startDate.value, this.endDate.value);
   }
 }

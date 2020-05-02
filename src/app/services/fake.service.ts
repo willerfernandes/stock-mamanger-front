@@ -39,7 +39,6 @@ export class FakeService {
 
   login(username: string, password: string): Observable<UserAuth> {
     // ao remover o fake service, remover também do auth guard
-    console.log('Fake authorization! Aways logging');
     const user: UserAuth = {
       id: 1,
       login: username,
@@ -94,8 +93,6 @@ export class FakeService {
 }
 
   loadExpenseReport(startDate: string, endDate: string): Observable<ExpenseReport> {
-    console.log('Local Storage expense report');
-
     const allEntries: Lancamento[] = this.getEntriesFromStorage();
     const entryClasses: CategoriaLancamento[] = this.getEntryClassesFromStorage();
 
@@ -163,8 +160,6 @@ export class FakeService {
     report.itemGrafico.valor = graphInfoValues;
 
     // --------- EMPTY EXPENSE REPORT ------------
-    console.log('LocalStorage Data');
-    console.log(localStorage);
     return of(report);
   }
 

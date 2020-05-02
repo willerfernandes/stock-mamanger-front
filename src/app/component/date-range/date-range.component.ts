@@ -19,7 +19,6 @@ export class DateRangeComponent implements OnInit {
 
   onReloadButtonClicked(event: any) {
     this.reloadButtonClicked.emit({startDate: this.startDate, endDate: this.endDate});
-    console.log('Reload button event emited!');
   }
 
   constructor() { }
