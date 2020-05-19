@@ -1,0 +1,130 @@
+{
+  "videos": [
+    {
+      "title": "LCI ou CDB?  ",
+      "description": "Entenda a diferença entre esses dois tipos de investimento",
+      "url": "https://www.youtube.com/embed/BKX0S71wwFU",
+      "thumbnail": "https://static.bancointer.com.br/investimentos/app-content-json/thumbnails/c231c2af934b429bbdacd4da394af7a5_3365_cdbxlci_alice_cd.png",
+      "orientation": "LANDSCAPE",
+      "fullscreen": false
+    },
+    {
+      "title": "Invista a partir de 100 reais!",
+      "description": "Veja como investir seu dinheiro a partir desse valor!",
+      "url": "https://www.youtube.com/embed/MQ-K41IzxMI",
+      "thumbnail": "https://static.bancointer.com.br/investimentos/app-content-json/thumbnails/thumbnails_100_reais_inter.png",
+      "orientation": "LANDSCAPE",
+      "fullscreen": false
+    },
+    {
+      "title": "Entenda o que são fundos de investimento",
+      "description": "Saiba tudo que precisa saber sobre esse tipo de aplicação",
+      "url": "https://www.youtube.com/embed/x_jHNcnLuuE",
+      "thumbnail": "https://static.bancointer.com.br/investimentos/app-content-json/thumbnails/2057bb0deae34d1a88166c8f2d6e4154_3450_fundos-de-investimento_ag.png",
+      "orientation": "LANDSCAPE",
+      "fullscreen": false
+    },
+    {
+      "title": "9 pensamento que atrapalham a sua vida financeira",
+      "description": "Não deixe esses pensamentos ficarem entre você e seus planos. ",
+      "url": "https://www.youtube.com/embed/V2PgQ4pb1eY",
+      "thumbnail": "https://static.bancointer.com.br/investimentos/app-content-json/thumbnails/2e057502666a47cfbdcbdf2d9fdf1385_3967_9-pensamentos_ag.png",
+      "orientation": "LANDSCAPE",
+      "fullscreen": false
+    },
+    {
+      "title": "O que é Selic e CDI?",
+      "description": "Entenda esses famosos termos de mercado!",
+      "url": "https://www.youtube.com/embed/0PEF2wYwTdk",
+      "thumbnail": "https://static.bancointer.com.br/investimentos/app-content-json/thumbnails/16a712940a4e47f2847177b099ffe542_3235_inter-tv-investimentos_selicxcdi_ag.png",
+      "orientation": "LANDSCAPE",
+      "fullscreen": false
+    },
+    {
+      "title": "Qual a diferença entre renda fixa e renda variável?",
+      "description": "Entenda uma das principais dúvidas de quem está começando a investir",
+      "url": "https://www.youtube.com/embed/KEh-lKSYMbE",
+      "thumbnail": "https://static.bancointer.com.br/investimentos/app-content-json/thumbnails/4028_RENDA-FIXA-X-VARIAVEL_AG.png",
+      "orientation": "LANDSCAPE",
+      "fullscreen": false
+    }
+  ],
+  "blog": [
+    {
+      "title": "Fundos com Cashback!",
+      "description": "Entenda como investir nesses produtos e ganhar dinheiro de volta",
+      "url": "https://www.contacomagente.com.br/index.php/eu-ouvi-cashback-veja-como-investir-em-fundos-e-ganhar-dinheiro-de-volta/",
+      "orientation": "LANDSCAPE",
+      "fullscreen": false
+    },
+    {
+      "title": "É seguro investir no Inter? ",
+      "description": "Entenda como contamos com toda segurança na hora do seu investimento",
+      "url": "https://www.contacomagente.com.br/index.php/e-seguro-investir-no-banco-inter/",
+      "orientation": "LANDSCAPE",
+      "fullscreen": false
+    },
+    {
+      "title": "Investimentos para sua aposentadoria",
+      "description": "Em que investir para não depender do INSS para se aposentar",
+      "url": "https://www.contacomagente.com.br/index.php/melhores-investimentos-para-se-aposentar-sem-depender-do-inss/",
+      "orientation": "LANDSCAPE",
+      "fullscreen": false
+    },
+    {
+      "title": "Comece a investir com R$ 100",
+      "description": "4 dicas de investimentos para quem está começando",
+      "url": "https://www.youtube.com/watch?v=MQ-K41IzxMI",
+      "orientation": "LANDSCAPE",
+      "fullscreen": false
+    },
+    {
+      "title": "3 dicas para começar a poupar",
+      "description": "Tá difícil organizar suas finanças? Então confira essas dicas",
+      "url": "https://www.contacomagente.com.br/index.php/3-dicas-para-comecar-poupar/",
+      "orientation": "LANDSCAPE",
+      "fullscreen": false
+    },
+    {
+      "title": "Conheça a PAI",
+      "description": "Comece a investir de forma simples e rápida",
+      "url": "https://www.contacomagente.com.br/index.php/conheca-a-plataforma-aberta-inter-pai/",
+      "orientation": "LANDSCAPE",
+      "fullscreen": false
+    },
+    {
+      "title": "10 sugestões de leitura para quem quer se tornar um investidor",
+      "description": "Confira algumas dicas de especialistas no mundo dos investimentos",
+      "url": "https://www.contacomagente.com.br/index.php/10-leituras-obrigatorias-para-quem-quer-se-tornar-investidor/",
+      "orientation": "LANDSCAPE",
+      "fullscreen": false
+    },
+    {
+      "title": "Como a poupança pode te ajudar a formar sua reserva financeira",
+      "description": "Conheça o investimento preferido para quem está começando",
+      "url": "https://www.contacomagente.com.br/index.php/poupanca-reserva-financeira/",
+      "orientation": "LANDSCAPE",
+      "fullscreen": false
+    }
+  ],
+  "relatorios": [
+    {
+      "creationDate": "2020-04-18T10:00:00z",
+      "type": "Relatório de Fundos Imobiliários",
+      "title": "Relatório de Fundos Imobiliários",
+      "description": "Relatório Fundos Imobiliários Março de 2020",
+      "url": "https://static.bancointer.com.br/investimentos/app-content-json/perfil/intermediario/relatorios-fii/FII_RELATORIO_MARCO20.pdf",
+      "thumbnail": "https://s3-sa-east-1.amazonaws.com/static.bancointer.com.br/investimentos/app-content-json/perfil/intermediario/relatorios-fii/FII_RELATORIO_MARCO20.png",
+      "numberOfDaysToRemainNew": 1
+    },
+    {
+      "creationDate": "2020-05-12T10:00:00z",
+      "type": "Relatório Fundos da PAI",
+      "title": "Relatório Fundos da PAI",
+      "description": "Relatório Fundos de Investimentos PAI Março 2020",
+      "url": "https://static.bancointer.com.br/investimentos/app-content-json/perfil/intermediario/relatorios-fii/FUNDOS_PAI_MARCO20.pdf",
+      "thumbnail": "https://static.bancointer.com.br/investimentos/app-content-json/perfil/intermediario/relatorios-fii/FUNDOS_PAI_MARCO20.png",
+      "numberOfDaysToRemainNew": 30
+    }
+  ]
+}
