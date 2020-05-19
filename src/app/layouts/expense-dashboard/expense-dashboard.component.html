@@ -46,22 +46,22 @@
       <label>LANÇAMENTOS</label>
     </div>
     <div>
-    <p *ngIf="gruposLancamentosDespesas.length > 0" style="font-size: small; color: #cacaca; padding-left: 5px;">Despesas</p>
+    <p *ngIf="expenseGroups.length > 0" style="font-size: small; color: #cacaca; padding-left: 5px;">Despesas</p>
       <div>
-        <app-expense-group *ngIf="isSuccess" [expenseGroups]="gruposLancamentosDespesas" (deleteRowEvent)="entryDeleted()"></app-expense-group>
+        <app-expense-group *ngIf="isSuccess" [expenseGroups]="expenseGroups" (deleteRowEvent)="entryDeleted()"></app-expense-group>
       </div>
       <br>
       <p style="font-size: small; color: #cacaca;  padding-left: 5px;">Receitas</p>
       <div>
-        <app-expense-group *ngIf="isSuccess" [expenseGroups]="gruposLancamentosReceitas" (deleteRowEvent)="entryDeleted()"></app-expense-group>
+        <app-expense-group *ngIf="isSuccess" [expenseGroups]="receiptGroups" (deleteRowEvent)="entryDeleted()"></app-expense-group>
       </div>
       <br>
     </div>
-    <p *ngIf="gruposLancamentosDespesas.length > 0" style="font-size: small; color: #cacaca;">Últimos lançamentos</p>
-    <div *ngIf="gruposLancamentosDespesas.length > 0">
+    <p *ngIf="expenseGroups.length > 0" style="font-size: small; color: #cacaca;">Últimos lançamentos</p>
+    <div *ngIf="expenseGroups.length > 0">
       <app-entry-table [entries]="allEntries"></app-entry-table>
     </div>
-    <p *ngIf="gruposLancamentosDespesas.length > 0" style="font-size: small; font-weight: bold; color: #777777; text-align: center; text-decoration: underline;"
+    <p *ngIf="expenseGroups.length > 0" style="font-size: small; font-weight: bold; color: #777777; text-align: center; text-decoration: underline;"
       (click)="onShowMoreClicked()">MOSTRAR MAIS</p>
   </div>
   <div *ngIf="isLoading" style="width: 80%; height: 400px; margin: auto; box-sizing: border-box;">

@@ -3,16 +3,16 @@
       <mat-expansion-panel class="expansion">
         <mat-expansion-panel-header>
           <mat-panel-title style="width: 100px; max-width: 100px; min-width: 100px;">
-            <h5>{{expenseGroup.categoria}}</h5>
+            <h5>{{expenseGroup.entryClassName}}</h5>
           </mat-panel-title>
           <mat-panel-description>
             <div class="grid">
-              <div>{{expenseGroup.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}}</div>
-              <div>{{expenseGroup.percentual?.toLocaleString(undefined,{style: 'percent', minimumFractionDigits:1})}}</div>
+              <div>{{expenseGroup.value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}}</div>
+              <div>{{expenseGroup.percentage?.toLocaleString(undefined,{style: 'percent', minimumFractionDigits:1})}}</div>
             </div>
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <app-expense-row [expenses]="expenseGroup.lancamentos" (deleteRowEvent)="onDelete($event)"></app-expense-row>
+        <app-expense-row [expenses]="expenseGroup.entries" (deleteRowEvent)="onDelete($event)"></app-expense-row>
       </mat-expansion-panel>
     </mat-accordion>
 </div>

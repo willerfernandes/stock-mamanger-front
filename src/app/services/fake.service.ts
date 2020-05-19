@@ -5,11 +5,11 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { of } from 'rxjs';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { ExpenseReport } from '../entities/expense-report';
-import { ItemGrafico } from '../entities/item-grafico';
-import { GrupoLancamento } from '../entities/grupo-lancamento';
-import { Lancamento } from '../entities/lancamento';
+import { GraphInfo } from '../entities/item-grafico';
+import { EntryGroup } from '../entities/grupo-lancamento';
+import { Entry } from '../entities/lancamento';
 import { User } from '../entities/user';
-import { CategoriaLancamento } from '../entities/categoria-lancamento';
+import { EntryClass } from '../entities/categoria-lancamento';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
@@ -54,29 +54,29 @@ export class FakeService {
   }
 
   private generateMockedDefaultEntryClassesData(): void {
-    const entryGroup1 = new CategoriaLancamento();
+    const entryGroup1 = new EntryClass();
     entryGroup1.id = 1;
-    entryGroup1.nome = 'Alimentação';
-    entryGroup1.descricao = 'Despesas com alimentação';
-    entryGroup1.tipo = 'DESPESA';
+    entryGroup1.name = 'Alimentação';
+    entryGroup1.description = 'Despesas com alimentação';
+    entryGroup1.type = 'DESPESA';
 
-    const entryGroup2 = new CategoriaLancamento();
+    const entryGroup2 = new EntryClass();
     entryGroup2.id = 2;
-    entryGroup2.nome = 'Transporte';
-    entryGroup2.descricao = 'Despesas com transporte';
-    entryGroup2.tipo = 'DESPESA';
+    entryGroup2.name = 'Transporte';
+    entryGroup2.description = 'Despesas com transporte';
+    entryGroup2.type = 'DESPESA';
 
-    const entryGroup3 = new CategoriaLancamento();
+    const entryGroup3 = new EntryClass();
     entryGroup3.id = 3;
-    entryGroup3.nome = 'Lazer';
-    entryGroup3.descricao = 'Despesas com lazer';
-    entryGroup3.tipo = 'DESPESA';
+    entryGroup3.name = 'Lazer';
+    entryGroup3.description = 'Despesas com lazer';
+    entryGroup3.type = 'DESPESA';
 
-    const entryGroup4 = new CategoriaLancamento();
+    const entryGroup4 = new EntryClass();
     entryGroup4.id = 4;
-    entryGroup4.nome = 'Salário';
-    entryGroup4.descricao = 'Recebimento do salário';
-    entryGroup4.tipo = 'RECEITA';
+    entryGroup4.name = 'Salário';
+    entryGroup4.description = 'Recebimento do salário';
+    entryGroup4.type = 'RECEITA';
 
     const allEntries = [entryGroup1, entryGroup2, entryGroup3, entryGroup4];
 
@@ -93,8 +93,8 @@ export class FakeService {
 }
 
   loadExpenseReport(startDate: string, endDate: string): Observable<ExpenseReport> {
-    const allEntries: Lancamento[] = this.getEntriesFromStorage();
-    const entryClasses: CategoriaLancamento[] = this.getEntryClassesFromStorage();
+    const allEntries: Entry[] = this.getEntriesFromStorage();
+    const entryClasses: EntryClass[] = this.getEntryClassesFromStorage();
 
     if (allEntries == null || allEntries.length === 0) {
       return of(null);
@@ -103,37 +103,37 @@ export class FakeService {
     const filterStartDate: Date = new Date(startDate);
     const filterEndDate: Date = new Date(endDate);
 
-    const entries = allEntries.filter(entry => new Date(entry.data) >= filterStartDate && new Date(entry.data) <= filterEndDate );
+    const entries = allEntries.filter(entry => new Date(entry.date) >= filterStartDate && new Date(entry.date) <= filterEndDate );
 
     if (entries == null || entries.length === 0) {
       return of(null);
     }
 
     const report: ExpenseReport = new ExpenseReport();
-    const entryGroupExpenseList: GrupoLancamento[] = [];
-    const entryGroupReceiptList: GrupoLancamento[] = [];
+    const entryGroupExpenseList: EntryGroup[] = [];
+    const entryGroupReceiptList: EntryGroup[] = [];
 
     let entryGroupId = 1;
     let totalValueExpenses = 0;
     let totalValueReceipt = 0;
     entryClasses.forEach(entryClass => {
-      const entriesOfThisClass = entries.filter(entry => entry.categoria.nome === entryClass.nome);
+      const entriesOfThisClass = entries.filter(entry => entry.entryClass.name === entryClass.name);
       if (entriesOfThisClass.length !== 0) {
-        const newEntryGroup: GrupoLancamento = new GrupoLancamento();
-        newEntryGroup.lancamentos = entriesOfThisClass;
-        newEntryGroup.categoria = entryClass.nome;
+        const newEntryGroup: EntryGroup = new EntryGroup();
+        newEntryGroup.entries = entriesOfThisClass;
+        newEntryGroup.categoria = entryClass.name;
         let totalGroupValue = 0;
         entriesOfThisClass.forEach(entryOfThiClass => {
-          totalGroupValue += entryOfThiClass.valor;
+          totalGroupValue += entryOfThiClass.value;
         });
 
-        newEntryGroup.valor = totalGroupValue;
+        newEntryGroup.value = totalGroupValue;
         newEntryGroup.id = entryGroupId;
 
-        if (entryClass.tipo === 'DESPESA') {
+        if (entryClass.type === 'DESPESA') {
           totalValueExpenses += totalGroupValue;
           entryGroupExpenseList.push(newEntryGroup);
-        } else if (entryClass.tipo === 'RECEITA') {
+        } else if (entryClass.type === 'RECEITA') {
           totalValueReceipt += totalGroupValue;
           entryGroupReceiptList.push(newEntryGroup);
         }
@@ -146,26 +146,26 @@ export class FakeService {
     const graphInfoNames: string[] = [];
     const graphInfoValues: number[] = [];
     entryGroupExpenseList.forEach(entryGroup => {
-      entryGroup.percentual = entryGroup.valor / totalValueExpenses;
+      entryGroup.percentage = entryGroup.value / totalValueExpenses;
       graphInfoNames.push(entryGroup.categoria);
-      graphInfoValues.push(entryGroup.valor);
+      graphInfoValues.push(entryGroup.value);
     });
 
-    report.gruposLancamentosDespesas = entryGroupExpenseList;
-    report.gruposLancamentosReceitas = entryGroupReceiptList;
-    report.valorTotalDespesas = totalValueExpenses;
-    report.valorTotalReceitas = totalValueReceipt;
-    report.itemGrafico = new ItemGrafico();
-    report.itemGrafico.nome = graphInfoNames;
-    report.itemGrafico.valor = graphInfoValues;
+    report.expenseGroups = entryGroupExpenseList;
+    report.receiptGroups = entryGroupReceiptList;
+    report.totalExpenseAmount = totalValueExpenses;
+    report.totalReceiptAmount = totalValueReceipt;
+    report.graphInfo = new GraphInfo();
+    report.graphInfo.itens = graphInfoNames;
+    report.graphInfo.values = graphInfoValues;
 
     // --------- EMPTY EXPENSE REPORT ------------
     return of(report);
   }
 
-  public saveEntry(entry: Lancamento): Observable<Lancamento> {
-    let entries: Lancamento[] = this.getEntriesFromStorage();
-    let entryClasses: CategoriaLancamento[] = this.getEntryClassesFromStorage();
+  public saveEntry(entry: Entry): Observable<Entry> {
+    let entries: Entry[] = this.getEntriesFromStorage();
+    let entryClasses: EntryClass[] = this.getEntryClassesFromStorage();
 
     if (entries == null || entries.length === 0) {
       entries = [];
@@ -174,21 +174,21 @@ export class FakeService {
     entry.id = entries.length  + 1;
 
     // necessary when user creastes a new entryClass and is multiple expenses
-    if (entry.categoria.nome != null) {
-        const existingCategory: CategoriaLancamento =  entryClasses.find(entryClass => entryClass.nome === entry.categoria.nome);
+    if (entry.entryClass.name != null) {
+        const existingCategory: EntryClass =  entryClasses.find(entryClass => entryClass.name === entry.entryClass.name);
         if (existingCategory != null) {
-          entry.categoria = existingCategory;
+          entry.entryClass = existingCategory;
         }
     }
 
-    if (entry.categoria.id == null) {
-      const newEntryClass = new CategoriaLancamento();
+    if (entry.entryClass.id == null) {
+      const newEntryClass = new EntryClass();
       newEntryClass.id = entryClasses.length + 1;
-      newEntryClass.nome = entry.categoria.nome;
-      newEntryClass.descricao = entry.categoria.descricao;
-      newEntryClass.tipo = entry.categoria.tipo;
+      newEntryClass.name = entry.entryClass.name;
+      newEntryClass.description = entry.entryClass.description;
+      newEntryClass.type = entry.entryClass.type;
 
-      entry.categoria = newEntryClass;
+      entry.entryClass = newEntryClass;
 
       if (entryClasses == null || entryClasses.length === 0) {
         entryClasses = [];
@@ -198,8 +198,8 @@ export class FakeService {
       this.setEntryClassesOnStorage(entryClasses);
 
     } else {
-      const classWithEntryId = entryClasses.find(entryClass => entryClass.id === entry.categoria.id);
-      entry.categoria = classWithEntryId;
+      const classWithEntryId = entryClasses.find(entryClass => entryClass.id === entry.entryClass.id);
+      entry.entryClass = classWithEntryId;
     }
 
     entries.push(entry);
@@ -207,45 +207,45 @@ export class FakeService {
     return of(entry);
   }
 
-  public deleteEntry(id: number): Observable<Lancamento> {
-    const entries: Lancamento[] = this.getEntriesFromStorage();
+  public deleteEntry(id: number): Observable<Entry> {
+    const entries: Entry[] = this.getEntriesFromStorage();
     const toBeDeleted = entries.findIndex(entry => entry.id === id);
     const deleted = entries.splice(toBeDeleted, 1);
     this.setEntriesOnStorage(entries);
     return of(deleted[0]);
   }
 
-  public loadEntryClasses(type: string): Observable<CategoriaLancamento[]> {
-    const entryClasses: CategoriaLancamento[] = this.getEntryClassesFromStorage();
+  public loadEntryClasses(type: string): Observable<EntryClass[]> {
+    const entryClasses: EntryClass[] = this.getEntryClassesFromStorage();
     if (entryClasses == null) {
       return of(null);
     }
     if (type == null) {
       return of(entryClasses);
     } else {
-      return of(entryClasses.filter(entryClass => entryClass.tipo === type));
+      return of(entryClasses.filter(entryClass => entryClass.type === type));
     }
   }
 
   public loadEntryClass(id: number) {
-    const entryClasses: CategoriaLancamento[] = this.getEntryClassesFromStorage();
+    const entryClasses: EntryClass[] = this.getEntryClassesFromStorage();
     return of(entryClasses.find(entryClass => entryClass.id === id));
   }
 
   deleteEntryClass(id: number) {
-    const entryClasses: CategoriaLancamento[] = this.getEntryClassesFromStorage();
+    const entryClasses: EntryClass[] = this.getEntryClassesFromStorage();
     const oldEntryClassIndex: number = entryClasses.findIndex(entryClass => entryClass.id === id);
     entryClasses.splice(oldEntryClassIndex, 1);
     this.setEntryClassesOnStorage(entryClasses);
 
     //delete ALL entries with this class
-    const entries: Lancamento[] = this.getEntriesFromStorage();
+    const entries: Entry[] = this.getEntriesFromStorage();
 
     const entriesWithoutThisClass = [];
 
     let index = 0;
     entries.forEach(entry => {
-      if (entry.categoria.id !== id) {
+      if (entry.entryClass.id !== id) {
         entriesWithoutThisClass.push(entry);
       }
       index++;
@@ -255,8 +255,8 @@ export class FakeService {
     return of(null);
   }
 
-  saveEntryClass(newEntryClass: CategoriaLancamento) {
-    const entryClasses: CategoriaLancamento[] = this.getEntryClassesFromStorage();
+  saveEntryClass(newEntryClass: EntryClass) {
+    const entryClasses: EntryClass[] = this.getEntryClassesFromStorage();
     const indexOldEntryClass: number =  entryClasses.findIndex(oldClass => oldClass.id === newEntryClass.id);
     if (indexOldEntryClass === -1) /*new class*/ {
       newEntryClass.id = entryClasses.length;
@@ -267,11 +267,11 @@ export class FakeService {
     this.setEntryClassesOnStorage(entryClasses);
 
     //update ALL entries with this class
-    const entries: Lancamento[] = this.getEntriesFromStorage();
+    const entries: Entry[] = this.getEntriesFromStorage();
 
     entries.forEach(entry => {
-      if (entry.categoria.id === newEntryClass.id) {
-        entry.categoria = newEntryClass;
+      if (entry.entryClass.id === newEntryClass.id) {
+        entry.entryClass = newEntryClass;
       }
     });
 
@@ -279,19 +279,19 @@ export class FakeService {
 
   }
 
-  private getEntryClassesFromStorage(): CategoriaLancamento[] {
+  private getEntryClassesFromStorage(): EntryClass[] {
     return JSON.parse(localStorage.getItem('entryClasses'));
   }
 
-  private getEntriesFromStorage(): Lancamento[] {
+  private getEntriesFromStorage(): Entry[] {
     return JSON.parse(localStorage.getItem('entries'));
   }
 
-  private setEntryClassesOnStorage(entryClasses: CategoriaLancamento[]) {
+  private setEntryClassesOnStorage(entryClasses: EntryClass[]) {
     localStorage.setItem('entryClasses', JSON.stringify(entryClasses));
   }
 
-  private setEntriesOnStorage(entries: Lancamento[]) {
+  private setEntriesOnStorage(entries: Entry[]) {
     localStorage.setItem('entries', JSON.stringify(entries));
   }
 

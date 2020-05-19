@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Lancamento } from 'src/app/entities/lancamento';
+import { Entry } from 'src/app/entities/lancamento';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ExpenseService } from 'src/app/services/expense.service';
 import { FakeService } from 'src/app/services/fake.service';
 import { DateAdapter } from '@angular/material';
 import { FormControl } from '@angular/forms';
-import { GrupoLancamento } from 'src/app/entities/grupo-lancamento';
+import { EntryGroup } from 'src/app/entities/grupo-lancamento';
 import { Router } from '@angular/router';
 import { state, style, transition, animate, trigger } from '@angular/animations';
 
@@ -54,8 +54,8 @@ export class EntryListViewComponent implements OnInit {
   public isEmptyResult = false;
   public isLoading = false;
 
-  public allEntries: Lancamento[] = [];
-  public filteredEntries: Lancamento[] = [];
+  public allEntries: Entry[] = [];
+  public filteredEntries: Entry[] = [];
 
   public isFirtsFilterSelected = false;
   public isSecondFilterSelected = false;
@@ -96,7 +96,7 @@ export class EntryListViewComponent implements OnInit {
 
 
     const today = new Date().getDate();
-    this.filteredEntries = this.allEntries.filter(entry => new Date(entry.data).getDate() >= today - 7);
+    this.filteredEntries = this.allEntries.filter(entry => new Date(entry.date).getDate() >= today - 7);
     this.isEmptyResult = this.filteredEntries.length < 0;
   }
 
@@ -105,7 +105,7 @@ export class EntryListViewComponent implements OnInit {
     this.isLoading = true;
 
     const today = new Date().getDate();
-    this.filteredEntries = this.allEntries.filter(entry => new Date(entry.data).getDate() >= today - 15);
+    this.filteredEntries = this.allEntries.filter(entry => new Date(entry.date).getDate() >= today - 15);
     this.isEmptyResult = this.filteredEntries.length < 0;
     this.isLoading = false;
   }
@@ -130,17 +130,17 @@ export class EntryListViewComponent implements OnInit {
     this.router.navigate(['/expense-dashboard']);
   }
 
-  private getEntries(entryGroups: GrupoLancamento[]): Lancamento[] {
-    let entries: Lancamento[] = [];
+  private getEntries(entryGroups: EntryGroup[]): Entry[] {
+    let entries: Entry[] = [];
     entryGroups.forEach(group => {
-      entries = entries.concat(group.lancamentos);
+      entries = entries.concat(group.entries);
     });
 
     // sort reversed
     entries.sort( (a, b) => {
-      if (new Date(a.data) < new Date(b.data)) {
+      if (new Date(a.date) < new Date(b.date)) {
         return 1;
-      } else if (new Date(a.data) > new Date(b.data)) {
+      } else if (new Date(a.date) > new Date(b.date)) {
         return -1;
       } else {
         return 0;
@@ -152,10 +152,10 @@ export class EntryListViewComponent implements OnInit {
 
   getExpenseReport(startDate: any, endDate: any) {
     this.isLoading = true;
-    this.fakeService.loadExpenseReport(startDate.toISOString(), endDate.toISOString())
+    this.expenseService.loadExpenseReport(startDate.toISOString(), endDate.toISOString())
       .subscribe(async res => {
         if (res) {
-          this.allEntries = this.getEntries(res.gruposLancamentosDespesas.concat(res.gruposLancamentosReceitas));
+          this.allEntries = this.getEntries(res.expenseGroups.concat(res.receiptGroups));
           this.isSuccess = true;
           this.isEmptyResult = false;
           this.isLoading = false;

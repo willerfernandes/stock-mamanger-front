@@ -1,9 +1,10 @@
-import { Lancamento } from './lancamento';
+import { Entry } from './lancamento';
 
-export class GrupoLancamento {
+export class EntryGroup {
   id: number;
-  categoria: string;
-  valor: number;
-  percentual: number;
-  lancamentos: Lancamento[];
+  entryClassName: string;
+  entryType: string;
+  value: number;
+  percentage: number;
+  entries: Entry[];
 }

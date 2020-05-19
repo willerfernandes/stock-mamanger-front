@@ -1,6 +1,7 @@
-export class CategoriaLancamento {
+export class EntryClass {
   id: number;
-  tipo: string;
-  nome: string;
-  descricao: string;
+  userId: number;
+  type: string;
+  name: string;
+  description: string;
 }

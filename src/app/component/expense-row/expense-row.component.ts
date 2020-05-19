@@ -3,6 +3,7 @@ import { ExpenseService } from 'src/app/services/expense.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { FakeService } from 'src/app/services/fake.service';
 import { MessageService } from 'src/app/services/message.service';
+import { Entry } from 'src/app/entities/lancamento';
 
 @Component({
   selector: 'app-expense-row',
@@ -12,7 +13,7 @@ import { MessageService } from 'src/app/services/message.service';
 export class ExpenseRowComponent implements OnInit {
 
   @Input()
-  public expenses: any[];
+  public expenses: Entry[];
 
   @Output()
   deleteRowEvent = new EventEmitter();
@@ -21,7 +22,7 @@ export class ExpenseRowComponent implements OnInit {
               private fakeService: FakeService, private messageService: MessageService) { }
 
   public deleteExpense(id: any) {
-     this.fakeService.deleteEntry(id).subscribe( async () => {
+     this.expenseService.deleteEntry(id).subscribe( async () => {
       this.deleteRowEvent.emit();
     },
     err => {

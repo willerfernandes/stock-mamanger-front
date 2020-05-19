@@ -47,11 +47,11 @@ export class MainNavBarComponent implements OnInit {
   }
 
   public logout(): void {
-    this.fakeService.logout();
+    this.authService.logout();
   }
 
   ngOnInit() {
-    const user: UserAuth = this.fakeService.currentUserValue;
+    const user: UserAuth = this.authService.currentUserValue;
     this.loggedUser = user.login;
   }
 

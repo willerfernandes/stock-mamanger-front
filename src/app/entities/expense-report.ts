@@ -1,10 +1,10 @@
-import { ItemGrafico } from './item-grafico';
-import { GrupoLancamento } from './grupo-lancamento';
+import { GraphInfo as GraphInfo } from './item-grafico';
+import { EntryGroup as EntryGroup } from './grupo-lancamento';
 
 export class ExpenseReport {
-  valorTotalDespesas: number;
-  valorTotalReceitas: number;
-  itemGrafico: ItemGrafico;
-  gruposLancamentosDespesas: GrupoLancamento[];
-  gruposLancamentosReceitas: GrupoLancamento[];
+  totalExpenseAmount: number;
+  totalReceiptAmount: number;
+  graphInfo: GraphInfo;
+  expenseGroups: EntryGroup[];
+  receiptGroups: EntryGroup[];
 }

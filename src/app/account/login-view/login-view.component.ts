@@ -40,7 +40,7 @@ export class LoginViewComponent implements OnInit {
   login(username: string, password: string) {
     this.isLoading = true;
     if (this.validateFields(username, password)) {
-      this.fakeService.login(username, password).subscribe(res => {
+      this.authenticationService.login(username, password).subscribe(res => {
         localStorage.setItem('currentUser', JSON.stringify(res));
         this.isLoading = false;
         this.router.navigate(['/expense-dashboard']);

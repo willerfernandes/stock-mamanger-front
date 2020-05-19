@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Lancamento } from 'src/app/entities/lancamento';
-import { GrupoLancamento } from 'src/app/entities/grupo-lancamento';
+import { Entry } from 'src/app/entities/lancamento';
+import { EntryGroup } from 'src/app/entities/grupo-lancamento';
 import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
@@ -22,7 +22,7 @@ export class EntryTableComponent implements OnInit {
   public displayedColumns = ['Categoria', 'Descrição', 'Data', 'Valor'];
 
   @Input()
-  public entries: Lancamento[] = [];
+  public entries: Entry[] = [];
 
   monthNames = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI',
     'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];

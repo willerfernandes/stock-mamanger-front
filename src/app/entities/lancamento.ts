@@ -1,10 +1,11 @@
-import { CategoriaLancamento } from './categoria-lancamento';
+import { EntryClass as EntryClass } from './categoria-lancamento';
 
-export class Lancamento {
+export class Entry {
   id: number;
-  tipo: string;
-  categoria: CategoriaLancamento;
-  valor: number;
-  data: string;
-  descricao: string;
+  userId: number;
+  entryType: string;
+  entryClass: EntryClass;
+  value: number;
+  date: string;
+  description: string;
 }

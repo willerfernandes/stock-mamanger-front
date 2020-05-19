@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoriaLancamento } from 'src/app/entities/categoria-lancamento';
+import { EntryClass } from 'src/app/entities/categoria-lancamento';
 import { Router } from '@angular/router';
 import { FakeService } from 'src/app/services/fake.service';
 import { ExpenseService } from 'src/app/services/expense.service';
@@ -12,8 +12,8 @@ import { Location } from '@angular/common';
 })
 export class EntryClassListViewComponent implements OnInit {
 
-  public expensesEntryClasses: CategoriaLancamento[];
-  public receiptEntryClasses: CategoriaLancamento[];
+  public expensesEntryClasses: EntryClass[];
+  public receiptEntryClasses: EntryClass[];
 
 
   constructor(private router: Router,
@@ -22,9 +22,9 @@ export class EntryClassListViewComponent implements OnInit {
               private location: Location) { }
 
   ngOnInit() {
-    this.fakeService.loadEntryClasses(null).subscribe(storedEntryClasses => {
-      this.expensesEntryClasses = storedEntryClasses.filter(entryClass => entryClass.tipo === 'DESPESA');
-      this.receiptEntryClasses = storedEntryClasses.filter(entryClass => entryClass.tipo === 'RECEITA');
+    this.expenseService.loadEntryClasses('').subscribe(storedEntryClasses => {
+      this.expensesEntryClasses = storedEntryClasses.filter(entryClass => entryClass.type === 'DESPESA');
+      this.receiptEntryClasses = storedEntryClasses.filter(entryClass => entryClass.type === 'RECEITA');
     });
 
 

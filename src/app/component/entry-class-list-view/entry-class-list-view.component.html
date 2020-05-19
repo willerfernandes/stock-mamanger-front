@@ -8,8 +8,8 @@
 <p style="font-size: small; color: #cacaca; margin-top: 30px;">Despesas</p>
 <div class="container">
   <div *ngFor="let entryClass of expensesEntryClasses" class="grid">
-    <div><p style="font-size: small;">{{entryClass.nome}}</p></div>
-    <div><p style="font-size: x-small;">{{entryClass.descricao}}</p></div>
+    <div><p style="font-size: small;">{{entryClass.name}}</p></div>
+    <div><p style="font-size: x-small;">{{entryClass.description}}</p></div>
     <div>
       <btn-secondary-blue [text]="'EDITAR'" style="display: inline;"  (clickedEvent)="goToEditPage(entryClass.id)"></btn-secondary-blue>
     </div>
@@ -19,8 +19,8 @@
 <p style="font-size: small; color: #cacaca;">Receitas</p>
 <div class="container">
   <div *ngFor="let entryClass of receiptEntryClasses" class="grid">
-    <div><p style="font-size: small;">{{entryClass.nome}}</p></div>
-    <div><p style="font-size: x-small;">{{entryClass.descricao}}</p></div>
+    <div><p style="font-size: small;">{{entryClass.name}}</p></div>
+    <div><p style="font-size: x-small;">{{entryClass.description}}</p></div>
     <div>
       <btn-secondary-blue [text]="'EDITAR'" style="display: inline;"  (clickedEvent)="goToEditPage(entryClass.id)"></btn-secondary-blue>
     </div>

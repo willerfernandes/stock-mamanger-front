@@ -1,4 +1,4 @@
-export class ItemGrafico {
-  nome: string[];
-  valor: number[];
+export class GraphInfo {
+  itens: string[];
+  values: number[];
 }

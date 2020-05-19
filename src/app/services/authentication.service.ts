@@ -38,9 +38,9 @@ export class AuthenticationService {
 
   login(username: string, password: string) {
     // console.log('Calling: ' + `${environment.apiUrl}/login`);
-    const credentials: Credentials = { login: '', senha: '' };
+    const credentials: Credentials = { login: '', password: '' };
     credentials.login = username;
-    credentials.senha = password;
+    credentials.password = password;
     return this.http.post<any>('http://localhost:8081/login', JSON.stringify(credentials), this.httpOptions)
       .pipe(map(user => {
         localStorage.setItem('currentUser', JSON.stringify(user));

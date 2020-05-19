@@ -5,11 +5,11 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 import { FormControl } from '@angular/forms';
 import { FakeService } from 'src/app/services/fake.service';
-import { GrupoLancamento } from 'src/app/entities/grupo-lancamento';
+import { EntryGroup } from 'src/app/entities/grupo-lancamento';
 import { NewExpenseViewComponent } from '../new-expense-view/new-expense-view.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { NewReceiptViewComponent } from 'src/app/component/new-receipt-view/new-receipt-view.component';
-import { Lancamento } from 'src/app/entities/lancamento';
+import { Entry } from 'src/app/entities/lancamento';
 import { Router } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
 @Component({
@@ -35,8 +35,8 @@ export class ExpenseDashboardComponent implements OnInit {
   public endDate: any;
 
 
-  public gruposLancamentosDespesas: GrupoLancamento[] = [];
-  public gruposLancamentosReceitas: GrupoLancamento[] = [];
+  public expenseGroups: EntryGroup[] = [];
+  public receiptGroups: EntryGroup[] = [];
   public tableTitle = 'RESUMO DESPESAS';
 
   public isSuccess = false;
@@ -51,7 +51,7 @@ export class ExpenseDashboardComponent implements OnInit {
   public expenseClicked = false;
   public isFakeServer = false;
 
-  public allEntries: Lancamento[] = [];
+  public allEntries: Entry[] = [];
 
   monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio',
     'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
@@ -176,39 +176,39 @@ export class ExpenseDashboardComponent implements OnInit {
   getExpenseReport(startDate: any, endDate: any) {
     this.setCurrentTile();
     this.isLoading = true;
-    this.fakeService.loadExpenseReport(startDate.toISOString(), endDate.toISOString())
+    this.expenseService.loadExpenseReport(startDate.toISOString(), endDate.toISOString())
       .subscribe(async res => {
         if (res) {
-          this.totalExpenses = res.valorTotalDespesas;
-          this.totalReceipt = res.valorTotalReceitas;
-          this.pieChartLabels = res.itemGrafico.nome;
-          this.pieChartData = res.itemGrafico.valor;
-          this.gruposLancamentosDespesas = res.gruposLancamentosDespesas;
-          this.gruposLancamentosReceitas = res.gruposLancamentosReceitas;
+          this.totalExpenses = res.totalExpenseAmount;
+          this.totalReceipt = res.totalReceiptAmount;
+          this.pieChartLabels = res.graphInfo.itens;
+          this.pieChartData = res.graphInfo.values;
+          this.expenseGroups = res.expenseGroups;
+          this.receiptGroups = res.receiptGroups;
 
-          this.gruposLancamentosDespesas.sort((a, b) => {
-            if (a.valor < b.valor) {
+          this.expenseGroups.sort((a, b) => {
+            if (a.value < b.value) {
               return 1;
-            } else if (a.valor > b.valor) {
+            } else if (a.value > b.value) {
               return -1;
             } else {
               return 0;
             }
           });
 
-          this.gruposLancamentosReceitas.sort((a, b) => {
-            if (a.valor < b.valor) {
+          this.receiptGroups.sort((a, b) => {
+            if (a.value < b.value) {
               return 1;
-            } else if (a.valor > b.valor) {
+            } else if (a.value > b.value) {
               return -1;
             } else {
               return 0;
             }
           });
 
-          this.allEntries = this.getEntries(res.gruposLancamentosDespesas.concat(res.gruposLancamentosReceitas));
+          this.allEntries = this.getEntries(res.expenseGroups.concat(res.receiptGroups));
           this.isSuccess = true;
-          this.isEmptyResult = this.gruposLancamentosDespesas.length === 0;
+          this.isEmptyResult = this.expenseGroups.length === 0;
           this.isLoading = false;
         } else {
           this.isSuccess = true;
@@ -223,17 +223,17 @@ export class ExpenseDashboardComponent implements OnInit {
         });
   }
 
-  private getEntries(entryGroups: GrupoLancamento[]): Lancamento[] {
-    let entries: Lancamento[] = [];
+  private getEntries(entryGroups: EntryGroup[]): Entry[] {
+    let entries: Entry[] = [];
     entryGroups.forEach(group => {
-      entries = entries.concat(group.lancamentos);
+      entries = entries.concat(group.entries);
     });
 
     // sort reversed
     entries.sort( (a, b) => {
-      if (new Date(a.data) < new Date(b.data)) {
+      if (new Date(a.date) < new Date(b.date)) {
         return 1;
-      } else if (new Date(a.data) > new Date(b.data)) {
+      } else if (new Date(a.date) > new Date(b.date)) {
         return -1;
       } else {
         return 0;
@@ -244,7 +244,6 @@ export class ExpenseDashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isFakeServer = this.fakeService.isFakeServer;
     this.apapter.setLocale('br');
     let dataInicial = new Date(Date.now());
     dataInicial = new Date(dataInicial.getFullYear(), dataInicial.getMonth(), 1);

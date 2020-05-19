@@ -3,8 +3,8 @@ import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { CurrencyPipe } from '@angular/common';
 import { ExpenseService } from 'src/app/services/expense.service';
 import { FakeService } from 'src/app/services/fake.service';
-import { Lancamento } from 'src/app/entities/lancamento';
-import { CategoriaLancamento } from 'src/app/entities/categoria-lancamento';
+import { Entry } from 'src/app/entities/lancamento';
+import { EntryClass } from 'src/app/entities/categoria-lancamento';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { FormControl } from '@angular/forms';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
@@ -23,7 +23,8 @@ export class NewExpenseViewComponent implements OnInit {
   public initialDate = new FormControl(new Date());
   public formattedAmount;
   public amount = '';
-  public allEntryGroups: CategoriaLancamento[];
+  public entryClasses: EntryClass[];
+  public isDone = false;
 
   color: ThemePalette = 'primary';
 
@@ -54,11 +55,11 @@ export class NewExpenseViewComponent implements OnInit {
     // TODO: validate with angular forms
     this.validateFields(entryGroupId, newEntryGroupName, newEntryGroupDescription, date, value);
 
-    const entryGroup = new CategoriaLancamento();
+    const entryGroup = new EntryClass();
     if (entryGroupId === 'new') {
-      entryGroup.nome = newEntryGroupName;
-      entryGroup.descricao = newEntryGroupDescription;
-      entryGroup.tipo = 'DESPESA';
+      entryGroup.name = newEntryGroupName;
+      entryGroup.description = newEntryGroupDescription;
+      entryGroup.type = 'DESPESA';
     } else {
       entryGroup.id = Number.parseInt(entryGroupId, 10);
     }
@@ -66,14 +67,14 @@ export class NewExpenseViewComponent implements OnInit {
     if (this.isInstallmentPurchase) {
       this.createInstallmentPurchases(event, value, numberOfPlots, date, entryGroup, description);
     } else {
-      const entry = new Lancamento();
-      entry.categoria = entryGroup;
-      entry.data = date._selected.toISOString();
-      entry.descricao = description;
-      entry.tipo = 'DESPESA';
-      entry.valor = Number.parseFloat(value);
+      const entry = new Entry();
+      entry.entryClass = entryGroup;
+      entry.date = date._selected.toISOString();
+      entry.description = description;
+      entry.entryType = 'DESPESA';
+      entry.value = Number.parseFloat(value);
       this.bottomSheetRef.dismiss();
-      this.fakeService.saveEntry(entry).subscribe(async res => {
+      this.expenseService.saveEntry(entry).subscribe(async res => {
         this.messageService.openMessageBar('Salvo com sucesso', 2000);
         this.entrySaved.emit();
       },
@@ -89,19 +90,19 @@ export class NewExpenseViewComponent implements OnInit {
                                       value: string,
                                       numberOfPlots: number,
                                       date: any,
-                                      entryGroup: CategoriaLancamento,
+                                      entryGroup: EntryClass,
                                       description: string) {
 
     const eachPlotValue: number = parseFloat(value) / numberOfPlots;
     const initialDate: Date = new Date(date._selected.toISOString());
     for (let i = 0; i < numberOfPlots; i++) {
-      const entry = new Lancamento();
-      entry.categoria = entryGroup;
-      entry.data = new Date(initialDate.getFullYear(), initialDate.getMonth() + i, initialDate.getDate()).toISOString();
-      entry.descricao = description + ' ' + '(' + (i + 1) + '/' + numberOfPlots + ')';
-      entry.tipo = 'DESPESA';
-      entry.valor = eachPlotValue;
-      this.fakeService.saveEntry(entry).subscribe();
+      const entry = new Entry();
+      entry.entryClass = entryGroup;
+      entry.date = new Date(initialDate.getFullYear(), initialDate.getMonth() + i, initialDate.getDate()).toISOString();
+      entry.description = description + ' ' + '(' + (i + 1) + '/' + numberOfPlots + ')';
+      entry.entryType = 'DESPESA';
+      entry.value = eachPlotValue;
+      this.expenseService.saveEntry(entry).subscribe();
     }
     this.messageService.openMessageBar('Salvo com sucesso', 2000);
     this.entrySaved.emit();
@@ -170,14 +171,14 @@ export class NewExpenseViewComponent implements OnInit {
     this.bottomSheetRef.dismiss();
   }
 
-  private loadEntryGroups() {
-    this.fakeService.loadEntryClasses('DESPESA').subscribe(res => {
-      this.allEntryGroups = res;
+  private loadEntryClasses() {
+    this.expenseService.loadEntryClasses('DESPESA').subscribe( async (res) => {
+      this.entryClasses = res;
+      this.isDone = true;
     });
   }
 
   ngOnInit() {
-
-    this.loadEntryGroups();
+    this.loadEntryClasses();
   }
 }

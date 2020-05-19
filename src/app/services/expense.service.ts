@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { ExpenseReport } from '../entities/expense-report';
-import { Lancamento } from '../entities/lancamento';
-import { CategoriaLancamento } from '../entities/categoria-lancamento';
+import { Entry } from '../entities/lancamento';
+import { EntryClass } from '../entities/categoria-lancamento';
 
 
 @Injectable({
@@ -12,9 +12,9 @@ import { CategoriaLancamento } from '../entities/categoria-lancamento';
 export class ExpenseService {
 
   baseUrl = 'http://localhost:8080';
-  expenseReportPath = '/api/v1/extrato';
-  entryPath = '/api/v1/lancamentos';
-  entryGroupPath = '/api/v1/categorias';
+  expenseReportPath = '/api/v1/expense-report';
+  entryPath = '/api/v1/entries';
+  entryGroupPath = '/api/v1/classes';
 
   private httpOptions = {
     params: new HttpParams()
@@ -25,35 +25,40 @@ export class ExpenseService {
   public loadExpenseReport(startDate: string, endDate: string): Observable<ExpenseReport> {
     let filterParams = new HttpParams();
     if (startDate != null) {
-      filterParams = filterParams.set('dataInicio', startDate);
+      filterParams = filterParams.set('startDate', startDate);
     }
     if (endDate != null) {
-      filterParams = filterParams.set('dataFim', endDate);
+      filterParams = filterParams.set('endDate', endDate);
     }
     this.httpOptions.params = filterParams;
     return this.httpClient.get<ExpenseReport>(
       this.baseUrl + this.expenseReportPath, this.httpOptions);
   }
 
-  public saveEntry(entry: Lancamento): Observable<Lancamento> {
-    return this.httpClient.post<Lancamento>(this.baseUrl + this.entryPath, JSON.stringify(entry));
+  public saveEntry(entry: Entry): Observable<Entry> {
+    return this.httpClient.post<Entry>(this.baseUrl + this.entryPath, JSON.stringify(entry));
   }
 
-  public deleteEntry(id: number): Observable<Lancamento> {
-    return this.httpClient.delete<Lancamento>(this.baseUrl + this.entryPath + '/' + id);
+  public deleteEntry(id: number): Observable<Entry> {
+    return this.httpClient.delete<Entry>(this.baseUrl + this.entryPath + '/' + id);
   }
 
-  public loadEntryGroups(type: string): Observable<CategoriaLancamento[]> {
+  public loadEntryGroups(type: string): Observable<EntryClass[]> {
     let filterParams = new HttpParams();
     if (type != null) {
-      filterParams = filterParams.set('tipo', type);
+      filterParams = filterParams.set('type', type);
     }
     this.httpOptions.params = filterParams;
-    return this.httpClient.get<CategoriaLancamento[]>(this.baseUrl + this.entryGroupPath, this.httpOptions);
+    return this.httpClient.get<EntryClass[]>(this.baseUrl + this.entryGroupPath, this.httpOptions);
   }
 
 
-  public loadEntryGroup(id: number): Observable<CategoriaLancamento> {
-    return this.httpClient.get<CategoriaLancamento>(this.baseUrl + this.entryGroupPath + '/' + id, this.httpOptions);
+  public loadEntryGroup(id: number): Observable<EntryClass> {
+    return this.httpClient.get<EntryClass>(this.baseUrl + this.entryGroupPath + '/' + id, this.httpOptions);
+  }
+
+  public loadEntryClasses(type: string): Observable<EntryClass[]> {
+    this.httpOptions.params = this.httpOptions.params.set('type', type);
+    return this.httpClient.get<EntryClass[]>(this.baseUrl + this.entryGroupPath, this.httpOptions);
   }
 }

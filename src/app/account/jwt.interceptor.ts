@@ -18,7 +18,8 @@ export class JwtInterceptor implements HttpInterceptor {
                 setHeaders: {
                   'Content-Type': 'application/json',
                   'Access-Control-Allow-Origin': '*',
-                  'security-token': `${currentUser.token}`
+                  'security-token': `${currentUser.token}`,
+                  userId: `${currentUser.id}`
                 }
             });
         }

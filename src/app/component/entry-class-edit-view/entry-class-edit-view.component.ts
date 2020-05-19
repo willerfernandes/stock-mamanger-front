@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { CategoriaLancamento } from 'src/app/entities/categoria-lancamento';
+import { EntryClass } from 'src/app/entities/categoria-lancamento';
 import { FakeService } from 'src/app/services/fake.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -16,7 +16,7 @@ export class EntryClassEditViewComponent implements OnInit {
 
   entryForm: FormGroup;
 
-  public entryClass: CategoriaLancamento;
+  public entryClass: EntryClass;
 
   public types = ['RECEITA', 'DESPESA'];
 
@@ -37,8 +37,8 @@ export class EntryClassEditViewComponent implements OnInit {
   }
 
   public save(name: string, description: string) {
-    this.entryClass.nome = name;
-    this.entryClass.descricao = description;
+    this.entryClass.name = name;
+    this.entryClass.description = description;
     this.fakeService.saveEntryClass(this.entryClass);
     this.messageService.openMessageBar('Categoria atualizada com sucesso', 2000);
     this.router.navigate(['/expense-dashboard']);
@@ -46,7 +46,7 @@ export class EntryClassEditViewComponent implements OnInit {
 
   ngOnInit() {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.fakeService.loadEntryClass(id).subscribe((res: CategoriaLancamento) => {
+    this.fakeService.loadEntryClass(id).subscribe((res: EntryClass) => {
       this.entryClass = res;
       /*this.entryForm = this.fb.group({
         typeControl: ['DESPESA']

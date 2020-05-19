@@ -1,13 +1,13 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { CategoriaLancamento } from 'src/app/entities/categoria-lancamento';
+import { EntryClass } from 'src/app/entities/categoria-lancamento';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { FakeService } from 'src/app/services/fake.service';
 import { ExpenseService } from 'src/app/services/expense.service';
 import { MatBottomSheetRef } from '@angular/material';
 import { NewExpenseViewComponent } from 'src/app/layouts/new-expense-view/new-expense-view.component';
 import { CurrencyPipe } from '@angular/common';
-import { Lancamento } from 'src/app/entities/lancamento';
+import { Entry } from 'src/app/entities/lancamento';
 import { MessageService } from 'src/app/services/message.service';
 
 @Component({
@@ -21,7 +21,7 @@ export class NewReceiptViewComponent implements OnInit {
   public initialDate = new FormControl(new Date());
   public formattedAmount;
   public amount;
-  public allEntryGroups: CategoriaLancamento[];
+  public allEntryGroups: EntryClass[];
 
   @Output()
   public entrySaved = new EventEmitter();
@@ -46,21 +46,21 @@ export class NewReceiptViewComponent implements OnInit {
     // TODO: validate with angular forms
     this.validateFields(entryGroupId, newEntryGroupName, newEntryGroupDescription, date, value);
 
-    const entryGroup = new CategoriaLancamento();
+    const entryGroup = new EntryClass();
     if (entryGroupId === 'new') {
-      entryGroup.nome = newEntryGroupName;
-      entryGroup.descricao = newEntryGroupDescription;
-      entryGroup.tipo = 'RECEITA';
+      entryGroup.name = newEntryGroupName;
+      entryGroup.description = newEntryGroupDescription;
+      entryGroup.type = 'RECEITA';
     } else {
       entryGroup.id = Number.parseInt(entryGroupId, 10);
     }
 
-    const entry = new Lancamento();
-    entry.categoria = entryGroup;
-    entry.data = date._selected.toISOString();
-    entry.descricao = description;
-    entry.tipo = 'RECEITA';
-    entry.valor = Number.parseFloat(value);
+    const entry = new Entry();
+    entry.entryClass = entryGroup;
+    entry.date = date._selected.toISOString();
+    entry.description = description;
+    entry.entryType = 'RECEITA';
+    entry.value = Number.parseFloat(value);
     this.bottomSheetRef.dismiss();
     this.fakeService.saveEntry(entry).subscribe(async res => {
       this.messageService.openMessageBar('Salvo com sucesso', 2000);
