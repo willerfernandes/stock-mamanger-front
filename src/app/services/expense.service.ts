@@ -14,7 +14,7 @@ export class ExpenseService {
   baseUrl = 'http://localhost:8080';
   expenseReportPath = '/api/v1/expense-report';
   entryPath = '/api/v1/entries';
-  entryGroupPath = '/api/v1/classes';
+  entryClassesPath = '/api/v1/classes';
 
   private httpOptions = {
     params: new HttpParams()
@@ -22,6 +22,7 @@ export class ExpenseService {
 
   constructor(private httpClient: HttpClient) { }
 
+  // ExpenseReport
   public loadExpenseReport(startDate: string, endDate: string): Observable<ExpenseReport> {
     let filterParams = new HttpParams();
     if (startDate != null) {
@@ -35,6 +36,7 @@ export class ExpenseService {
       this.baseUrl + this.expenseReportPath, this.httpOptions);
   }
 
+  // Entry
   public saveEntry(entry: Entry): Observable<Entry> {
     return this.httpClient.post<Entry>(this.baseUrl + this.entryPath, JSON.stringify(entry));
   }
@@ -43,22 +45,25 @@ export class ExpenseService {
     return this.httpClient.delete<Entry>(this.baseUrl + this.entryPath + '/' + id);
   }
 
-  public loadEntryGroups(type: string): Observable<EntryClass[]> {
-    let filterParams = new HttpParams();
-    if (type != null) {
-      filterParams = filterParams.set('type', type);
-    }
-    this.httpOptions.params = filterParams;
-    return this.httpClient.get<EntryClass[]>(this.baseUrl + this.entryGroupPath, this.httpOptions);
-  }
-
-
-  public loadEntryGroup(id: number): Observable<EntryClass> {
-    return this.httpClient.get<EntryClass>(this.baseUrl + this.entryGroupPath + '/' + id, this.httpOptions);
+  // EntryClass
+  public loadEntryClass(id: number): Observable<EntryClass> {
+    return this.httpClient.get<EntryClass>(this.baseUrl + this.entryClassesPath + '/' + id, this.httpOptions);
   }
 
   public loadEntryClasses(type: string): Observable<EntryClass[]> {
-    this.httpOptions.params = this.httpOptions.params.set('type', type);
-    return this.httpClient.get<EntryClass[]>(this.baseUrl + this.entryGroupPath, this.httpOptions);
+    let filterParams = new HttpParams();
+    if (type != null) {
+      filterParams = filterParams.set('type', type);
+      this.httpOptions.params = filterParams;
+    }
+    return this.httpClient.get<EntryClass[]>(this.baseUrl + this.entryClassesPath, this.httpOptions);
+  }
+
+  public saveEntryClass(entryClass: EntryClass): Observable<EntryClass> {
+    return this.httpClient.put<EntryClass>(this.baseUrl + this.entryClassesPath, JSON.stringify(entryClass));
+  }
+
+  public deleteEntryClass(id: number): Observable<EntryClass> {
+    return this.httpClient.delete<EntryClass>(this.baseUrl + this.entryClassesPath + '/' + id);
   }
 }

@@ -18,7 +18,7 @@ import { Router } from '@angular/router';
 })
 export class FakeService {
 
-  public isFakeServer = true;
+  public isFakeServer = false;
 
   constructor(private http: HttpClient, private router: Router) {
     this.currentUserSubject = new BehaviorSubject<UserAuth>(JSON.parse(localStorage.getItem('currentUser')));
@@ -121,7 +121,7 @@ export class FakeService {
       if (entriesOfThisClass.length !== 0) {
         const newEntryGroup: EntryGroup = new EntryGroup();
         newEntryGroup.entries = entriesOfThisClass;
-        newEntryGroup.categoria = entryClass.name;
+        newEntryGroup.entryClassName = entryClass.name;
         let totalGroupValue = 0;
         entriesOfThisClass.forEach(entryOfThiClass => {
           totalGroupValue += entryOfThiClass.value;
@@ -147,7 +147,7 @@ export class FakeService {
     const graphInfoValues: number[] = [];
     entryGroupExpenseList.forEach(entryGroup => {
       entryGroup.percentage = entryGroup.value / totalValueExpenses;
-      graphInfoNames.push(entryGroup.categoria);
+      graphInfoNames.push(entryGroup.entryClassName);
       graphInfoValues.push(entryGroup.value);
     });
 

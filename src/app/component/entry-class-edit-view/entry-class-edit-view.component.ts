@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { MessageService } from 'src/app/services/message.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ExpenseService } from 'src/app/services/expense.service';
 
 @Component({
   selector: 'app-entry-class-edit-view',
@@ -21,6 +22,7 @@ export class EntryClassEditViewComponent implements OnInit {
   public types = ['RECEITA', 'DESPESA'];
 
   constructor(private fakeService: FakeService,
+              private expenseService: ExpenseService,
               private route: ActivatedRoute,
               private location: Location,
               private messageService: MessageService,
@@ -30,23 +32,31 @@ export class EntryClassEditViewComponent implements OnInit {
     this.location.back();
   }
 
-  public deleteEntryClass(): void {
-    this.fakeService.deleteEntryClass(this.entryClass.id).subscribe();
-    this.messageService.openMessageBar('Categoria removida com sucesso', 2000);
+  public async deleteEntryClass() {
+    /*this.expenseService.deleteEntryClass(this.entryClass.id).subscribe( (res) =>
+    this.messageService.openMessageBar('Categoria removida com sucesso', 2000)
+    , err => this.messageService.openMessageBar(err, 2000)
+    );*/
+
+    await this.expenseService.deleteEntryClass(this.entryClass.id)
+    .toPromise()
+    .then();
+
     this.router.navigate(['/expense-dashboard']);
   }
 
   public save(name: string, description: string) {
     this.entryClass.name = name;
     this.entryClass.description = description;
-    this.fakeService.saveEntryClass(this.entryClass);
-    this.messageService.openMessageBar('Categoria atualizada com sucesso', 2000);
+    this.expenseService.saveEntryClass(this.entryClass).subscribe(
+     () => this.messageService.openMessageBar('Categoria atualizada com sucesso', 2000),
+     () => this.messageService.openMessageBar('Houve um erro ao atualizar a categoria', 2000));
     this.router.navigate(['/expense-dashboard']);
   }
 
   ngOnInit() {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.fakeService.loadEntryClass(id).subscribe((res: EntryClass) => {
+    this.expenseService.loadEntryClass(id).subscribe((res: EntryClass) => {
       this.entryClass = res;
       /*this.entryForm = this.fb.group({
         typeControl: ['DESPESA']

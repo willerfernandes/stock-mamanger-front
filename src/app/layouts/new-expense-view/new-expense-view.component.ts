@@ -55,24 +55,28 @@ export class NewExpenseViewComponent implements OnInit {
     // TODO: validate with angular forms
     this.validateFields(entryGroupId, newEntryGroupName, newEntryGroupDescription, date, value);
 
-    const entryGroup = new EntryClass();
+    const entryClass = new EntryClass();
     if (entryGroupId === 'new') {
-      entryGroup.name = newEntryGroupName;
-      entryGroup.description = newEntryGroupDescription;
-      entryGroup.type = 'DESPESA';
+      entryClass.userId = JSON.parse(localStorage.getItem('currentUser')).id;
+      entryClass.name = newEntryGroupName;
+      entryClass.description = newEntryGroupDescription;
+      entryClass.type = 'DESPESA';
     } else {
-      entryGroup.id = Number.parseInt(entryGroupId, 10);
+      entryClass.id = Number.parseInt(entryGroupId, 10);
     }
 
     if (this.isInstallmentPurchase) {
-      this.createInstallmentPurchases(event, value, numberOfPlots, date, entryGroup, description);
+      this.createInstallmentPurchases(event, value, numberOfPlots, date, entryClass, description);
     } else {
+
       const entry = new Entry();
-      entry.entryClass = entryGroup;
+      entry.userId = JSON.parse(localStorage.getItem('currentUser')).id;
+      entry.entryClass = entryClass;
       entry.date = date._selected.toISOString();
       entry.description = description;
       entry.entryType = 'DESPESA';
       entry.value = Number.parseFloat(value);
+
       this.bottomSheetRef.dismiss();
       this.expenseService.saveEntry(entry).subscribe(async res => {
         this.messageService.openMessageBar('Salvo com sucesso', 2000);
@@ -112,6 +116,13 @@ export class NewExpenseViewComponent implements OnInit {
 
   public onIsInstallmentPurchaseToogleSliderChange(): void {
       this.isInstallmentPurchase = !this.isInstallmentPurchase;
+  }
+
+  // TODO: Jesus, how ugly this is, but for reason the select options only updates when something chages
+  // Already set to wait for reponse and, by console-loggin, the options are coming. It seens that
+  // the select options are filled before backend response and it is never updated again until somenthing changes
+  public doNothing() {
+    this.entryClasses = this.entryClasses;
   }
 
   public changedInputAmountValue(event: any) {
@@ -171,11 +182,11 @@ export class NewExpenseViewComponent implements OnInit {
     this.bottomSheetRef.dismiss();
   }
 
-  private loadEntryClasses() {
-    this.expenseService.loadEntryClasses('DESPESA').subscribe( async (res) => {
-      this.entryClasses = res;
-      this.isDone = true;
-    });
+  private async loadEntryClasses() {
+      // save result
+      this.entryClasses = await this.expenseService.loadEntryClasses('DESPESA')
+      .toPromise()
+      .then(resp => resp as EntryClass[]);
   }
 
   ngOnInit() {

@@ -244,6 +244,7 @@ export class ExpenseDashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isFakeServer = this.fakeService.isFakeServer;
     this.apapter.setLocale('br');
     let dataInicial = new Date(Date.now());
     dataInicial = new Date(dataInicial.getFullYear(), dataInicial.getMonth(), 1);

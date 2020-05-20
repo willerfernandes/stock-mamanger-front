@@ -21,7 +21,7 @@ export class NewReceiptViewComponent implements OnInit {
   public initialDate = new FormControl(new Date());
   public formattedAmount;
   public amount;
-  public allEntryGroups: EntryClass[];
+  public entryClasses: EntryClass[];
 
   @Output()
   public entrySaved = new EventEmitter();
@@ -46,23 +46,26 @@ export class NewReceiptViewComponent implements OnInit {
     // TODO: validate with angular forms
     this.validateFields(entryGroupId, newEntryGroupName, newEntryGroupDescription, date, value);
 
-    const entryGroup = new EntryClass();
+    const entryClass = new EntryClass();
     if (entryGroupId === 'new') {
-      entryGroup.name = newEntryGroupName;
-      entryGroup.description = newEntryGroupDescription;
-      entryGroup.type = 'RECEITA';
+      entryClass.userId = JSON.parse(localStorage.getItem('currentUser')).id;
+      entryClass.name = newEntryGroupName;
+      entryClass.description = newEntryGroupDescription;
+      entryClass.type = 'RECEITA';
     } else {
-      entryGroup.id = Number.parseInt(entryGroupId, 10);
+      entryClass.id = Number.parseInt(entryGroupId, 10);
     }
 
     const entry = new Entry();
-    entry.entryClass = entryGroup;
+    entry.userId = JSON.parse(localStorage.getItem('currentUser')).id;
+    entry.entryClass = entryClass;
     entry.date = date._selected.toISOString();
     entry.description = description;
     entry.entryType = 'RECEITA';
     entry.value = Number.parseFloat(value);
+
     this.bottomSheetRef.dismiss();
-    this.fakeService.saveEntry(entry).subscribe(async res => {
+    this.expenseService.saveEntry(entry).subscribe(async res => {
       this.messageService.openMessageBar('Salvo com sucesso', 2000);
       this.entrySaved.emit();
     },
@@ -114,14 +117,19 @@ export class NewReceiptViewComponent implements OnInit {
     this.bottomSheetRef.dismiss();
   }
 
-  private loadEntryGroups() {
-    this.fakeService.loadEntryClasses('RECEITA').subscribe(res => {
-      this.allEntryGroups = res;
-    });
+  public doNothing() {
+    this.entryClasses = this.entryClasses;
   }
 
+  private async loadEntryClasses() {
+    // save result
+    this.entryClasses = await this.expenseService.loadEntryClasses('RECEITA')
+    .toPromise()
+    .then(resp => resp as EntryClass[]);
+}
+
   ngOnInit() {
-    this.loadEntryGroups();
+    this.loadEntryClasses();
   }
 
 }
