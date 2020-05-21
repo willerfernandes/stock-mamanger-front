@@ -7,6 +7,7 @@
     [title]="'Servidor não conectado.'"
     [message]="'Utilizando armazenamento do seu Browser. Ao limpar os dados do navegador, seus dados serão apagados.'">
 </app-alert-on-screen>
+</div>
 <div class="container-login">
   <div class="wrap-login">
     <div class="internal-login">
@@ -22,7 +23,7 @@
           (focus)="onTypePassword($event)">
 
         <div style="padding-top: 50px; padding-bottom: 40px;  text-align: center;">
-          <btn-primary-blue [isloadingButtonType]="false" [isLoading]="isLoading" [text]="'Entrar'" (clickedEvent)="login(user_name.value, password.value)"
+          <btn-primary-blue [text]="'Entrar'" (clickedEvent)="login(user_name.value, password.value)"
             (keyup.enter)="login(user_name.value, password.value)">
           </btn-primary-blue>
         </div>

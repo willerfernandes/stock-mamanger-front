@@ -5,6 +5,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Router } from '@angular/router';
 import { FakeService } from 'src/app/services/fake.service';
 import { MessageService } from 'src/app/services/message.service';
+import { SignupCredentials } from 'src/app/entities/signup-credentials';
 
 @Component({
   selector: 'app-signup-view',
@@ -16,6 +17,8 @@ export class SignupViewComponent implements OnInit {
   public baseURL = 'http://localhost:4200/';
   public loginPath = this.baseURL + 'login';
 
+  isLoading = false;
+
   successMessage = 'Cadstrado com sucesso';
 
   public isFakeServer  = false;
@@ -25,25 +28,42 @@ export class SignupViewComponent implements OnInit {
 
   ngOnInit() {
     this.isFakeServer = this.fakeService.isFakeServer;
-    if (this.fakeService.isLoggedIn) {
-      this.router.navigate(['/expense-dashboard']);
-    }
+    this.authService.isLoggedIn.subscribe(logged => {
+      if (logged) {
+        this.router.navigate(['/expense-dashboard']);
+      }
+    });
   }
 
   public signUp(login: string, password: string, repeatPsw: string, name: string) {
     this.validateFields(login, password, repeatPsw, name);
-    const user = new User();
-    user.id = 0;
-    user.login = login;
-    user.nome = name;
-    user.senha = password;
-    this.fakeService.save(user).subscribe(res => {
-      this.messageService.openMessageBar(this.successMessage, 3000);
-      this.router.navigate(['/login']);
+    this.isLoading = true;
+    const credentials = new SignupCredentials();
+    credentials.login = login;
+    credentials.name = name;
+    credentials.password = password;
+
+    this.authService.checkUsernameAvailability(login).subscribe( res => {
+      if (!res ) {
+        this.isLoading = false;
+        this.messageService.openMessageBar('O nome de usuário "' + login + '" não está disponível', 3000);
+      } else {
+        this.authService.createUser(credentials).subscribe( () => {
+          this.isLoading = false;
+          this.messageService.openMessageBar(this.successMessage, 3000);
+          this.router.navigate(['/login']);
+        },
+          err => {
+            this.isLoading = false;
+            this.messageService.openMessageBar('Erro ao cadastrar usuário', 3000);
+            this.router.navigate(['/home']);
+          });
+      }
     },
-      err => {
-        this.router.navigate(['/homr']);
-      });
+    err => {
+      this.isLoading = false;
+      this.messageService.openMessageBar('Erro ao cadastrar usuário', 3000);
+    });
 
   }
 

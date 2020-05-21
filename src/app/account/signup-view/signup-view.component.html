@@ -7,6 +7,7 @@
     [title]="'Servidor não conectado.'"
     [message]="'Utilizando armazenamento do seu Browser. Ao limpar os dados do navegador, seus dados serão apagados.'">
 </app-alert-on-screen>
+</div>
 <form action="action_page.php" style="border:1px solid #ccc">
   <div class="container">
     <h2>Cadastrar</h2>
@@ -28,12 +29,15 @@
     </div>
 
 
-    <div class="clearfix">
+    <div *ngIf="!isLoading"  class="clearfix">
       <div style="padding-top: 20px; padding-bottom: 40px;  text-align: center;">
         <btn-primary-blue [isloadingButtonType]="false"  [text]="'Cadastrar'" (clickedEvent)="signUp(login.value, psw.value, repeatPsw.value, name.value)"
           (keyup.enter)="signUp(login.value, psw.value, repeatPsw.value, name.value)">
         </btn-primary-blue>
       </div>
+    </div>
+    <div *ngIf="isLoading" style="width: 100%; margin: auto; box-sizing: border-box;">
+      <img src='/assets/img/loading.gif' style="width: 100px; height: auto; display: block; margin: auto;">
     </div>
   </div>
 </form>

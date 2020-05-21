@@ -8,6 +8,7 @@ import { FormControl } from '@angular/forms';
 import { EntryGroup } from 'src/app/entities/grupo-lancamento';
 import { Router } from '@angular/router';
 import { state, style, transition, animate, trigger } from '@angular/animations';
+import { ExpenseReport } from 'src/app/entities/expense-report';
 
 @Component({
   selector: 'app-entry-list-view',
@@ -80,7 +81,7 @@ export class EntryListViewComponent implements OnInit {
 
     this.startDate = new FormControl(dataInicial);
     this.endDate = new FormControl(dataFinal);
-    this.getExpenseReport(this.startDate.value, this.endDate.value);
+    this.getExpenseReport2(this.startDate.value, this.endDate.value);
     this.filteredEntries = this.allEntries;
     this.isFirtsFilterSelected = true;
   }
@@ -150,7 +151,36 @@ export class EntryListViewComponent implements OnInit {
     return entries;
   }
 
-  getExpenseReport(startDate: any, endDate: any) {
+
+  private async getExpenseReport2(startDate: any, endDate: any) {
+    this.isLoading = true;
+    const expenseReport = await this.expenseService.loadExpenseReport(startDate.toISOString(), endDate.toISOString())
+    .toPromise()
+    .then(res => {
+      res as ExpenseReport;
+      if (res) {
+        this.allEntries = this.getEntries(res.expenseGroups.concat(res.receiptGroups));
+        this.filteredEntries = this.allEntries;
+        this.isSuccess = true;
+        this.isEmptyResult = false;
+        this.isLoading = false;
+      } else {
+        this.allEntries = [];
+        this.isSuccess = false;
+        this.isEmptyResult = true;
+        this.isLoading = false;
+      }
+    })
+    .catch(err => {
+      this.isSuccess = false;
+      this.isEmptyResult = true;
+      this.isLoading = false;
+    });
+
+
+}
+
+  private getExpenseReport(startDate: any, endDate: any) {
     this.isLoading = true;
     this.expenseService.loadExpenseReport(startDate.toISOString(), endDate.toISOString())
       .subscribe(async res => {
