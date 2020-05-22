@@ -14,9 +14,12 @@ import { SignupCredentials } from '../entities/signup-credentials';
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
 
-  loginUrl = 'http://localhost:8081/api/v1/login';
-  signupUrl = 'http://localhost:8081/api/v1/users';
-  usernameAvaililityUrl = 'http://localhost:8081/api/v1/users/availabiliy';
+  // baseUrl = 'http://localhost:8081';
+  baseUrl = 'https://admoney-auth-wdhw7uplaa-uc.a.run.app';
+
+  loginUrl = this.baseUrl + '/api/v1/login';
+  signupUrl = this.baseUrl + '/api/v1/users';
+  usernameAvaililityUrl = this.baseUrl + '/api/v1/users/availabiliy';
 
   constructor(private http: HttpClient, public dialog: MatSnackBar, private router: Router) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));

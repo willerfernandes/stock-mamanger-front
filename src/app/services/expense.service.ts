@@ -11,7 +11,8 @@ import { EntryClass } from '../entities/categoria-lancamento';
 })
 export class ExpenseService {
 
-  baseUrl = 'http://localhost:8080';
+  // baseUrl = 'http://localhost:8080';
+  baseUrl = 'https://admoney-backend-wdhw7uplaa-uc.a.run.app';
   expenseReportPath = '/api/v1/expense-report';
   entryPath = '/api/v1/entries';
   entryClassesPath = '/api/v1/classes';
