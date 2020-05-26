@@ -22,10 +22,13 @@
           [style.backgroundColor]="passwordPlaceholder === 'Campo Obrigatório'? '#ffc1c1': 'transparent'"
           (focus)="onTypePassword($event)">
 
-        <div style="padding-top: 50px; padding-bottom: 40px;  text-align: center;">
+        <div *ngIf="!isLoading" style="padding-top: 50px; padding-bottom: 40px;  text-align: center;">
           <btn-primary-blue [text]="'Entrar'" (clickedEvent)="login(user_name.value, password.value)"
             (keyup.enter)="login(user_name.value, password.value)">
           </btn-primary-blue>
+        </div>
+        <div *ngIf="isLoading" style="padding-bottom: 40px;  text-align: center;">
+          <img src='/assets/img/loading.gif' style="width: 100px; height: auto; display: block; margin: auto;">
         </div>
         <span> Não é usuário? Cadastre-se <button style="background:none; border:none; color: #030091; font-family: 'Roboto';"
            (click)="navSignUpPage()">AQUI</button></span>

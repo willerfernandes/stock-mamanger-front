@@ -46,6 +46,7 @@ export class LoginViewComponent implements OnInit {
         this.router.navigate(['/expense-dashboard']);
       },
       error => {
+        this.isLoading = false;
         if (error.status === 401) {
           this.messageService.openMessageBar('Usuário ou senha incorretos', 3000);
         }
