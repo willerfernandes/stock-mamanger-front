@@ -2,12 +2,12 @@
   <img src="assets/img/logo.png">
   <h2 class="header-text">O seu APP de finanças pessoais</h2>
 </div>
-<div *ngIf="isFakeServer">
+<!--div *ngIf="isOfflineMode">
   <app-alert-on-screen
-    [title]="'Servidor não conectado.'"
+    [title]="'Modo Offline'"
     [message]="'Utilizando armazenamento do seu Browser. Ao limpar os dados do navegador, seus dados serão apagados.'">
 </app-alert-on-screen>
-</div>
+</div-->
 <div class="container-login">
   <div class="wrap-login">
     <div class="internal-login">
@@ -17,20 +17,29 @@
         <input #user_name type="text" placeholder="{{usernamePlaceholder}}" name="uname" required
           [style.backgroundColor]="usernamePlaceholder === 'Campo Obrigatório'? '#ffc1c1': 'transparent'"
           (focus)="onTypeUsername($event)">
-        <label class="color-primary" for="psw"><b>Senha</b></label>
-        <input #password type="password" placeholder="{{passwordPlaceholder}}" name="psw" required
+        <label [hidden]="isOfflineMode" class="color-primary" for="psw"><b>Senha</b></label>
+        <input [hidden]="isOfflineMode" #password type="password" placeholder="{{passwordPlaceholder}}" name="psw" required
           [style.backgroundColor]="passwordPlaceholder === 'Campo Obrigatório'? '#ffc1c1': 'transparent'"
           (focus)="onTypePassword($event)">
-
         <div style="padding-top: 50px; padding-bottom: 40px;  text-align: center;">
           <btn-primary-blue [text]="'Entrar'" (clickedEvent)="login(user_name.value, password.value)"
             (keyup.enter)="login(user_name.value, password.value)">
           </btn-primary-blue>
         </div>
-        <span> Não é usuário? Cadastre-se <button style="background:none; border:none; color: #030091; font-family: 'Roboto';"
-           (click)="navSignUpPage()">AQUI</button></span>
+        <span [hidden]="isOfflineMode"> Não é usuário? Cadastre-se <button style="background:none; border:none; color: #030091; font-family: 'Roboto';"
+           (click)="navSignUpPage()">AQUI</button>
+        </span>
+        <p [hidden]="!isOfflineMode" class="observationText">
+          No modo offline suas infomações são  salvas no armazenamento local. Ao registrar novas informações, elas não serão refletidas em outros dispositivos, a menos que você habilite novamente o modo online.
+        </p>
       </form>
+      <label [ngClass]="isOfflineMode ? 'offlineModeText' : 'onlineModeText'">{{changeConnectionModeLabel}}</label>
+      <mat-slide-toggle style="padding-left: 5px;"
+        [color]="color"
+        (change)= "onOfflineModeSliderChange()">
+      </mat-slide-toggle>
     </div>
+
 
   </div>
 </div>

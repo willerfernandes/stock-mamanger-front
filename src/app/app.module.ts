@@ -17,7 +17,6 @@ import { StockNewComponent } from './register/stock/stock-new/stock-new.componen
 import { UserFilterComponent } from './register/user/user-filter/user-filter.component';
 import { UserDetailComponent } from './register/user/user-detail/user-detail.component';
 import { UserNewComponent } from './register/user/user-new/user-new.component';
-import { NavbarComponent } from './layouts/navbar/navbar.component';
 import { LayoutModule } from '@angular/cdk/layout';
 
 import { CommonModule, CurrencyPipe} from '@angular/common';
@@ -89,7 +88,6 @@ import { BtnSecondaryBlueComponent } from './component/basic/btn-secondary-blue/
 import { BtnSecondaryBlueLargeComponent } from './component/basic/btn-secondary-blue-large/btn-secondary-blue-large.component';
 import { BtnPrimaryBlueLargeComponent } from './component/basic/btn-primary-blue-large/btn-primary-blue-large.component';
 import { UnderConstructionComponent } from './layouts/under-construction/under-construction.component';
-import { TopNavbarComponent } from './component/top-navbar/top-navbar.component';
 import { AddMenuComponent } from './component/add-menu/add-menu.component';
 import { ExpenseBottomSheetComponent } from './component/expense-bottom-sheet/expense-bottom-sheet.component';
 import { NewExpenseViewComponent } from './layouts/new-expense-view/new-expense-view.component';
@@ -117,7 +115,6 @@ import { AdmViewComponent } from './component/adm-view/adm-view.component';
     UserFilterComponent,
     UserDetailComponent,
     UserNewComponent,
-    NavbarComponent,
     MainViewComponent,
     LoginViewComponent,
     SignupViewComponent,
@@ -144,7 +141,6 @@ import { AdmViewComponent } from './component/adm-view/adm-view.component';
     BtnSecondaryBlueLargeComponent,
     BtnPrimaryBlueLargeComponent,
     UnderConstructionComponent,
-    TopNavbarComponent,
     AddMenuComponent,
     ExpenseBottomSheetComponent,
     NewExpenseViewComponent,

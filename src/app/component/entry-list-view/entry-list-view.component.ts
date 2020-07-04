@@ -9,6 +9,7 @@ import { EntryGroup } from 'src/app/entities/grupo-lancamento';
 import { Router } from '@angular/router';
 import { state, style, transition, animate, trigger } from '@angular/animations';
 import { ExpenseReport } from 'src/app/entities/expense-report';
+import { RouterService } from 'src/app/services/router.service';
 
 @Component({
   selector: 'app-entry-list-view',
@@ -65,9 +66,7 @@ export class EntryListViewComponent implements OnInit {
 
   public filterSelected = 0;
 
-  constructor(private authService: AuthenticationService,
-              private expenseService: ExpenseService,
-              private fakeService: FakeService,
+  constructor(private routerService: RouterService,
               private apapter: DateAdapter<any>,
               private router: Router) { }
 
@@ -154,7 +153,7 @@ export class EntryListViewComponent implements OnInit {
 
   private async getExpenseReport2(startDate: any, endDate: any) {
     this.isLoading = true;
-    const expenseReport = await this.expenseService.loadExpenseReport(startDate.toISOString(), endDate.toISOString())
+    const expenseReport = await this.routerService.loadExpenseReport(startDate.toISOString(), endDate.toISOString())
     .toPromise()
     .then(res => {
       res as ExpenseReport;
@@ -182,7 +181,7 @@ export class EntryListViewComponent implements OnInit {
 
   private getExpenseReport(startDate: any, endDate: any) {
     this.isLoading = true;
-    this.expenseService.loadExpenseReport(startDate.toISOString(), endDate.toISOString())
+    this.routerService.loadExpenseReport(startDate.toISOString(), endDate.toISOString())
       .subscribe(async res => {
         if (res) {
           this.allEntries = this.getEntries(res.expenseGroups.concat(res.receiptGroups));

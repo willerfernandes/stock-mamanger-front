@@ -4,6 +4,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { FakeService } from 'src/app/services/fake.service';
 import { MessageService } from 'src/app/services/message.service';
 import { Entry } from 'src/app/entities/lancamento';
+import { RouterService } from 'src/app/services/router.service';
 
 @Component({
   selector: 'app-expense-row',
@@ -18,11 +19,10 @@ export class ExpenseRowComponent implements OnInit {
   @Output()
   deleteRowEvent = new EventEmitter();
 
-  constructor(private authenticationService: AuthenticationService, private expenseService: ExpenseService,
-              private fakeService: FakeService, private messageService: MessageService) { }
+  constructor(private routerService: RouterService, private messageService: MessageService) { }
 
   public deleteExpense(id: any) {
-     this.expenseService.deleteEntry(id).subscribe( async () => {
+     this.routerService.deleteEntry(id).subscribe( async () => {
       this.deleteRowEvent.emit();
     },
     err => {

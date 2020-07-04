@@ -1,14 +1,12 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { EntryClass } from 'src/app/entities/categoria-lancamento';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { FakeService } from 'src/app/services/fake.service';
-import { ExpenseService } from 'src/app/services/expense.service';
 import { MatBottomSheetRef } from '@angular/material';
 import { NewExpenseViewComponent } from 'src/app/layouts/new-expense-view/new-expense-view.component';
 import { CurrencyPipe } from '@angular/common';
 import { Entry } from 'src/app/entities/lancamento';
 import { MessageService } from 'src/app/services/message.service';
+import { RouterService } from 'src/app/services/router.service';
 
 @Component({
   selector: 'app-new-receipt-view',
@@ -27,9 +25,7 @@ export class NewReceiptViewComponent implements OnInit {
   public entrySaved = new EventEmitter();
 
   constructor(
-    private authenticationService: AuthenticationService,
-    private fakeService: FakeService,
-    private expenseService: ExpenseService,
+    private routerService: RouterService,
     private bottomSheetRef: MatBottomSheetRef<NewExpenseViewComponent>,
     private currencyPipe: CurrencyPipe,
     private messageService: MessageService) { }
@@ -65,7 +61,7 @@ export class NewReceiptViewComponent implements OnInit {
     entry.value = Number.parseFloat(value);
 
     this.bottomSheetRef.dismiss();
-    this.expenseService.saveEntry(entry).subscribe(async res => {
+    this.routerService.saveEntry(entry).subscribe(async res => {
       this.messageService.openMessageBar('Salvo com sucesso', 2000);
       this.entrySaved.emit();
     },
@@ -123,7 +119,7 @@ export class NewReceiptViewComponent implements OnInit {
 
   private async loadEntryClasses() {
     // save result
-    this.entryClasses = await this.expenseService.loadEntryClasses('RECEITA')
+    this.entryClasses = await this.routerService.loadEntryClasses('RECEITA')
     .toPromise()
     .then(resp => resp as EntryClass[]);
 }

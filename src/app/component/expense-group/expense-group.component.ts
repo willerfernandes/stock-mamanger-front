@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ExpenseService } from 'src/app/services/expense.service';
 
 @Component({
   selector: 'app-expense-group',

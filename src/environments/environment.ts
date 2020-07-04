@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8080'
+  authenticationApiUrl: 'http://localhost:8080',
+  expenseApiUrl: 'http://localhost:8080'
 };
 
 

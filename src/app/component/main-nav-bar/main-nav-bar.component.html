@@ -72,28 +72,64 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script-->
 <div class="navbar-header-container">
   <div class="navbar-header-wrapper">
-    <img id="menu-icon" src="assets/img/logo.png" (click)="navigateToHome()">
-    <img id="menu-bars" src="assets/img/menu-bars.svg" (click)="toogleMenu()">
+    <img id="menu-icon" src="assets/img/logo.png" (click)="navigateToHome()" />
+    <img id="menu-bars" src="assets/img/menu-bars.svg" (click)="toogleMenu()" />
   </div>
 </div>
 <div *ngIf="isMenuActive" class="menu-content-container">
   <div class="menu-content-wrapper">
     <div class="user-info">
       Logado como:
-      <br>
-      <strong>{{loggedUser}}</strong>
-      <hr>
+      <br />
+      <div>
+        <strong>{{ loggedUser }}</strong>
+        <ng-container *ngIf="isOnline; else redCircleImage">
+          <img style="padding-left: 5px;" src="./assets/img/green-circle.png" />
+          <p class="connection-mode">Você está online</p>
+          <button (click)="disconnect()"
+            style="
+              padding: 0px;
+              background: none;
+              border: none;
+              color: #030091;
+              font-family: 'Roboto';
+              font-weight: bolder;
+            "
+          >
+            Modo offline
+          </button>
+        </ng-container>
+        <ng-template #redCircleImage>
+          <img style="padding-left: 5px;" src="./assets/img/red-circle.png" />
+          <div>
+            <p class="connection-mode">Você está offline</p>
+            <button (click)="connect()"
+              style="
+                padding: 0px;
+                background: none;
+                border: none;
+                color: #030091;
+                font-family: 'Roboto';
+                font-weight: bolder;
+              "
+            >
+              Conectar
+            </button>
+          </div>
+        </ng-template>
+      </div>
+      <hr />
     </div>
-    <div class = "menu-item" (click)="navigateToHome()">
+    <div class="menu-item" (click)="navigateToHome()">
       Home
     </div>
-    <div class = "menu-item" (click)="navigateToEntryClasses()">
+    <div class="menu-item" (click)="navigateToEntryClasses()">
       <p>Categorias</p>
     </div>
-    <div class = "menu-item" (click)="navigateToEntryListView()">
+    <div class="menu-item" (click)="navigateToEntryListView()">
       <p>Lançamentos</p>
     </div>
-    <div class = "menu-item" (click)=logout()>
+    <div class="menu-item" (click)="logout()">
       <p><strong>Sair</strong></p>
     </div>
   </div>

@@ -61,10 +61,20 @@
   background-color: rgb(240, 240, 240);
 }
 
+.connection-mode {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+  color: #BBB3B3;
+  padding: 2px;
+  margin: 0px;
+}
 
 @media only screen and (max-width: 600px) {
   .menu-content-container {
-    max-width: 40%;
-  min-width: 20%;
+    max-width: 50%;
+    min-width: 40%;
   }
 }

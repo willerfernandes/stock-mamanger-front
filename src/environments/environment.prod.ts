@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:8080'
+  authenticationApiUrl: 'https://admoney-auth-wdhw7uplaa-uc.a.run.app',
+  expenseApiUrl: 'https://admoney-backend-wdhw7uplaa-uc.a.run.app'
 };

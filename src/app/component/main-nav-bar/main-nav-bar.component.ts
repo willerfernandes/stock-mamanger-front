@@ -1,9 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FakeService } from 'src/app/services/fake.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserAuth } from 'src/app/entities/user-auth';
+import { RouterService } from 'src/app/services/router.service';
 
 @Component({
   selector: 'app-main-nav-bar',
@@ -28,7 +27,9 @@ export class MainNavBarComponent implements OnInit {
 
   public loggedUser;
 
-  constructor(private authService: AuthenticationService, private router: Router, private fakeService: FakeService) { }
+  public isOnline;
+
+  constructor(private routerService: RouterService, private router: Router) { }
 
   public toogleMenu(): void {
     this.isMenuActive = !this.isMenuActive;
@@ -47,12 +48,23 @@ export class MainNavBarComponent implements OnInit {
   }
 
   public logout(): void {
-    this.authService.logout();
+    this.routerService.logout();
+  }
+
+  public connect(): void {
+    this.routerService.connect();
+    this.ngOnInit();
+  }
+
+  public disconnect(): void {
+    this.routerService.disconnect();
+    this.ngOnInit();
   }
 
   ngOnInit() {
-    const user: UserAuth = this.authService.currentUserValue;
+    const user: UserAuth = this.routerService.getCurrentUserValue();
     this.loggedUser = user.login;
+    this.isOnline = this.routerService.isOnline();
   }
 
 }

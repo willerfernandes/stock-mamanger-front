@@ -1,17 +1,15 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { ExpenseService } from './../../services/expense.service';
 import { DateAdapter } from '@angular/material/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 import { FormControl } from '@angular/forms';
-import { FakeService } from 'src/app/services/fake.service';
 import { EntryGroup } from 'src/app/entities/grupo-lancamento';
 import { NewExpenseViewComponent } from '../new-expense-view/new-expense-view.component';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 import { NewReceiptViewComponent } from 'src/app/component/new-receipt-view/new-receipt-view.component';
 import { Entry } from 'src/app/entities/lancamento';
 import { Router } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
+import { RouterService } from 'src/app/services/router.service';
 @Component({
   selector: 'app-expense-dashboard',
   templateUrl: './expense-dashboard.component.html',
@@ -49,16 +47,14 @@ export class ExpenseDashboardComponent implements OnInit {
   public isAddMenuActive: boolean;
 
   public expenseClicked = false;
-  public isFakeServer = false;
+  public isOfflineMode = false;
 
   public allEntries: Entry[] = [];
 
   monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio',
     'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
-  constructor(private authService: AuthenticationService,
-              private expenseService: ExpenseService,
-              private fakeService: FakeService,
+  constructor(private routerService: RouterService,
               private apapter: DateAdapter<any>,
               private bottomSheet: MatBottomSheet,
               private router: Router,
@@ -176,7 +172,7 @@ export class ExpenseDashboardComponent implements OnInit {
   getExpenseReport(startDate: any, endDate: any) {
     this.setCurrentTile();
     this.isLoading = true;
-    this.expenseService.loadExpenseReport(startDate.toISOString(), endDate.toISOString())
+    this.routerService.loadExpenseReport(startDate.toISOString(), endDate.toISOString())
       .subscribe(async res => {
         if (res) {
           this.totalExpenses = res.totalExpenseAmount;
@@ -244,7 +240,7 @@ export class ExpenseDashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isFakeServer = this.fakeService.isFakeServer;
+    this.isOfflineMode = !this.routerService.isOnline();
     this.apapter.setLocale('br');
     let dataInicial = new Date(Date.now());
     dataInicial = new Date(dataInicial.getFullYear(), dataInicial.getMonth(), 1);

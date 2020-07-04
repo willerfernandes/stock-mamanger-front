@@ -118,6 +118,35 @@ input:active {
 	border-bottom: 1px ridge #030091;
 }
 
+.onlineModeText {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 21px;
+  color: #030091;
+
+}
+
+.offlineModeText {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 21px;
+  color: #868686;
+}
+
+.observationText {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  text-align: justify;
+  text-justify: inter-word;
+  color: #868686;
+}
 
 
 app-button-primary-text {

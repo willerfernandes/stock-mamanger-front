@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { FakeService } from 'src/app/services/fake.service';
 import { environment } from 'src/environments/environment';
 import { User } from 'src/app/entities/user';
 import { MessageService } from 'src/app/services/message.service';
+import { RouterService } from 'src/app/services/router.service';
+import { ThemePalette } from '@angular/material';
 
 
 @Component({
@@ -14,33 +14,30 @@ import { MessageService } from 'src/app/services/message.service';
 })
 export class LoginViewComponent implements OnInit {
 
-  public baseURL = 'http://localhost:4200';
-  public registerUserPath = this.baseURL + '/signup';
-
-  constructor(private authenticationService: AuthenticationService,
-              private fakeService: FakeService,
+  constructor(private routerService: RouterService,
               private router: Router,
               private messageService: MessageService) { }
 
   isLoading = false;
 
-  public isFakeServer = false;
+  public isOfflineMode = false;
+  changeConnectionModeLabel = 'Modo Offline';
+  color: ThemePalette = 'primary';
 
   usernamePlaceholder = 'Nome do usuário';
   passwordPlaceholder = 'Insira a senha';
 
   ngOnInit() {
-    this.isFakeServer = this.fakeService.isFakeServer;
-    if (this.authenticationService.isLoggedIn) {
+    if (this.routerService.loggedIn()) {
       this.router.navigate(['/expense-dashboard']);
     }
   }
 
-
   login(username: string, password: string) {
     this.isLoading = true;
+    const isOffline = this.isOfflineMode;
     if (this.validateFields(username, password)) {
-      this.authenticationService.login(username, password).subscribe(res => {
+      this.routerService.login(username, password, isOffline).subscribe(res => {
         localStorage.setItem('currentUser', JSON.stringify(res));
         this.isLoading = false;
         this.router.navigate(['/expense-dashboard']);
@@ -66,13 +63,17 @@ export class LoginViewComponent implements OnInit {
     this.passwordPlaceholder = 'Insira a senha';
   }
 
+  public onOfflineModeSliderChange(): void {
+    this.isOfflineMode = !this.isOfflineMode;
+  }
+
   private validateFields(username: string, password: string) {
     let isAllRequiredFieldsFilled = true;
     if (username === '') {
       this.usernamePlaceholder = 'Campo Obrigatório';
       isAllRequiredFieldsFilled = false;
     }
-    if (password === '') {
+    if (password === '' && !this.isOfflineMode) {
       this.passwordPlaceholder = 'Campo Obrigatório';
       isAllRequiredFieldsFilled = false;
     }

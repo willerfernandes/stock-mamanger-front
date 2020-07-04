@@ -12,6 +12,7 @@ import { User } from '../entities/user';
 import { EntryClass } from '../entities/categoria-lancamento';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { SignupCredentials } from '../entities/signup-credentials';
 
 @Injectable({
   providedIn: 'root'
@@ -277,6 +278,15 @@ export class FakeService {
 
     this.setEntriesOnStorage(entries);
 
+    return of(newEntryClass);
+  }
+
+  public checkUsernameAvailability(login: string): boolean {
+    return true;
+  }
+
+  public createUser(credentials: SignupCredentials): boolean {
+    return true;
   }
 
   private getEntryClassesFromStorage(): EntryClass[] {

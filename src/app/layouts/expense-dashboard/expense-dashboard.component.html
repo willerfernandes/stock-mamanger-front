@@ -2,9 +2,9 @@
 <link href='https://fonts.googleapis.com/css?family=Roboto Condensed' rel='stylesheet'>
 <div id="mainDiv"  (click)="onMenuDismissed()">
   <app-main-nav-bar></app-main-nav-bar>
-  <div *ngIf="isFakeServer">
+  <div *ngIf="isOfflineMode">
     <app-alert-on-screen
-      [title]="'Servidor não conectado.'"
+      [title]="'Modo offline.'"
       [message]="'Utilizando armazenamento do seu Browser. Ao fazer logout ou limpar os dados do navegador, seus dados serão apagados.'">
   </app-alert-on-screen>
   </div>

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { FakeService } from 'src/app/services/fake.service';
 import { ExpenseService } from 'src/app/services/expense.service';
 import { Location } from '@angular/common';
+import { RouterService } from 'src/app/services/router.service';
 
 @Component({
   selector: 'app-entry-class-list-view',
@@ -17,17 +18,14 @@ export class EntryClassListViewComponent implements OnInit {
 
 
   constructor(private router: Router,
-              private fakeService: FakeService,
-              private expenseService: ExpenseService,
+              private routerService: RouterService,
               private location: Location) { }
 
   ngOnInit() {
-    this.expenseService.loadEntryClasses('').subscribe(storedEntryClasses => {
+    this.routerService.loadEntryClasses('').subscribe(storedEntryClasses => {
       this.expensesEntryClasses = storedEntryClasses.filter(entryClass => entryClass.type === 'DESPESA');
       this.receiptEntryClasses = storedEntryClasses.filter(entryClass => entryClass.type === 'RECEITA');
     });
-
-
   }
 
   goBack(): void {
@@ -39,6 +37,6 @@ export class EntryClassListViewComponent implements OnInit {
   }
 
   public delete(id: number): void {
-    this.fakeService.deleteEntryClass(id);
+    this.routerService.deleteEntryClass(id);
   }
 }

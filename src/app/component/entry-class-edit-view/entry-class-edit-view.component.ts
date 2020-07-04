@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 import { MessageService } from 'src/app/services/message.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ExpenseService } from 'src/app/services/expense.service';
+import { RouterService } from 'src/app/services/router.service';
 
 @Component({
   selector: 'app-entry-class-edit-view',
@@ -21,8 +22,7 @@ export class EntryClassEditViewComponent implements OnInit {
 
   public types = ['RECEITA', 'DESPESA'];
 
-  constructor(private fakeService: FakeService,
-              private expenseService: ExpenseService,
+  constructor(private routerService: RouterService,
               private route: ActivatedRoute,
               private location: Location,
               private messageService: MessageService,
@@ -38,7 +38,7 @@ export class EntryClassEditViewComponent implements OnInit {
     , err => this.messageService.openMessageBar(err, 2000)
     );*/
 
-    await this.expenseService.deleteEntryClass(this.entryClass.id)
+    await this.routerService.deleteEntryClass(this.entryClass.id)
     .toPromise()
     .then();
 
@@ -48,7 +48,7 @@ export class EntryClassEditViewComponent implements OnInit {
   public save(name: string, description: string) {
     this.entryClass.name = name;
     this.entryClass.description = description;
-    this.expenseService.saveEntryClass(this.entryClass).subscribe(
+    this.routerService.saveEntryClass(this.entryClass).subscribe(
      () => this.messageService.openMessageBar('Categoria atualizada com sucesso', 2000),
      () => this.messageService.openMessageBar('Houve um erro ao atualizar a categoria', 2000));
     this.router.navigate(['/expense-dashboard']);
@@ -56,7 +56,7 @@ export class EntryClassEditViewComponent implements OnInit {
 
   ngOnInit() {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.expenseService.loadEntryClass(id).subscribe((res: EntryClass) => {
+    this.routerService.loadEntryClass(id).subscribe((res: EntryClass) => {
       this.entryClass = res;
       /*this.entryForm = this.fb.group({
         typeControl: ['DESPESA']

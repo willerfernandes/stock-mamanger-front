@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { ExpenseReport } from '../entities/expense-report';
 import { Entry } from '../entities/lancamento';
 import { EntryClass } from '../entities/categoria-lancamento';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -11,8 +12,7 @@ import { EntryClass } from '../entities/categoria-lancamento';
 })
 export class ExpenseService {
 
-  // baseUrl = 'http://localhost:8080';
-  baseUrl = 'https://admoney-backend-wdhw7uplaa-uc.a.run.app';
+  baseUrl = environment.expenseApiUrl;
   expenseReportPath = '/api/v1/expense-report';
   entryPath = '/api/v1/entries';
   entryClassesPath = '/api/v1/classes';

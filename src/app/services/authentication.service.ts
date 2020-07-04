@@ -10,12 +10,9 @@ import { Router } from '@angular/router';
 import { UserAuth } from '../entities/user-auth';
 import { SignupCredentials } from '../entities/signup-credentials';
 
-
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-
-  // baseUrl = 'http://localhost:8081';
-  baseUrl = 'https://admoney-auth-wdhw7uplaa-uc.a.run.app';
+  baseUrl = environment.authenticationApiUrl;
 
   loginUrl = this.baseUrl + '/api/v1/login';
   signupUrl = this.baseUrl + '/api/v1/users';

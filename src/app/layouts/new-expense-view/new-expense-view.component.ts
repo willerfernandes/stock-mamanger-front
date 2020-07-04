@@ -1,15 +1,14 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { CurrencyPipe } from '@angular/common';
-import { ExpenseService } from 'src/app/services/expense.service';
 import { FakeService } from 'src/app/services/fake.service';
 import { Entry } from 'src/app/entities/lancamento';
 import { EntryClass } from 'src/app/entities/categoria-lancamento';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 import { FormControl } from '@angular/forms';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { ThemePalette } from '@angular/material';
 import { MessageService } from 'src/app/services/message.service';
+import { RouterService } from 'src/app/services/router.service';
 
 
 @Component({
@@ -34,9 +33,7 @@ export class NewExpenseViewComponent implements OnInit {
   public entrySaved = new EventEmitter();
 
   constructor(
-    private authenticationService: AuthenticationService,
-    private fakeService: FakeService,
-    private expenseService: ExpenseService,
+    private routerService: RouterService,
     private bottomSheetRef: MatBottomSheetRef<NewExpenseViewComponent>,
     private currencyPipe: CurrencyPipe,
     private messageService: MessageService) { }
@@ -78,7 +75,7 @@ export class NewExpenseViewComponent implements OnInit {
       entry.value = Number.parseFloat(value);
 
       this.bottomSheetRef.dismiss();
-      this.expenseService.saveEntry(entry).subscribe(async res => {
+      this.routerService.saveEntry(entry).subscribe(async res => {
         this.messageService.openMessageBar('Salvo com sucesso', 2000);
         this.entrySaved.emit();
       },
@@ -106,7 +103,7 @@ export class NewExpenseViewComponent implements OnInit {
       entry.description = description + ' ' + '(' + (i + 1) + '/' + numberOfPlots + ')';
       entry.entryType = 'DESPESA';
       entry.value = eachPlotValue;
-      this.expenseService.saveEntry(entry).subscribe();
+      this.routerService.saveEntry(entry).subscribe();
     }
     this.messageService.openMessageBar('Salvo com sucesso', 2000);
     this.entrySaved.emit();
@@ -184,7 +181,7 @@ export class NewExpenseViewComponent implements OnInit {
 
   private async loadEntryClasses() {
       // save result
-      this.entryClasses = await this.expenseService.loadEntryClasses('DESPESA')
+      this.entryClasses = await this.routerService.loadEntryClasses('DESPESA')
       .toPromise()
       .then(resp => resp as EntryClass[]);
   }
