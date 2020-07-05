@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { ExpenseReport } from '../entities/expense-report';
 import { Entry } from '../entities/lancamento';
@@ -16,6 +16,7 @@ export class ExpenseService {
   expenseReportPath = '/api/v1/expense-report';
   entryPath = '/api/v1/entries';
   entryClassesPath = '/api/v1/classes';
+  syncPath = '/sync';
 
   private httpOptions = {
     params: new HttpParams()
@@ -46,6 +47,10 @@ export class ExpenseService {
     return this.httpClient.delete<Entry>(this.baseUrl + this.entryPath + '/' + id);
   }
 
+  public loadAllEntries(): Observable<Entry[]> {
+    return this.httpClient.get<Entry[]>(this.baseUrl + this.entryPath);
+  }
+
   // EntryClass
   public loadEntryClass(id: number): Observable<EntryClass> {
     return this.httpClient.get<EntryClass>(this.baseUrl + this.entryClassesPath + '/' + id, this.httpOptions);
@@ -66,5 +71,9 @@ export class ExpenseService {
 
   public deleteEntryClass(id: number): Observable<EntryClass> {
     return this.httpClient.delete<EntryClass>(this.baseUrl + this.entryClassesPath + '/' + id);
+  }
+
+  public syncEntries(entries: Entry[]): Observable<HttpResponse<Entry[]>> {
+    return this.httpClient.post<Entry[]>(this.baseUrl + this.entryPath + this.syncPath,  JSON.stringify(entries), { observe: 'response' });
   }
 }

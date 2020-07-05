@@ -37,8 +37,9 @@ export class LoginViewComponent implements OnInit {
     this.isLoading = true;
     const isOffline = this.isOfflineMode;
     if (this.validateFields(username, password)) {
-      this.routerService.login(username, password, isOffline).subscribe(res => {
-        localStorage.setItem('currentUser', JSON.stringify(res));
+      this.routerService.login(username, password, isOffline).subscribe(user => {
+        this.routerService.setCurrentUser(user);
+        this.routerService.updateLocalStorageFromDatabase();
         this.isLoading = false;
         this.router.navigate(['/expense-dashboard']);
       },

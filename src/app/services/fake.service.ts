@@ -13,6 +13,7 @@ import { EntryClass } from '../entities/categoria-lancamento';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { SignupCredentials } from '../entities/signup-credentials';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +22,8 @@ export class FakeService {
 
   public isFakeServer = false;
 
-  constructor(private http: HttpClient, private router: Router) {
-    this.currentUserSubject = new BehaviorSubject<UserAuth>(JSON.parse(localStorage.getItem('currentUser')));
+  constructor(private http: HttpClient, private router: Router, private storageService: StorageService) {
+    this.currentUserSubject = new BehaviorSubject<UserAuth>(this.storageService.findUser());
     this.currentUser = this.currentUserSubject.asObservable();
   }
   private currentUserSubject: BehaviorSubject<UserAuth>;
@@ -39,18 +40,31 @@ export class FakeService {
 
 
   login(username: string, password: string): Observable<UserAuth> {
-    // ao remover o fake service, remover também do auth guard
-    const user: UserAuth = {
-      id: 1,
-      login: username,
-      nome: 'Fake User',
-      token: '9123jhasdjaqs812318dajsd8q1j219e3j121234=çfasd.1//a~]-=dlaspiodmjapismda9da89ujd9q'
-    };
-    localStorage.setItem('currentUser', JSON.stringify(user));
+    let user = this.storageService.findUser();
+    if (user == null) {
+      user = this.storageService.findLastUser();
+    }
+    if (user == null) {
+      this.generateMockedDefaultEntryClassesData();
+      user = {
+        id: 1,
+        login: username,
+        nome: 'Fake User',
+        token: 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4' +
+               'cCI6MTU5Mzg5MDUxOCwic2NvcGUiOiJleHBlbnNlLXJlc' +
+               'G9ydDtsaXN0LWVudHJ5O3NhdmUtZW50cnk7ZGVsZXRlLWV' +
+               'udHJ5O2xpc3QtZW50cnlDbGFzcztzYXZlLWVudHJ5Q2xhc' +
+               '3M7ZGVsZXRlLWVudHJ5Q2xhc3MiLCJpc3MiOiJ3aWxsc29' +
+               'mdCIsImlkIjoxLCJsb2dpbiI6ImFkbWluIiwibmFtZSI6I' +
+               'kFkbWluaXN0cmF0b3IiLCJpYXQiOjE1OTM4ODY5MTgsImp' +
+               '0aSI6IjA2YzU4ZDNhLTBmNDQtNDI5ZS1iMjUwLWJmYTM3M' +
+               'zM1ZjY0MyJ9.I0oJxXkxi9Kih0RlVoNKdcwv9c49-FAnvv' +
+               'GYl17E6E-Rku2J6uUPAx8r4xVnspt2k38aNr7Uq2QKMF8ieMRG0Q'
+      };
+    }
+
+    this.storageService.saveCurrentUser(user);
     this.currentUserSubject.next(user);
-
-    this.generateMockedDefaultEntryClassesData();
-
     return of(user);
   }
 
@@ -79,9 +93,9 @@ export class FakeService {
     entryGroup4.description = 'Recebimento do salário';
     entryGroup4.type = 'RECEITA';
 
-    const allEntries = [entryGroup1, entryGroup2, entryGroup3, entryGroup4];
+    const allEntryClasses = [entryGroup1, entryGroup2, entryGroup3, entryGroup4];
 
-    localStorage.setItem('entryClasses', JSON.stringify(allEntries));
+    this.storageService.saveAllEntryClasses(allEntryClasses);
 
   }
 
@@ -94,8 +108,8 @@ export class FakeService {
 }
 
   loadExpenseReport(startDate: string, endDate: string): Observable<ExpenseReport> {
-    const allEntries: Entry[] = this.getEntriesFromStorage();
-    const entryClasses: EntryClass[] = this.getEntryClassesFromStorage();
+    const allEntries: Entry[] = this.storageService.findAllEntries();
+    const entryClasses: EntryClass[] = this.storageService.findAllEntryClasses();
 
     if (allEntries == null || allEntries.length === 0) {
       return of(null);
@@ -165,16 +179,20 @@ export class FakeService {
   }
 
   public saveEntry(entry: Entry): Observable<Entry> {
-    let entries: Entry[] = this.getEntriesFromStorage();
-    let entryClasses: EntryClass[] = this.getEntryClassesFromStorage();
+    let entries: Entry[] = this.storageService.findAllEntries();
+    let entryClasses: EntryClass[] = this.storageService.findAllEntryClasses();
 
     if (entries == null || entries.length === 0) {
       entries = [];
     }
 
+    if (entryClasses == null || entryClasses.length === 0) {
+      entryClasses = [];
+    }
+
     entry.id = entries.length  + 1;
 
-    // necessary when user creastes a new entryClass and is multiple expenses
+    // necessary when user creates a new entryClass and is multiple expenses
     if (entry.entryClass.name != null) {
         const existingCategory: EntryClass =  entryClasses.find(entryClass => entryClass.name === entry.entryClass.name);
         if (existingCategory != null) {
@@ -191,12 +209,8 @@ export class FakeService {
 
       entry.entryClass = newEntryClass;
 
-      if (entryClasses == null || entryClasses.length === 0) {
-        entryClasses = [];
-      }
-
       entryClasses.push(newEntryClass);
-      this.setEntryClassesOnStorage(entryClasses);
+      this.storageService.saveAllEntryClasses(entryClasses);
 
     } else {
       const classWithEntryId = entryClasses.find(entryClass => entryClass.id === entry.entryClass.id);
@@ -204,20 +218,20 @@ export class FakeService {
     }
 
     entries.push(entry);
-    this.setEntriesOnStorage(entries);
+    this.storageService.saveAllEntries(entries);
     return of(entry);
   }
 
   public deleteEntry(id: number): Observable<Entry> {
-    const entries: Entry[] = this.getEntriesFromStorage();
+    const entries: Entry[] = this.storageService.findAllEntries();
     const toBeDeleted = entries.findIndex(entry => entry.id === id);
     const deleted = entries.splice(toBeDeleted, 1);
-    this.setEntriesOnStorage(entries);
+    this.storageService.saveAllEntries(entries);
     return of(deleted[0]);
   }
 
   public loadEntryClasses(type: string): Observable<EntryClass[]> {
-    const entryClasses: EntryClass[] = this.getEntryClassesFromStorage();
+    const entryClasses: EntryClass[] = this.storageService.findAllEntryClasses();
     if (entryClasses == null) {
       return of(null);
     }
@@ -229,18 +243,18 @@ export class FakeService {
   }
 
   public loadEntryClass(id: number) {
-    const entryClasses: EntryClass[] = this.getEntryClassesFromStorage();
+    const entryClasses: EntryClass[] = this.storageService.findAllEntryClasses();
     return of(entryClasses.find(entryClass => entryClass.id === id));
   }
 
   deleteEntryClass(id: number) {
-    const entryClasses: EntryClass[] = this.getEntryClassesFromStorage();
+    const entryClasses: EntryClass[] = this.storageService.findAllEntryClasses();
     const oldEntryClassIndex: number = entryClasses.findIndex(entryClass => entryClass.id === id);
     entryClasses.splice(oldEntryClassIndex, 1);
-    this.setEntryClassesOnStorage(entryClasses);
+    this.storageService.saveAllEntryClasses(entryClasses);
 
-    //delete ALL entries with this class
-    const entries: Entry[] = this.getEntriesFromStorage();
+    // delete ALL entries with this class
+    const entries: Entry[] = this.storageService.findAllEntries();
 
     const entriesWithoutThisClass = [];
 
@@ -252,12 +266,12 @@ export class FakeService {
       index++;
     });
 
-    this.setEntriesOnStorage(entriesWithoutThisClass);
+    this.storageService.saveAllEntries(entriesWithoutThisClass);
     return of(null);
   }
 
   saveEntryClass(newEntryClass: EntryClass) {
-    const entryClasses: EntryClass[] = this.getEntryClassesFromStorage();
+    const entryClasses: EntryClass[] = this.storageService.findAllEntryClasses();
     const indexOldEntryClass: number =  entryClasses.findIndex(oldClass => oldClass.id === newEntryClass.id);
     if (indexOldEntryClass === -1) /*new class*/ {
       newEntryClass.id = entryClasses.length;
@@ -265,10 +279,10 @@ export class FakeService {
     } else {
       entryClasses.splice(indexOldEntryClass, 1, newEntryClass);
     }
-    this.setEntryClassesOnStorage(entryClasses);
+    this.storageService.saveAllEntryClasses(entryClasses);
 
     //update ALL entries with this class
-    const entries: Entry[] = this.getEntriesFromStorage();
+    const entries: Entry[] = this.storageService.findAllEntries();
 
     entries.forEach(entry => {
       if (entry.entryClass.id === newEntryClass.id) {
@@ -276,7 +290,7 @@ export class FakeService {
       }
     });
 
-    this.setEntriesOnStorage(entries);
+    this.storageService.saveAllEntries(entries);
 
     return of(newEntryClass);
   }
@@ -289,49 +303,35 @@ export class FakeService {
     return true;
   }
 
-  private getEntryClassesFromStorage(): EntryClass[] {
-    return JSON.parse(localStorage.getItem('entryClasses'));
-  }
-
-  private getEntriesFromStorage(): Entry[] {
-    return JSON.parse(localStorage.getItem('entries'));
-  }
-
-  private setEntryClassesOnStorage(entryClasses: EntryClass[]) {
-    localStorage.setItem('entryClasses', JSON.stringify(entryClasses));
-  }
-
-  private setEntriesOnStorage(entries: Entry[]) {
-    localStorage.setItem('entries', JSON.stringify(entries));
-  }
 
   logout() {
-    // remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
-    localStorage.removeItem('entryClasses');
-    localStorage.removeItem('entries');
+    // remove user from local storage to log user out - do not remove user data to allow offline mode
+    this.storageService.saveLastUser();
+    this.storageService.deleteCurrentUser();
     this.currentUserSubject.next(null);
     this.router.navigate(['/login']);
   }
 
+
+  // Adm
   updateEntriesOnStorage(entriesJson: string) {
-    localStorage.setItem('entries', entriesJson);
+    this.storageService.saveAllEntries(JSON.parse(entriesJson));
   }
 
   updateEntryClassesOnStorage(entryClasses: string) {
-    localStorage.setItem('entryClasses', entryClasses);
+    this.storageService.saveAllEntryClasses(JSON.parse(entryClasses));
   }
 
   loadEntriesFromStorage(): Observable<string> {
-    return of(localStorage.getItem('entries'));
+    return of(JSON.stringify(this.storageService.findAllEntries()));
   }
 
   loadEntryClassesFromStorage(): Observable<string>  {
-    return of(localStorage.getItem('entryClasses'));
+    return of(JSON.stringify(this.storageService.findAllEntryClasses()));
   }
 
   clearStorage() {
-    localStorage.clear();
+    this.storageService.delleteAllStorage();
   }
 
 }

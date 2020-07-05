@@ -6,6 +6,10 @@ import { Entry } from '../entities/lancamento';
 import { Observable } from 'rxjs';
 import { EntryClass } from '../entities/categoria-lancamento';
 import { SignupCredentials } from '../entities/signup-credentials';
+import { StorageService } from './storage.service';
+import { UserAuth } from '../entities/user-auth';
+import { MessageService } from './message.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -15,28 +19,92 @@ export class RouterService {
   constructor(private authenticationService: AuthenticationService,
               private expenseService: ExpenseService,
               private fakeService: FakeService,
+              private storageService: StorageService,
+              private messageService: MessageService,
+              private router: Router
               ) { }
 
   connectionMode = 'offline';
 
   public isOnline(): boolean {
-    return localStorage.getItem('connectionMode') === 'online';
+    return this.storageService.getConnectionMode()  === 'online';
   }
 
   public connect(): void {
-    localStorage.setItem('connectionMode', 'online');
+    this.storageService.saveConnectionMode('online');
+    const user = this.storageService.findUser();
+    if (user != null) {
+      this.authenticationService.registerUser(user);
+    } else {
+      this.messageService.openMessageBar('Sua sessão expirou, faça login novamente', 2000);
+      this.router.navigate(['/login']);
+    }
+
+    this.sync();
+  }
+
+  public sync() {
+    const entries = this.storageService.findAllEntries();
+    this.expenseService.syncEntries(entries).subscribe(entriesOnDatabase => {
+      if (entriesOnDatabase.status === 204) {
+        this.messageService.openMessageBar('Você está online novamente! Seus novos lançamentos foram sincronizados com o servidor.', null);
+        return;
+      }
+      if (entriesOnDatabase.status === 200) {
+        this.storageService.saveAllEntries(entriesOnDatabase.body);
+      }
+      this.messageService.openMessageBar('Você está online novamente! Seus novos lançamentos foram sincronizados com o servidor.', null);
+
+    },
+      err => {
+        this.messageService.openMessageBar('Houve um erro ao conectar com o servidor', 2000);
+      });
   }
 
   public disconnect(): void {
-    localStorage.setItem('connectionMode', 'offline');
+    this.storageService.saveConnectionMode('offline');
+    this.messageService.openMessageBar('Você está offline! Seus lançamentos serão salvos localmente até ficar online novamente.', null);
+
   }
 
+  clearConnectionMode(): void {
+    this.storageService.deleteConnectionMode();
+  }
+
+  setConnectionMode(isOfflineMode: boolean): void {
+    if (isOfflineMode) {
+      this.storageService.saveConnectionMode('offline');
+    } else {
+      this.storageService.saveConnectionMode('online');
+    }
+  }
+
+  updateLocalStorageFromDatabase(): void {
+    try {
+      if (this.isOnline()) {
+        this.expenseService.loadEntryClasses('').subscribe(clases => {
+          this.storageService.saveAllEntryClasses(clases);
+        });
+        this.expenseService.loadAllEntries().subscribe(entries => {
+          this.storageService.saveAllEntries(entries);
+        });
+      }
+    } catch (error) {
+      console.log('Error while sincronizing with database');
+    }
+  }
+
+  // authentitacion
   public getCurrentUser() {
     if (this.isOnline()) {
       return this.authenticationService.currentUserValue;
     } else {
       return this.fakeService.currentUserValue;
     }
+  }
+
+  public setCurrentUser(user: UserAuth) {
+    this.storageService.saveCurrentUser(user);
   }
 
   public loggedIn() {
@@ -55,39 +123,26 @@ export class RouterService {
     }
   }
 
-
-  setConnectionMode(isOfflineMode: boolean): void {
-    if (isOfflineMode) {
-      this.disconnect();
-    } else {
-      this.connect();
-    }
-  }
-
-  clearConnectionMode(): void {
-    localStorage.removeItem('connectionMode');
-  }
-
-  //
   login(username: string, password: string, isOfflineMode: boolean) {
     this.setConnectionMode(isOfflineMode);
+    let loginResponse = this.fakeService.login(username, password);
     if (this.isOnline()) {
-      return this.authenticationService.login(username, password);
-    } else {
-      return this.fakeService.login(username, password);
+      loginResponse = this.authenticationService.login(username, password);
     }
+    return loginResponse;
   }
 
   logout() {
+    this.clearConnectionMode();
+    let logoutResponse = this.fakeService.logout();
     if (this.isOnline()) {
-      this.clearConnectionMode();
-      return this.authenticationService.logout();
-    } else {
-      this.clearConnectionMode();
-      return this.fakeService.logout();
+      logoutResponse = this.authenticationService.logout();
     }
+    return logoutResponse;
   }
 
+
+  // expenses
   loadExpenseReport(startDate: string, endDate: string) {
     if (this.isOnline()) {
       return this.expenseService.loadExpenseReport(startDate, endDate);
@@ -143,7 +198,6 @@ export class RouterService {
       return this.fakeService.deleteEntry(id);
     }
   }
-
 
   checkUsernameAvailability(login: string) {
     if (this.isOnline()) {

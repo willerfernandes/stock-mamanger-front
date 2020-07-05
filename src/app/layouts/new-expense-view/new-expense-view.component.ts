@@ -54,7 +54,7 @@ export class NewExpenseViewComponent implements OnInit {
 
     const entryClass = new EntryClass();
     if (entryGroupId === 'new') {
-      entryClass.userId = JSON.parse(localStorage.getItem('currentUser')).id;
+      entryClass.userId = this.routerService.getCurrentUser().id;
       entryClass.name = newEntryGroupName;
       entryClass.description = newEntryGroupDescription;
       entryClass.type = 'DESPESA';
@@ -67,7 +67,7 @@ export class NewExpenseViewComponent implements OnInit {
     } else {
 
       const entry = new Entry();
-      entry.userId = JSON.parse(localStorage.getItem('currentUser')).id;
+      entry.userId = this.routerService.getCurrentUser().id;
       entry.entryClass = entryClass;
       entry.date = date._selected.toISOString();
       entry.description = description;
@@ -77,6 +77,7 @@ export class NewExpenseViewComponent implements OnInit {
       this.bottomSheetRef.dismiss();
       this.routerService.saveEntry(entry).subscribe(async res => {
         this.messageService.openMessageBar('Salvo com sucesso', 2000);
+        this.routerService.updateLocalStorageFromDatabase();
         this.entrySaved.emit();
       },
         err => {
@@ -103,7 +104,9 @@ export class NewExpenseViewComponent implements OnInit {
       entry.description = description + ' ' + '(' + (i + 1) + '/' + numberOfPlots + ')';
       entry.entryType = 'DESPESA';
       entry.value = eachPlotValue;
-      this.routerService.saveEntry(entry).subscribe();
+      this.routerService.saveEntry(entry).subscribe( () => {
+        this.routerService.updateLocalStorageFromDatabase();
+      });
     }
     this.messageService.openMessageBar('Salvo com sucesso', 2000);
     this.entrySaved.emit();

@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { UserAuth } from '../entities/user-auth';
 import { SignupCredentials } from '../entities/signup-credentials';
+import { StorageService } from './storage.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -18,8 +19,8 @@ export class AuthenticationService {
   signupUrl = this.baseUrl + '/api/v1/users';
   usernameAvaililityUrl = this.baseUrl + '/api/v1/users/availabiliy';
 
-  constructor(private http: HttpClient, public dialog: MatSnackBar, private router: Router) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+  constructor(private http: HttpClient, public dialog: MatSnackBar, private router: Router, private storageService: StorageService) {
+    this.currentUserSubject = new BehaviorSubject<UserAuth>(this.storageService.findUser());
     this.currentUser = this.currentUserSubject.asObservable();
   }
   private currentUserSubject: BehaviorSubject<UserAuth>;
@@ -50,16 +51,21 @@ export class AuthenticationService {
     credentials.password = password;
     return this.http.post<UserAuth>(this.loginUrl, JSON.stringify(credentials), this.httpOptions)
       .pipe(map(user => {
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        this.currentUserSubject.next(user);
+        this.registerUser(user);
         this.loggedIn.next(true);
         return user;
       }));
   }
 
+  public registerUser(user: UserAuth) {
+    this.storageService.saveCurrentUser(user);
+    this.currentUserSubject.next(user);
+  }
+
   logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
+    this.storageService.saveLastUser();
+    this.storageService.deleteCurrentUser();
     this.loggedIn.next(false);
     this.currentUserSubject.next(null);
     this.router.navigate(['/login']);

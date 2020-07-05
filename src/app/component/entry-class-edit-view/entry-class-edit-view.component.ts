@@ -49,7 +49,10 @@ export class EntryClassEditViewComponent implements OnInit {
     this.entryClass.name = name;
     this.entryClass.description = description;
     this.routerService.saveEntryClass(this.entryClass).subscribe(
-     () => this.messageService.openMessageBar('Categoria atualizada com sucesso', 2000),
+     () => {
+       this.messageService.openMessageBar('Categoria atualizada com sucesso', 2000);
+       this.routerService.updateLocalStorageFromDatabase();
+     },
      () => this.messageService.openMessageBar('Houve um erro ao atualizar a categoria', 2000));
     this.router.navigate(['/expense-dashboard']);
   }

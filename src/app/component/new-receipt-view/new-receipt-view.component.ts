@@ -44,7 +44,7 @@ export class NewReceiptViewComponent implements OnInit {
 
     const entryClass = new EntryClass();
     if (entryGroupId === 'new') {
-      entryClass.userId = JSON.parse(localStorage.getItem('currentUser')).id;
+      entryClass.userId = this.routerService.getCurrentUser().id;
       entryClass.name = newEntryGroupName;
       entryClass.description = newEntryGroupDescription;
       entryClass.type = 'RECEITA';
@@ -53,7 +53,7 @@ export class NewReceiptViewComponent implements OnInit {
     }
 
     const entry = new Entry();
-    entry.userId = JSON.parse(localStorage.getItem('currentUser')).id;
+    entry.userId = this.routerService.getCurrentUser().id;
     entry.entryClass = entryClass;
     entry.date = date._selected.toISOString();
     entry.description = description;
@@ -63,6 +63,7 @@ export class NewReceiptViewComponent implements OnInit {
     this.bottomSheetRef.dismiss();
     this.routerService.saveEntry(entry).subscribe(async res => {
       this.messageService.openMessageBar('Salvo com sucesso', 2000);
+      this.routerService.updateLocalStorageFromDatabase();
       this.entrySaved.emit();
     },
       err => {

@@ -119,22 +119,21 @@ input:active {
 }
 
 .onlineModeText {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 18px;
-  line-height: 21px;
-  color: #030091;
-
-}
-
-.offlineModeText {
-  font-family: Roboto;
+  font-family: 'Roboto';
   font-style: normal;
   font-weight: bold;
   font-size: 18px;
   line-height: 21px;
   color: #868686;
+}
+
+.offlineModeText {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 21px;
+  color: #030091;
 }
 
 .observationText {
