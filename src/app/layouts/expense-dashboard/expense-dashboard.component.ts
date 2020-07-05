@@ -204,7 +204,7 @@ export class ExpenseDashboardComponent implements OnInit {
 
           this.allEntries = this.getEntries(res.expenseGroups.concat(res.receiptGroups));
           this.isSuccess = true;
-          this.isEmptyResult = this.expenseGroups.length === 0;
+          this.isEmptyResult = this.expenseGroups.length === 0 && this.receiptGroups.length === 0;
           this.isLoading = false;
         } else {
           this.isSuccess = true;
