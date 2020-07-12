@@ -78,10 +78,12 @@ export class SignupViewComponent implements OnInit {
       this.messageService.openMessageBar('Os valores digitados nos campos \'Senha\' e \'Repita sua Senha\' não são iguais!', 3000);
       throw new Error('Os valores digitados nos campos \'Senha\' e \'Repita sua Senha\' não são iguais!');
     }
-
-
     return true;
   }
+
+    public goBack() {
+      this.router.navigate(['/login']);
+    }
 
 }
 

@@ -6,12 +6,12 @@
 </div>
 <div class="container">
   <div style="margin-top: 40px;">
-    <label class="input-label color-primary">Nome:</label>
-    <input type="text" class="input-medium padding-medium" #name value={{entryClass.name}}/>
+    <label class="input-label  color-primary">Nome:</label>
+    <input type="text" maxlength="40" class="input-medium padding-medium" #name value={{entryClass.name}}/>
   </div>
   <div>
     <label class="input-label color-primary">Descrição:</label>
-    <input type="text" class="input-medium padding-medium" #description value={{entryClass.description}}/>
+    <input type="text" maxlength="100"  class="input-medium padding-medium" #description value={{entryClass.description}}/>
   </div>
   <!--div TODO: set entry type select to load value from object>
     <form [formGroup]="entryForm">

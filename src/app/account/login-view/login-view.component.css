@@ -162,6 +162,7 @@ app-button-primary-text {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    overflow-y: scroll;
     padding-top: 0px;
     padding-bottom: 0px;
   }

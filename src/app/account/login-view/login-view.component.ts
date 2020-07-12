@@ -1,11 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
-import { User } from 'src/app/entities/user';
 import { MessageService } from 'src/app/services/message.service';
 import { RouterService } from 'src/app/services/router.service';
 import { ThemePalette } from '@angular/material';
-
 
 @Component({
   selector: 'app-login-view',
@@ -27,6 +24,8 @@ export class LoginViewComponent implements OnInit {
   usernamePlaceholder = 'Nome do usuário';
   passwordPlaceholder = 'Insira a senha';
 
+
+
   ngOnInit() {
     if (this.routerService.loggedIn()) {
       this.router.navigate(['/expense-dashboard']);
@@ -34,6 +33,7 @@ export class LoginViewComponent implements OnInit {
   }
 
   login(username: string, password: string) {
+
     this.isLoading = true;
     const isOffline = this.isOfflineMode;
     if (this.validateFields(username, password)) {

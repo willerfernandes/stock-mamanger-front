@@ -14,11 +14,11 @@
       <form>
         <p>LOGIN</p>
         <label class="color-primary" for="uname"><b>Login</b></label>
-        <input #user_name type="text" placeholder="{{usernamePlaceholder}}" name="uname" required
+        <input #user_name type="text" maxlength="25" placeholder="{{usernamePlaceholder}}" name="uname" required
           [style.backgroundColor]="usernamePlaceholder === 'Campo Obrigatório'? '#ffc1c1': 'transparent'"
           (focus)="onTypeUsername($event)">
         <label [hidden]="isOfflineMode" class="color-primary" for="psw"><b>Senha</b></label>
-        <input [hidden]="isOfflineMode" #password type="password" placeholder="{{passwordPlaceholder}}" name="psw" required
+        <input [hidden]="isOfflineMode" #password type="password" maxlength="25" placeholder="{{passwordPlaceholder}}" name="psw" required
           [style.backgroundColor]="passwordPlaceholder === 'Campo Obrigatório'? '#ffc1c1': 'transparent'"
           (focus)="onTypePassword($event)">
         <div *ngIf="!isLoading" style="padding-top: 50px; padding-bottom: 40px;  text-align: center;">
@@ -42,8 +42,6 @@
         (change)= "onOfflineModeSliderChange()">
       </mat-slide-toggle>
     </div>
-
-
   </div>
 </div>
 

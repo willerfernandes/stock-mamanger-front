@@ -10,7 +10,7 @@
 
 <div class="container containter-wraper" style="margin-top: 70px;">
     <img  [src]="'./assets/img/piggy-bank-icon.png'" style="margin-right: 10px; vertical-align: middle;"><label class="red-text">*</label><label class="color-primary input-label">Valor:</label>
-    <input id="input-currency"  #amount autofocus
+    <input maxlength="15"  id="input-currency"  #amount autofocus
     type="number" placeholder="000,00"
     class="input-medium padding-small" style="font-size: 24px; font-weight: bold;">
 </div>
@@ -27,18 +27,18 @@
     <span class="hint-text">Nova Categoria</span>
       <div>
         <label class="red-text">*</label><label class="color-primary input-label-small">Nome:</label>
-        <input #newEntryGroupName type="text" class="input-medium">
+        <input #newEntryGroupName type="text" maxlength="40" class="input-medium">
       </div>
       <div>
         <label class="red-text">*</label><label class="color-primary input-label-small">Descrição:</label>
-        <input #newEntryGroupDescription type="text" class="input-medium padding-small">
+        <input #newEntryGroupDescription type="text" maxlength="100"  class="input-medium padding-small">
       </div>
   </div>
 </div>
 <hr>
 <div class="container">
   <img [src]="'./assets/img/piggy-bank-icon.png'" style="margin-right: 10px; vertical-align: middle;"><label class="color-primary input-label">Descrição:</label>
-  <input #description class= "input-medium" type="text">
+  <input #description class= "input-medium" type="text" maxlength="100">
 </div>
 <hr>
 <div class="container">

@@ -10,11 +10,12 @@ import { Router } from '@angular/router';
 import { UserAuth } from '../entities/user-auth';
 import { SignupCredentials } from '../entities/signup-credentials';
 import { StorageService } from './storage.service';
+import {SHA1} from 'crypto-js';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
   baseUrl = environment.authenticationApiUrl;
-
+  encryptionKey = 'af5j2fbce';
   loginUrl = this.baseUrl + '/api/v1/login';
   signupUrl = this.baseUrl + '/api/v1/users';
   usernameAvaililityUrl = this.baseUrl + '/api/v1/users/availabiliy';
@@ -45,10 +46,9 @@ export class AuthenticationService {
   }
 
   login(username: string, password: string) {
-    // console.log('Calling: ' + `${environment.apiUrl}/login`);
     const credentials: Credentials = { login: '', password: '' };
     credentials.login = username;
-    credentials.password = password;
+    credentials.password = SHA1(password).toString();
     return this.http.post<UserAuth>(this.loginUrl, JSON.stringify(credentials), this.httpOptions)
       .pipe(map(user => {
         this.registerUser(user);
@@ -82,6 +82,7 @@ export class AuthenticationService {
   }
 
   public createUser(credentials: SignupCredentials) {
+    credentials.password = SHA1(credentials.password).toString();
     return this.http.post<boolean>(this.signupUrl, JSON.stringify(credentials), this.httpOptions);
   }
 
