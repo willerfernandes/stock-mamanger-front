@@ -132,7 +132,7 @@ export class FakeService {
     let totalValueExpenses = 0;
     let totalValueReceipt = 0;
     entryClasses.forEach(entryClass => {
-      const entriesOfThisClass = entries.filter(entry => entry.entryClass.name === entryClass.name);
+      const entriesOfThisClass = entries.filter(entry => entry.entryClass.name === entryClass.name && entry.entryType === entryClass.type);
       if (entriesOfThisClass.length !== 0) {
         const newEntryGroup: EntryGroup = new EntryGroup();
         newEntryGroup.entries = entriesOfThisClass;
@@ -143,7 +143,6 @@ export class FakeService {
         });
 
         newEntryGroup.value = totalGroupValue;
-        newEntryGroup.id = entryGroupId;
 
         if (entryClass.type === 'DESPESA') {
           totalValueExpenses += totalGroupValue;

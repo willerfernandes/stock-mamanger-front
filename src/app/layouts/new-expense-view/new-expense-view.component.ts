@@ -99,6 +99,7 @@ export class NewExpenseViewComponent implements OnInit {
     const initialDate: Date = new Date(date._selected.toISOString());
     for (let i = 0; i < numberOfPlots; i++) {
       const entry = new Entry();
+      entry.userId = this.routerService.getCurrentUser().id;
       entry.entryClass = entryGroup;
       entry.date = new Date(initialDate.getFullYear(), initialDate.getMonth() + i, initialDate.getDate()).toISOString();
       entry.description = description + ' ' + '(' + (i + 1) + '/' + numberOfPlots + ')';
@@ -119,7 +120,7 @@ export class NewExpenseViewComponent implements OnInit {
   }
 
   // TODO: Jesus, how ugly this is, but for reason the select options only updates when something chages
-  // Already set to wait for reponse and, by console-loggin, the options are coming. It seens that
+  // Already set to wait for reponse and, by console-logging, the options are coming. It seens that
   // the select options are filled before backend response and it is never updated again until somenthing changes
   public doNothing() {
     this.entryClasses = this.entryClasses;

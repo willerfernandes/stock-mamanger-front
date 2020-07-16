@@ -1,15 +1,24 @@
-<div class="pie-chart-container">
-  <canvas baseChart
-        height="8"
-        width="8"
-        [data]="pieChartData"
-        [labels]="pieChartLabels"
-        [chartType]="pieChartType"
-        [legend]="pieChartLegend"
-        [colors]="pieChartColors"
-        [options]="pieChartOptions"
-        (chartHover)="chartHovered($event)"
-        (chartClick)="chartClicked($event)">
-  </canvas>
-
-</div>
+<ng-container *ngIf="pieChartLabels.length > 0; else elseTemplate">
+  <div  class="pie-chart-container">
+    <canvas baseChart
+          height="8"
+          width="8"
+          [data]="pieChartData"
+          [labels]="pieChartLabels"
+          [chartType]="pieChartType"
+          [legend]="pieChartLegend"
+          [colors]="pieChartColors"
+          [options]="pieChartOptions"
+          (chartHover)="chartHovered($event)"
+          (chartClick)="chartClicked($event)">
+    </canvas>
+  </div>
+</ng-container>
+<ng-template #elseTemplate>
+  <div class="no-expenses-container">
+    <br>
+    <h3>Você ainda não tem despesas no período!</h3>
+    <br>
+    <p> Comece a registrar seus gastos e mantenha o controle da sua vida financeira</p>
+  </div>
+</ng-template>

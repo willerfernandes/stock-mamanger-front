@@ -156,7 +156,6 @@ export class ExpenseDashboardComponent implements OnInit {
       startDate.getFullYear() === endDate.getFullYear()) {
       const consideredStartDate = new Date(startDate.getFullYear(), startDate.getMonth(), 1);
       const consideredEndDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0);
-      //this.pieChartTitle = this.monthNames[startDate.getMonth()];
       if (startDate.getTime() === consideredStartDate.getTime()
         && endDate.getTime() === consideredEndDate.getTime()) {
         this.pieChartTitle = this.monthNames[startDate.getMonth()];

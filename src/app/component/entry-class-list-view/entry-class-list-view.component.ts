@@ -22,7 +22,7 @@ export class EntryClassListViewComponent implements OnInit {
               private location: Location) { }
 
   ngOnInit() {
-    this.routerService.loadEntryClasses('').subscribe(storedEntryClasses => {
+    this.routerService.loadEntryClasses(null).subscribe(storedEntryClasses => {
       this.expensesEntryClasses = storedEntryClasses.filter(entryClass => entryClass.type === 'DESPESA');
       this.receiptEntryClasses = storedEntryClasses.filter(entryClass => entryClass.type === 'RECEITA');
     });
@@ -40,3 +40,6 @@ export class EntryClassListViewComponent implements OnInit {
     this.routerService.deleteEntryClass(id);
   }
 }
+
+
+
