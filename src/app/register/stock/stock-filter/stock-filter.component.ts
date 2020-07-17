@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { StockService } from './../../../services/stock.service';
+import { StockService } from './../../../stocks/services/stock.service';
 import { Stock } from './../../../entities/stock';
 import { DatePipe } from '@angular/common';
 import { StockInfo } from 'src/app/entities/stock-info';
@@ -23,12 +23,12 @@ export class StockFilterComponent implements OnInit {
   isSuccess;
 
 
-  constructor(private StockService: StockService, private datePipe: DatePipe) { }
+  constructor(private stockService: StockService, private datePipe: DatePipe) { }
 
   get_all_stocks() {
 
     this.stocks = [];
-    this.StockService.getAll().subscribe((res) => {
+    this.stockService.getAll().subscribe((res) => {
       this.stocks = res;
 
       //PARA ATIVAR A FUNCIONALIDADE DE ATUALIZAR OS PRECOS AUTOMATICAMENTE, BASTA DESCOMENTAR O TRECHO, MAS O API
@@ -42,7 +42,7 @@ export class StockFilterComponent implements OnInit {
   }
 
   find_by_chave(key: string) {
-    this.StockService.search(key).subscribe((res) => {
+    this.stockService.search(key).subscribe((res) => {
       this.stocks = [];
       if (res != null) {
         this.stocks = res;
@@ -56,7 +56,7 @@ export class StockFilterComponent implements OnInit {
 
 
   delete_stock(id: number) {
-    this.StockService.delete(id).subscribe((res) => {
+    this.stockService.delete(id).subscribe((res) => {
       this.get_all_stocks();
     });
   }
@@ -71,7 +71,7 @@ export class StockFilterComponent implements OnInit {
   }
 
   get_stock_info(stock: Stock) {
-    this.StockService.stockPrices(stock).subscribe(res => {
+    this.stockService.stockPrices(stock).subscribe(res => {
 
       var stockInfoResponse = res['Time Series (Daily)'][this.datePipe.transform(new Date(), 'yyyy-MM-dd')];
 
@@ -98,7 +98,7 @@ export class StockFilterComponent implements OnInit {
           }
         }
 
-        this.StockService.update(this.stocks[stockIndex]).subscribe();
+        this.stockService.update(this.stocks[stockIndex]).subscribe();
       }
     });
 

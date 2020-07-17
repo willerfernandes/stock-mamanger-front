@@ -3,10 +3,10 @@ import { DateAdapter } from '@angular/material/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 import { FormControl, FormGroup } from '@angular/forms';
-import { EntryGroup } from 'src/app/entities/grupo-lancamento';
+import { EntryGroup } from 'src/app/entities/entry-group';
 import { NewExpenseViewComponent } from '../new-expense-view/new-expense-view.component';
 import { NewReceiptViewComponent } from 'src/app/component/new-receipt-view/new-receipt-view.component';
-import { Entry } from 'src/app/entities/lancamento';
+import { Entry } from 'src/app/entities/entry';
 import { Router } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
 import { RouterService } from 'src/app/services/router.service';

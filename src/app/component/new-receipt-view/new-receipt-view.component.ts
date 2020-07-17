@@ -1,10 +1,10 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { EntryClass } from 'src/app/entities/categoria-lancamento';
+import { EntryClass } from 'src/app/entities/entry-class';
 import { MatBottomSheetRef } from '@angular/material';
 import { NewExpenseViewComponent } from 'src/app/layouts/new-expense-view/new-expense-view.component';
 import { CurrencyPipe } from '@angular/common';
-import { Entry } from 'src/app/entities/lancamento';
+import { Entry } from 'src/app/entities/entry';
 import { MessageService } from 'src/app/services/message.service';
 import { RouterService } from 'src/app/services/router.service';
 

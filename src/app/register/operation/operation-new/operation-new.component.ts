@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { OperationService } from './../../../services/operation.service';
+import { OperationService } from './../../../../app/stocks/services/operation.service';
 import { Stock } from './../../../entities/stock';
 import { User } from './../../../entities/user';
 import { Operation } from './../../../entities/operation';

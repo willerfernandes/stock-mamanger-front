@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { OperationService } from './../../../services/operation.service';
+import { OperationService } from './../../../../app/stocks/services/operation.service';
 import { Operation } from './../../../entities/operation';
 import { User } from './../../../entities/user';
 import { Stock } from './../../../entities/stock';

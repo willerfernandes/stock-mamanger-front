@@ -1,4 +1,4 @@
-import { EntryClass as EntryClass } from './categoria-lancamento';
+import { EntryClass as EntryClass } from './entry-class';
 
 export class Entry {
   id: number;

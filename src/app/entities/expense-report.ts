@@ -1,5 +1,5 @@
-import { GraphInfo as GraphInfo } from './item-grafico';
-import { EntryGroup as EntryGroup } from './grupo-lancamento';
+import { GraphInfo as GraphInfo } from './graph-info';
+import { EntryGroup as EntryGroup } from './entry-group';
 
 export class ExpenseReport {
   totalExpenseAmount: number;

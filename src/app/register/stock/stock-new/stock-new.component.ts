@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { StockService } from './../../../services/stock.service';
+import { StockService } from './../../../stocks/services/stock.service';
+
 import { Stock } from './../../../entities/stock';
 
 @Component({

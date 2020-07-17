@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { StockService } from './../../services/stock.service';
-import { UserService } from './../../services/user.service';
+import { UserService } from '../services/user.service';
 import { DatePipe } from '@angular/common';
 import { UserBalance } from './../../entities/user-balance';
 import { Stock } from 'src/app/entities/stock';
+import { StockService } from '../services/stock.service';
 
 @Component({
   selector: 'app-main-view',

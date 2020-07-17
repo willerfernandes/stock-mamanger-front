@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { ExpenseReport } from '../entities/expense-report';
-import { Entry } from '../entities/lancamento';
-import { EntryClass } from '../entities/categoria-lancamento';
+import { Entry } from '../entities/entry';
+import { EntryClass } from '../entities/entry-class';
 import { environment } from 'src/environments/environment';
 
 

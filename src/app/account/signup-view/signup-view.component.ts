@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/entities/user';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/stocks/services/user.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Router } from '@angular/router';
 import { FakeService } from 'src/app/services/fake.service';

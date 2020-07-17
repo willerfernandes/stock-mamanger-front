@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UserAuth } from '../entities/user-auth';
-import { Entry } from '../entities/lancamento';
-import { EntryClass } from '../entities/categoria-lancamento';
+import { Entry } from '../entities/entry';
+import { EntryClass } from '../entities/entry-class';
 
 @Injectable({
   providedIn: 'root'

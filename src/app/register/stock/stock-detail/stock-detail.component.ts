@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { StockService } from './../../../services/stock.service';
 import { Stock } from './../../../entities/stock';
+import { StockService } from 'src/app/stocks/services/stock.service';
 
 @Component({
   selector: 'app-stock-detail',

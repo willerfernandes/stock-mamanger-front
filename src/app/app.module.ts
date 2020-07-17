@@ -60,7 +60,6 @@ import { NativeDateModule } from '@angular/material';
 
 
 
-import { MainViewComponent } from './layouts/main-view/main-view.component';
 import { LoginViewComponent } from './account/login-view/login-view.component';
 import { SignupViewComponent } from './account/signup-view/signup-view.component';
 import { ExpenseFilterComponent } from './register/expense/expense-filter/expense-filter.component';
@@ -99,7 +98,8 @@ import { EntryListViewComponent } from './component/entry-list-view/entry-list-v
 import { EntryClassListViewComponent } from './component/entry-class-list-view/entry-class-list-view.component';
 import { EntryClassEditViewComponent } from './component/entry-class-edit-view/entry-class-edit-view.component';
 import { AdmViewComponent } from './component/adm-view/adm-view.component';
-import { NgxCurrencyModule } from "ngx-currency";
+import { NgxCurrencyModule } from 'ngx-currency';
+import { MainViewComponent } from './stocks/main-view/main-view.component';
 
 @NgModule({
   declarations: [

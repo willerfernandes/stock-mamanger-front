@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Entry } from 'src/app/entities/lancamento';
+import { Entry } from 'src/app/entities/entry';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ExpenseService } from 'src/app/services/expense.service';
 import { FakeService } from 'src/app/services/fake.service';
 import { DateAdapter } from '@angular/material';
 import { FormControl } from '@angular/forms';
-import { EntryGroup } from 'src/app/entities/grupo-lancamento';
+import { EntryGroup } from 'src/app/entities/entry-group';
 import { Router } from '@angular/router';
 import { state, style, transition, animate, trigger } from '@angular/animations';
 import { ExpenseReport } from 'src/app/entities/expense-report';

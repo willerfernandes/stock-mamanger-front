@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CategoryService } from './../../../services/category.service';
 import { Category } from './../../../entities/category';
+import { CategoryService } from 'src/app/stocks/services/category.service';
 
 @Component({
   selector: 'app-expense-category-filter',

@@ -2,8 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { ConfigurationService } from './../../../services/configuration.service';
 import { Config } from './../config/config';
+import { ConfigurationService } from 'src/app/stocks/services/configuration.service';
 
 @Component({
   selector: 'app-config-new',

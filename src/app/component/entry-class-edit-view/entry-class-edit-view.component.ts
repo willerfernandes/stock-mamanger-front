@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { EntryClass } from 'src/app/entities/categoria-lancamento';
+import { EntryClass } from 'src/app/entities/entry-class';
 import { FakeService } from 'src/app/services/fake.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';

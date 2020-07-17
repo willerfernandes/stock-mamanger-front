@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location, DatePipe } from '@angular/common';
-import { OperationService } from './../../../services/operation.service';
+import { OperationService } from './../../../../app/stocks/services/operation.service';
 import { Operation } from './../../../entities/operation';
 import { User } from './../../../entities/user';
 import { Stock } from './../../../entities/stock';

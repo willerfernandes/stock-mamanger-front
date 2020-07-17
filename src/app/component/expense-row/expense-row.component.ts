@@ -3,7 +3,7 @@ import { ExpenseService } from 'src/app/services/expense.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { FakeService } from 'src/app/services/fake.service';
 import { MessageService } from 'src/app/services/message.service';
-import { Entry } from 'src/app/entities/lancamento';
+import { Entry } from 'src/app/entities/entry';
 import { RouterService } from 'src/app/services/router.service';
 
 @Component({

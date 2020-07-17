@@ -1,4 +1,4 @@
-import { Entry } from './lancamento';
+import { Entry } from './entry';
 
 export class EntryGroup {
   entryClassName: string;

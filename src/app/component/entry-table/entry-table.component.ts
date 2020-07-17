@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Entry } from 'src/app/entities/lancamento';
-import { EntryGroup } from 'src/app/entities/grupo-lancamento';
+import { Entry } from 'src/app/entities/entry';
+import { EntryGroup } from 'src/app/entities/entry-group';
 import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({

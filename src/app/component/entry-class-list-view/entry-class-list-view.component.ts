@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EntryClass } from 'src/app/entities/categoria-lancamento';
+import { EntryClass } from 'src/app/entities/entry-class';
 import { Router } from '@angular/router';
 import { FakeService } from 'src/app/services/fake.service';
 import { ExpenseService } from 'src/app/services/expense.service';
