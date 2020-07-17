@@ -42,17 +42,6 @@
   min-width: 100px;
 }
 
-.input-label {
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: bolder;
-  font-size: 18px;
-  margin: 0px;
-  vertical-align: middle;
-  max-width: 150px;
-  min-width: 100px;
-}
-
 .input-label-small {
   font-family: 'Roboto';
   font-style: normal;

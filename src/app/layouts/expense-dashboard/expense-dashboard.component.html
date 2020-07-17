@@ -20,9 +20,8 @@
       <app-date-range style="width: 100%; margin: auto; display: block;" [startDate]="startDate" [endDate]="endDate"
     (reloadButtonClicked)="getExpenseReport(startDate.value, endDate.value)"></app-date-range>
     </div>
-
-
   </div>
+
 
   <div *ngIf="!isLoading && isSuccess && !isEmptyResult">
     <div style="width: 80%; box-sizing: border-box; margin: auto;">

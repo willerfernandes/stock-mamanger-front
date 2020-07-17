@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { EntryGroup } from 'src/app/entities/grupo-lancamento';
 import { NewExpenseViewComponent } from '../new-expense-view/new-expense-view.component';
 import { NewReceiptViewComponent } from 'src/app/component/new-receipt-view/new-receipt-view.component';

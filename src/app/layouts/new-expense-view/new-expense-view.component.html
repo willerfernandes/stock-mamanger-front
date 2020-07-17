@@ -6,11 +6,9 @@
   </div>
 </div>
 
-<div class="container containter-wraper" style="margin-top: 70px;">
-    <img  [src]="'./assets/img/credit-card-icon.svg'" style="margin-right: 10px; vertical-align: middle;"><label class="red-text">*</label><label class="color-primary input-label">Valor:</label>
-    <input id="input-currency" #amount type="number" maxlength="15" placeholder="000,00"
-    (keypress)="changedInputAmountValue($event)"
-    class="input-medium padding-small" style="font-size: 24px; font-weight: bold;">
+<div [formGroup]="group" class="container containter-wraper" style="margin-top: 70px;">
+  <img  [src]="'./assets/img/credit-card-icon.svg'" style="margin-right: 10px; vertical-align: middle;"><label class="red-text">*</label><label class="color-primary input-label">Valor:</label>
+  <input id="input-currency" class="input-medium padding-small" style="font-size: 24px; font-weight: bold;" #amount placeholder="000,00" currencyMask type="tel" formControlName="value"  [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"/>
 </div>
 
 <hr>
@@ -60,7 +58,17 @@
     <option *ngFor="let plot of plots" [value]="plot">{{plot.toString() + 'x'}}</option>
   </select>
 </div>
-
 <div style="display: flex; justify-content: center;" class="container">
   <btn-primary-blue [text]="'OK'" (click)="saveExpense($event, entryGroupSelect?.value, newEntryGroupName?.value, newEntryGroupDescription?.value, picker1, description?.value, amount?.value, numberOfPlots.value)" ></btn-primary-blue>
 </div>
+
+  <!--div [formGroup]="group" class="container containter-wraper" style="margin-top: 70px;">
+    <div class="containter">
+      <img  [src]="'./assets/img/credit-card-icon.svg'" style="margin-right: 10px; vertical-align: middle;"><label class="red-text">*</label><label class="color-primary input-label">Valor:</label>
+      <input id="input-currency" class="input-medium padding-small" style="font-size: 24px; font-weight: bold;" #amount placeholder="000,00" currencyMask type="tel" formControlName="amountForm"  [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"/>
+    </div>
+    <div class="containter">
+
+    </div>
+  </div-->
+

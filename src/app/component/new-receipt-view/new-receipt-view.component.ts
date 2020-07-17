@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { EntryClass } from 'src/app/entities/categoria-lancamento';
 import { MatBottomSheetRef } from '@angular/material';
 import { NewExpenseViewComponent } from 'src/app/layouts/new-expense-view/new-expense-view.component';
@@ -21,13 +21,16 @@ export class NewReceiptViewComponent implements OnInit {
   public amount;
   public entryClasses: EntryClass[];
 
+  group = new FormGroup({
+    value: new FormControl()
+ });
+
   @Output()
   public entrySaved = new EventEmitter();
 
   constructor(
     private routerService: RouterService,
     private bottomSheetRef: MatBottomSheetRef<NewExpenseViewComponent>,
-    private currencyPipe: CurrencyPipe,
     private messageService: MessageService) { }
 
   saveReceipt(
@@ -40,7 +43,7 @@ export class NewReceiptViewComponent implements OnInit {
     value: string): void {
 
     // TODO: validate with angular forms
-    this.validateFields(entryGroupId, newEntryGroupName, newEntryGroupDescription, date, value);
+    this.validateFields(entryGroupId, newEntryGroupName, newEntryGroupDescription, date, this.group.value);
 
     const entryClass = new EntryClass();
     if (entryGroupId === 'new') {
@@ -58,7 +61,7 @@ export class NewReceiptViewComponent implements OnInit {
     entry.date = date._selected.toISOString();
     entry.description = description;
     entry.entryType = 'RECEITA';
-    entry.value = Number.parseFloat(value);
+    entry.value = this.group.value;
 
     this.bottomSheetRef.dismiss();
     this.routerService.saveEntry(entry).subscribe(async res => {

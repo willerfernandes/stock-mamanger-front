@@ -4,7 +4,7 @@ import { CurrencyPipe } from '@angular/common';
 import { FakeService } from 'src/app/services/fake.service';
 import { Entry } from 'src/app/entities/lancamento';
 import { EntryClass } from 'src/app/entities/categoria-lancamento';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { ThemePalette } from '@angular/material';
 import { MessageService } from 'src/app/services/message.service';
@@ -29,6 +29,11 @@ export class NewExpenseViewComponent implements OnInit {
 
   public isInstallmentPurchase = false;
 
+
+  group = new FormGroup({
+    value: new FormControl()
+ });
+
   @Output()
   public entrySaved = new EventEmitter();
 
@@ -49,9 +54,9 @@ export class NewExpenseViewComponent implements OnInit {
     value: string,
     numberOfPlots: number): void {
 
-    // TODO: validate with angular forms
-    this.validateFields(entryGroupId, newEntryGroupName, newEntryGroupDescription, date, value);
 
+    // TODO: validate with angular forms
+    this.validateFields(entryGroupId, newEntryGroupName, newEntryGroupDescription, date, this.group.value);
     const entryClass = new EntryClass();
     if (entryGroupId === 'new') {
       entryClass.userId = this.routerService.getCurrentUser().id;
@@ -63,8 +68,9 @@ export class NewExpenseViewComponent implements OnInit {
     }
 
     if (this.isInstallmentPurchase) {
-      this.createInstallmentPurchases(event, value, numberOfPlots, date, entryClass, description);
+      this.createInstallmentPurchases(event, this.group.value, numberOfPlots, date, entryClass, description);
     } else {
+
 
       const entry = new Entry();
       entry.userId = this.routerService.getCurrentUser().id;
@@ -72,7 +78,7 @@ export class NewExpenseViewComponent implements OnInit {
       entry.date = date._selected.toISOString();
       entry.description = description;
       entry.entryType = 'DESPESA';
-      entry.value = Number.parseFloat(value);
+      entry.value = this.group.value.value;
 
       this.bottomSheetRef.dismiss();
       this.routerService.saveEntry(entry).subscribe(async res => {

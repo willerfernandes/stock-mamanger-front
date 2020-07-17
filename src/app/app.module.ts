@@ -99,6 +99,7 @@ import { EntryListViewComponent } from './component/entry-list-view/entry-list-v
 import { EntryClassListViewComponent } from './component/entry-class-list-view/entry-class-list-view.component';
 import { EntryClassEditViewComponent } from './component/entry-class-edit-view/entry-class-edit-view.component';
 import { AdmViewComponent } from './component/adm-view/adm-view.component';
+import { NgxCurrencyModule } from "ngx-currency";
 
 @NgModule({
   declarations: [
@@ -203,7 +204,8 @@ import { AdmViewComponent } from './component/adm-view/adm-view.component';
     MatCardModule,
     MatInputModule,
     MatButtonModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
+    NgxCurrencyModule
 
   ],
   providers: [
