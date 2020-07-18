@@ -1,88 +1,104 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { OnlineAuthenticationService } from 'src/app/common/services/online-authentication.service';
+import { FakeService } from 'src/app/financial/services/fake.service';
+import { StorageService } from 'src/app/financial/services/storage.service';
+import { MessageService } from 'src/app/financial/services/message.service';
 import { Router } from '@angular/router';
-import { StorageService } from '../../financial/services/storage.service';
-import {SHA1} from 'crypto-js';
-import { UserAuth } from 'src/app/common/entities/user-auth';
-import { Credentials } from 'src/app/common/entities/credentials';
-import { SignupCredentials } from 'src/app/common/entities/signup-credentials';
+import { UserAuth } from '../entities/user-auth';
+import { OfflineAuthenticationService } from './offline-authentication.service';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthenticationService {
-  baseUrl = environment.authenticationApiUrl;
-  encryptionKey = 'af5j2fbce';
-  loginUrl = this.baseUrl + '/api/v1/login';
-  signupUrl = this.baseUrl + '/api/v1/users';
-  usernameAvaililityUrl = this.baseUrl + '/api/v1/users/availabiliy';
 
-  constructor(private http: HttpClient, public dialog: MatSnackBar, private router: Router, private storageService: StorageService) {
-    this.currentUserSubject = new BehaviorSubject<UserAuth>(this.storageService.findUser());
-    this.currentUser = this.currentUserSubject.asObservable();
-  }
-  private currentUserSubject: BehaviorSubject<UserAuth>;
-  public currentUser: Observable<UserAuth>;
+  constructor(private onlineAuthenticationService: OnlineAuthenticationService,
+              private offlineAuthenticationService: OfflineAuthenticationService,
+              private storageService: StorageService,
+              private messageService: MessageService,
+              private router: Router
+    ) { }
 
-  private loggedIn = new BehaviorSubject<boolean>(false); // {1}
+    connectionMode = 'offline';
 
-  get isLoggedIn() {
-    return this.loggedIn.asObservable(); // {2}
+  public isOnline(): boolean {
+    return this.storageService.getConnectionMode()  === 'online';
   }
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
-    }),
-    params: new HttpParams()
-  };
+  public connect(): void {
+    this.storageService.saveConnectionMode('online');
+    const user = this.storageService.findUser();
+    if (user != null) {
+      this.onlineAuthenticationService.registerUser(user);
+    } else {
+      this.messageService.openMessageBar('Sua sessão expirou, faça login novamente', 2000);
+      this.router.navigate(['/login']);
+    }
 
-  public get currentUserValue(): UserAuth {
-    return this.currentUserSubject.value;
   }
 
-  login(username: string, password: string) {
-    const credentials: Credentials = { login: '', password: '' };
-    credentials.login = username;
-    credentials.password = SHA1(password).toString();
-    return this.http.post<UserAuth>(this.loginUrl, JSON.stringify(credentials), this.httpOptions)
-      .pipe(map(user => {
-        this.registerUser(user);
-        this.loggedIn.next(true);
-        return user;
-      }));
+  public disconnect(): void {
+    this.storageService.saveConnectionMode('offline');
+    this.messageService.openMessageBar('Você está offline! Seus lançamentos serão salvos localmente até ficar online novamente.', null);
+
   }
 
-  public registerUser(user: UserAuth) {
+  clearConnectionMode(): void {
+    this.storageService.deleteConnectionMode();
+  }
+
+  setConnectionMode(isOfflineMode: boolean): void {
+    if (isOfflineMode) {
+      this.storageService.saveConnectionMode('offline');
+    } else {
+      this.storageService.saveConnectionMode('online');
+    }
+  }
+
+  public getCurrentUser() {
+    if (this.isOnline()) {
+      return this.onlineAuthenticationService.currentUserValue;
+    } else {
+      return this.offlineAuthenticationService.currentUserValue;
+    }
+  }
+
+  public setCurrentUser(user: UserAuth) {
     this.storageService.saveCurrentUser(user);
-    this.currentUserSubject.next(user);
+  }
+
+  public loggedIn() {
+    if (this.isOnline()) {
+      return this.onlineAuthenticationService.isLoggedIn;
+    } else {
+      return this.offlineAuthenticationService.isLoggedIn;
+    }
+  }
+
+  public getCurrentUserValue() {
+    if (this.isOnline()) {
+      return this.onlineAuthenticationService.currentUserValue;
+    } else {
+      return this.offlineAuthenticationService.currentUserValue;
+    }
+  }
+
+  login(username: string, password: string, isOfflineMode: boolean) {
+    this.setConnectionMode(isOfflineMode);
+    let loginResponse = this.offlineAuthenticationService.login(username, password);
+    if (this.isOnline()) {
+      loginResponse = this.onlineAuthenticationService.login(username, password);
+    }
+    return loginResponse;
   }
 
   logout() {
-    // remove user from local storage to log user out
-    this.storageService.saveLastUser();
-    this.storageService.deleteCurrentUser();
-    this.loggedIn.next(false);
-    this.currentUserSubject.next(null);
-    this.router.navigate(['/login']);
-  }
-
-  checkUsernameAvailability(login: string) {
-
-    let filterParams = new HttpParams();
-    if (login != null) {
-      filterParams = filterParams.set('login', login);
-      this.httpOptions.params = filterParams;
+    this.clearConnectionMode();
+    let logoutResponse = this.offlineAuthenticationService.logout();
+    if (this.isOnline()) {
+      logoutResponse = this.onlineAuthenticationService.logout();
     }
-    return this.http.get<boolean>(this.usernameAvaililityUrl, this.httpOptions);
-  }
-
-  public createUser(credentials: SignupCredentials) {
-    credentials.password = SHA1(credentials.password).toString();
-    return this.http.post<boolean>(this.signupUrl, JSON.stringify(credentials), this.httpOptions);
+    return logoutResponse;
   }
 
 }

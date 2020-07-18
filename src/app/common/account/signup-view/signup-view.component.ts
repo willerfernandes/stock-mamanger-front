@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from 'src/app/common/services/authentication.service';
+import { OnlineAuthenticationService } from 'src/app/common/services/online-authentication.service';
 import { Router } from '@angular/router';
 
 import { MessageService } from 'src/app/financial/services/message.service';
@@ -21,7 +21,7 @@ export class SignupViewComponent implements OnInit {
 
   public isFakeServer  = false;
 
-  constructor(private authService: AuthenticationService,
+  constructor(private authService: OnlineAuthenticationService,
               private router: Router,  private messageService: MessageService) { }
 
   ngOnInit() {

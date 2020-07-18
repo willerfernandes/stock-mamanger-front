@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { RouterService } from 'src/app/financial/services/router.service';
 import { MessageService } from 'src/app/financial/services/message.service';
 import { EntryClass } from '../../entities/entry-class';
+import { FinancialService } from '../../services/financial.service';
 
 @Component({
   selector: 'app-entry-class-edit-view',
@@ -20,7 +20,7 @@ export class EntryClassEditViewComponent implements OnInit {
 
   public types = ['RECEITA', 'DESPESA'];
 
-  constructor(private routerService: RouterService,
+  constructor(private financialService: FinancialService,
               private route: ActivatedRoute,
               private location: Location,
               private messageService: MessageService,
@@ -36,7 +36,7 @@ export class EntryClassEditViewComponent implements OnInit {
     , err => this.messageService.openMessageBar(err, 2000)
     );*/
 
-    await this.routerService.deleteEntryClass(this.entryClass.id)
+    await this.financialService.deleteEntryClass(this.entryClass.id)
     .toPromise()
     .then();
 
@@ -46,10 +46,10 @@ export class EntryClassEditViewComponent implements OnInit {
   public save(name: string, description: string) {
     this.entryClass.name = name;
     this.entryClass.description = description;
-    this.routerService.saveEntryClass(this.entryClass).subscribe(
+    this.financialService.saveEntryClass(this.entryClass).subscribe(
      () => {
        this.messageService.openMessageBar('Categoria atualizada com sucesso', 2000);
-       this.routerService.updateLocalStorageFromDatabase();
+       this.financialService.updateLocalStorageFromDatabase();
      },
      () => this.messageService.openMessageBar('Houve um erro ao atualizar a categoria', 2000));
     this.router.navigate(['/expense-dashboard']);
@@ -57,7 +57,7 @@ export class EntryClassEditViewComponent implements OnInit {
 
   ngOnInit() {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.routerService.loadEntryClass(id).subscribe((res: EntryClass) => {
+    this.financialService.loadEntryClass(id).subscribe((res: EntryClass) => {
       this.entryClass = res;
       /*this.entryForm = this.fb.group({
         typeControl: ['DESPESA']

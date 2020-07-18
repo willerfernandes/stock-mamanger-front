@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AuthenticationService } from '../../common/services/authentication.service';
+import { OnlineAuthenticationService } from '../../common/services/online-authentication.service';
 import { ExpenseService } from './expense.service';
 import { FakeService } from './fake.service';
 import { Entry } from '../entities/entry';
@@ -16,7 +16,7 @@ import { SignupCredentials } from 'src/app/common/entities/signup-credentials';
 })
 export class RouterService {
 
-  constructor(private authenticationService: AuthenticationService,
+  constructor(private authenticationService: OnlineAuthenticationService,
               private expenseService: ExpenseService,
               private fakeService: FakeService,
               private storageService: StorageService,

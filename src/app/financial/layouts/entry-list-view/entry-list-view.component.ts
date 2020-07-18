@@ -4,10 +4,10 @@ import { DateAdapter } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { state, style, transition, animate, trigger } from '@angular/animations';
-import { RouterService } from 'src/app/financial/services/router.service';
 import { Entry } from '../../entities/entry';
 import { EntryGroup } from '../../entities/entry-group';
 import { ExpenseReport } from '../../entities/expense-report';
+import { FinancialService } from '../../services/financial.service';
 
 
 @Component({
@@ -65,7 +65,7 @@ export class EntryListViewComponent implements OnInit {
 
   public filterSelected = 0;
 
-  constructor(private routerService: RouterService,
+  constructor(private financialService: FinancialService,
               private apapter: DateAdapter<any>,
               private router: Router) { }
 
@@ -152,7 +152,7 @@ export class EntryListViewComponent implements OnInit {
 
   private async getExpenseReport2(startDate: any, endDate: any) {
     this.isLoading = true;
-    const expenseReport = await this.routerService.loadExpenseReport(startDate.toISOString(), endDate.toISOString())
+    const expenseReport = await this.financialService.loadExpenseReport(startDate.toISOString(), endDate.toISOString())
     .toPromise()
     .then(res => {
       res as ExpenseReport;
@@ -180,7 +180,7 @@ export class EntryListViewComponent implements OnInit {
 
   private getExpenseReport(startDate: any, endDate: any) {
     this.isLoading = true;
-    this.routerService.loadExpenseReport(startDate.toISOString(), endDate.toISOString())
+    this.financialService.loadExpenseReport(startDate.toISOString(), endDate.toISOString())
       .subscribe(async res => {
         if (res) {
           this.allEntries = this.getEntries(res.expenseGroups.concat(res.receiptGroups));

@@ -4,10 +4,11 @@ import { CurrencyPipe } from '@angular/common';
 import { FormControl, FormGroup } from '@angular/forms';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { ThemePalette } from '@angular/material';
-import { RouterService } from 'src/app/financial/services/router.service';
 import { MessageService } from 'src/app/financial/services/message.service';
 import { EntryClass } from '../../entities/entry-class';
 import { Entry } from '../../entities/entry';
+import { FinancialService } from '../../services/financial.service';
+import { AuthenticationService } from 'src/app/common/services/authentication.service';
 
 
 
@@ -38,7 +39,8 @@ export class NewExpenseViewComponent implements OnInit {
   public entrySaved = new EventEmitter();
 
   constructor(
-    private routerService: RouterService,
+    private financialService: FinancialService,
+    private authenticationService: AuthenticationService,
     private bottomSheetRef: MatBottomSheetRef<NewExpenseViewComponent>,
     private currencyPipe: CurrencyPipe,
     private messageService: MessageService) { }
@@ -59,7 +61,7 @@ export class NewExpenseViewComponent implements OnInit {
     this.validateFields(entryGroupId, newEntryGroupName, newEntryGroupDescription, date, this.group.value.value);
     const entryClass = new EntryClass();
     if (entryGroupId === 'new') {
-      entryClass.userId = this.routerService.getCurrentUser().id;
+      entryClass.userId = this.authenticationService.getCurrentUser().id;
       entryClass.name = newEntryGroupName;
       entryClass.description = newEntryGroupDescription;
       entryClass.type = 'DESPESA';
@@ -73,7 +75,7 @@ export class NewExpenseViewComponent implements OnInit {
 
 
       const entry = new Entry();
-      entry.userId = this.routerService.getCurrentUser().id;
+      entry.userId = this.authenticationService.getCurrentUser().id;
       entry.entryClass = entryClass;
       entry.date = date._selected.toISOString();
       entry.description = description;
@@ -81,10 +83,10 @@ export class NewExpenseViewComponent implements OnInit {
       entry.value = this.group.value.value;
 
       this.bottomSheetRef.dismiss();
-      this.routerService.saveEntry(entry).subscribe(async res => {
+      this.financialService.saveEntry(entry).subscribe(async res => {
         this.messageService.openMessageBar('Salvo com sucesso', 2000);
-        this.routerService.updateLocalStorageFromDatabase();
         this.entrySaved.emit();
+        this.financialService.updateLocalStorageFromDatabase();
       },
         err => {
           this.messageService.openMessageBar('Ops! Tivemos um erro ao salvar seu lançamento.', 3000);
@@ -105,14 +107,14 @@ export class NewExpenseViewComponent implements OnInit {
     const initialDate: Date = new Date(date._selected.toISOString());
     for (let i = 0; i < numberOfPlots; i++) {
       const entry = new Entry();
-      entry.userId = this.routerService.getCurrentUser().id;
+      entry.userId = this.authenticationService.getCurrentUser().id;
       entry.entryClass = entryGroup;
       entry.date = new Date(initialDate.getFullYear(), initialDate.getMonth() + i, initialDate.getDate()).toISOString();
       entry.description = description + ' ' + '(' + (i + 1) + '/' + numberOfPlots + ')';
       entry.entryType = 'DESPESA';
       entry.value = eachPlotValue;
-      this.routerService.saveEntry(entry).subscribe( () => {
-        this.routerService.updateLocalStorageFromDatabase();
+      this.financialService.saveEntry(entry).subscribe( () => {
+        this.financialService.updateLocalStorageFromDatabase();
       });
     }
     this.messageService.openMessageBar('Salvo com sucesso', 2000);
@@ -191,7 +193,7 @@ export class NewExpenseViewComponent implements OnInit {
 
   private async loadEntryClasses() {
       // save result
-      this.entryClasses = await this.routerService.loadEntryClasses('DESPESA')
+      this.entryClasses = await this.financialService.loadEntryClasses('DESPESA')
       .toPromise()
       .then(resp => resp as EntryClass[]);
   }

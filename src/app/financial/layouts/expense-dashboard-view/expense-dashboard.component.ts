@@ -6,10 +6,10 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { NewExpenseViewComponent } from '../new-expense-view/new-expense-view.component';
 import { Router } from '@angular/router';
 import { MessageService } from 'src/app/financial/services/message.service';
-import { RouterService } from 'src/app/financial/services/router.service';
 import { EntryGroup } from '../../entities/entry-group';
 import { Entry } from '../../entities/entry';
 import { NewReceiptViewComponent } from '../new-receipt-view/new-receipt-view.component';
+import { FinancialService } from '../../services/financial.service';
 
 @Component({
   selector: 'app-expense-dashboard',
@@ -55,7 +55,7 @@ export class ExpenseDashboardComponent implements OnInit {
   monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio',
     'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
-  constructor(private routerService: RouterService,
+  constructor(private financialService: FinancialService,
               private apapter: DateAdapter<any>,
               private bottomSheet: MatBottomSheet,
               private router: Router,
@@ -172,7 +172,7 @@ export class ExpenseDashboardComponent implements OnInit {
   getExpenseReport(startDate: any, endDate: any) {
     this.setCurrentTile();
     this.isLoading = true;
-    this.routerService.loadExpenseReport(startDate.toISOString(), endDate.toISOString())
+    this.financialService.loadExpenseReport(startDate.toISOString(), endDate.toISOString())
       .subscribe(async res => {
         if (res) {
           this.totalExpenses = res.totalExpenseAmount;
@@ -240,7 +240,7 @@ export class ExpenseDashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isOfflineMode = !this.routerService.isOnline();
+    this.isOfflineMode = !this.financialService.isOnline;
     this.apapter.setLocale('br');
     let dataInicial = new Date(Date.now());
     dataInicial = new Date(dataInicial.getFullYear(), dataInicial.getMonth(), 1);

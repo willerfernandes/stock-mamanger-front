@@ -2,11 +2,12 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatBottomSheetRef } from '@angular/material';
 
-import { RouterService } from 'src/app/financial/services/router.service';
 import { MessageService } from 'src/app/financial/services/message.service';
 import { EntryClass } from '../../entities/entry-class';
 import { NewExpenseViewComponent } from '../new-expense-view/new-expense-view.component';
 import { Entry } from '../../entities/entry';
+import { FinancialService } from '../../services/financial.service';
+import { AuthenticationService } from 'src/app/common/services/authentication.service';
 
 
 @Component({
@@ -30,7 +31,8 @@ export class NewReceiptViewComponent implements OnInit {
   public entrySaved = new EventEmitter();
 
   constructor(
-    private routerService: RouterService,
+    private financialService: FinancialService,
+    private authenticationService: AuthenticationService,
     private bottomSheetRef: MatBottomSheetRef<NewReceiptViewComponent>,
     private messageService: MessageService) { }
 
@@ -48,7 +50,7 @@ export class NewReceiptViewComponent implements OnInit {
 
     const entryClass = new EntryClass();
     if (entryGroupId === 'new') {
-      entryClass.userId = this.routerService.getCurrentUser().id;
+      entryClass.userId = this.authenticationService.getCurrentUser().id;
       entryClass.name = newEntryGroupName;
       entryClass.description = newEntryGroupDescription;
       entryClass.type = 'RECEITA';
@@ -57,7 +59,7 @@ export class NewReceiptViewComponent implements OnInit {
     }
 
     const entry = new Entry();
-    entry.userId = this.routerService.getCurrentUser().id;
+    entry.userId = this.authenticationService.getCurrentUser().id;
     entry.entryClass = entryClass;
     entry.date = date._selected.toISOString();
     entry.description = description;
@@ -65,10 +67,10 @@ export class NewReceiptViewComponent implements OnInit {
     entry.value = this.group.value.value;
 
     this.bottomSheetRef.dismiss();
-    this.routerService.saveEntry(entry).subscribe(async res => {
+    this.financialService.saveEntry(entry).subscribe(async res => {
       this.messageService.openMessageBar('Salvo com sucesso', 2000);
-      this.routerService.updateLocalStorageFromDatabase();
       this.entrySaved.emit();
+      this.financialService.updateLocalStorageFromDatabase();
     },
       err => {
         this.messageService.openMessageBar('Ops! Tivemos um erro ao salvar seu lançamento.', 3000);
@@ -124,7 +126,7 @@ export class NewReceiptViewComponent implements OnInit {
 
   private async loadEntryClasses() {
     // save result
-    this.entryClasses = await this.routerService.loadEntryClasses('RECEITA')
+    this.entryClasses = await this.financialService.loadEntryClasses('RECEITA')
     .toPromise()
     .then(resp => resp as EntryClass[]);
 }

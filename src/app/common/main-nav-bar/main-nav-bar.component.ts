@@ -2,8 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserAuth } from '../entities/user-auth';
-import { AuthenticationRouterService } from '../services/authentication-router.service';
-import { RouterService } from 'src/app/financial/services/router.service';
+import { AuthenticationService } from '../services/authentication.service';
+import { FinancialService } from 'src/app/financial/services/financial.service';
 
 @Component({
   selector: 'app-main-nav-bar',
@@ -19,8 +19,8 @@ export class MainNavBarComponent implements OnInit {
 
   public isOnline;
 
-  constructor(private authenticationRouterService: AuthenticationRouterService,
-              private routerService: RouterService,
+  constructor(private authenticationService: AuthenticationService,
+              private financialService: FinancialService,
               private router: Router) { }
 
   public toogleMenu(): void {
@@ -40,24 +40,24 @@ export class MainNavBarComponent implements OnInit {
   }
 
   public logout(): void {
-    this.authenticationRouterService.logout();
+    this.authenticationService.logout();
   }
 
   public connect(): void {
-    this.authenticationRouterService.connect();
-    this.routerService.sync();
+    this.authenticationService.connect();
+    this.financialService.sync();
     this.ngOnInit();
   }
 
   public disconnect(): void {
-    this.authenticationRouterService.disconnect();
+    this.authenticationService.disconnect();
     this.ngOnInit();
   }
 
   ngOnInit() {
-    const user: UserAuth = this.authenticationRouterService.getCurrentUserValue();
+    const user: UserAuth = this.authenticationService.getCurrentUserValue();
     this.loggedUser = user.login;
-    this.isOnline = this.authenticationRouterService.isOnline();
+    this.isOnline = this.authenticationService.isOnline();
   }
 
 }

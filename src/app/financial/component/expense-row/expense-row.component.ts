@@ -1,7 +1,7 @@
 import { Component, OnInit, Input , EventEmitter, Output} from '@angular/core';
-import { RouterService } from 'src/app/financial/services/router.service';
 import { MessageService } from 'src/app/financial/services/message.service';
 import { Entry } from '../../entities/entry';
+import { FinancialService } from '../../services/financial.service';
 
 
 @Component({
@@ -17,10 +17,10 @@ export class ExpenseRowComponent implements OnInit {
   @Output()
   deleteRowEvent = new EventEmitter();
 
-  constructor(private routerService: RouterService, private messageService: MessageService) { }
+  constructor(private financialService: FinancialService, private messageService: MessageService) { }
 
   public deleteExpense(id: any) {
-     this.routerService.deleteEntry(id).subscribe( async () => {
+     this.financialService.deleteEntry(id).subscribe( async () => {
       this.deleteRowEvent.emit();
     },
     err => {

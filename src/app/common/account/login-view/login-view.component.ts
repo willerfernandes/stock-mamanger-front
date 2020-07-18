@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 
 import { ThemePalette } from '@angular/material';
 import { MessageService } from 'src/app/financial/services/message.service';
-import { AuthenticationRouterService } from '../../services/authentication-router.service';
-import { RouterService } from 'src/app/financial/services/router.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { FinancialService } from 'src/app/financial/services/financial.service';
 
 
 @Component({
@@ -14,8 +14,8 @@ import { RouterService } from 'src/app/financial/services/router.service';
 })
 export class LoginViewComponent implements OnInit {
 
-  constructor(private authenticationRouterService: AuthenticationRouterService,
-              private routerService: RouterService,
+  constructor(private authenticationService: AuthenticationService,
+              private financialService: FinancialService,
               private router: Router,
               private messageService: MessageService) { }
 
@@ -31,7 +31,7 @@ export class LoginViewComponent implements OnInit {
 
 
   ngOnInit() {
-    if (this.authenticationRouterService.loggedIn()) {
+    if (this.authenticationService.loggedIn()) {
       this.router.navigate(['/expense-dashboard']);
     }
   }
@@ -41,9 +41,9 @@ export class LoginViewComponent implements OnInit {
     this.isLoading = true;
     const isOffline = this.isOfflineMode;
     if (this.validateFields(username, password)) {
-      this.authenticationRouterService.login(username, password, isOffline).subscribe(user => {
-        this.authenticationRouterService.setCurrentUser(user);
-        this.routerService.updateLocalStorageFromDatabase();
+      this.authenticationService.login(username, password, isOffline).subscribe(user => {
+        this.authenticationService.setCurrentUser(user);
+        this.financialService.updateLocalStorageFromDatabase();
         this.isLoading = false;
         this.router.navigate(['/expense-dashboard']);
       },
