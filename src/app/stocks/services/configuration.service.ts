@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { Config } from 'src/app/entities/config';
+import { Config } from 'src/app/stocks/entities/config';
 
 
 @Injectable({

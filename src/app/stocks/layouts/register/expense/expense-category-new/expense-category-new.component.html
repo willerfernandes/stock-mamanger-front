@@ -1,0 +1,23 @@
+<div>
+    <div>
+  <div>
+  	<h2>Detalhes</h2>
+  </div>
+
+  <div>
+    <label>TIPO:
+      <input #input_tipo/>
+    </label>
+    <br>
+    <label>NOME:
+      <input #input_nome/>
+    </label>
+    <br>
+    <label>DESCRICAO:
+      <input #input_descricao/>
+    </label>
+  </div>
+  <button (click)="goBack()" class="btn btn-light">VOLTAR</button>
+  <button (click)="save(input_tipo.value, input_nome.value, input_descricao.value)" class="btn btn-primary">SALVAR</button>
+</div>
+</div>

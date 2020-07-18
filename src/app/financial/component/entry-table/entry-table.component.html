@@ -1,0 +1,27 @@
+<link href='https://fonts.googleapis.com/css?family=Roboto Condensed' rel='stylesheet'>
+
+<div @items *ngFor="let entry of entries">
+  <div class="grid">
+    <div style="margin: auto;">
+      <img *ngIf="entry.entryClass.name === 'Alimentação'" style="display: block;"  src='/assets/img/food-icon.png' class="entryClassIcon">
+      <img *ngIf="entry.entryClass.name === 'Transporte'" src='/assets/img/transport-icon.png' class="entryClassIcon">
+      <img *ngIf="entry.entryClass.name === 'Lazer'" src='/assets/img/leisure-icon.png' class="entryClassIcon">
+      <img *ngIf="entry.entryClass.name !== 'Alimentação' && entry.entryClass.name !== 'Transporte' && entry.entryClass.name !== 'Lazer'" src='/assets/img/other-classes-icon.png' class="entryClassIcon">
+      <p style="display: block; font-size: small;">{{entry.entryClass.name.substr(0, 4) + '.'}}</p>
+    </div>
+    <div>
+      <p class="date-text">{{getEntryDateWeekDayName(entry.date)}}</p>
+      <p class="date-number">{{getEntryDateMonthDay(entry.date)}}</p>
+      <p class="date-text">{{getEntryMonthName(entry.date)}}</p>
+    </div>
+    <div >
+      <p *ngIf="entry.entryType === 'DESPESA'" class="sign-minus">-</p>
+      <p *ngIf="entry.entryType === 'RECEITA'" class="sign-plus">+</p>
+    </div>
+    <div style="text-overflow: ellipsis;">
+      <p class="amount">{{entry.value.toLocaleString('pt-BR', { style: 'currency', currency:'BRL' })}}</p>
+      <p class="description">{{entry.description.toUpperCase()}}</p>
+    </div>
+  </div>
+  <hr style="margin: 5px;">
+</div>

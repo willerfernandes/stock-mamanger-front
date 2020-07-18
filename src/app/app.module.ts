@@ -5,18 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ConfigComponent } from './register/configuration/config/config.component';
-import { ConfigDetailComponent } from './register/configuration/config-detail/config-detail.component';
-import { ConfigNewComponent } from './register/configuration/config-new/config-new.component';
-import { OperationFilterComponent } from './register/operation/operation-filter/operation-filter.component';
-import { OperationDetailComponent } from './register/operation/operation-detail/operation-detail.component';
-import { OperationNewComponent } from './register/operation/operation-new/operation-new.component';
-import { StockFilterComponent } from './register/stock/stock-filter/stock-filter.component';
-import { StockDetailComponent } from './register/stock/stock-detail/stock-detail.component';
-import { StockNewComponent } from './register/stock/stock-new/stock-new.component';
-import { UserFilterComponent } from './register/user/user-filter/user-filter.component';
-import { UserDetailComponent } from './register/user/user-detail/user-detail.component';
-import { UserNewComponent } from './register/user/user-new/user-new.component';
+
 import { LayoutModule } from '@angular/cdk/layout';
 
 import { CommonModule, CurrencyPipe} from '@angular/common';
@@ -60,46 +49,61 @@ import { NativeDateModule } from '@angular/material';
 
 
 
-import { LoginViewComponent } from './account/login-view/login-view.component';
-import { SignupViewComponent } from './account/signup-view/signup-view.component';
-import { ExpenseFilterComponent } from './register/expense/expense-filter/expense-filter.component';
-import { ExpenseDetailComponent } from './register/expense/expense-detail/expense-detail.component';
-import { ExpenseNewComponent } from './register/expense/expense-new/expense-new.component';
-import { ExpenseCategoryNewComponent } from './register/expense/expense-category-new/expense-category-new.component';
-import { ExpenseCategoryFilterComponent } from './register/expense/expense-category-filter/expense-category-filter.component';
-import { ExpenseCategoryDetailComponent } from './register/expense/expense-category-detail/expense-category-detail.component';
-import { ExpenseDashboardComponent } from './layouts/expense-dashboard/expense-dashboard.component';
-import { PieChartComponent } from './component/pie-chart/pie-chart.component';
-import { DateRangeComponent } from './component/date-range/date-range.component';
-import { ExpenseRowComponent } from './component/expense-row/expense-row.component';
-import { ExpenseGroupComponent } from './component/expense-group/expense-group.component';
-import { ExpenseTableTitleComponent } from './component/expense-table-title/expense-table-title.component';
-import { ExpenseErrorScreenComponent } from './component/expense-error-screen/expense-error-screen.component';
-import { MainNavBarComponent } from './component/main-nav-bar/main-nav-bar.component';
-import { JwtInterceptor } from './account/jwt.interceptor';
-import { ErrorInterceptor } from './account/error.interceptor';
-import { ButtonPrimaryTextComponent } from './component/basic/button-primary-text/button-primary-text.component';
-import { ButtonPrimaryIconComponent } from './component/basic/button-primary-icon/button-primary-icon.component';
-import { HomeViewComponent } from './layouts/home-view/home-view.component';
-import { CardComponent } from './component/basic/card/card.component';
-import { BtnPrimaryBlueComponent } from './component/basic/btn-primary-blue/btn-primary-blue.component';
-import { BtnSecondaryBlueComponent } from './component/basic/btn-secondary-blue/btn-secondary-blue.component';
-import { BtnSecondaryBlueLargeComponent } from './component/basic/btn-secondary-blue-large/btn-secondary-blue-large.component';
-import { BtnPrimaryBlueLargeComponent } from './component/basic/btn-primary-blue-large/btn-primary-blue-large.component';
-import { UnderConstructionComponent } from './layouts/under-construction/under-construction.component';
-import { AddMenuComponent } from './component/add-menu/add-menu.component';
-import { ExpenseBottomSheetComponent } from './component/expense-bottom-sheet/expense-bottom-sheet.component';
-import { NewExpenseViewComponent } from './layouts/new-expense-view/new-expense-view.component';
-import { ExpenseNoResultsFoundComponent } from './component/expense-no-results-found/expense-no-results-found.component';
-import { NewReceiptViewComponent } from './component/new-receipt-view/new-receipt-view.component';
-import { AlertOnScreenComponent } from './component/alert-on-screen/alert-on-screen.component';
-import { EntryTableComponent } from './component/entry-table/entry-table.component';
-import { EntryListViewComponent } from './component/entry-list-view/entry-list-view.component';
-import { EntryClassListViewComponent } from './component/entry-class-list-view/entry-class-list-view.component';
-import { EntryClassEditViewComponent } from './component/entry-class-edit-view/entry-class-edit-view.component';
-import { AdmViewComponent } from './component/adm-view/adm-view.component';
+
 import { NgxCurrencyModule } from 'ngx-currency';
-import { MainViewComponent } from './stocks/main-view/main-view.component';
+import { MainViewComponent } from './stocks/layouts/main-view/main-view.component';
+import { LoginViewComponent } from './common/account/login-view/login-view.component';
+import { SignupViewComponent } from './common/account/signup-view/signup-view.component';
+import { ExpenseFilterComponent } from './stocks/layouts/register/expense/expense-filter/expense-filter.component';
+import { ExpenseDetailComponent } from './stocks/layouts/register/expense/expense-detail/expense-detail.component';
+import { ExpenseNewComponent } from './stocks/layouts/register/expense/expense-new/expense-new.component';
+import { ExpenseCategoryNewComponent } from './stocks/layouts/register/expense/expense-category-new/expense-category-new.component';
+import { ExpenseCategoryFilterComponent } from './stocks/layouts/register/expense/expense-category-filter/expense-category-filter.component';
+import { ExpenseCategoryDetailComponent } from './stocks/layouts/register/expense/expense-category-detail/expense-category-detail.component';
+import { ExpenseDashboardComponent } from './financial/layouts/expense-dashboard-view/expense-dashboard.component';
+import { PieChartComponent } from './financial/component/pie-chart/pie-chart.component';
+import { DateRangeComponent } from './common/uikit/date-range/date-range.component';
+import { ExpenseRowComponent } from './financial/component/expense-row/expense-row.component';
+import { ExpenseGroupComponent } from './financial/component/expense-group/expense-group.component';
+import { ExpenseTableTitleComponent } from './financial/component/expense-table-title/expense-table-title.component';
+import { ExpenseErrorScreenComponent } from './financial/component/expense-error-screen/expense-error-screen.component';
+import { MainNavBarComponent } from './common/main-nav-bar/main-nav-bar.component';
+import { ButtonPrimaryTextComponent } from './common/uikit/button-primary-text/button-primary-text.component';
+import { ButtonPrimaryIconComponent } from './common/uikit/button-primary-icon/button-primary-icon.component';
+import { HomeViewComponent } from './financial/layouts/home-view/home-view.component';
+import { CardComponent } from './common/uikit/card/card.component';
+import { BtnPrimaryBlueComponent } from './common/uikit/btn-primary-blue/btn-primary-blue.component';
+import { BtnSecondaryBlueComponent } from './common/uikit/btn-secondary-blue/btn-secondary-blue.component';
+import { BtnSecondaryBlueLargeComponent } from './common/uikit/btn-secondary-blue-large/btn-secondary-blue-large.component';
+import { BtnPrimaryBlueLargeComponent } from './common/uikit/btn-primary-blue-large/btn-primary-blue-large.component';
+import { UnderConstructionComponent } from './financial/layouts/under-construction-view/under-construction.component';
+import { AddMenuComponent } from './financial/component/add-menu/add-menu.component';
+import { ExpenseBottomSheetComponent } from './financial/component/expense-bottom-sheet/expense-bottom-sheet.component';
+import { NewExpenseViewComponent } from './financial/layouts/new-expense-view/new-expense-view.component';
+import { ExpenseNoResultsFoundComponent } from './financial/component/expense-no-results-found/expense-no-results-found.component';
+import { NewReceiptViewComponent } from './financial/layouts/new-receipt-view/new-receipt-view.component';
+import { AlertOnScreenComponent } from './common/uikit/alert-on-screen/alert-on-screen.component';
+import { EntryTableComponent } from './financial/component/entry-table/entry-table.component';
+import { EntryListViewComponent } from './financial/layouts/entry-list-view/entry-list-view.component';
+import { EntryClassListViewComponent } from './financial/layouts/entry-class-list-view/entry-class-list-view.component';
+import { EntryClassEditViewComponent } from './financial/layouts/entry-class-edit-view/entry-class-edit-view.component';
+import { AdmViewComponent } from './financial/layouts/adm-view/adm-view.component';
+import { JwtInterceptor } from './common/handlers/jwt.interceptor';
+import { ErrorInterceptor } from './common/handlers/error.interceptor';
+import { ConfigComponent } from './stocks/layouts/register/configuration/config/config.component';
+
+
+import { ConfigDetailComponent } from './stocks/layouts/register/configuration/config-detail/config-detail.component';
+import { ConfigNewComponent } from './stocks/layouts/register/configuration/config-new/config-new.component';
+import { OperationFilterComponent } from './stocks/layouts/register/operation/operation-filter/operation-filter.component';
+import { OperationDetailComponent } from './stocks/layouts/register/operation/operation-detail/operation-detail.component';
+import { OperationNewComponent } from './stocks/layouts/register/operation/operation-new/operation-new.component';
+import { StockFilterComponent } from './stocks/layouts/register/stock/stock-filter/stock-filter.component';
+import { StockDetailComponent } from './stocks/layouts/register/stock/stock-detail/stock-detail.component';
+import { StockNewComponent } from './stocks/layouts/register/stock/stock-new/stock-new.component';
+import { UserFilterComponent } from './stocks/layouts/register/user/user-filter/user-filter.component';
+import { UserDetailComponent } from './stocks/layouts/register/user/user-detail/user-detail.component';
+import { UserNewComponent } from './stocks/layouts/register/user/user-new/user-new.component';
 
 @NgModule({
   declarations: [

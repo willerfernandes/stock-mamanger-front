@@ -1,6 +1,5 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from './services/authentication.service';
 import { Observable } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 
