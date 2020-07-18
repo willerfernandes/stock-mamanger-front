@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { StorageService } from './storage.service';
+import { StorageService } from '../../financial/services/storage.service';
 import {SHA1} from 'crypto-js';
 import { UserAuth } from 'src/app/common/entities/user-auth';
 import { Credentials } from 'src/app/common/entities/credentials';

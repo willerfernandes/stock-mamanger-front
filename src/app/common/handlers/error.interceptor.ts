@@ -3,7 +3,7 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/c
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { AuthenticationService } from 'src/app/financial/services/authentication.service';
+import { AuthenticationService } from 'src/app/common/services/authentication.service';
 import { MessageService } from 'src/app/financial/services/message.service';
 
 

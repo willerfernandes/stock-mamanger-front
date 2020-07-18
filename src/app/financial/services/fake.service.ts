@@ -103,6 +103,24 @@ export class FakeService {
     return of(user);
   }
 
+  public checkUsernameAvailability(login: string): boolean {
+    return true;
+  }
+
+  public createUser(credentials: SignupCredentials): boolean {
+    return true;
+  }
+
+
+  logout() {
+    // remove user from local storage to log user out - do not remove user data to allow offline mode
+    this.storageService.saveLastUser();
+    this.storageService.deleteCurrentUser();
+    this.currentUserSubject.next(null);
+    this.router.navigate(['/login']);
+  }
+
+
   private delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
 }
@@ -292,23 +310,6 @@ export class FakeService {
     this.storageService.saveAllEntries(entries);
 
     return of(newEntryClass);
-  }
-
-  public checkUsernameAvailability(login: string): boolean {
-    return true;
-  }
-
-  public createUser(credentials: SignupCredentials): boolean {
-    return true;
-  }
-
-
-  logout() {
-    // remove user from local storage to log user out - do not remove user data to allow offline mode
-    this.storageService.saveLastUser();
-    this.storageService.deleteCurrentUser();
-    this.currentUserSubject.next(null);
-    this.router.navigate(['/login']);
   }
 
 

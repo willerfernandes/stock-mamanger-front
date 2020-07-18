@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { RouterService } from 'src/app/financial/services/router.service';
 import { UserAuth } from '../entities/user-auth';
+import { AuthenticationRouterService } from '../services/authentication-router.service';
+import { RouterService } from 'src/app/financial/services/router.service';
 
 @Component({
   selector: 'app-main-nav-bar',
@@ -12,24 +13,15 @@ import { UserAuth } from '../entities/user-auth';
 
 export class MainNavBarComponent implements OnInit {
 
-  public baseURL = 'http://localhost:4200/';
-  public loginPath = this.baseURL + 'login';
-  public stockDashboardPath = this.baseURL + 'stock-dashboard';
-  public expenseDashboardPath = this.baseURL + 'expense-dashboard';
-  public configPath = this.baseURL + 'config';
-  public stockPath = this.baseURL + 'stock';
-  public userPath = this.baseURL + 'user';
-  public operationPath = this.baseURL + 'operation';
-  public categoryPath = this.baseURL + 'category';
-
-
   public isMenuActive = false;
 
   public loggedUser;
 
   public isOnline;
 
-  constructor(private routerService: RouterService, private router: Router) { }
+  constructor(private authenticationRouterService: AuthenticationRouterService,
+              private routerService: RouterService,
+              private router: Router) { }
 
   public toogleMenu(): void {
     this.isMenuActive = !this.isMenuActive;
@@ -46,25 +38,26 @@ export class MainNavBarComponent implements OnInit {
   public navigateToEntryListView(): void {
     this.router.navigate(['/entries']);
   }
-x
+
   public logout(): void {
-    this.routerService.logout();
+    this.authenticationRouterService.logout();
   }
 
   public connect(): void {
-    this.routerService.connect();
+    this.authenticationRouterService.connect();
+    this.routerService.sync();
     this.ngOnInit();
   }
 
   public disconnect(): void {
-    this.routerService.disconnect();
+    this.authenticationRouterService.disconnect();
     this.ngOnInit();
   }
 
   ngOnInit() {
-    const user: UserAuth = this.routerService.getCurrentUserValue();
+    const user: UserAuth = this.authenticationRouterService.getCurrentUserValue();
     this.loggedUser = user.login;
-    this.isOnline = this.routerService.isOnline();
+    this.isOnline = this.authenticationRouterService.isOnline();
   }
 
 }

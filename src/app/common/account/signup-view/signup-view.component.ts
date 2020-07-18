@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from 'src/app/financial/services/authentication.service';
+import { AuthenticationService } from 'src/app/common/services/authentication.service';
 import { Router } from '@angular/router';
 
 import { MessageService } from 'src/app/financial/services/message.service';

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AuthenticationService } from './authentication.service';
+import { AuthenticationService } from '../../common/services/authentication.service';
 import { ExpenseService } from './expense.service';
 import { FakeService } from './fake.service';
 import { Entry } from '../entities/entry';
