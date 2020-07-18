@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { Stock } from 'src/app/stocks/layouts/main-view/node_modules/src/app/entities/stock';
-import { Operation } from 'src/app/entities/operation';
+import { Observable } from 'rxjs';
+import { Stock } from '../entities/stock';
+import { Operation } from '../entities/operation';
 
 
 @Injectable({
