@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { StorageService } from 'src/app/financial/services/storage.service';
+import { StorageService } from 'src/app/common/services/storage.service';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { UserAuth } from '../entities/user-auth';
 import { EntryClass } from 'src/app/financial/entities/entry-class';

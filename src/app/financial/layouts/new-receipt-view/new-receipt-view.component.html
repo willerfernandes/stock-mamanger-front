@@ -10,7 +10,7 @@
 
 <div [formGroup]="group" class="container containter-wraper" style="margin-top: 70px;">
   <img  [src]="'./assets/img/credit-card-icon.svg'" style="margin-right: 10px; vertical-align: middle;"><label class="red-text">*</label><label class="color-primary input-label">Valor:</label>
-  <input id="input-currency" class="input-medium padding-small" style="font-size: 24px; font-weight: bold;" #amount placeholder="000,00" currencyMask type="tel" formControlName="value"  [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"/>
+  <input id="input-currency" class="input-medium padding-small" style="font-size: 24px; font-weight: bold;" #amount placeholder="000,00" formControlName="value"/>
 </div>
 <hr>
 <div class="container" (click)="doNothing()">

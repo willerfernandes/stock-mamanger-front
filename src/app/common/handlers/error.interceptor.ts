@@ -4,7 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { OnlineAuthenticationService } from 'src/app/common/services/online-authentication.service';
-import { MessageService } from 'src/app/financial/services/message.service';
+import { MessageService } from 'src/app/common/services/message.service';
 
 
 @Injectable()

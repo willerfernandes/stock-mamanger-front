@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatBottomSheetRef } from '@angular/material';
 
-import { MessageService } from 'src/app/financial/services/message.service';
+import { MessageService } from 'src/app/common/services/message.service';
 import { EntryClass } from '../../entities/entry-class';
 import { NewExpenseViewComponent } from '../new-expense-view/new-expense-view.component';
 import { Entry } from '../../entities/entry';

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FakeService } from 'src/app/financial/services/fake.service';
-import { MessageService } from 'src/app/financial/services/message.service';
+import { MessageService } from 'src/app/common/services/message.service';
+import { FinancialService } from '../../services/financial.service';
 
 
 @Component({
@@ -13,27 +13,27 @@ export class AdmViewComponent implements OnInit {
   public entries = '';
   public entryClasses = '';
 
-  constructor(private fakeService: FakeService, private messageService: MessageService) { }
+  constructor(private financialService: FinancialService, private messageService: MessageService) { }
 
   ngOnInit() {
-    this.fakeService.loadEntriesFromStorage().subscribe( res => {
+    this.financialService.loadEntriesFromStorage().subscribe( res => {
       this.entries = res;
     });
 
-    this.fakeService.loadEntryClassesFromStorage().subscribe( res => {
+    this.financialService.loadEntryClassesFromStorage().subscribe( res => {
       this.entryClasses = res;
     });
   }
 
   public updateLocalStorage(entries: string, entryClasses: string) {
-    this.fakeService.updateEntriesOnStorage(entries);
-    this.fakeService.updateEntryClassesOnStorage(entryClasses);
+    this.financialService.updateEntriesOnStorage(entries);
+    this.financialService.updateEntryClassesOnStorage(entryClasses);
     this.messageService.openMessageBar('Atualizado com sucesso', 1000);
     this.ngOnInit();
   }
 
   public clearLocalStorage() {
-    this.fakeService.clearStorage();
+    this.financialService.clearStorage();
     this.messageService.openMessageBar('Todos os dados foram removidos', 1000);
     this.ngOnInit();
   }

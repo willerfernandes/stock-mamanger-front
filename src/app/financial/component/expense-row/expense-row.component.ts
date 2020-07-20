@@ -1,5 +1,5 @@
 import { Component, OnInit, Input , EventEmitter, Output} from '@angular/core';
-import { MessageService } from 'src/app/financial/services/message.service';
+import { MessageService } from 'src/app/common/services/message.service';
 import { Entry } from '../../entities/entry';
 import { FinancialService } from '../../services/financial.service';
 

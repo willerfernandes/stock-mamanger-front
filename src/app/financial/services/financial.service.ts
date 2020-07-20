@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Entry } from '../entities/entry';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { EntryClass } from '../entities/entry-class';
 import { OnlineFinancialService } from './online-financial.service';
 import { OfflineFinancialService } from './offline-financial.service';
 import { AuthenticationService } from 'src/app/common/services/authentication.service';
-import { StorageService } from './storage.service';
-import { MessageService } from './message.service';
+import { StorageService } from '../../common/services/storage.service';
+import { MessageService } from '../../common/services/message.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,10 @@ export class FinancialService {
               private messageService: MessageService,
               private storageService: StorageService) { }
 
-  isOnline = this.authenticationService.isOnline();
+
+  private isOnline(): boolean {
+    return this.authenticationService.isOnline();
+  }
 
   loadExpenseReport(startDate: string, endDate: string) {
     if (this.authenticationService.isOnline()) {
@@ -109,4 +112,26 @@ export class FinancialService {
       console.log('Error while sincronizing with database');
     }
   }
+
+    // Adm
+    updateEntriesOnStorage(entriesJson: string) {
+      this.storageService.saveAllEntries(JSON.parse(entriesJson));
+    }
+
+    updateEntryClassesOnStorage(entryClasses: string) {
+      this.storageService.saveAllEntryClasses(JSON.parse(entryClasses));
+    }
+
+    loadEntriesFromStorage(): Observable<string> {
+      return of(JSON.stringify(this.storageService.findAllEntries()));
+    }
+
+    loadEntryClassesFromStorage(): Observable<string>  {
+      return of(JSON.stringify(this.storageService.findAllEntryClasses()));
+    }
+
+    clearStorage() {
+      this.storageService.delleteAllStorage();
+    }
+
 }

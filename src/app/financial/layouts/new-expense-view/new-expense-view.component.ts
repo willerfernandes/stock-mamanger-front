@@ -4,7 +4,7 @@ import { CurrencyPipe } from '@angular/common';
 import { FormControl, FormGroup } from '@angular/forms';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { ThemePalette } from '@angular/material';
-import { MessageService } from 'src/app/financial/services/message.service';
+import { MessageService } from 'src/app/common/services/message.service';
 import { EntryClass } from '../../entities/entry-class';
 import { Entry } from '../../entities/entry';
 import { FinancialService } from '../../services/financial.service';
@@ -42,7 +42,6 @@ export class NewExpenseViewComponent implements OnInit {
     private financialService: FinancialService,
     private authenticationService: AuthenticationService,
     private bottomSheetRef: MatBottomSheetRef<NewExpenseViewComponent>,
-    private currencyPipe: CurrencyPipe,
     private messageService: MessageService) { }
     plots = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
 

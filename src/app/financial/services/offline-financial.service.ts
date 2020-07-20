@@ -5,7 +5,7 @@ import { Entry } from '../entities/entry';
 import { EntryClass } from '../entities/entry-class';
 import { EntryGroup } from '../entities/entry-group';
 import { GraphInfo } from '../entities/graph-info';
-import { StorageService } from './storage.service';
+import { StorageService } from '../../common/services/storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -85,6 +85,7 @@ export class OfflineFinancialService {
   }
 
   public saveEntry(entry: Entry): Observable<Entry> {
+    this.storageService.setIsDirty(true);
     let entries: Entry[] = this.storageService.findAllEntries();
     let entryClasses: EntryClass[] = this.storageService.findAllEntryClasses();
 
@@ -129,6 +130,7 @@ export class OfflineFinancialService {
   }
 
   public deleteEntry(id: number): Observable<Entry> {
+    this.storageService.setIsDirty(true);
     const entries: Entry[] = this.storageService.findAllEntries();
     const toBeDeleted = entries.findIndex(entry => entry.id === id);
     const deleted = entries.splice(toBeDeleted, 1);
@@ -154,6 +156,7 @@ export class OfflineFinancialService {
   }
 
   deleteEntryClass(id: number) {
+    this.storageService.setIsDirty(true);
     const entryClasses: EntryClass[] = this.storageService.findAllEntryClasses();
     const oldEntryClassIndex: number = entryClasses.findIndex(entryClass => entryClass.id === id);
     entryClasses.splice(oldEntryClassIndex, 1);
@@ -177,6 +180,7 @@ export class OfflineFinancialService {
   }
 
   saveEntryClass(newEntryClass: EntryClass) {
+    this.storageService.setIsDirty(true);
     const entryClasses: EntryClass[] = this.storageService.findAllEntryClasses();
     const indexOldEntryClass: number =  entryClasses.findIndex(oldClass => oldClass.id === newEntryClass.id);
     if (indexOldEntryClass === -1) /*new class*/ {

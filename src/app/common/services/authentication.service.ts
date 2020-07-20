@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { OnlineAuthenticationService } from 'src/app/common/services/online-authentication.service';
-import { FakeService } from 'src/app/financial/services/fake.service';
-import { StorageService } from 'src/app/financial/services/storage.service';
-import { MessageService } from 'src/app/financial/services/message.service';
+import { StorageService } from 'src/app/common/services/storage.service';
+import { MessageService } from 'src/app/common/services/message.service';
 import { Router } from '@angular/router';
 import { UserAuth } from '../entities/user-auth';
 import { OfflineAuthenticationService } from './offline-authentication.service';
@@ -23,6 +22,14 @@ export class AuthenticationService {
 
   public isOnline(): boolean {
     return this.storageService.getConnectionMode()  === 'online';
+  }
+
+  public isDirty(): boolean {
+    return this.storageService.isDirty();
+  }
+
+  public setIsClean(): void {
+    return this.storageService.setIsDirty(false);
   }
 
   public connect(): void {

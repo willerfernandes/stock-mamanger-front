@@ -5,7 +5,7 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NewExpenseViewComponent } from '../new-expense-view/new-expense-view.component';
 import { Router } from '@angular/router';
-import { MessageService } from 'src/app/financial/services/message.service';
+import { MessageService } from 'src/app/common/services/message.service';
 import { EntryGroup } from '../../entities/entry-group';
 import { Entry } from '../../entities/entry';
 import { NewReceiptViewComponent } from '../new-receipt-view/new-receipt-view.component';

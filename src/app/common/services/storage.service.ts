@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Entry } from '../entities/entry';
-import { EntryClass } from '../entities/entry-class';
+import { Entry } from '../../financial/entities/entry';
+import { EntryClass } from '../../financial/entities/entry-class';
 import { UserAuth } from 'src/app/common/entities/user-auth';
 
 @Injectable({
@@ -56,6 +56,14 @@ export class StorageService {
 
   public saveAllEntries(entries: Entry[]) {
     localStorage.setItem('entries', JSON.stringify(entries));
+  }
+
+  public setIsDirty(isDirty: boolean): void {
+    localStorage.setItem('isDirty', JSON.stringify(isDirty));
+  }
+
+  public isDirty(): boolean {
+    return localStorage.getItem('isDirty') === 'true';
   }
 
   // DANGER ZONE

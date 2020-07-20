@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ThemePalette } from '@angular/material';
-import { MessageService } from 'src/app/financial/services/message.service';
+import { MessageService } from 'src/app/common/services/message.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { FinancialService } from 'src/app/financial/services/financial.service';
 
@@ -42,8 +42,14 @@ export class LoginViewComponent implements OnInit {
     const isOffline = this.isOfflineMode;
     if (this.validateFields(username, password)) {
       this.authenticationService.login(username, password, isOffline).subscribe(user => {
+        if (this.isDataSyncDirty()) {
+          this.financialService.sync();
+          this.setDataSynClean();
+        } else {
+          this.financialService.updateLocalStorageFromDatabase();
+          this.setDataSynClean();
+        }
         this.authenticationService.setCurrentUser(user);
-        this.financialService.updateLocalStorageFromDatabase();
         this.isLoading = false;
         this.router.navigate(['/expense-dashboard']);
       },
@@ -88,6 +94,14 @@ export class LoginViewComponent implements OnInit {
       this.messageService.openMessageBar('Existem campos obrigatórios não preenchidos', 3000);
     }
     return isAllRequiredFieldsFilled;
+  }
+
+  public isDataSyncDirty(): boolean {
+    return this.authenticationService.isDirty();
+  }
+
+  public setDataSynClean(): void {
+    this.authenticationService.setIsClean();
   }
 
 }

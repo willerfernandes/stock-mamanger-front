@@ -50,7 +50,6 @@ import { NativeDateModule } from '@angular/material';
 
 
 
-import { NgxCurrencyModule } from 'ngx-currency';
 import { MainViewComponent } from './stocks/layouts/main-view/main-view.component';
 import { LoginViewComponent } from './common/account/login-view/login-view.component';
 import { SignupViewComponent } from './common/account/signup-view/signup-view.component';
@@ -208,8 +207,7 @@ import { UserNewComponent } from './stocks/layouts/register/user/user-new/user-n
     MatCardModule,
     MatInputModule,
     MatButtonModule,
-    MatBottomSheetModule,
-    NgxCurrencyModule
+    MatBottomSheetModule
 
   ],
   providers: [
