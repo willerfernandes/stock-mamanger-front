@@ -18,8 +18,6 @@ export class AuthenticationService {
               private router: Router
     ) { }
 
-    connectionMode = 'offline';
-
   public isOnline(): boolean {
     return this.storageService.getConnectionMode()  === 'online';
   }

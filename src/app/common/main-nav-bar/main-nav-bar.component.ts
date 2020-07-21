@@ -45,7 +45,7 @@ export class MainNavBarComponent implements OnInit {
 
   public connect(): void {
     this.authenticationService.connect();
-    this.financialService.sync();
+    this.financialService.sync(true);
     this.ngOnInit();
   }
 

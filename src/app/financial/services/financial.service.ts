@@ -20,7 +20,7 @@ export class FinancialService {
               private storageService: StorageService) { }
 
 
-  private isOnline(): boolean {
+  public isOnline(): boolean {
     return this.authenticationService.isOnline();
   }
 
@@ -33,7 +33,7 @@ export class FinancialService {
   }
 
   saveEntry(entry: Entry) {
-    if (this.isOnline) {
+    if (this.isOnline()) {
       return this.onlineFinancialService.saveEntry(entry);
     } else {
       return this.offlineFinancialService.saveEntry(entry);
@@ -41,7 +41,7 @@ export class FinancialService {
   }
 
   public loadEntryClass(id: number): Observable<EntryClass> {
-    if (this.isOnline) {
+    if (this.isOnline()) {
       return this.onlineFinancialService.loadEntryClass(id);
     } else {
       return this.offlineFinancialService.loadEntryClass(id);
@@ -49,7 +49,7 @@ export class FinancialService {
   }
 
   public loadEntryClasses(type: string): Observable<EntryClass[]> {
-    if (this.isOnline) {
+    if (this.isOnline()) {
       return this.onlineFinancialService.loadEntryClasses(type);
     } else {
       return this.offlineFinancialService.loadEntryClasses(type);
@@ -57,7 +57,7 @@ export class FinancialService {
   }
 
   public saveEntryClass(entryClass: EntryClass): Observable<EntryClass> {
-    if (this.isOnline) {
+    if (this.isOnline()) {
       return this.onlineFinancialService.saveEntryClass(entryClass);
     } else {
       return this.offlineFinancialService.saveEntryClass(entryClass);
@@ -65,7 +65,7 @@ export class FinancialService {
   }
 
   public deleteEntryClass(id: number): Observable<EntryClass> {
-    if (this.isOnline) {
+    if (this.isOnline()) {
       return this.onlineFinancialService.deleteEntryClass(id);
     } else {
       return this.offlineFinancialService.deleteEntryClass(id);
@@ -73,34 +73,38 @@ export class FinancialService {
   }
 
   public deleteEntry(id: number): Observable<Entry> {
-    if (this.isOnline) {
+    if (this.isOnline()) {
       return this.onlineFinancialService.deleteEntry(id);
     } else {
       return this.offlineFinancialService.deleteEntry(id);
     }
   }
 
-  public sync() {
+  public async sync(showUpdateMessage: boolean) {
     const entries = this.storageService.findAllEntries();
     this.onlineFinancialService.syncEntries(entries).subscribe(entriesOnDatabase => {
-      if (entriesOnDatabase.status === 204) {
+
+      if (entriesOnDatabase.status === 204 && showUpdateMessage) {
         this.messageService.openMessageBar('Você está online novamente! Seus novos lançamentos foram sincronizados com o servidor.', null);
         return;
       }
       if (entriesOnDatabase.status === 200) {
         this.storageService.saveAllEntries(entriesOnDatabase.body);
+        if (showUpdateMessage) {
+          this.messageService.openMessageBar('Você está online novamente!' +
+          'Seus novos lançamentos foram sincronizados com o servidor.', null);
+          return;
+        }
       }
-      this.messageService.openMessageBar('Você está online novamente! Seus novos lançamentos foram sincronizados com o servidor.', null);
-
     },
       err => {
-        this.messageService.openMessageBar('Houve um erro ao conectar com o servidor', 2000);
+        this.messageService.openMessageBar('Sua sessão expirou. Por favor, faça login novamente', null);
       });
   }
 
   updateLocalStorageFromDatabase(): void {
     try {
-      if (this.isOnline) {
+      if (this.isOnline()) {
         this.onlineFinancialService.loadEntryClasses('').subscribe(clases => {
           this.storageService.saveAllEntryClasses(clases);
         });

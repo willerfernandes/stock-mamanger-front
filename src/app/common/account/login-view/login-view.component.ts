@@ -42,16 +42,15 @@ export class LoginViewComponent implements OnInit {
     const isOffline = this.isOfflineMode;
     if (this.validateFields(username, password)) {
       this.authenticationService.login(username, password, isOffline).subscribe(user => {
+        this.authenticationService.setCurrentUser(user);
         if (this.isDataSyncDirty()) {
-          this.financialService.sync();
-          this.setDataSynClean();
+          this.financialService.sync(false).then( () => {
+            this.proceedLogin();
+          });
         } else {
           this.financialService.updateLocalStorageFromDatabase();
-          this.setDataSynClean();
+          this.proceedLogin();
         }
-        this.authenticationService.setCurrentUser(user);
-        this.isLoading = false;
-        this.router.navigate(['/expense-dashboard']);
       },
       error => {
         this.isLoading = false;
@@ -62,6 +61,11 @@ export class LoginViewComponent implements OnInit {
     }
   }
 
+  private proceedLogin(): void {
+    this.isLoading = false;
+    this.setDataSynClean();
+    this.router.navigate(['/expense-dashboard']);
+  }
 
   navSignUpPage() {
     this.router.navigate(['/signup']);

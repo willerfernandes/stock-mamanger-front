@@ -79,7 +79,7 @@ export class NewExpenseViewComponent implements OnInit {
       entry.date = date._selected.toISOString();
       entry.description = description;
       entry.entryType = 'DESPESA';
-      entry.value = this.group.value.value;
+      entry.value = Number.parseFloat(this.group.value.value);
 
       this.bottomSheetRef.dismiss();
       this.financialService.saveEntry(entry).subscribe(async res => {
