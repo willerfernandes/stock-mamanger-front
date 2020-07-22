@@ -44,7 +44,7 @@ export class LoginViewComponent implements OnInit {
       this.authenticationService.login(username, password, isOffline).subscribe(user => {
         this.authenticationService.setCurrentUser(user);
         if (this.isDataSyncDirty()) {
-          this.financialService.sync(false).then( () => {
+          this.financialService.sync(true).then( () => {
             this.proceedLogin();
           });
         } else {

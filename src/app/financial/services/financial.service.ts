@@ -14,10 +14,10 @@ import { MessageService } from '../../common/services/message.service';
 export class FinancialService {
 
   constructor(private onlineFinancialService: OnlineFinancialService,
-              private offlineFinancialService: OfflineFinancialService,
-              private authenticationService: AuthenticationService,
-              private messageService: MessageService,
-              private storageService: StorageService) { }
+    private offlineFinancialService: OfflineFinancialService,
+    private authenticationService: AuthenticationService,
+    private messageService: MessageService,
+    private storageService: StorageService) { }
 
 
   public isOnline(): boolean {
@@ -80,19 +80,33 @@ export class FinancialService {
     }
   }
 
-  public async sync(showUpdateMessage: boolean) {
+  public async sync(isLogin: boolean) {
     const entries = this.storageService.findAllEntries();
+    this.messageService.openMessageBar('Sincronizando dados da sua sessão... Isso poderá levar alguns segundos.', null);
     this.onlineFinancialService.syncEntries(entries).subscribe(entriesOnDatabase => {
 
-      if (entriesOnDatabase.status === 204 && showUpdateMessage) {
-        this.messageService.openMessageBar('Você está online novamente! Seus novos lançamentos foram sincronizados com o servidor.', null);
-        return;
+      if (isLogin) {
+        if (entriesOnDatabase.status === 200) {
+          this.storageService.saveAllEntries(entriesOnDatabase.body);
+          this.messageService.openMessageBar('Seus novos lançamentos foram sincronizados com o servidor' +
+            ' Atualize para exibir os dados mais recentes.', null);
+
+        }
+      } else {
+        if (entriesOnDatabase.status === 204) {
+          this.messageService.openMessageBar('Você está online novamente!', null);
+        }
+        if (entriesOnDatabase.status === 200) {
+          this.storageService.saveAllEntries(entriesOnDatabase.body);
+          this.messageService.openMessageBar('Você está online novamente! ' +
+            'Seus novos lançamentos foram sincronizados com o servidor.', null);
+          this.storageService.saveAllEntries(entriesOnDatabase.body);
+        }
       }
       if (entriesOnDatabase.status === 200) {
-        this.storageService.saveAllEntries(entriesOnDatabase.body);
-        if (showUpdateMessage) {
-          this.messageService.openMessageBar('Você está online novamente!' +
-          'Seus novos lançamentos foram sincronizados com o servidor.', null);
+        if (isLogin) {
+          this.messageService.openMessageBar('Você está online novamente! ' +
+            'Seus novos lançamentos foram sincronizados com o servidor.', null);
           return;
         }
       }
@@ -117,25 +131,25 @@ export class FinancialService {
     }
   }
 
-    // Adm
-    updateEntriesOnStorage(entriesJson: string) {
-      this.storageService.saveAllEntries(JSON.parse(entriesJson));
-    }
+  // Adm
+  updateEntriesOnStorage(entriesJson: string) {
+    this.storageService.saveAllEntries(JSON.parse(entriesJson));
+  }
 
-    updateEntryClassesOnStorage(entryClasses: string) {
-      this.storageService.saveAllEntryClasses(JSON.parse(entryClasses));
-    }
+  updateEntryClassesOnStorage(entryClasses: string) {
+    this.storageService.saveAllEntryClasses(JSON.parse(entryClasses));
+  }
 
-    loadEntriesFromStorage(): Observable<string> {
-      return of(JSON.stringify(this.storageService.findAllEntries()));
-    }
+  loadEntriesFromStorage(): Observable<string> {
+    return of(JSON.stringify(this.storageService.findAllEntries()));
+  }
 
-    loadEntryClassesFromStorage(): Observable<string>  {
-      return of(JSON.stringify(this.storageService.findAllEntryClasses()));
-    }
+  loadEntryClassesFromStorage(): Observable<string> {
+    return of(JSON.stringify(this.storageService.findAllEntryClasses()));
+  }
 
-    clearStorage() {
-      this.storageService.delleteAllStorage();
-    }
+  clearStorage() {
+    this.storageService.delleteAllStorage();
+  }
 
 }
