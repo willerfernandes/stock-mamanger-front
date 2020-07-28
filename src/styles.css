@@ -3,9 +3,9 @@
 
 .color-primary {
   color: #030091;
-
 }
 
+/* General font styles */
 .input-label  {
   font-family: 'Roboto';
   font-style: normal;
@@ -18,7 +18,22 @@
 
 }
 
-.color-primary .input-label-large {
+
+
+
+/* General inputs styles */
+textarea, select, input[type=text], input[type=tel], input[type=number], input[type=password] {
+  padding-left: 12px;
+  padding: 02px 05px;
+  background-color: white;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px ridge #030091;
+  font-size: 16px;
+}
+
+.input-label-large {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: bold;
@@ -28,7 +43,7 @@
   min-width: 100px;
 }
 
-.color-primary .input-label-small {
+.input-label-small {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: normal;
@@ -38,9 +53,6 @@
   max-width: 150px;
   min-width: 100px;
 }
-
-
-
 
 /* Snackbar */
 .mat-snack-bar-container {

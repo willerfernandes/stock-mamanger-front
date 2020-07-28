@@ -84,13 +84,11 @@ export class FinancialService {
     const entries = this.storageService.findAllEntries();
     this.messageService.openMessageBar('Sincronizando dados da sua sessão... Isso poderá levar alguns segundos.', null);
     this.onlineFinancialService.syncEntries(entries).subscribe(entriesOnDatabase => {
-
       if (isLogin) {
         if (entriesOnDatabase.status === 200) {
           this.storageService.saveAllEntries(entriesOnDatabase.body);
           this.messageService.openMessageBar('Seus novos lançamentos foram sincronizados com o servidor' +
             ' Atualize para exibir os dados mais recentes.', null);
-
         }
       } else {
         if (entriesOnDatabase.status === 204) {

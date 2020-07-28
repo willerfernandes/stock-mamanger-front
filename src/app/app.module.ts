@@ -90,6 +90,7 @@ import { AdmViewComponent } from './financial/layouts/adm-view/adm-view.componen
 import { JwtInterceptor } from './common/handlers/jwt.interceptor';
 import { ErrorInterceptor } from './common/handlers/error.interceptor';
 import { ConfigComponent } from './stocks/layouts/register/configuration/config/config.component';
+import { NgxCurrencyModule } from "ngx-currency";
 
 
 import { ConfigDetailComponent } from './stocks/layouts/register/configuration/config-detail/config-detail.component';
@@ -207,7 +208,8 @@ import { UserNewComponent } from './stocks/layouts/register/user/user-new/user-n
     MatCardModule,
     MatInputModule,
     MatButtonModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
+    NgxCurrencyModule
 
   ],
   providers: [

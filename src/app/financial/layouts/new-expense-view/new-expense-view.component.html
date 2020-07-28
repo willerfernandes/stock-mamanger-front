@@ -7,8 +7,8 @@
 </div>
 
 <div [formGroup]="group" class="container containter-wraper" style="margin-top: 70px;">
-  <img  [src]="'./assets/img/credit-card-icon.svg'" style="margin-right: 10px; vertical-align: middle;"><label class="red-text">*</label><label class="color-primary input-label">Valor:</label>
-  <input id="input-currency" class="input-medium padding-small" style="font-size: 24px; font-weight: bold;" #amount placeholder="000,00" formControlName="value" />
+      <img  [src]="'./assets/img/credit-card-icon.svg'" style="margin-right: 10px; vertical-align: middle;"><label class="red-text">*</label><label class="color-primary input-label">Valor:</label>
+      <input id="input-currency" class="input-medium padding-small" style="font-size: 24px; font-weight: bold;" #amount placeholder="R$ 000,00" currencyMask type="tel" formControlName="value"  [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"/>
 </div>
 
 <hr>
@@ -17,7 +17,7 @@
   <select  #entryGroupSelect (change)="selectValueChanged(entryGroupSelect)" class="input-medium" #entryGroupSelect>
     <option value='---'>---</option>
     <option *ngFor="let entryClass of entryClasses" [value]="entryClass.id">{{entryClass.name}}</option>
-    <option style="font-weight: bold;" value="new">*Nova*</option>
+    <option style="font-weight: bold;" value="new">*Criar Nova*</option>
   </select>
   <span [hidden]="!isNewEntryGroup" class="hint-text" style="padding-left: 150px; max-width: 300px;">*Uma nova categoria será criada com as informações</span>
   <div [hidden]="!isNewEntryGroup">

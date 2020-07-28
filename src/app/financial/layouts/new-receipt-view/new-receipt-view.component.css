@@ -98,14 +98,14 @@
 }
 
 #input-currency {
-  background-image: url('/assets/img/RS-icon.svg');
+  /*background-image: url('/assets/img/RS-icon.svg');*/
   background-position: 10px 10px;
   background-repeat: no-repeat;
-  padding-left: 40px;
+  padding-left: 10px;
   color: #1d1d1d;
 }
 
-textarea, select, input[type=text], input[type=number], input[type=password] {
+textarea, select, input[type=text], input[type=number], input[type=tel], input[type=password] {
   padding-left: 12px;
   padding: 02px 05px;
   background-color: white;
