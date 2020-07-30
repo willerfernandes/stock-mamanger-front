@@ -30,17 +30,21 @@ import { AdmViewComponent } from './financial/layouts/adm-view/adm-view.componen
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'stock-dashboard', component: MainViewComponent },
-  { path: 'home', component: HomeViewComponent, canActivate: [AuthGuard] },
-  { path: 'expense-dashboard', component: ExpenseDashboardComponent , canActivate: [AuthGuard]},
   { path: 'login', component: LoginViewComponent },
   { path: 'signup', component: SignupViewComponent },
+  { path: 'home', component: HomeViewComponent, canActivate: [AuthGuard] },
+  { path: 'expense-dashboard', component: ExpenseDashboardComponent , canActivate: [AuthGuard]},
+  { path: 'entries', component: EntryListViewComponent },
+  { path: 'classes', component: EntryClassListViewComponent },
+  { path: 'classes/:id', component: EntryClassEditViewComponent },
+  { path: 'adm', component: AdmViewComponent },
   { path: 'config', component: ConfigComponent },
   { path: 'config/new', component: ConfigNewComponent },
   { path: 'config/:id', component: ConfigDetailComponent },
   { path: 'user', component: UserFilterComponent },
   { path: 'user/new', component: UserNewComponent },
   { path: 'user/:id', component: UserDetailComponent },
+  { path: 'stock-dashboard', component: MainViewComponent },
   { path: 'stock', component: StockFilterComponent },
   { path: 'stock/new', component: StockNewComponent },
   { path: 'stock/:id', component: StockDetailComponent },
@@ -50,11 +54,7 @@ const routes: Routes = [
   { path: 'category', component: ExpenseCategoryFilterComponent },
   { path: 'category/new', component: ExpenseCategoryNewComponent },
   { path: 'category/:id', component: ExpenseCategoryDetailComponent },
-  { path: 'under-construction', component: UnderConstructionComponent },
-  { path: 'entries', component: EntryListViewComponent },
-  { path: 'classes', component: EntryClassListViewComponent },
-  { path: 'classes/:id', component: EntryClassEditViewComponent },
-  { path: 'adm', component: AdmViewComponent }
+  { path: 'under-construction', component: UnderConstructionComponent }
 ];
 
 
