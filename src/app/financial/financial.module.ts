@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { SharedModule } from '../common/shared.module';
 import { ExpenseFilterComponent } from '../stocks/layouts/register/expense/expense-filter/expense-filter.component';
 import { ExpenseDetailComponent } from '../stocks/layouts/register/expense/expense-detail/expense-detail.component';
 import { ExpenseNewComponent } from '../stocks/layouts/register/expense/expense-new/expense-new.component';
 import { ExpenseCategoryNewComponent } from '../stocks/layouts/register/expense/expense-category-new/expense-category-new.component';
+// tslint:disable-next-line:max-line-length
 import { ExpenseCategoryFilterComponent } from '../stocks/layouts/register/expense/expense-category-filter/expense-category-filter.component';
+// tslint:disable-next-line:max-line-length
 import { ExpenseCategoryDetailComponent } from '../stocks/layouts/register/expense/expense-category-detail/expense-category-detail.component';
 import { ExpenseDashboardComponent } from './layouts/expense-dashboard-view/expense-dashboard.component';
 import { PieChartComponent } from './component/pie-chart/pie-chart.component';
@@ -13,7 +14,6 @@ import { ExpenseRowComponent } from './component/expense-row/expense-row.compone
 import { ExpenseGroupComponent } from './component/expense-group/expense-group.component';
 import { ExpenseTableTitleComponent } from './component/expense-table-title/expense-table-title.component';
 import { ExpenseErrorScreenComponent } from './component/expense-error-screen/expense-error-screen.component';
-import { RouterModule } from '@angular/router';
 import { HomeViewComponent } from './layouts/home-view/home-view.component';
 import { AddMenuComponent } from './component/add-menu/add-menu.component';
 import { ExpenseBottomSheetComponent } from './component/expense-bottom-sheet/expense-bottom-sheet.component';
@@ -52,6 +52,10 @@ import { AppRoutingModule } from '../app-routing.module';
     EntryClassListViewComponent,
     EntryClassEditViewComponent,
     AdmViewComponent
+  ],
+  entryComponents: [
+    NewExpenseViewComponent,
+    NewReceiptViewComponent
   ],
   imports: [
     SharedModule

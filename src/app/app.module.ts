@@ -20,10 +20,6 @@ import { SharedModule } from './common/shared.module';
   declarations: [
     AppComponent
   ],
-  entryComponents: [
-    NewExpenseViewComponent,
-    NewReceiptViewComponent
-  ],
   imports: [
     StocksModule,
     FinancialModule,
