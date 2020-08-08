@@ -5,6 +5,7 @@ import { ThemePalette } from '@angular/material';
 import { MessageService } from 'src/app/common/services/message.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { FinancialService } from 'src/app/financial/services/financial.service';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 
 @Component({
@@ -17,7 +18,8 @@ export class LoginViewComponent implements OnInit {
   constructor(private authenticationService: AuthenticationService,
               private financialService: FinancialService,
               private router: Router,
-              private messageService: MessageService) { }
+              private messageService: MessageService,
+              private fb: FormBuilder) { this.createForm(); }
 
   isLoading = false;
 
@@ -28,7 +30,15 @@ export class LoginViewComponent implements OnInit {
   usernamePlaceholder = 'Nome do usuário';
   passwordPlaceholder = 'Insira a senha';
 
+  loginForm: FormGroup;
 
+  createForm() {
+    this.loginForm = this.fb.group({
+      username: ['', Validators.required ],
+      password: ['', Validators.required ],
+      offlineModeControl: [false]
+    });
+  }
 
   ngOnInit() {
     if (this.authenticationService.loggedIn()) {
@@ -36,11 +46,18 @@ export class LoginViewComponent implements OnInit {
     }
   }
 
-  login(username: string, password: string) {
+  public isOffline() {
+    console.log(this.loginForm.value.offlineModeControl);
+    return this.loginForm.value.offlineModeControl === 'true';
+  }
 
-    this.isLoading = true;
-    const isOffline = this.isOfflineMode;
-    if (this.validateFields(username, password)) {
+  login() {
+
+    const username = this.loginForm.value.username;
+    const password = this.loginForm.value.password;
+    const isOffline = this.loginForm.value.offlineModeControl;
+
+    if (this.validateFields(username, password, isOffline)) {
       this.authenticationService.login(username, password, isOffline).subscribe(user => {
         this.authenticationService.setCurrentUser(user);
         if (this.isDataSyncDirty()) {
@@ -83,13 +100,13 @@ export class LoginViewComponent implements OnInit {
     this.isOfflineMode = !this.isOfflineMode;
   }
 
-  private validateFields(username: string, password: string) {
+  private validateFields(username: string, password: string, offlineMode: boolean) {
     let isAllRequiredFieldsFilled = true;
     if (username === '') {
       this.usernamePlaceholder = 'Campo Obrigatório';
       isAllRequiredFieldsFilled = false;
     }
-    if (password === '' && !this.isOfflineMode) {
+    if (password === '' && !offlineMode) {
       this.passwordPlaceholder = 'Campo Obrigatório';
       isAllRequiredFieldsFilled = false;
     }

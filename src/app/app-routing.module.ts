@@ -19,8 +19,10 @@ import { StockDetailComponent } from './stocks/layouts/register/stock/stock-deta
 import { OperationFilterComponent } from './stocks/layouts/register/operation/operation-filter/operation-filter.component';
 import { OperationNewComponent } from './stocks/layouts/register/operation/operation-new/operation-new.component';
 import { OperationDetailComponent } from './stocks/layouts/register/operation/operation-detail/operation-detail.component';
+// tslint:disable-next-line:max-line-length
 import { ExpenseCategoryFilterComponent } from './stocks/layouts/register/expense/expense-category-filter/expense-category-filter.component';
 import { ExpenseCategoryNewComponent } from './stocks/layouts/register/expense/expense-category-new/expense-category-new.component';
+// tslint:disable-next-line:max-line-length
 import { ExpenseCategoryDetailComponent } from './stocks/layouts/register/expense/expense-category-detail/expense-category-detail.component';
 import { UnderConstructionComponent } from './financial/layouts/under-construction-view/under-construction.component';
 import { EntryListViewComponent } from './financial/layouts/entry-list-view/entry-list-view.component';
@@ -30,17 +32,21 @@ import { AdmViewComponent } from './financial/layouts/adm-view/adm-view.componen
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'stock-dashboard', component: MainViewComponent },
-  { path: 'home', component: HomeViewComponent, canActivate: [AuthGuard] },
-  { path: 'expense-dashboard', component: ExpenseDashboardComponent , canActivate: [AuthGuard]},
   { path: 'login', component: LoginViewComponent },
   { path: 'signup', component: SignupViewComponent },
+  { path: 'home', component: HomeViewComponent, canActivate: [AuthGuard] },
+  { path: 'expense-dashboard', component: ExpenseDashboardComponent , canActivate: [AuthGuard]},
+  { path: 'entries', component: EntryListViewComponent },
+  { path: 'classes', component: EntryClassListViewComponent },
+  { path: 'classes/:id', component: EntryClassEditViewComponent },
+  { path: 'adm', component: AdmViewComponent },
   { path: 'config', component: ConfigComponent },
   { path: 'config/new', component: ConfigNewComponent },
   { path: 'config/:id', component: ConfigDetailComponent },
   { path: 'user', component: UserFilterComponent },
   { path: 'user/new', component: UserNewComponent },
   { path: 'user/:id', component: UserDetailComponent },
+  { path: 'stock-dashboard', component: MainViewComponent },
   { path: 'stock', component: StockFilterComponent },
   { path: 'stock/new', component: StockNewComponent },
   { path: 'stock/:id', component: StockDetailComponent },
@@ -50,11 +56,7 @@ const routes: Routes = [
   { path: 'category', component: ExpenseCategoryFilterComponent },
   { path: 'category/new', component: ExpenseCategoryNewComponent },
   { path: 'category/:id', component: ExpenseCategoryDetailComponent },
-  { path: 'under-construction', component: UnderConstructionComponent },
-  { path: 'entries', component: EntryListViewComponent },
-  { path: 'classes', component: EntryClassListViewComponent },
-  { path: 'classes/:id', component: EntryClassEditViewComponent },
-  { path: 'adm', component: AdmViewComponent }
+  { path: 'under-construction', component: UnderConstructionComponent }
 ];
 
 
