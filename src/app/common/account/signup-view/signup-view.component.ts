@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { MessageService } from 'src/app/common/services/message.service';
 import { SignupCredentials } from '../../entities/signup-credentials';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-signup-view',
@@ -12,17 +13,21 @@ import { SignupCredentials } from '../../entities/signup-credentials';
 })
 export class SignupViewComponent implements OnInit {
 
-  public baseURL = 'http://localhost:4200/';
-  public loginPath = this.baseURL + 'login';
-
   isLoading = false;
 
-  successMessage = 'Cadstrado com sucesso';
+  signUpForm: FormGroup;
 
-  public isFakeServer  = false;
+  createForm() {
+    this.signUpForm = this.fb.group({
+      login: ['', Validators.required],
+      psw: ['', Validators.required ],
+      repeatPsw: ['', Validators.required ],
+      name: ['', Validators.required ]
+    });
+  }
 
   constructor(private authService: OnlineAuthenticationService,
-              private router: Router,  private messageService: MessageService) { }
+              private router: Router,  private messageService: MessageService, private fb: FormBuilder) { this.createForm(); }
 
   ngOnInit() {
     this.authService.isLoggedIn.subscribe(logged => {
@@ -32,7 +37,12 @@ export class SignupViewComponent implements OnInit {
     });
   }
 
-  public signUp(login: string, password: string, repeatPsw: string, name: string) {
+  public signUp() {
+    const login = this.signUpForm.value.login;
+    const password = this.signUpForm.value.psw;
+    const repeatPsw = this.signUpForm.value.repeatPsw;
+    const name = this.signUpForm.value.name;
+
     this.validateFields(login, password, repeatPsw, name);
     this.isLoading = true;
     const credentials = new SignupCredentials();
@@ -47,7 +57,7 @@ export class SignupViewComponent implements OnInit {
       } else {
         this.authService.createUser(credentials).subscribe( () => {
           this.isLoading = false;
-          this.messageService.openMessageBar(this.successMessage, 3000);
+          this.messageService.openMessageBar('Cadstrado com sucesso', 3000);
           this.router.navigate(['/login']);
         },
           err => {
@@ -65,12 +75,10 @@ export class SignupViewComponent implements OnInit {
   }
 
   private validateFields(login: string, password: string, repeatPsw: string, name: string): boolean {
-    if (login == null || password == null || repeatPsw == null || name == null
-        || login === '' || password === '' || repeatPsw === '' || name === '' ) {
+    if (!this.signUpForm.valid) {
       this.messageService.openMessageBar('Preencha todos os campos obrigatórios', 3000);
       throw new Error('Preencha todos os campos obrigatórios');
     }
-
     if (password !== repeatPsw) {
       this.messageService.openMessageBar('Os valores digitados nos campos \'Senha\' e \'Repita sua Senha\' não são iguais!', 3000);
       throw new Error('Os valores digitados nos campos \'Senha\' e \'Repita sua Senha\' não são iguais!');

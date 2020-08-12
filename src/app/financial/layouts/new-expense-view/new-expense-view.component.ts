@@ -35,6 +35,8 @@ export class NewExpenseViewComponent implements OnInit {
     value: new FormControl()
  });
 
+ 
+
   @Output()
   public entrySaved = new EventEmitter();
 

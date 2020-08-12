@@ -15,11 +15,18 @@
   vertical-align: middle;
   max-width: 150px;
   min-width: 100px;
-
 }
 
-
-
+.observationText {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  text-align: justify;
+  text-justify: inter-word;
+  color: #868686;
+}
 
 /* General inputs styles */
 textarea, select, input[type=text], input[type=tel], input[type=number], input[type=password] {
@@ -31,6 +38,22 @@ textarea, select, input[type=text], input[type=tel], input[type=number], input[t
   border-right: none;
   border-bottom: 1px ridge #030091;
   font-size: 16px;
+}
+
+textarea:focus, select:focus, input:focus {
+  outline: none;
+}
+
+
+/* General text styeles */
+label {
+  color: #030091;
+  font-weight: bold;
+}
+
+h2 {
+  color: #030091;
+  text-align: center;
 }
 
 .input-label-large {

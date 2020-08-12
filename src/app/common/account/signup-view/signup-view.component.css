@@ -1,51 +1,24 @@
 * {box-sizing: border-box}
 
-/* Full-width input fields */
-  input[type=text], input[type=password] {
-  width: 100%;
-  padding: 10px;
-  margin: 5px 0 22px 0;
-  display: inline-block;
-  border: none;
-  background: #f1f1f1;
+form {
+  border: 1px solid #ccc;
 }
 
-input[type=text]:focus, input[type=password]:focus {
-  background-color: #ddd;
-  outline: none;
+input[type=text], input[type=password] {
+  width: 100%;
+  padding-left: 12px;
+  margin: 5px 0 22px 0;
+  padding: 02px 05px;
+  display: -webkit-box;
+}
+
+p {
+  text-align: center;
 }
 
 hr {
   border: 1px solid #f1f1f1;
   margin-bottom: 25px;
-}
-
-/* Set a style for all buttons */
-button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  opacity: 0.9;
-}
-
-button:hover {
-  opacity:1;
-}
-
-/* Extra styles for the cancel button */
-.cancelbtn {
-  padding: 14px 20px;
-  background-color: #f44336;
-}
-
-/* Float cancel and signup buttons and add an equal width */
-.cancelbtn, .signupbtn {
-  float: left;
-  width: 50%;
 }
 
 /* Add padding to container elements */
@@ -61,25 +34,10 @@ button:hover {
   border-radius: 8px;
 }
 
-/* Clear floats */
 .clearfix::after {
   content: "";
   clear: both;
   display: table;
-}
-
-h2 {
-  color: #030091;
-  text-align: center;
-}
-
-
-.footer {
-  position: fixed;
-  bottom: 0px;
-  width: 100%;
-  height: 60px;
-  background-color: #030091;
 }
 
 .header {
@@ -87,6 +45,10 @@ h2 {
   height: 100px;
   background-color: #030091;
   padding-top: 4px;
+  text-align: center;
+  font-family: 'Roboto';
+  font-size: xx-large;
+  font-weight: bolder;
 }
 
 .header-text {
@@ -96,41 +58,37 @@ h2 {
   color: white;
 }
 
-.center {
+.button-container {
+  padding-top: 20px;
+  padding-bottom: 20px;
   text-align: center;
-  font-family: 'Roboto';
-  font-size: xx-large;
+}
+
+.button-back {
+  background: none;
+  border: none;
   font-weight: bolder;
-}
-
-input[type=text], input[type=password] {
-  width: 100%;
-  padding-left: 12px;
-  padding: 02px 05px;
-  display: -webkit-box;
-  background-color: white;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-bottom: 1px ridge #030091;
-  background-color: transparent;
-}
-
-input:active {
-  border-top: none;
-  border-left: none;
-  border-right: none;
-	border-bottom: 1px ridge #030091;
-}
-
-
-input:focus {
-  background-color: transparent;
+  display: block;
+  margin: auto;
+  width: 100px;
 }
 
 .text-center {
   text-align: center;
   justify-content: center;
+}
+
+.loading-container {
+  width: 100%;
+  margin: auto;
+  box-sizing: border-box;
+}
+
+.loading-gif {
+  width: 100px;
+  height: auto;
+  display: block;
+  margin: auto;
 }
 
 @media only screen and (max-width: 600px) {

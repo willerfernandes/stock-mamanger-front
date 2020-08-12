@@ -25,7 +25,7 @@ import { EntryListViewComponent } from './layouts/entry-list-view/entry-list-vie
 import { EntryClassListViewComponent } from './layouts/entry-class-list-view/entry-class-list-view.component';
 import { EntryClassEditViewComponent } from './layouts/entry-class-edit-view/entry-class-edit-view.component';
 import { AdmViewComponent } from './layouts/adm-view/adm-view.component';
-import { AppRoutingModule } from '../app-routing.module';
+import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
 
 @NgModule({
   declarations: [
@@ -58,7 +58,8 @@ import { AppRoutingModule } from '../app-routing.module';
     NewReceiptViewComponent
   ],
   imports: [
-    SharedModule
+    SharedModule,
+    NgxTrimDirectiveModule
   ]
 })
 export class FinancialModule { }
