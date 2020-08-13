@@ -10,14 +10,14 @@
       <form [formGroup]="loginForm" (ngSubmit)="login()">
 
         <div>
-          <label  class="color-primary" for="name">
+          <label  class="input-label" for="name">
             <b>Login</b>
           </label>
           <input id="id_username" type="text" formControlName="username" maxlength="25" placeholder="{{usernamePlaceholder}}" required>
         </div>
 
         <div [hidden]="isOfflineMode">
-          <label  class="color-primary" for="pass">
+          <label  class="input-label" for="pass">
             <b>Senha</b>
           </label>
           <input id="id_password" type="password" formControlName="password" maxlength="25" placeholder="{{passwordPlaceholder}}" required>

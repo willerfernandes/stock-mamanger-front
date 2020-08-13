@@ -22,15 +22,13 @@
     </div>
   </div>
 
-
   <div *ngIf="!isLoading && isSuccess && !isEmptyResult">
     <div style="width: 80%; box-sizing: border-box; margin: auto;">
       <app-pie-chart [pieChartLabels]="pieChartLabels"
       [pieChartData]="pieChartData"> </app-pie-chart>
     </div>
 
-
-    <div   class="financial-statement-container">
+    <div class="financial-statement-container">
         <div>
           <label>Despesas no período</label><label class="financial-statement-values color-red">{{totalExpenses.toLocaleString('pt-BR', { style: 'currency', currency:'BRL' })}}</label>
         </div>
@@ -41,30 +39,30 @@
           <label>Total</label><label class="financial-statement-values"  [style.color]="getFinancialStatement() > 0 ? '#4BC949': '#D00000'">{{getFinancialStatement().toLocaleString('pt-BR', { style: 'currency', currency:'BRL' })}}</label>
         </div>
     </div>
-    <div style="margin-top: 40px; text-align: center; font-weight: bold; font-size: 16px;">
+    <div class="entries-title">
       <label>LANÇAMENTOS</label>
     </div>
     <div>
-    <p *ngIf="expenseGroups.length > 0" style="font-size: small; color: #cacaca; padding-left: 5px;">Despesas</p>
+    <p *ngIf="expenseGroups.length > 0" class="category-title">Despesas</p>
       <div>
         <app-expense-group *ngIf="isSuccess" [expenseGroups]="expenseGroups" (deleteRowEvent)="entryDeleted()"></app-expense-group>
       </div>
       <br>
-      <p style="font-size: small; color: #cacaca;  padding-left: 5px;">Receitas</p>
+    <p *ngIf="receiptGroups.length > 0" class="category-title">Receitas</p>
       <div>
         <app-expense-group *ngIf="isSuccess" [expenseGroups]="receiptGroups" (deleteRowEvent)="entryDeleted()"></app-expense-group>
       </div>
       <br>
     </div>
-    <p *ngIf="expenseGroups.length > 0" style="font-size: small; color: #cacaca;">Últimos lançamentos</p>
+    <p *ngIf="expenseGroups.length > 0" class="category-title">Últimos lançamentos</p>
     <div *ngIf="expenseGroups.length > 0">
       <app-entry-table [entries]="allEntries"></app-entry-table>
     </div>
-    <p *ngIf="expenseGroups.length > 0" style="font-size: small; font-weight: bold; color: #777777; text-align: center; text-decoration: underline;"
+    <p *ngIf="expenseGroups.length > 0" class="show-more-text"
       (click)="onShowMoreClicked()">MOSTRAR MAIS</p>
   </div>
-  <div *ngIf="isLoading" style="width: 80%; height: 400px; margin: auto; box-sizing: border-box;">
-    <img src='/assets/img/loading.gif' style="width: 100px; height: auto; display: block; margin: auto; padding: 100px 0px;">
+  <div *ngIf="isLoading" class="loading-container">
+    <img src='/assets/img/loading.gif' class="loading-gif">
   </div>
   <div *ngIf="!isLoading && !isSuccess">
     <app-expense-error-screen></app-expense-error-screen>
@@ -91,7 +89,6 @@
     (expenseClicked)="activeExpense()"
     (receiptClicked)="activeReceipt()"
     ([isAddMenuActive])="isAddMenuActive">
-
   </app-add-menu>
 </div>
 

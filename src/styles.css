@@ -46,7 +46,7 @@ textarea:focus, select:focus, input:focus {
 
 
 /* General text styeles */
-label {
+.input-label {
   color: #030091;
   font-weight: bold;
 }
