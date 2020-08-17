@@ -1,8 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
-import { CurrencyPipe } from '@angular/common';
-import { FormControl, FormGroup } from '@angular/forms';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material';
 import { MessageService } from 'src/app/common/services/message.service';
 import { EntryClass } from '../../entities/entry-class';
@@ -20,22 +18,21 @@ import { AuthenticationService } from 'src/app/common/services/authentication.se
 export class NewExpenseViewComponent implements OnInit {
 
   public isNewEntryGroup = false;
-  public initialDate = new FormControl(new Date());
-  public formattedAmount;
-  public amount = '';
   public entryClasses: EntryClass[];
-  public isDone = false;
-
+  plots = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
   color: ThemePalette = 'primary';
 
-  public isInstallmentPurchase = false;
-
-
   group = new FormGroup({
-    value: new FormControl()
+    value: new FormControl(Validators.required),
+    entryClass: new FormControl(Validators.required),
+    newEntryClassName: new FormControl('', Validators.required),
+    newEntryClassDescription: new FormControl('', Validators.required),
+    description: new FormControl(),
+    date: new FormControl(new Date()),
+    dateToogless: new FormControl(),
+    installmentPurchase: new FormControl(false, Validators.required),
+    numberOfPlots: new FormControl(Validators.required)
  });
-
- 
 
   @Output()
   public entrySaved = new EventEmitter();
@@ -45,40 +42,45 @@ export class NewExpenseViewComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private bottomSheetRef: MatBottomSheetRef<NewExpenseViewComponent>,
     private messageService: MessageService) { }
-    plots = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
 
-  saveExpense(
-    event: MouseEvent,
-    entryGroupId: string,
-    newEntryGroupName: any,
-    newEntryGroupDescription: string,
-    date: any,
-    description: string,
-    value: string,
-    numberOfPlots: number): void {
-
-
-    // TODO: validate with angular forms
-    this.validateFields(entryGroupId, newEntryGroupName, newEntryGroupDescription, date, this.group.value.value);
-    const entryClass = new EntryClass();
-    if (entryGroupId === 'new') {
-      entryClass.userId = this.authenticationService.getCurrentUser().id;
-      entryClass.name = newEntryGroupName;
-      entryClass.description = newEntryGroupDescription;
-      entryClass.type = 'DESPESA';
-    } else {
-      entryClass.id = Number.parseInt(entryGroupId, 10);
+    ngOnInit() {
+      this.loadEntryClasses();
     }
 
-    if (this.isInstallmentPurchase) {
-      this.createInstallmentPurchases(event, this.group.value.value, numberOfPlots, date, entryClass, description);
+  saveExpense(event: MouseEvent): void {
+
+    const value = this.group.value.value;
+    const entryClassId = this.group.value.entryClass;
+    const newEntryClassName = this.group.value.newEntryClassName;
+    const newEntryClassDescription = this.group.value.newEntryClassDescription;
+    const description = this.group.value.description;
+    const date = this.group.value.date;
+    const installmentPurchase = this.group.value.installmentPurchase;
+    const numberOfPlots = this.group.value.numberOfPlots;
+
+    console.log(installmentPurchase);
+
+    // TODO: validate with angular forms
+    this.validateFields(entryClassId, newEntryClassName, newEntryClassDescription, date, value);
+    const entryClass = new EntryClass();
+    if (entryClassId === 'new') {
+      entryClass.userId = this.authenticationService.getCurrentUser().id;
+      entryClass.name = newEntryClassName;
+      entryClass.description = newEntryClassDescription;
+      entryClass.type = 'DESPESA';
+    } else {
+      entryClass.id = Number.parseInt(entryClassId, 10);
+    }
+
+    if (installmentPurchase) {
+      this.createInstallmentPurchases(event, value, numberOfPlots, date, entryClass, description);
     } else {
 
 
       const entry = new Entry();
       entry.userId = this.authenticationService.getCurrentUser().id;
       entry.entryClass = entryClass;
-      entry.date = date._selected.toISOString();
+      entry.date = date.toISOString();
       entry.description = description;
       entry.entryType = 'DESPESA';
       entry.value = Number.parseFloat(this.group.value.value);
@@ -105,7 +107,7 @@ export class NewExpenseViewComponent implements OnInit {
                                       description: string) {
 
     const eachPlotValue: number = parseFloat(value) / numberOfPlots;
-    const initialDate: Date = new Date(date._selected.toISOString());
+    const initialDate: Date = new Date(date.toISOString());
     for (let i = 0; i < numberOfPlots; i++) {
       const entry = new Entry();
       entry.userId = this.authenticationService.getCurrentUser().id;
@@ -124,32 +126,9 @@ export class NewExpenseViewComponent implements OnInit {
     this.bottomSheetRef.dismiss();
   }
 
-  public onIsInstallmentPurchaseToogleSliderChange(): void {
-      this.isInstallmentPurchase = !this.isInstallmentPurchase;
-  }
-
-  // TODO: Jesus, how ugly this is, but for reason the select options only updates when something chages
-  // Already set to wait for reponse and, by console-logging, the options are coming. It seens that
-  // the select options are filled before backend response and it is never updated again until somenthing changes
   public doNothing() {
     this.entryClasses = this.entryClasses;
   }
-
-  public changedInputAmountValue(event: any) {
-    /*const key = event.key;
-    if (key === '.' || key === ',') {
-      return;
-    }
-    const oldAmount = this.amount ;
-    if (oldAmount.length === 0) {
-      this.amount = ',0';
-    }
-    document.getElementById('input-currency').value = this.amount;
-    // console.log(document.getElementById('input-currency').value );
-    User key pressed still apears on input after the value set
-    */
-  }
-
 
   public validateFields(
     entryGroupId: string,
@@ -160,7 +139,7 @@ export class NewExpenseViewComponent implements OnInit {
 
     let isValidForm = true;
 
-    if (entryGroupId === '---' || value == null || value === '' || date._selected == null) {
+    if (entryGroupId === '---' || value == null || value === '' || date == null) {
       isValidForm = false;
     }
     if (entryGroupId === 'new' &&
@@ -174,14 +153,6 @@ export class NewExpenseViewComponent implements OnInit {
       this.messageService.openMessageBar('Preencha todos os campos obrigatórios', 4000);
       throw new Error(('Campos obrigatórios não preenchidos'));
     }
-
-
-  }
-
-  transformAmount(element) {
-    /*this.formattedAmount = this.currencyPipe.transform(this.formattedAmount, 'BRL');
-
-    element.target.value = this.formattedAmount;*/
   }
 
   public selectValueChanged(entryGroupSelect: any): void {
@@ -193,13 +164,9 @@ export class NewExpenseViewComponent implements OnInit {
   }
 
   private async loadEntryClasses() {
-      // save result
       this.entryClasses = await this.financialService.loadEntryClasses('DESPESA')
       .toPromise()
       .then(resp => resp as EntryClass[]);
   }
 
-  ngOnInit() {
-    this.loadEntryClasses();
-  }
 }
