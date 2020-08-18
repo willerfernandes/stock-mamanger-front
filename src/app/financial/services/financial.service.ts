@@ -7,6 +7,7 @@ import { OfflineFinancialService } from './offline-financial.service';
 import { AuthenticationService } from 'src/app/common/services/authentication.service';
 import { StorageService } from '../../common/services/storage.service';
 import { MessageService } from '../../common/services/message.service';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +15,10 @@ import { MessageService } from '../../common/services/message.service';
 export class FinancialService {
 
   constructor(private onlineFinancialService: OnlineFinancialService,
-    private offlineFinancialService: OfflineFinancialService,
-    private authenticationService: AuthenticationService,
-    private messageService: MessageService,
-    private storageService: StorageService) { }
+              private offlineFinancialService: OfflineFinancialService,
+              private authenticationService: AuthenticationService,
+              private messageService: MessageService,
+              private storageService: StorageService) { }
 
 
   public isOnline(): boolean {
@@ -32,12 +33,87 @@ export class FinancialService {
     }
   }
 
-  saveEntry(entry: Entry) {
+  saveEntry(value: string,
+            entryClassId: string,
+            newEntryClassName: string,
+            newEntryClassDescription: string,
+            description: string,
+            date: any,
+            installmentPurchase: boolean,
+            numberOfPlots: number, entryType: string) {
+
+    const newEntries: Entry[] = this.createEntries(value,
+      entryClassId, newEntryClassName, newEntryClassDescription, description,
+      date, installmentPurchase, numberOfPlots, entryType);
+
     if (this.isOnline()) {
-      return this.onlineFinancialService.saveEntry(entry);
+      return this.onlineFinancialService.saveEntries(newEntries);
     } else {
-      return this.offlineFinancialService.saveEntry(entry);
+      return this.offlineFinancialService.saveEntries(newEntries);
     }
+  }
+
+  createEntries(value: string,
+                entryClassId: string,
+                newEntryClassName: string,
+                newEntryClassDescription: string,
+                description: string,
+                date: any,
+                installmentPurchase: boolean,
+                numberOfPlots: number,
+                entryClassType: string): Entry[] {
+
+    let entriesToBeCreated: Entry[] = [];
+
+    const entryClass = new EntryClass();
+    if (entryClassId === 'new') {
+      entryClass.userId = this.authenticationService.getCurrentUser().id;
+      entryClass.name = newEntryClassName;
+      entryClass.description = newEntryClassDescription;
+      entryClass.type = entryClassType;
+    } else {
+      entryClass.id = Number.parseInt(entryClassId, 10);
+    }
+
+    if (installmentPurchase) {
+      const entries = this.createInstallmentPurchases(value, numberOfPlots, date, entryClass, description);
+      entriesToBeCreated = entriesToBeCreated.concat(entries);
+    } else {
+      const entry = new Entry();
+      entry.userId = this.authenticationService.getCurrentUser().id;
+      entry.entryClass = entryClass;
+      entry.date = date.toISOString();
+      entry.description = description;
+      entry.entryType = entryClassType;
+      entry.value = Number.parseFloat(value);
+      entriesToBeCreated.push(entry);
+    }
+
+    return entriesToBeCreated;
+
+  }
+
+  private createInstallmentPurchases( value: string,
+                                      numberOfPlots: number,
+                                      date: any,
+                                      entryGroup: EntryClass,
+                                      description: string): Entry[] {
+
+    const eachPlotValue: number = parseFloat(value) / numberOfPlots;
+    const initialDate: Date = new Date(date.toISOString());
+    const entriesToBeCreated = [];
+    for (let i = 0; i < numberOfPlots; i++) {
+      const entry = new Entry();
+      entry.userId = this.authenticationService.getCurrentUser().id;
+      entry.entryClass = entryGroup;
+      entry.date = new Date(initialDate.getFullYear(), initialDate.getMonth() + i, initialDate.getDate()).toISOString();
+      entry.description = description + ' ' + '(' + (i + 1) + '/' + numberOfPlots + ')';
+      entry.entryType = 'DESPESA';
+      entry.value = eachPlotValue;
+      entriesToBeCreated.push(entry);
+    }
+
+    return entriesToBeCreated;
   }
 
   public loadEntryClass(id: number): Observable<EntryClass> {

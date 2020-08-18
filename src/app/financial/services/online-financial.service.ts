@@ -14,6 +14,7 @@ export class OnlineFinancialService {
   baseUrl = environment.expenseApiUrl;
   expenseReportPath = '/api/v1/expense-report';
   entryPath = '/api/v1/entries';
+  batchPatch = '/batch';
   entryClassesPath = '/api/v1/classes';
   syncPath = '/sync';
 
@@ -40,6 +41,10 @@ export class OnlineFinancialService {
   // Entry
   public saveEntry(entry: Entry): Observable<Entry> {
     return this.httpClient.post<Entry>(this.baseUrl + this.entryPath, JSON.stringify(entry));
+  }
+
+  public saveEntries(entry: Entry[]): Observable<Entry[]> {
+    return this.httpClient.post<Entry[]>(this.baseUrl + this.entryPath + this.batchPatch, JSON.stringify(entry));
   }
 
   public deleteEntry(id: number): Observable<Entry> {

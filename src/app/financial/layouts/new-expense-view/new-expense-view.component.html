@@ -25,7 +25,7 @@
       <hr>
       <!-- New Entry Class group-->
       <div>
-        <span [hidden]="!isNewEntryGroup" class="hint-text" style="padding-left: 150px; max-width: 300px;">*Uma nova categoria será criada com as informações</span>
+        <span [hidden]="!isNewEntryGroup" class="hint-text new-expense-text ">*Uma nova categoria será criada com as informações</span>
         <div [hidden]="!isNewEntryGroup">
           <span class="hint-text">Nova Categoria</span>
             <div>
@@ -67,8 +67,8 @@
           <option *ngFor="let plot of plots" [value]="plot">{{plot.toString() + 'x'}}</option>
         </select>
       </div>
-
-      <div style="display: flex; justify-content: center;" class="container">
+      <!-- Button save -->
+      <div  class="button-save">
         <btn-primary-blue [text]="'OK'" (click)="saveExpense($event)" ></btn-primary-blue>
       </div>
 

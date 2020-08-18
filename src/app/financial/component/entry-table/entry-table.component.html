@@ -20,7 +20,7 @@
     </div>
     <div style="text-overflow: ellipsis;">
       <p class="amount">{{entry.value.toLocaleString('pt-BR', { style: 'currency', currency:'BRL' })}}</p>
-      <p class="description">{{entry.description.toUpperCase()}}</p>
+      <p class="description">{{entry.description?.toUpperCase()}}</p>
     </div>
   </div>
   <hr style="margin: 5px;">

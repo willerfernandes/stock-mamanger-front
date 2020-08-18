@@ -6,6 +6,7 @@ import { EntryClass } from '../entities/entry-class';
 import { EntryGroup } from '../entities/entry-group';
 import { GraphInfo } from '../entities/graph-info';
 import { StorageService } from '../../common/services/storage.service';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Injectable({
   providedIn: 'root'
@@ -84,7 +85,17 @@ export class OfflineFinancialService {
     return of(report);
   }
 
-  public saveEntry(entry: Entry): Observable<Entry> {
+
+  public saveEntries(entries: Entry[]): Observable<Entry[]> {
+    const createdEntries: Entry[] = [];
+    for ( const entry of entries) {
+      createdEntries.push(this.saveEntry(entry));
+    }
+    return of(createdEntries);
+  }
+
+
+  public saveEntry(entry: Entry): Entry {
     this.storageService.setIsDirty(true);
     let entries: Entry[] = this.storageService.findAllEntries();
     let entryClasses: EntryClass[] = this.storageService.findAllEntryClasses();
@@ -126,7 +137,7 @@ export class OfflineFinancialService {
 
     entries.push(entry);
     this.storageService.saveAllEntries(entries);
-    return of(entry);
+    return entry;
   }
 
   public deleteEntry(id: number): Observable<Entry> {

@@ -48,7 +48,7 @@ export class NewReceiptViewComponent implements OnInit {
     // TODO: validate with angular forms
     this.validateFields(entryGroupId, newEntryGroupName, newEntryGroupDescription, date, this.group.value.value);
 
-    const entryClass = new EntryClass();
+    /*const entryClass = new EntryClass();
     if (entryGroupId === 'new') {
       entryClass.userId = this.authenticationService.getCurrentUser().id;
       entryClass.name = newEntryGroupName;
@@ -64,10 +64,12 @@ export class NewReceiptViewComponent implements OnInit {
     entry.date = date._selected.toISOString();
     entry.description = description;
     entry.entryType = 'RECEITA';
-    entry.value = Number.parseFloat(this.group.value.value);
+    entry.value = Number.parseFloat(this.group.value.value);*/
 
     this.bottomSheetRef.dismiss();
-    this.financialService.saveEntry(entry).subscribe(async res => {
+    this.financialService.saveEntry(this.group.value.value,
+      entryGroupId, newEntryGroupName, newEntryGroupDescription, description,
+      date._selected, false, null, 'RECEITA').subscribe(async res => {
       this.messageService.openMessageBar('Salvo com sucesso', 2000);
       this.entrySaved.emit();
       this.financialService.updateLocalStorageFromDatabase();

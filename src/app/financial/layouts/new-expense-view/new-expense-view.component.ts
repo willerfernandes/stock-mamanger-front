@@ -47,46 +47,23 @@ export class NewExpenseViewComponent implements OnInit {
       this.loadEntryClasses();
     }
 
-  saveExpense(event: MouseEvent): void {
 
-    const value = this.group.value.value;
-    const entryClassId = this.group.value.entryClass;
-    const newEntryClassName = this.group.value.newEntryClassName;
-    const newEntryClassDescription = this.group.value.newEntryClassDescription;
-    const description = this.group.value.description;
-    const date = this.group.value.date;
-    const installmentPurchase = this.group.value.installmentPurchase;
-    const numberOfPlots = this.group.value.numberOfPlots;
+    saveExpense(event: MouseEvent): void {
 
-    console.log(installmentPurchase);
+      const value = this.group.value.value;
+      const entryClassId = this.group.value.entryClass;
+      const newEntryClassName = this.group.value.newEntryClassName;
+      const newEntryClassDescription = this.group.value.newEntryClassDescription;
+      const description = this.group.value.description;
+      const date = this.group.value.date;
+      const installmentPurchase = this.group.value.installmentPurchase;
+      const numberOfPlots = this.group.value.numberOfPlots;
 
-    // TODO: validate with angular forms
-    this.validateFields(entryClassId, newEntryClassName, newEntryClassDescription, date, value);
-    const entryClass = new EntryClass();
-    if (entryClassId === 'new') {
-      entryClass.userId = this.authenticationService.getCurrentUser().id;
-      entryClass.name = newEntryClassName;
-      entryClass.description = newEntryClassDescription;
-      entryClass.type = 'DESPESA';
-    } else {
-      entryClass.id = Number.parseInt(entryClassId, 10);
-    }
+      this.validateFields(entryClassId, newEntryClassName, newEntryClassDescription, date, value);
 
-    if (installmentPurchase) {
-      this.createInstallmentPurchases(event, value, numberOfPlots, date, entryClass, description);
-    } else {
-
-
-      const entry = new Entry();
-      entry.userId = this.authenticationService.getCurrentUser().id;
-      entry.entryClass = entryClass;
-      entry.date = date.toISOString();
-      entry.description = description;
-      entry.entryType = 'DESPESA';
-      entry.value = Number.parseFloat(this.group.value.value);
-
-      this.bottomSheetRef.dismiss();
-      this.financialService.saveEntry(entry).subscribe(async res => {
+      this.financialService.saveEntry(value,
+        entryClassId, newEntryClassName, newEntryClassDescription, description,
+        date, installmentPurchase, numberOfPlots, 'DESPESA').subscribe(async res => {
         this.messageService.openMessageBar('Salvo com sucesso', 2000);
         this.entrySaved.emit();
         this.financialService.updateLocalStorageFromDatabase();
@@ -95,36 +72,8 @@ export class NewExpenseViewComponent implements OnInit {
           this.messageService.openMessageBar('Ops! Tivemos um erro ao salvar seu lançamento.', 3000);
         });
       event.preventDefault();
+      this.bottomSheetRef.dismiss();
     }
-
-  }
-
-  private createInstallmentPurchases( event: MouseEvent,
-                                      value: string,
-                                      numberOfPlots: number,
-                                      date: any,
-                                      entryGroup: EntryClass,
-                                      description: string) {
-
-    const eachPlotValue: number = parseFloat(value) / numberOfPlots;
-    const initialDate: Date = new Date(date.toISOString());
-    for (let i = 0; i < numberOfPlots; i++) {
-      const entry = new Entry();
-      entry.userId = this.authenticationService.getCurrentUser().id;
-      entry.entryClass = entryGroup;
-      entry.date = new Date(initialDate.getFullYear(), initialDate.getMonth() + i, initialDate.getDate()).toISOString();
-      entry.description = description + ' ' + '(' + (i + 1) + '/' + numberOfPlots + ')';
-      entry.entryType = 'DESPESA';
-      entry.value = eachPlotValue;
-      this.financialService.saveEntry(entry).subscribe( () => {
-        this.financialService.updateLocalStorageFromDatabase();
-      });
-    }
-    this.messageService.openMessageBar('Salvo com sucesso', 2000);
-    this.entrySaved.emit();
-    event.preventDefault();
-    this.bottomSheetRef.dismiss();
-  }
 
   public doNothing() {
     this.entryClasses = this.entryClasses;
