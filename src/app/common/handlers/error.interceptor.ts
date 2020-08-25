@@ -28,7 +28,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           this.router.navigate(['/login']);
         }
       } else if (err.status === 500) {
-        message = 'Houve um erro ao buscar as informações do servidor!';
+        message = 'Houve um erro ao buscar as informações do servidor! Que tal tentar o modo offline?';
       } else {
         message = 'Ops! Houve um erro =/';
       }

@@ -53,6 +53,7 @@ export class LoginViewComponent implements OnInit {
 
   login() {
 
+    this.isLoading = true;
     const username = this.loginForm.value.username;
     const password = this.loginForm.value.password;
     const isOffline = this.loginForm.value.offlineModeControl;
@@ -72,7 +73,9 @@ export class LoginViewComponent implements OnInit {
       error => {
         this.isLoading = false;
         if (error.status === 401) {
-          this.messageService.openMessageBar('Usuário ou senha incorretos', 3000);
+          this.messageService.openMessageBar('Usuário ou senha incorretos', null);
+        } else if (error.status === 0) {
+          this.messageService.openMessageBar('Houve um problema ao conectar com o servidor. Que tal tentar o modo Offline?', null);
         }
       });
     }

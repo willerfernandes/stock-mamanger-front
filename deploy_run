@@ -1,0 +1,8 @@
+echo Build production bundles...
+ng build --prod
+echo Deleted old files from firebase dir
+rm -r firebase/financas/*
+echo Copying new files to firebase dir
+cp -r dist/stock-manager-front/ firebase/financas/
+cd firebase/
+firebase deploy
