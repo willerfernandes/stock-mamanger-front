@@ -7,6 +7,7 @@ import { EntryClass } from '../../entities/entry-class';
 import { Entry } from '../../entities/entry';
 import { FinancialService } from '../../services/financial.service';
 import { AuthenticationService } from 'src/app/common/services/authentication.service';
+import { Router } from '@angular/router';
 
 
 
@@ -23,15 +24,17 @@ export class NewExpenseViewComponent implements OnInit {
   color: ThemePalette = 'primary';
 
   group = new FormGroup({
-    value: new FormControl(Validators.required),
-    entryClass: new FormControl(Validators.required),
+    value: new FormControl(null, Validators.required),
+    entryClass: new FormControl(null, Validators.required),
     newEntryClassName: new FormControl('', Validators.required),
     newEntryClassDescription: new FormControl('', Validators.required),
     description: new FormControl(),
     date: new FormControl(new Date()),
     dateToogless: new FormControl(),
     installmentPurchase: new FormControl(false, Validators.required),
-    numberOfPlots: new FormControl(Validators.required)
+    numberOfPlots: new FormControl(Validators.required),
+    recurrentEntry: new FormControl(false, Validators.required),
+    recurrentDate: new FormControl(new Date())
  });
 
   @Output()
@@ -39,9 +42,9 @@ export class NewExpenseViewComponent implements OnInit {
 
   constructor(
     private financialService: FinancialService,
-    private authenticationService: AuthenticationService,
     private bottomSheetRef: MatBottomSheetRef<NewExpenseViewComponent>,
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    private router: Router)  { }
 
     ngOnInit() {
       this.loadEntryClasses();
@@ -58,21 +61,37 @@ export class NewExpenseViewComponent implements OnInit {
       const date = this.group.value.date;
       const installmentPurchase = this.group.value.installmentPurchase;
       const numberOfPlots = this.group.value.numberOfPlots;
+      const recurrentEntry = this.group.value.recurrentEntry;
+      const recurrentDate = this.group.value.recurrentDate;
+
 
       this.validateFields(entryClassId, newEntryClassName, newEntryClassDescription, date, value);
 
       this.financialService.saveEntry(value,
         entryClassId, newEntryClassName, newEntryClassDescription, description,
-        date, installmentPurchase, numberOfPlots, 'DESPESA').subscribe(async res => {
-        this.messageService.openMessageBar('Salvo com sucesso', 2000);
-        this.entrySaved.emit();
-        this.financialService.updateLocalStorageFromDatabase();
+        date, installmentPurchase, numberOfPlots, 'DESPESA').subscribe(async () => {
+
+          if (recurrentEntry) {
+            this.financialService.saveRecurrentEntry(value,
+              entryClassId, newEntryClassName, newEntryClassDescription, description,
+              date, recurrentDate, 'DESPESA').subscribe(async () => {
+              this.messageService.openMessageBar('Salvo com sucesso', 2000);
+              this.entrySaved.emit();
+              this.financialService.updateLocalStorageFromDatabase();
+            });
+          } else {
+            this.messageService.openMessageBar('Salvo com sucesso', 2000);
+            this.entrySaved.emit();
+            this.financialService.updateLocalStorageFromDatabase();
+          }
+
       },
         err => {
           this.messageService.openMessageBar('Ops! Tivemos um erro ao salvar seu lançamento.', 3000);
         });
       event.preventDefault();
       this.bottomSheetRef.dismiss();
+      console.log(localStorage);
     }
 
   public doNothing() {
@@ -88,7 +107,7 @@ export class NewExpenseViewComponent implements OnInit {
 
     let isValidForm = true;
 
-    if (entryGroupId === '---' || value == null || value === '' || date == null) {
+    if ( entryGroupId === '---' || value == null || value === '' || date == null) {
       isValidForm = false;
     }
     if (entryGroupId === 'new' &&
@@ -116,6 +135,11 @@ export class NewExpenseViewComponent implements OnInit {
       this.entryClasses = await this.financialService.loadEntryClasses('DESPESA')
       .toPromise()
       .then(resp => resp as EntryClass[]);
+  }
+
+  public openRecurrentEntries(): void {
+    this.bottomSheetRef.dismiss();
+    this.router.navigate(['/recurrent-entries']);
   }
 
 }

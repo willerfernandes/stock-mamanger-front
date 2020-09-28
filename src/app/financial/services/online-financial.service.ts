@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { ExpenseReport } from '../entities/expense-report';
 import { Entry } from '../entities/entry';
 import { EntryClass } from '../entities/entry-class';
+import { RecurrentEntry } from '../entities/recurrent-entry';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class OnlineFinancialService {
   baseUrl = environment.expenseApiUrl;
   expenseReportPath = '/api/v1/expense-report';
   entryPath = '/api/v1/entries';
+  recurrentEntryPath = '/api/v1/recurrent-entries';
   batchPatch = '/batch';
   entryClassesPath = '/api/v1/classes';
   syncPath = '/sync';
@@ -43,6 +45,10 @@ export class OnlineFinancialService {
     return this.httpClient.post<Entry>(this.baseUrl + this.entryPath, JSON.stringify(entry));
   }
 
+  public saveRecurrentEntry(recurrentEntryPath: RecurrentEntry): Observable<RecurrentEntry> {
+    return this.httpClient.post<RecurrentEntry>(this.baseUrl + this.recurrentEntryPath, JSON.stringify(recurrentEntryPath));
+  }
+
   public saveEntries(entry: Entry[]): Observable<Entry[]> {
     return this.httpClient.post<Entry[]>(this.baseUrl + this.entryPath + this.batchPatch, JSON.stringify(entry));
   }
@@ -53,6 +59,10 @@ export class OnlineFinancialService {
 
   public loadAllEntries(): Observable<Entry[]> {
     return this.httpClient.get<Entry[]>(this.baseUrl + this.entryPath);
+  }
+
+  public loadAllRecurrentEntries(): Observable<RecurrentEntry[]> {
+    return this.httpClient.get<RecurrentEntry[]>(this.baseUrl + this.recurrentEntryPath);
   }
 
   // EntryClass

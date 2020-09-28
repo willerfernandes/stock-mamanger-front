@@ -26,6 +26,8 @@ import { EntryClassListViewComponent } from './layouts/entry-class-list-view/ent
 import { EntryClassEditViewComponent } from './layouts/entry-class-edit-view/entry-class-edit-view.component';
 import { AdmViewComponent } from './layouts/adm-view/adm-view.component';
 import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
+import { RecurrentEntryCardComponent } from './component/recurrent-entry-card/recurrent-entry-card.component';
+import { RecurrentEntryViewComponent } from './layouts/recurrent-entry-view/recurrent-entry-view.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,9 @@ import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
     EntryListViewComponent,
     EntryClassListViewComponent,
     EntryClassEditViewComponent,
-    AdmViewComponent
+    AdmViewComponent,
+    RecurrentEntryCardComponent,
+    RecurrentEntryViewComponent
   ],
   entryComponents: [
     NewExpenseViewComponent,

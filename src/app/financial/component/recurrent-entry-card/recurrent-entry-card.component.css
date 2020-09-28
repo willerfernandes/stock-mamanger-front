@@ -1,0 +1,129 @@
+.grid {
+  width: 100%;
+  display: grid;
+  grid: 70px / 40% 35% 25%;
+  overflow: hidden;
+}
+
+.inner-grid {
+  width: 100%;
+  display: grid;
+  grid: 45px 25px/ 100%;
+  overflow: hidden;
+  margin: 5px;
+  position: relative;
+}
+
+.inner-grid-tag {
+  width: 100%;
+  display: grid;
+  grid: 45px 25px/ 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.recurrent-card {
+  margin: auto;
+  width: 95%;
+  border: 1px solid #EDEDED;
+  border-radius: 10px;
+}
+
+.description {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 19px;
+  display: flex;
+  align-items: center;
+  vertical-align: middle;
+  color: #000000;
+}
+
+.entry-class {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  display: flex;
+  align-items: center;
+  vertical-align: middle;
+
+  color: #868686;
+}
+
+.small-text {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  display: flex;
+  align-items: center;
+
+  color: #000000;
+}
+
+.sign-minus {
+  font-family: 'Roboto';
+  line-height: 20px;
+  position: relative;
+  left: 5px;
+  top: 8px;
+  font-size: 50px;
+  color: red;
+}
+
+.sign-plus {
+  font-family: 'Roboto';
+  line-height: 20px;
+  position: relative;
+  right: 8px;
+  top: 0px;
+  font-size: 40px;
+  color: green;
+}
+
+.amount {
+  font-family: 'Roboto';
+  font-weight: bolder;
+  font-size: large;
+  left: 10px;
+  top: 5px;
+  margin-left: 10px;
+}
+
+.tag {
+  width: 50px;
+  height: 15px;
+  border-radius: 0 10px 0 10px;
+  position: absolute;
+  margin: 0px;
+  top: 0px;
+  right: 0px;
+  font-size: 18px;
+  text-align: center;
+}
+
+label {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 11px;
+  text-align: center;
+  color: #FFFFFF;
+  vertical-align: text-bottom;
+}
+
+.tag-red {
+  background-color: #E50000;
+}
+
+.tag-yellow {
+  background-color: #D6CE00;
+}
+.tag-green {
+  background-color: #43CA49;
+}

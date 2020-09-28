@@ -10,6 +10,7 @@ import { EntryGroup } from '../../entities/entry-group';
 import { Entry } from '../../entities/entry';
 import { NewReceiptViewComponent } from '../new-receipt-view/new-receipt-view.component';
 import { FinancialService } from '../../services/financial.service';
+import { RecurrentEntry } from '../../entities/recurrent-entry';
 
 @Component({
   selector: 'app-expense-dashboard',
@@ -36,6 +37,8 @@ export class ExpenseDashboardComponent implements OnInit {
 
   public expenseGroups: EntryGroup[] = [];
   public receiptGroups: EntryGroup[] = [];
+  public recurrentEntries: RecurrentEntry[] = [];
+
   public tableTitle = 'RESUMO DESPESAS';
 
   public isSuccess = false;
@@ -169,7 +172,7 @@ export class ExpenseDashboardComponent implements OnInit {
 
   }
 
-  getExpenseReport(startDate: any, endDate: any) {
+  getExpenseReport(startDate: any, endDate: any): void {
     this.setCurrentTile();
     this.isLoading = true;
     this.financialService.loadExpenseReport(startDate.toISOString(), endDate.toISOString())
@@ -181,6 +184,7 @@ export class ExpenseDashboardComponent implements OnInit {
           this.pieChartData = res.graphInfo.values;
           this.expenseGroups = res.expenseGroups;
           this.receiptGroups = res.receiptGroups;
+          this.recurrentEntries = res.recurrentEntries;
 
           this.expenseGroups.sort((a, b) => {
             if (a.value < b.value) {

@@ -7,6 +7,7 @@ import { EntryGroup } from '../entities/entry-group';
 import { GraphInfo } from '../entities/graph-info';
 import { StorageService } from '../../common/services/storage.service';
 import { forEach } from '@angular/router/src/utils/collection';
+import { RecurrentEntry } from '../entities/recurrent-entry';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class OfflineFinancialService {
   loadExpenseReport(startDate: string, endDate: string): Observable<ExpenseReport> {
     const allEntries: Entry[] = this.storageService.findAllEntries();
     const entryClasses: EntryClass[] = this.storageService.findAllEntryClasses();
+    const recurrentEntries: RecurrentEntry[] = this.storageService.findAllRecurrentEntries();
 
     if (allEntries == null || allEntries.length === 0) {
       return of(null);
@@ -75,6 +77,7 @@ export class OfflineFinancialService {
 
     report.expenseGroups = entryGroupExpenseList;
     report.receiptGroups = entryGroupReceiptList;
+    report.recurrentEntries = recurrentEntries;
     report.totalExpenseAmount = totalValueExpenses;
     report.totalReceiptAmount = totalValueReceipt;
     report.graphInfo = new GraphInfo();
@@ -93,6 +96,53 @@ export class OfflineFinancialService {
     }
     return of(createdEntries);
   }
+
+  saveRecurrentEntry(entry: RecurrentEntry): Observable<RecurrentEntry> {
+      this.storageService.setIsDirty(true);
+      let entries: RecurrentEntry[] = this.storageService.findAllRecurrentEntries();
+      let entryClasses: EntryClass[] = this.storageService.findAllEntryClasses();
+
+      if (entries == null || entries.length === 0) {
+        entries = [];
+      }
+
+      if (entryClasses == null || entryClasses.length === 0) {
+        entryClasses = [];
+      }
+
+      entry.id = entries.length  + 1;
+
+      // necessary when user creates a new entryClass and is multiple expenses
+      if (entry.entryClass.name != null) {
+          const existingCategory: EntryClass =  entryClasses.find(entryClass => entryClass.name === entry.entryClass.name);
+          if (existingCategory != null) {
+            entry.entryClass = existingCategory;
+          }
+      }
+
+      if (entry.entryClass.id == null) {
+        const newEntryClass = new EntryClass();
+        newEntryClass.id = entryClasses.length + 1;
+        newEntryClass.name = entry.entryClass.name;
+        newEntryClass.description = entry.entryClass.description;
+        newEntryClass.type = entry.entryClass.type;
+
+        entry.entryClass = newEntryClass;
+
+        entryClasses.push(newEntryClass);
+        this.storageService.saveAllEntryClasses(entryClasses);
+
+      } else {
+        const classWithEntryId = entryClasses.find(entryClass => entryClass.id === entry.entryClass.id);
+        entry.entryClass = classWithEntryId;
+      }
+
+      entries.push(entry);
+      this.storageService.saveAllRecurrentEntries(entries);
+      return of(entry);
+
+  }
+
 
 
   public saveEntry(entry: Entry): Entry {

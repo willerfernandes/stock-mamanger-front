@@ -43,34 +43,42 @@
       <label>LANÇAMENTOS</label>
     </div>
     <div>
-    <p *ngIf="expenseGroups.length > 0" class="category-title">Despesas</p>
-      <div>
-        <app-expense-group *ngIf="isSuccess" [expenseGroups]="expenseGroups" (deleteRowEvent)="entryDeleted()"></app-expense-group>
-      </div>
-      <br>
-    <p *ngIf="receiptGroups.length > 0" class="category-title">Receitas</p>
-      <div>
-        <app-expense-group *ngIf="isSuccess" [expenseGroups]="receiptGroups" (deleteRowEvent)="entryDeleted()"></app-expense-group>
-      </div>
-      <br>
+        <p *ngIf="expenseGroups.length > 0" class="category-title">Despesas</p>
+        <div>
+          <app-expense-group *ngIf="isSuccess" [expenseGroups]="expenseGroups" (deleteRowEvent)="entryDeleted()"></app-expense-group>
+        </div>
+        <br>
+        <p *ngIf="receiptGroups.length > 0" class="category-title">Receitas</p>
+        <div>
+          <app-expense-group *ngIf="isSuccess" [expenseGroups]="receiptGroups" (deleteRowEvent)="entryDeleted()"></app-expense-group>
+        </div>
+        <br>
+        <p *ngIf="receiptGroups.length > 0" class="category-title">Receitas</p>
+        <div *ngIf="isSuccess">
+          <div style="margin-top: 5px;" *ngFor=" let  entry of recurrentEntries">
+            <app-recurrent-entry-card [entry]="entry"></app-recurrent-entry-card>
+          </div>
+        </div>
+        <br>
     </div>
+
     <p *ngIf="expenseGroups.length > 0" class="category-title">Últimos lançamentos</p>
     <div *ngIf="expenseGroups.length > 0">
       <app-entry-table [entries]="allEntries"></app-entry-table>
     </div>
     <p *ngIf="expenseGroups.length > 0" class="show-more-text"
       (click)="onShowMoreClicked()">MOSTRAR MAIS</p>
+    </div>
+    <div *ngIf="isLoading" class="loading-container">
+      <img src='/assets/img/loading.gif' class="loading-gif">
+    </div>
+    <div *ngIf="!isLoading && !isSuccess">
+      <app-expense-error-screen></app-expense-error-screen>
+    </div>
+    <div *ngIf="!isLoading && isSuccess && isEmptyResult">
+      <app-expense-no-results-found></app-expense-no-results-found>
+    </div>
   </div>
-  <div *ngIf="isLoading" class="loading-container">
-    <img src='/assets/img/loading.gif' class="loading-gif">
-  </div>
-  <div *ngIf="!isLoading && !isSuccess">
-    <app-expense-error-screen></app-expense-error-screen>
-  </div>
-  <div *ngIf="!isLoading && isSuccess && isEmptyResult">
-    <app-expense-no-results-found></app-expense-no-results-found>
-  </div>
-</div>
 <br>
 <br>
 <br>

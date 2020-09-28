@@ -58,7 +58,7 @@
       <!-- Installment Purchase group-->
       <div class="container">
         <img src='/assets/img/question-icon.png' class="mandatory-item" matTooltip="Ao selecionar a compra parcelada serão realizados lançamentos nos meses subsequentes com os valores da parcela.">
-        <label class="color-primary input-label">Compra<br>parcelada?</label>
+        <label class="color-primary input-label">Parcelada?</label>
         <mat-slide-toggle formControlName="installmentPurchase"
           [color]="color"
           >
@@ -67,6 +67,31 @@
           <option *ngFor="let plot of plots" [value]="plot">{{plot.toString() + 'x'}}</option>
         </select>
       </div>
+      <hr>
+      <!-- Recurrent entry group-->
+      <div class="container">
+        <img src='/assets/img/question-icon.png' class="mandatory-item" matTooltip="As despesas recorrentes são lançados todos os meses com o mesmo valor, incluindo lembretes para pagamento">
+        <label class="color-primary input-label">Recorrente? </label>
+        <mat-slide-toggle formControlName="recurrentEntry"
+          [color]="color"
+          >
+        </mat-slide-toggle>
+        <div [hidden]="!group.value.recurrentEntry">
+          <p style="margin-top: 20px; margin-bottom: 0px; font-weight: bolder;">
+            Até
+          </p>
+          <mat-form-field style="max-width: 150px;">
+            <input #date class="color-primary input-label" matInput [matDatepicker]="picker2" formControlName="recurrentDate">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker id="recurrentDateInput" #picker2></mat-datepicker>
+          </mat-form-field>
+          <p class="observationText">
+            Despesas recorrentes serão lançadas todos os meses até <strong>{{group.value.recurrentDate | date: 'dd/MM/yyyy'}}</strong>. Para alterações, acessar o menu<span (click)="openRecurrentEntries()" class="color-primary"> Lançamentos Recorrentes</span>
+          </p>
+
+        </div>
+      </div>
+
       <!-- Button save -->
       <div  class="button-save">
         <btn-primary-blue [text]="'OK'" (click)="saveExpense($event)" ></btn-primary-blue>

@@ -1,4 +1,4 @@
-<label>LançaCamentos</label>
+<label>Lançamentos</label>
 <br>
 <textarea #inputEntries style="width: 90%; height: 400px; overflow: scroll;">{{entries}}</textarea>
 <br>
@@ -12,6 +12,17 @@
 <br>
 <textarea #inputEntryClasses style="width: 90%; height: 400px; overflow: scroll;">{{entryClasses}}</textarea>
 <br>
-<btn-primary-blue-large [text]="'ATUALIZAR'" (click)="updateLocalStorage(inputEntries.value, inputEntryClasses.value)"></btn-primary-blue-large>
+<br>
+<br>
+<br>
+<br>
+<br>
+<label>Lançamentos Recorrentes</label>
+<br>
+<textarea #inputRecurrentEntries style="width: 90%; height: 400px; overflow: scroll;">{{recurrentEntries}}</textarea>
+<br>
+<br>
+<br>
+<btn-primary-blue-large [text]="'ATUALIZAR'" (click)="updateLocalStorage(inputEntries.value, inputEntryClasses.value, inputRecurrentEntries.value)"></btn-primary-blue-large>
 <btn-primary-blue-large [text]="'LIMPAR BANCO'" (click)="clearLocalStorage()"></btn-primary-blue-large>
 

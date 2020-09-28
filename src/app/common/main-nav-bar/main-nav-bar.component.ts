@@ -39,6 +39,10 @@ export class MainNavBarComponent implements OnInit {
     this.router.navigate(['/entries']);
   }
 
+  public navigateToRecurrentyEntryView(): void {
+    this.router.navigate(['/recurrent-entries']);
+  }
+
   public logout(): void {
     this.authenticationService.logout();
   }

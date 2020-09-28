@@ -1,0 +1,39 @@
+<div class="grid recurrent-card">
+  <div class="inner-grid">
+    <div>
+      <span class="description">
+        {{entry.description}}
+      </span>
+    </div>
+    <div>
+      <span class="entry-class">
+        {{entry.entryClass.name}}
+      </span>
+    </div>
+  </div>
+  <div class="inner-grid">
+    <div>
+      <div>
+        <span *ngIf="entry.entryType === 'DESPESA'" class="sign-minus">-</span>
+        <span *ngIf="entry.entryType === 'RECEITA'" class="sign-plus">+</span>
+        <span class="amount">{{entry.value.toLocaleString('pt-BR', { style: 'currency', currency:'BRL' })}}</span>
+      </div>
+    </div>
+    <div>
+      <span class="small-text">
+        {{getRemainingDaysText()}}
+      </span>
+    </div>
+  </div>
+  <div class="inner-grid-tag">
+    <div style="position: relative;">
+      <div [ngClass]="tagClass" class="tag">
+        <label>{{tagText}}</label>
+      </div>
+    </div>
+    <div>
+      <span class="small-text" style="margin-top: 5px;">
+        Até dia {{entry.dueDate | date: 'dd/MM'}}
+      </span></div>
+  </div>
+</div>

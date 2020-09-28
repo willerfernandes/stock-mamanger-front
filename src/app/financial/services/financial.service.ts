@@ -8,6 +8,8 @@ import { AuthenticationService } from 'src/app/common/services/authentication.se
 import { StorageService } from '../../common/services/storage.service';
 import { MessageService } from '../../common/services/message.service';
 import { FormGroup } from '@angular/forms';
+import { RecurrentEntry } from '../entities/recurrent-entry';
+import { ExpenseReport } from '../entities/expense-report';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +27,7 @@ export class FinancialService {
     return this.authenticationService.isOnline();
   }
 
-  loadExpenseReport(startDate: string, endDate: string) {
+  loadExpenseReport(startDate: string, endDate: string): Observable<ExpenseReport> {
     if (this.authenticationService.isOnline()) {
       return this.onlineFinancialService.loadExpenseReport(startDate, endDate);
     } else {
@@ -40,11 +42,13 @@ export class FinancialService {
             description: string,
             date: any,
             installmentPurchase: boolean,
-            numberOfPlots: number, entryType: string) {
+            numberOfPlots: number,
+            entryType: string) {
 
     const newEntries: Entry[] = this.createEntries(value,
       entryClassId, newEntryClassName, newEntryClassDescription, description,
       date, installmentPurchase, numberOfPlots, entryType);
+
 
     if (this.isOnline()) {
       return this.onlineFinancialService.saveEntries(newEntries);
@@ -52,6 +56,26 @@ export class FinancialService {
       return this.offlineFinancialService.saveEntries(newEntries);
     }
   }
+
+saveRecurrentEntry( value: string,
+                    entryClassId: string,
+                    newEntryClassName: string,
+                    newEntryClassDescription: string,
+                    description: string,
+                    date: any,
+                    recurrentDate: any,
+                    entryType: string): Observable<RecurrentEntry> {
+
+    const newRecurrentEntry: RecurrentEntry = this.createRecurrentEntry(value,
+    entryClassId, newEntryClassName, newEntryClassDescription, description,
+    date, recurrentDate, entryType);
+
+    if (this.isOnline()) {
+      return this.onlineFinancialService.saveRecurrentEntry(newRecurrentEntry);
+    } else {
+      return this.offlineFinancialService.saveRecurrentEntry(newRecurrentEntry);
+    }
+}
 
   createEntries(value: string,
                 entryClassId: string,
@@ -92,6 +116,40 @@ export class FinancialService {
     return entriesToBeCreated;
 
   }
+
+
+  createRecurrentEntry(   value: string,
+                          entryClassId: string,
+                          newEntryClassName: string,
+                          newEntryClassDescription: string,
+                          description: string,
+                          date: any,
+                          maxDate: Date,
+                          entryClassType: string): RecurrentEntry {
+
+    const entryClass = new EntryClass();
+    if (entryClassId === 'new') {
+    entryClass.userId = this.authenticationService.getCurrentUser().id;
+    entryClass.name = newEntryClassName;
+    entryClass.description = newEntryClassDescription;
+    entryClass.type = entryClassType;
+    } else {
+    entryClass.id = Number.parseInt(entryClassId, 10);
+    }
+
+    const recurrentEntry = new RecurrentEntry();
+    recurrentEntry.userId = this.authenticationService.getCurrentUser().id;
+    recurrentEntry.entryClass = entryClass;
+    recurrentEntry.dueDate = date;
+    recurrentEntry.maxDate = maxDate;
+    recurrentEntry.creationDate = new Date();
+    recurrentEntry.description = description;
+    recurrentEntry.entryType = entryClassType;
+    recurrentEntry.value = Number.parseFloat(value);
+
+    return recurrentEntry;
+
+}
 
   private createInstallmentPurchases( value: string,
                                       numberOfPlots: number,
@@ -199,6 +257,9 @@ export class FinancialService {
         this.onlineFinancialService.loadAllEntries().subscribe(entries => {
           this.storageService.saveAllEntries(entries);
         });
+        this.onlineFinancialService.loadAllRecurrentEntries().subscribe(recurrentEntries => {
+          this.storageService.saveAllRecurrentEntries(recurrentEntries);
+        });
       }
     } catch (error) {
       console.log('Error while sincronizing with database');
@@ -214,12 +275,20 @@ export class FinancialService {
     this.storageService.saveAllEntryClasses(JSON.parse(entryClasses));
   }
 
+  updateRecurrentEntryClassesOnStorage(recurrentEntries: string) {
+    this.storageService.saveAllRecurrentEntries(JSON.parse(recurrentEntries));
+  }
+
   loadEntriesFromStorage(): Observable<string> {
     return of(JSON.stringify(this.storageService.findAllEntries()));
   }
 
   loadEntryClassesFromStorage(): Observable<string> {
     return of(JSON.stringify(this.storageService.findAllEntryClasses()));
+  }
+
+  loadRecurrentEntriesFromStorage(): Observable<string> {
+    return of(JSON.stringify(this.storageService.findAllRecurrentEntries()));
   }
 
   clearStorage() {
