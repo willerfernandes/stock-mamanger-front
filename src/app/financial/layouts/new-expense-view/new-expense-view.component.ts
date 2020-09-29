@@ -23,7 +23,11 @@ export class NewExpenseViewComponent implements OnInit {
   plots = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
   color: ThemePalette = 'primary';
   group: FormGroup;
-  creditCardImage = './assets/img/credit-card-icon.svg';
+  title = 'Despesas';
+  titleClass = 'menu-item-text red-text';
+  inputIcon = './assets/img/credit-card-icon.svg';
+  menuItem = './assets/img/add-menu-expense.svg';
+  entryType = 'DESPESA';
 
   @Output()
   public entrySaved = new EventEmitter();
@@ -84,11 +88,11 @@ export class NewExpenseViewComponent implements OnInit {
       if (recurrentEntry)  {
         this.financialService.saveRecurrentEntry(value,
           entryClassId, newEntryClassName, newEntryClassDescription, description,
-          date, recurrentDate, 'DESPESA').subscribe(async (newRecurrentEntry) => {
+          date, recurrentDate, this.entryType).subscribe(async (newRecurrentEntry) => {
 
             this.financialService.saveEntry(value,
               entryClassId, newEntryClassName, newEntryClassDescription, description,
-              date, installmentPurchase, numberOfPlots, newRecurrentEntry.id, 'DESPESA').subscribe(async () => {
+              date, installmentPurchase, numberOfPlots, newRecurrentEntry.id, this.entryType).subscribe(async () => {
                 this.messageService.openMessageBar('Salvo com sucesso', 2000);
                 this.entrySaved.emit();
                 this.financialService.updateLocalStorageFromDatabase();
@@ -98,7 +102,7 @@ export class NewExpenseViewComponent implements OnInit {
       } else {
         this.financialService.saveEntry(value,
           entryClassId, newEntryClassName, newEntryClassDescription, description,
-          date, installmentPurchase, numberOfPlots, this.recurrentEntryId, 'DESPESA').subscribe(async () => {
+          date, installmentPurchase, numberOfPlots, this.recurrentEntryId, this.entryType).subscribe(async () => {
             this.messageService.openMessageBar('Salvo com sucesso', 2000);
             this.entrySaved.emit();
             this.financialService.updateLocalStorageFromDatabase();
@@ -149,7 +153,7 @@ export class NewExpenseViewComponent implements OnInit {
   }
 
   private async loadEntryClasses() {
-      this.entryClasses = await this.financialService.loadEntryClasses('DESPESA')
+      this.entryClasses = await this.financialService.loadEntryClasses(this.entryType)
       .toPromise()
       .then(resp => resp as EntryClass[]);
   }

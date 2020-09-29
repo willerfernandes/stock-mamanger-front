@@ -78,11 +78,9 @@
 
 .sign-plus {
   font-family: 'Roboto';
-  line-height: 20px;
+  line-height: 18px;
   position: relative;
-  right: 8px;
-  top: 0px;
-  font-size: 40px;
+  font-size: 30px;
   color: green;
 }
 
@@ -135,7 +133,16 @@ label {
   transition: .2s ease;
 }
 
-
+.due-date-text {
+  padding-left: 5px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  color: #000000;
+  vertical-align: text-bottom;
+}
 
 
 

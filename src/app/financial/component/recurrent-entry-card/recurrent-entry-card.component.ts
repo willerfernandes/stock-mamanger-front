@@ -17,7 +17,7 @@ export class RecurrentEntryCardComponent implements OnInit {
   @Input()
   public isOk = false;
 
-  public remainingDaysText: number = null;
+  public remainingDaysText: string = null;
 
   public tagText = 'NOT';
   public tagClass = '';
@@ -26,8 +26,10 @@ export class RecurrentEntryCardComponent implements OnInit {
     if (this.isOk) {
       this.tagClass = 'tag-green';
       this.tagText = 'OK';
+      this.remainingDaysText = 'LANÇADO!';
     } else {
       this.setTagText();
+      this.remainingDaysText = this.getRemainingDaysText();
     }
   }
 

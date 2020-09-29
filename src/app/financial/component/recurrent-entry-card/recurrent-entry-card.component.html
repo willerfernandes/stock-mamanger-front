@@ -21,7 +21,7 @@
     </div>
     <div>
       <span class="small-text">
-        {{getRemainingDaysText()}}
+        {{remainingDaysText}}
       </span>
     </div>
   </div>
@@ -33,7 +33,7 @@
     </div>
     <div>
       <span class="small-text" style="margin-top: 5px;">
-        Até dia {{entryGroup.recurrentEntry.dueDate | date: 'dd/MM'}}
+        <span>Até</span><span class="due-date-text">{{entryGroup.recurrentEntry.dueDate | date: 'dd/MM'}}</span>
       </span></div>
   </div>
 </div>

@@ -94,6 +94,7 @@ export class OfflineFinancialService {
     const recurrentEntryGroups: RecurrentEntryGroup[] = [];
 
     for (const recurrentEntry of recurrentEntriesOnStorge) {
+      // TODO: check for only recurrentEntries of this month
       const recurrentEntryGroup = new RecurrentEntryGroup();
       recurrentEntryGroup.recurrentEntry = recurrentEntry;
       recurrentEntryGroup.associatedEntries = allEntries.filter(entry => entry.recurrentEntryId === recurrentEntry.id);

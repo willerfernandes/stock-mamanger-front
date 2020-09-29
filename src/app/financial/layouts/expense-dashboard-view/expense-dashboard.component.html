@@ -56,7 +56,7 @@
         <p *ngIf="recurrentEntryGroups.length > 0" class="category-title">Recorrentes</p>
         <div *ngIf="isSuccess">
           <div style="margin-top: 5px;" *ngFor=" let  entryGroup of recurrentEntryGroups">
-            <app-recurrent-entry-card [entryGroup]="entryGroup" (click)="createEntryForRecurrent(entryGroup.recurrentEntry)"></app-recurrent-entry-card>
+            <app-recurrent-entry-card [entryGroup]="entryGroup" [isOk]="entryGroup.isCheckedForThisPeriod" (click)="createEntryForRecurrent(entryGroup.recurrentEntry)"></app-recurrent-entry-card>
           </div>
         </div>
         <br>
