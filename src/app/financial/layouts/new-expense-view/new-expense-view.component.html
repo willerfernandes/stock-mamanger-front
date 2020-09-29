@@ -9,13 +9,13 @@
     <div [formGroup]="group" class="container">
       <!-- Amount group-->
       <div style="margin-top: 10px;">
-        <img  [src]="'./assets/img/credit-card-icon.svg'" class="mandatory-item"><label class="red-text">*</label><label class="color-primary input-label">Valor:</label>
+        <img  [src]="creditCardImage" class="mandatory-item"><label class="red-text">*</label><label class="color-primary input-label">Valor:</label>
         <input formControlName="value" id="input-currency" class="input-medium padding-small" style="font-size: 24px; font-weight: bold;" #amount placeholder="R$ 000,00" currencyMask type="tel"  [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"/>
       </div>
       <hr>
       <!-- Entry Class group-->
       <div>
-        <img [src]="'./assets/img/credit-card-icon.svg'" class="mandatory-item"> <label class="red-text">*</label><label class="color-primary input-label">Categoria:</label>
+        <img [src]="creditCardImage" class="mandatory-item"> <label class="red-text">*</label><label class="color-primary input-label">Categoria:</label>
         <select formControlName="entryClass"  #entryGroupSelect (change)="selectValueChanged(entryGroupSelect)" class="input-medium" #entryGroupSelect>
           <option value='---'>---</option>
           <option *ngFor="let entryClass of entryClasses" [value]="entryClass.id">{{entryClass.name}}</option>
@@ -41,13 +41,13 @@
       </div>
       <!-- Description group-->
       <div>
-        <img [src]="'./assets/img/credit-card-icon.svg'" class="mandatory-item"><label class="color-primary input-label">Descrição:</label>
+        <img [src]="creditCardImage" class="mandatory-item"><label class="color-primary input-label">Descrição:</label>
         <input formControlName="description" #description class= "input-medium" type="text" maxlength="100">
       </div>
       <hr>
       <!-- Date group-->
       <div>
-        <img [src]="'./assets/img/credit-card-icon.svg'" class="mandatory-item"> <label class="red-text">*</label><label class="color-primary input-label">Data:</label>
+        <img [src]="creditCardImage" class="mandatory-item"> <label class="red-text">*</label><label class="color-primary input-label">Data:</label>
         <mat-form-field class="datePicker" style="max-width: 150px;">
           <input #date class="color-primary input-label" matInput [matDatepicker]="picker1" formControlName="date">
           <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>

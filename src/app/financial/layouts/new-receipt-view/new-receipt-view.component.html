@@ -47,7 +47,30 @@
       <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
       <mat-datepicker id="dateInput" #picker1></mat-datepicker>
     </mat-form-field>
+</div>
+<!-- Recurrent entry group-->
+<div class="container">
+  <img src='/assets/img/question-icon.png' class="mandatory-item" matTooltip="As despesas recorrentes são lançados todos os meses com o mesmo valor, incluindo lembretes para pagamento">
+  <label class="color-primary input-label">Recorrente? </label>
+  <mat-slide-toggle formControlName="recurrentEntry"
+    [color]="color"
+    >
+  </mat-slide-toggle>
+  <div [hidden]="!group.value.recurrentEntry">
+    <p style="margin-top: 20px; margin-bottom: 0px; font-weight: bolder;">
+      Até
+    </p>
+    <mat-form-field style="max-width: 150px;">
+      <input #date class="color-primary input-label" matInput [matDatepicker]="picker2" formControlName="recurrentDate">
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker id="recurrentDateInput" #picker2></mat-datepicker>
+    </mat-form-field>
+    <p class="observationText">
+      Despesas recorrentes serão lançadas todos os meses até <strong>{{group.value.recurrentDate | date: 'dd/MM/yyyy'}}</strong>. Para alterações, acessar o menu<span (click)="openRecurrentEntries()" class="color-primary"> Lançamentos Recorrentes</span>
+    </p>
+
   </div>
+</div>
 <hr>
 <div style="display: flex; justify-content: center;" class="container">
   <btn-primary-blue [text]="'OK'" (click)="saveReceipt($event, entryGroupSelect?.value, newEntryGroupName?.value, newEntryGroupDescription?.value, picker1, description?.value, amount?.value)" ></btn-primary-blue>

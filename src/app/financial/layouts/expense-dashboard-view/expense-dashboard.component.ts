@@ -176,10 +176,13 @@ export class ExpenseDashboardComponent implements OnInit {
 
   public createEntryForRecurrent(recurrentEntry: RecurrentEntry) {
     sessionStorage.setItem('recurrentEntry', JSON.stringify(recurrentEntry));
-    const bottomSheet = this.bottomSheet.open(NewExpenseViewComponent);
-    bottomSheet.instance.entrySaved.subscribe(() => {
-      this.ngOnInit();
-    });
+    if (recurrentEntry.entryType === 'DESPESA') {
+      this.openBottomSheetExpense();
+    }
+    if (recurrentEntry.entryType === 'RECEITA') {
+      this.openBottomSheetReceipt();
+    }
+
   }
 
   public getExpenseReport(startDate: any, endDate: any): void {
