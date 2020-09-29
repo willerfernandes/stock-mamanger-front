@@ -8,6 +8,8 @@ import { Entry } from '../../entities/entry';
 import { FinancialService } from '../../services/financial.service';
 import { AuthenticationService } from 'src/app/common/services/authentication.service';
 import { Router } from '@angular/router';
+import { RecurrentEntryGroup } from '../../entities/recurrent-entry-group';
+import { RecurrentEntry } from '../../entities/recurrent-entry';
 
 
 
@@ -48,8 +50,15 @@ export class NewExpenseViewComponent implements OnInit {
 
     ngOnInit() {
       this.loadEntryClasses();
+      const clickedRecurrentEntry: RecurrentEntry = JSON.parse(sessionStorage.getItem('recurrentEntry'));
+      if (clickedRecurrentEntry != null) {
+        this.group.value.value = clickedRecurrentEntry.value;
+        this.group.value.entryClassId = clickedRecurrentEntry.entryClass.id;
+        this.group.value.description = clickedRecurrentEntry.description;
+        this.group.value.date = clickedRecurrentEntry.dueDate;
+      }
+      sessionStorage.removeItem('recurrentEntry');
     }
-
 
     saveExpense(event: MouseEvent): void {
 
@@ -64,31 +73,33 @@ export class NewExpenseViewComponent implements OnInit {
       const recurrentEntry = this.group.value.recurrentEntry;
       const recurrentDate = this.group.value.recurrentDate;
 
-
       this.validateFields(entryClassId, newEntryClassName, newEntryClassDescription, date, value);
 
-      this.financialService.saveEntry(value,
-        entryClassId, newEntryClassName, newEntryClassDescription, description,
-        date, installmentPurchase, numberOfPlots, 'DESPESA').subscribe(async () => {
+      if (recurrentEntry)  {
+        this.financialService.saveRecurrentEntry(value,
+          entryClassId, newEntryClassName, newEntryClassDescription, description,
+          date, recurrentDate, 'DESPESA').subscribe(async (newRecurrentEntry) => {
 
-          if (recurrentEntry) {
-            this.financialService.saveRecurrentEntry(value,
+            this.financialService.saveEntry(value,
               entryClassId, newEntryClassName, newEntryClassDescription, description,
-              date, recurrentDate, 'DESPESA').subscribe(async () => {
-              this.messageService.openMessageBar('Salvo com sucesso', 2000);
-              this.entrySaved.emit();
-              this.financialService.updateLocalStorageFromDatabase();
-            });
-          } else {
+              date, installmentPurchase, numberOfPlots, newRecurrentEntry.id, 'DESPESA').subscribe(async () => {
+                this.messageService.openMessageBar('Salvo com sucesso', 2000);
+                this.entrySaved.emit();
+                this.financialService.updateLocalStorageFromDatabase();
+              },
+               err => {this.messageService.openMessageBar('Ops! Tivemos um erro ao salvar seu lançamento.', 3000); });
+        });
+      } else {
+        this.financialService.saveEntry(value,
+          entryClassId, newEntryClassName, newEntryClassDescription, description,
+          date, installmentPurchase, numberOfPlots, null, 'DESPESA').subscribe(async () => {
             this.messageService.openMessageBar('Salvo com sucesso', 2000);
             this.entrySaved.emit();
             this.financialService.updateLocalStorageFromDatabase();
-          }
+          },
+           err => {this.messageService.openMessageBar('Ops! Tivemos um erro ao salvar seu lançamento.', 3000); });
+      }
 
-      },
-        err => {
-          this.messageService.openMessageBar('Ops! Tivemos um erro ao salvar seu lançamento.', 3000);
-        });
       event.preventDefault();
       this.bottomSheetRef.dismiss();
       console.log(localStorage);

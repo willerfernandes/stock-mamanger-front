@@ -53,10 +53,10 @@
           <app-expense-group *ngIf="isSuccess" [expenseGroups]="receiptGroups" (deleteRowEvent)="entryDeleted()"></app-expense-group>
         </div>
         <br>
-        <p *ngIf="receiptGroups.length > 0" class="category-title">Receitas</p>
+        <p *ngIf="recurrentEntryGroups.length > 0" class="category-title">Recorrentes</p>
         <div *ngIf="isSuccess">
-          <div style="margin-top: 5px;" *ngFor=" let  entry of recurrentEntries">
-            <app-recurrent-entry-card [entry]="entry"></app-recurrent-entry-card>
+          <div style="margin-top: 5px;" *ngFor=" let  entryGroup of recurrentEntryGroups">
+            <app-recurrent-entry-card [entryGroup]="entryGroup" (click)="createEntryForRecurrent(entryGroup.recurrentEntry)"></app-recurrent-entry-card>
           </div>
         </div>
         <br>

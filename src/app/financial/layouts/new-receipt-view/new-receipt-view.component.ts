@@ -69,7 +69,7 @@ export class NewReceiptViewComponent implements OnInit {
     this.bottomSheetRef.dismiss();
     this.financialService.saveEntry(this.group.value.value,
       entryGroupId, newEntryGroupName, newEntryGroupDescription, description,
-      date._selected, false, null, 'RECEITA').subscribe(async res => {
+      date._selected, false, null, null, 'RECEITA').subscribe(async res => {
       this.messageService.openMessageBar('Salvo com sucesso', 2000);
       this.entrySaved.emit();
       this.financialService.updateLocalStorageFromDatabase();

@@ -43,11 +43,12 @@ export class FinancialService {
             date: any,
             installmentPurchase: boolean,
             numberOfPlots: number,
+            recurrentEntryId: number,
             entryType: string) {
 
     const newEntries: Entry[] = this.createEntries(value,
       entryClassId, newEntryClassName, newEntryClassDescription, description,
-      date, installmentPurchase, numberOfPlots, entryType);
+      date, installmentPurchase, numberOfPlots, recurrentEntryId, entryType);
 
 
     if (this.isOnline()) {
@@ -85,6 +86,7 @@ saveRecurrentEntry( value: string,
                 date: any,
                 installmentPurchase: boolean,
                 numberOfPlots: number,
+                recurrentEntryId: number,
                 entryClassType: string): Entry[] {
 
     let entriesToBeCreated: Entry[] = [];
@@ -105,6 +107,7 @@ saveRecurrentEntry( value: string,
     } else {
       const entry = new Entry();
       entry.userId = this.authenticationService.getCurrentUser().id;
+      entry.recurrentEntryId  = recurrentEntryId;
       entry.entryClass = entryClass;
       entry.date = date.toISOString();
       entry.description = description;

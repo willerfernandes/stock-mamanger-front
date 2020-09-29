@@ -8,12 +8,13 @@
   </div>
 </div>
 
-<div [formGroup]="group" class="container containter-wraper" style="margin-top: 70px;">
-  <img  [src]="'./assets/img/piggy-bank-icon.png'" style="margin-right: 10px; vertical-align: middle;"><label class="red-text">*</label><label class="color-primary input-label">Valor:</label>
-  <input id="input-currency" class="input-medium padding-small" style="font-size: 24px; font-weight: bold;" #amount placeholder="R$ 000,00" currencyMask type="tel" formControlName="value"  [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"/>
-</div>
+
 <hr>
-<div class="container" (click)="doNothing()">
+<div [formGroup]="group" class="container" (click)="doNothing()">
+  <div class="container containter-wraper" style="margin-top: 70px;">
+    <img  [src]="'./assets/img/piggy-bank-icon.png'" style="margin-right: 10px; vertical-align: middle;"><label class="red-text">*</label><label class="color-primary input-label">Valor:</label>
+    <input id="input-currency" class="input-medium padding-small" style="font-size: 24px; font-weight: bold;" #amount placeholder="R$ 000,00" currencyMask type="tel" formControlName="value"  [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"/>
+  </div>
   <img [src]="'./assets/img/piggy-bank-icon.png'" style="margin-right: 10px; vertical-align: middle;"> <label class="red-text">*</label><label class="color-primary input-label">Categoria:</label>
   <select #entryGroupSelect (change)="selectValueChanged(entryGroupSelect)" class="input-medium" #entryGroupSelect>
     <option value='---'>---</option>

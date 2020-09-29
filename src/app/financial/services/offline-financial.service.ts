@@ -6,8 +6,8 @@ import { EntryClass } from '../entities/entry-class';
 import { EntryGroup } from '../entities/entry-group';
 import { GraphInfo } from '../entities/graph-info';
 import { StorageService } from '../../common/services/storage.service';
-import { forEach } from '@angular/router/src/utils/collection';
 import { RecurrentEntry } from '../entities/recurrent-entry';
+import { RecurrentEntryGroup } from '../entities/recurrent-entry-group';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class OfflineFinancialService {
   loadExpenseReport(startDate: string, endDate: string): Observable<ExpenseReport> {
     const allEntries: Entry[] = this.storageService.findAllEntries();
     const entryClasses: EntryClass[] = this.storageService.findAllEntryClasses();
-    const recurrentEntries: RecurrentEntry[] = this.storageService.findAllRecurrentEntries();
+    const allRecurrentEntries: RecurrentEntry[] = this.storageService.findAllRecurrentEntries();
 
     if (allEntries == null || allEntries.length === 0) {
       return of(null);
@@ -62,7 +62,6 @@ export class OfflineFinancialService {
           entryGroupReceiptList.push(newEntryGroup);
         }
 
-
         entryGroupId++;
       }
     });
@@ -75,9 +74,12 @@ export class OfflineFinancialService {
       graphInfoValues.push(entryGroup.value);
     });
 
+
+    const recurrentEntries = this.getRecurrentEntriesInfo(allRecurrentEntries, allEntries);
+
     report.expenseGroups = entryGroupExpenseList;
     report.receiptGroups = entryGroupReceiptList;
-    report.recurrentEntries = recurrentEntries;
+    report.recurrentEntryGroups = recurrentEntries;
     report.totalExpenseAmount = totalValueExpenses;
     report.totalReceiptAmount = totalValueReceipt;
     report.graphInfo = new GraphInfo();
@@ -88,6 +90,31 @@ export class OfflineFinancialService {
     return of(report);
   }
 
+  private getRecurrentEntriesInfo(recurrentEntriesOnStorge: RecurrentEntry[], allEntries: Entry[]): RecurrentEntryGroup[] {
+    const recurrentEntryGroups: RecurrentEntryGroup[] = [];
+
+    for (const recurrentEntry of recurrentEntriesOnStorge) {
+      const recurrentEntryGroup = new RecurrentEntryGroup();
+      recurrentEntryGroup.recurrentEntry = recurrentEntry;
+      recurrentEntryGroup.associatedEntries = allEntries.filter(entry => entry.recurrentEntryId === recurrentEntry.id);
+      recurrentEntryGroup.isCheckedForThisPeriod = this.
+        getIsCheckedForPeriod(recurrentEntryGroup.associatedEntries, recurrentEntry.dueDate);
+      recurrentEntryGroups.push(recurrentEntryGroup);
+    }
+
+    return recurrentEntryGroups;
+  }
+
+  private getIsCheckedForPeriod(associatedEntries: Entry[], dueDate: Date): boolean {
+    for (const entry of associatedEntries) {
+      const entryMonthNumber = new Date(entry.date).getMonth();
+      const recurrentEntryMonthNumber = new Date(dueDate).getMonth();
+      if ( entryMonthNumber === recurrentEntryMonthNumber) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   public saveEntries(entries: Entry[]): Observable<Entry[]> {
     const createdEntries: Entry[] = [];

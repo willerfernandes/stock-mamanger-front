@@ -2,21 +2,21 @@
   <div class="inner-grid">
     <div>
       <span class="description">
-        {{entry.description}}
+        {{entryGroup.recurrentEntry.description}}
       </span>
     </div>
     <div>
       <span class="entry-class">
-        {{entry.entryClass.name}}
+        {{entryGroup.recurrentEntry.entryClass.name}}
       </span>
     </div>
   </div>
   <div class="inner-grid">
     <div>
       <div>
-        <span *ngIf="entry.entryType === 'DESPESA'" class="sign-minus">-</span>
-        <span *ngIf="entry.entryType === 'RECEITA'" class="sign-plus">+</span>
-        <span class="amount">{{entry.value.toLocaleString('pt-BR', { style: 'currency', currency:'BRL' })}}</span>
+        <span *ngIf="entryGroup.recurrentEntry.entryType === 'DESPESA'" class="sign-minus">-</span>
+        <span *ngIf="entryGroup.recurrentEntry.entryType === 'RECEITA'" class="sign-plus">+</span>
+        <span class="amount">{{entryGroup.recurrentEntry.value.toLocaleString('pt-BR', { style: 'currency', currency:'BRL' })}}</span>
       </div>
     </div>
     <div>
@@ -33,7 +33,7 @@
     </div>
     <div>
       <span class="small-text" style="margin-top: 5px;">
-        Até dia {{entry.dueDate | date: 'dd/MM'}}
+        Até dia {{entryGroup.recurrentEntry.dueDate | date: 'dd/MM'}}
       </span></div>
   </div>
 </div>

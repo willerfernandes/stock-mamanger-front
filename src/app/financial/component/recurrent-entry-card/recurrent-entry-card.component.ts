@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { RecurrentEntry } from '../../entities/recurrent-entry';
+import { RecurrentEntryGroup } from '../../entities/recurrent-entry-group';
 
 @Component({
   selector: 'app-recurrent-entry-card',
@@ -12,7 +12,7 @@ export class RecurrentEntryCardComponent implements OnInit {
   constructor() { }
 
   @Input()
-  public entry: RecurrentEntry;
+  public entryGroup: RecurrentEntryGroup;
 
   @Input()
   public isOk = false;
@@ -33,6 +33,11 @@ export class RecurrentEntryCardComponent implements OnInit {
 
   setTagText(): void {
     const numberOfDaysBeforeDueDatedifference = this.getNumberOfDaysBeforeDueDate();
+    if (this.entryGroup.isCheckedForThisPeriod) {
+      this.tagClass = 'tag-green';
+      this.tagText = 'OK';
+      return;
+    }
     if (numberOfDaysBeforeDueDatedifference > 3) {
       this.tagClass = 'tag-yellow';
       this.tagText = 'PEND.';
@@ -54,7 +59,6 @@ export class RecurrentEntryCardComponent implements OnInit {
   }
 
   getRemainingDaysText(): string {
-    console.log(this.entry);
     const difference = this.getNumberOfDaysBeforeDueDate();
     if (difference > 0) {
       return 'Vence em ' + difference + ' dias';
@@ -69,7 +73,7 @@ export class RecurrentEntryCardComponent implements OnInit {
 
 
   private getNumberOfDaysBeforeDueDate(): number {
-    const dueDate: Date = new Date(this.entry.dueDate);
+    const dueDate: Date = new Date(this.entryGroup.recurrentEntry.dueDate);
     const now: Date = new Date();
     const difference = dueDate.getDay() - now.getDay();
     return difference;

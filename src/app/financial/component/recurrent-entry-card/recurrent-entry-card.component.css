@@ -127,3 +127,15 @@ label {
 .tag-green {
   background-color: #43CA49;
 }
+
+.recurrent-card :hover, :active {
+  border-color: #030091;
+  height: 102%;
+  width: 101%;
+  transition: .2s ease;
+}
+
+
+
+
+

@@ -1,6 +1,6 @@
 import { GraphInfo as GraphInfo } from './graph-info';
 import { EntryGroup as EntryGroup } from './entry-group';
-import { RecurrentEntry } from './recurrent-entry';
+import { RecurrentEntryGroup } from './recurrent-entry-group';
 
 export class ExpenseReport {
   totalExpenseAmount: number;
@@ -8,5 +8,5 @@ export class ExpenseReport {
   graphInfo: GraphInfo;
   expenseGroups: EntryGroup[];
   receiptGroups: EntryGroup[];
-  recurrentEntries: RecurrentEntry[];
+  recurrentEntryGroups: RecurrentEntryGroup[];
 }

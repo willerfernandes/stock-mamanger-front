@@ -11,6 +11,7 @@ import { Entry } from '../../entities/entry';
 import { NewReceiptViewComponent } from '../new-receipt-view/new-receipt-view.component';
 import { FinancialService } from '../../services/financial.service';
 import { RecurrentEntry } from '../../entities/recurrent-entry';
+import { RecurrentEntryGroup } from '../../entities/recurrent-entry-group';
 
 @Component({
   selector: 'app-expense-dashboard',
@@ -37,7 +38,7 @@ export class ExpenseDashboardComponent implements OnInit {
 
   public expenseGroups: EntryGroup[] = [];
   public receiptGroups: EntryGroup[] = [];
-  public recurrentEntries: RecurrentEntry[] = [];
+  public recurrentEntryGroups: RecurrentEntryGroup[] = [];
 
   public tableTitle = 'RESUMO DESPESAS';
 
@@ -172,7 +173,16 @@ export class ExpenseDashboardComponent implements OnInit {
 
   }
 
-  getExpenseReport(startDate: any, endDate: any): void {
+
+  public createEntryForRecurrent(recurrentEntry: RecurrentEntry) {
+    sessionStorage.setItem('recurrentEntry', JSON.stringify(recurrentEntry));
+    const bottomSheet = this.bottomSheet.open(NewExpenseViewComponent);
+    bottomSheet.instance.entrySaved.subscribe(() => {
+      this.ngOnInit();
+    });
+  }
+
+  public getExpenseReport(startDate: any, endDate: any): void {
     this.setCurrentTile();
     this.isLoading = true;
     this.financialService.loadExpenseReport(startDate.toISOString(), endDate.toISOString())
@@ -184,7 +194,7 @@ export class ExpenseDashboardComponent implements OnInit {
           this.pieChartData = res.graphInfo.values;
           this.expenseGroups = res.expenseGroups;
           this.receiptGroups = res.receiptGroups;
-          this.recurrentEntries = res.recurrentEntries;
+          this.recurrentEntryGroups = res.recurrentEntryGroups;
 
           this.expenseGroups.sort((a, b) => {
             if (a.value < b.value) {
