@@ -16,19 +16,20 @@ export class OfflineFinancialService {
 
   constructor(private storageService: StorageService) { }
 
-  loadExpenseReport(startDate: string, endDate: string): Observable<ExpenseReport> {
+  loadExpenseReport(startDate: Date, endDate: Date): Observable<ExpenseReport> {
     const allEntries: Entry[] = this.storageService.findAllEntries();
     const entryClasses: EntryClass[] = this.storageService.findAllEntryClasses();
-    const allRecurrentEntries: RecurrentEntry[] = this.storageService.findAllRecurrentEntries();
 
     if (allEntries == null || allEntries.length === 0) {
       return of(null);
     }
 
-    const filterStartDate: Date = new Date(startDate);
-    const filterEndDate: Date = new Date(endDate);
+    startDate.setHours(0, 0, 0);
+    endDate.setHours(23, 59, 59);
 
-    const entries = allEntries.filter(entry => new Date(entry.date) >= filterStartDate && new Date(entry.date) <= filterEndDate );
+    const entries = allEntries.filter(entry => {
+      return new Date(entry.date) >= startDate && new Date(entry.date) <= endDate;
+    });
 
     if (entries == null || entries.length === 0) {
       return of(null);
@@ -75,7 +76,7 @@ export class OfflineFinancialService {
     });
 
 
-    const recurrentEntries = this.getRecurrentEntriesInfo(allRecurrentEntries, allEntries);
+    const recurrentEntries = this.getRecurrentEntriesInfo();
 
     report.expenseGroups = entryGroupExpenseList;
     report.receiptGroups = entryGroupReceiptList;
@@ -90,11 +91,16 @@ export class OfflineFinancialService {
     return of(report);
   }
 
-  private getRecurrentEntriesInfo(recurrentEntriesOnStorge: RecurrentEntry[], allEntries: Entry[]): RecurrentEntryGroup[] {
+  private getRecurrentEntriesInfo(): RecurrentEntryGroup[] {
+    const allEntries: Entry[] = this.storageService.findAllEntries();
+    let allRecurrentEntries: RecurrentEntry[] = this.storageService.findAllRecurrentEntries();
     const recurrentEntryGroups: RecurrentEntryGroup[] = [];
 
-    for (const recurrentEntry of recurrentEntriesOnStorge) {
-      // TODO: check for only recurrentEntries of this month
+    if (allRecurrentEntries == null) {
+      allRecurrentEntries = [];
+    }
+
+    for (const recurrentEntry of allRecurrentEntries) {
       const recurrentEntryGroup = new RecurrentEntryGroup();
       recurrentEntryGroup.recurrentEntry = recurrentEntry;
       recurrentEntryGroup.associatedEntries = allEntries.filter(entry => entry.recurrentEntryId === recurrentEntry.id);
@@ -124,54 +130,6 @@ export class OfflineFinancialService {
     }
     return of(createdEntries);
   }
-
-  saveRecurrentEntry(entry: RecurrentEntry): Observable<RecurrentEntry> {
-      this.storageService.setIsDirty(true);
-      let entries: RecurrentEntry[] = this.storageService.findAllRecurrentEntries();
-      let entryClasses: EntryClass[] = this.storageService.findAllEntryClasses();
-
-      if (entries == null || entries.length === 0) {
-        entries = [];
-      }
-
-      if (entryClasses == null || entryClasses.length === 0) {
-        entryClasses = [];
-      }
-
-      entry.id = entries.length  + 1;
-
-      // necessary when user creates a new entryClass and is multiple expenses
-      if (entry.entryClass.name != null) {
-          const existingCategory: EntryClass =  entryClasses.find(entryClass => entryClass.name === entry.entryClass.name);
-          if (existingCategory != null) {
-            entry.entryClass = existingCategory;
-          }
-      }
-
-      if (entry.entryClass.id == null) {
-        const newEntryClass = new EntryClass();
-        newEntryClass.id = entryClasses.length + 1;
-        newEntryClass.name = entry.entryClass.name;
-        newEntryClass.description = entry.entryClass.description;
-        newEntryClass.type = entry.entryClass.type;
-
-        entry.entryClass = newEntryClass;
-
-        entryClasses.push(newEntryClass);
-        this.storageService.saveAllEntryClasses(entryClasses);
-
-      } else {
-        const classWithEntryId = entryClasses.find(entryClass => entryClass.id === entry.entryClass.id);
-        entry.entryClass = classWithEntryId;
-      }
-
-      entries.push(entry);
-      this.storageService.saveAllRecurrentEntries(entries);
-      return of(entry);
-
-  }
-
-
 
   public saveEntry(entry: Entry): Entry {
     this.storageService.setIsDirty(true);
@@ -227,6 +185,15 @@ export class OfflineFinancialService {
     return of(deleted[0]);
   }
 
+  public deleteRecurrentEntry(id: number): Observable<RecurrentEntry> {
+    this.storageService.setIsDirty(true);
+    const entries: RecurrentEntry[] = this.storageService.findAllRecurrentEntries();
+    const toBeDeleted = entries.findIndex(entry => entry.id === id);
+    const deleted = entries.splice(toBeDeleted, 1);
+    this.storageService.saveAllRecurrentEntries(entries);
+    return of(deleted[0]);
+  }
+
   public loadEntryClasses(type: string): Observable<EntryClass[]> {
     const entryClasses: EntryClass[] = this.storageService.findAllEntryClasses();
     if (entryClasses == null) {
@@ -237,6 +204,25 @@ export class OfflineFinancialService {
     } else {
       return of(entryClasses.filter(entryClass => entryClass.type === type));
     }
+  }
+
+  public loadRecurrentEntries(): Observable<RecurrentEntry[]> {
+    const recurrentEntries: RecurrentEntry[] = this.storageService.findAllRecurrentEntries();
+    if (recurrentEntries == null) {
+      return of(null);
+    }
+
+    return of(recurrentEntries);
+  }
+
+  public loadRecurrentEntry(id: number) {
+    const recurrentEntries: RecurrentEntry[] = this.storageService.findAllRecurrentEntries();
+    return of(recurrentEntries.find(recurrentEntry => recurrentEntry.id === id));
+  }
+
+  public loadRecurrentEntryGroup(id: number) {
+    const recurrentEntriesGroups = this.getRecurrentEntriesInfo();
+    return of(recurrentEntriesGroups.find(recurrentEntryGroup => recurrentEntryGroup.recurrentEntry.id === id));
   }
 
   public loadEntryClass(id: number) {
@@ -293,6 +279,66 @@ export class OfflineFinancialService {
 
     return of(newEntryClass);
   }
+
+
+  saveRecurrentEntry(entry: RecurrentEntry): Observable<RecurrentEntry> {
+    this.storageService.setIsDirty(true);
+    let entries: RecurrentEntry[] = this.storageService.findAllRecurrentEntries();
+    let entryClasses: EntryClass[] = this.storageService.findAllEntryClasses();
+
+    if (entries == null || entries.length === 0) {
+      entries = [];
+    }
+
+    if (entryClasses == null || entryClasses.length === 0) {
+      entryClasses = [];
+    }
+
+    entry.id = entries.length  + 1;
+
+    // necessary when user creates a new entryClass and is multiple expenses
+    if (entry.entryClass.name != null) {
+        const existingCategory: EntryClass =  entryClasses.find(entryClass => entryClass.name === entry.entryClass.name);
+        if (existingCategory != null) {
+          entry.entryClass = existingCategory;
+        }
+    }
+
+    if (entry.entryClass.id == null) {
+      const newEntryClass = new EntryClass();
+      newEntryClass.id = entryClasses.length + 1;
+      newEntryClass.name = entry.entryClass.name;
+      newEntryClass.description = entry.entryClass.description;
+      newEntryClass.type = entry.entryClass.type;
+
+      entry.entryClass = newEntryClass;
+
+      entryClasses.push(newEntryClass);
+      this.storageService.saveAllEntryClasses(entryClasses);
+
+    } else {
+      const classWithEntryId = entryClasses.find(entryClass => entryClass.id === entry.entryClass.id);
+      entry.entryClass = classWithEntryId;
+    }
+
+    entries.push(entry);
+    this.storageService.saveAllRecurrentEntries(entries);
+    return of(entry);
+}
+
+
+updateRecurrentEntry(entry: RecurrentEntry): Observable<RecurrentEntry> {
+  const allEntries: RecurrentEntry[] = this.storageService.findAllRecurrentEntries();
+  const indexOldEntry: number =  allEntries.findIndex(oldEntry => oldEntry.id === entry.id);
+  if (indexOldEntry === -1) /*not found*/ {
+    entry.id = allEntries.length;
+    allEntries.push(entry);
+  } else {
+    allEntries.splice(indexOldEntry, 1, entry);
+  }
+  this.storageService.saveAllRecurrentEntries(allEntries);
+  return of(entry);
+}
 
 
   // Adm

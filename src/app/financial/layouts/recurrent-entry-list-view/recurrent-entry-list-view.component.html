@@ -1,0 +1,24 @@
+<link href='https://fonts.googleapis.com/css?family=Roboto Condensed' rel='stylesheet'>
+<div id="mainDiv">
+  <app-main-nav-bar></app-main-nav-bar>
+<div style="height: 40px; width: 90%; box-sizing: border-box; margin: 10px auto auto auto;">
+  <img src='/assets/img/arrow-backward.svg' style="float: left;" (click)="goBack()">
+  <p style="display: block; text-align: center;  font-weight: bold; padding-top: 7px;">Lançamentos Recorrentes</p>
+</div>
+<p style="font-size: small; color: #cacaca; margin-top: 30px;">Lançamentos</p>
+<div class="container"></div>
+  <div style="margin-top: 5px;" *ngFor=" let  entryGroup of recurrentEntryGroups">
+    <app-recurrent-entry-card [hideTag]=true [entryGroup]="entryGroup" [isOk]="entryGroup.isCheckedForThisPeriod" (click)="goToEditView(entryGroup.recurrentEntry.id)"></app-recurrent-entry-card>
+  </div>
+  <br>
+</div>
+<div class="center">
+  <btn-primary-blue type="submit" [text]="'Novo'" (clickedEvent)="gotoNewRecurrentEntryView()"></btn-primary-blue>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>

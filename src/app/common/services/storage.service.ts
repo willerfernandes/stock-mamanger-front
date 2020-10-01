@@ -59,6 +59,18 @@ export class StorageService {
     localStorage.setItem('entries', JSON.stringify(entries));
   }
 
+  public clearEntries(): void {
+    localStorage.removeItem('entries');
+  }
+
+  public clearEntryClasses(): void {
+    localStorage.removeItem('entryClasses');
+  }
+
+  public clearRecurrentEntries(): void {
+    localStorage.removeItem('recurrentEntries');
+  }
+
   findAllRecurrentEntries(): RecurrentEntry[] {
     return JSON.parse(localStorage.getItem('recurrentEntries'));
   }

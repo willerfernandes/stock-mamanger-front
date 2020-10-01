@@ -157,10 +157,13 @@ export class ExpenseDashboardComponent implements OnInit {
   setCurrentTile() {
     const startDate: Date = new Date(this.startDate.value.toISOString());
     const endDate: Date = new Date(this.endDate.value.toISOString());
-    if (startDate.getMonth() === endDate.getMonth() &&
-      startDate.getFullYear() === endDate.getFullYear()) {
+    startDate.setHours(0, 0, 0);
+    endDate.setHours(0, 0, 0);
+
+    if (this.isStartAndEndDateAtTheSameMonth(startDate, endDate)) {
       const consideredStartDate = new Date(startDate.getFullYear(), startDate.getMonth(), 1);
       const consideredEndDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0);
+
       if (startDate.getTime() === consideredStartDate.getTime()
         && endDate.getTime() === consideredEndDate.getTime()) {
         this.pieChartTitle = this.monthNames[startDate.getMonth()];
@@ -170,9 +173,13 @@ export class ExpenseDashboardComponent implements OnInit {
     } else {
       this.pieChartTitle = 'Personalizado';
     }
-
   }
 
+
+  private isStartAndEndDateAtTheSameMonth(startDate: Date, endDate: Date) {
+    return startDate.getMonth() === endDate.getMonth() &&
+      startDate.getFullYear() === endDate.getFullYear();
+  }
 
   public createEntryForRecurrent(recurrentEntry: RecurrentEntry) {
     sessionStorage.setItem('recurrentEntry', JSON.stringify(recurrentEntry));
@@ -188,7 +195,7 @@ export class ExpenseDashboardComponent implements OnInit {
   public getExpenseReport(startDate: any, endDate: any): void {
     this.setCurrentTile();
     this.isLoading = true;
-    this.financialService.loadExpenseReport(startDate.toISOString(), endDate.toISOString())
+    this.financialService.loadExpenseReport(startDate, endDate)
       .subscribe(async res => {
         if (res) {
           this.totalExpenses = res.totalExpenseAmount;
@@ -197,7 +204,7 @@ export class ExpenseDashboardComponent implements OnInit {
           this.pieChartData = res.graphInfo.values;
           this.expenseGroups = res.expenseGroups;
           this.receiptGroups = res.receiptGroups;
-          this.recurrentEntryGroups = res.recurrentEntryGroups;
+          this.recurrentEntryGroups = res.recurrentEntryGroups == null ? [] : res.recurrentEntryGroups;
 
           this.expenseGroups.sort((a, b) => {
             if (a.value < b.value) {

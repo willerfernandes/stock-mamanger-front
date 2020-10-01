@@ -7,9 +7,10 @@ import { OfflineFinancialService } from './offline-financial.service';
 import { AuthenticationService } from 'src/app/common/services/authentication.service';
 import { StorageService } from '../../common/services/storage.service';
 import { MessageService } from '../../common/services/message.service';
-import { FormGroup } from '@angular/forms';
 import { RecurrentEntry } from '../entities/recurrent-entry';
 import { ExpenseReport } from '../entities/expense-report';
+import { RecurrentEntryGroup } from '../entities/recurrent-entry-group';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -20,14 +21,15 @@ export class FinancialService {
               private offlineFinancialService: OfflineFinancialService,
               private authenticationService: AuthenticationService,
               private messageService: MessageService,
-              private storageService: StorageService) { }
+              private storageService: StorageService,
+              public datepipe: DatePipe) { }
 
 
   public isOnline(): boolean {
     return this.authenticationService.isOnline();
   }
 
-  loadExpenseReport(startDate: string, endDate: string): Observable<ExpenseReport> {
+  loadExpenseReport(startDate: Date, endDate: Date): Observable<ExpenseReport> {
     if (this.authenticationService.isOnline()) {
       return this.onlineFinancialService.loadExpenseReport(startDate, endDate);
     } else {
@@ -78,6 +80,15 @@ saveRecurrentEntry( value: string,
     }
 }
 
+
+  updateRecurrentEntry(entry: RecurrentEntry): Observable<RecurrentEntry> {
+    if (this.isOnline()) {
+      return this.onlineFinancialService.updateRecurrentEntry(entry);
+    } else {
+      return this.offlineFinancialService.updateRecurrentEntry(entry);
+    }
+  }
+
   createEntries(value: string,
                 entryClassId: string,
                 newEntryClassName: string,
@@ -110,7 +121,7 @@ saveRecurrentEntry( value: string,
       entry.recurrentEntryId  = recurrentEntryId;
       entry.entryClass = entryClass;
       entry.date = date.toISOString();
-      entry.description = description;
+      entry.description = this.getEntryDescription(description, recurrentEntryId);
       entry.entryType = entryClassType;
       entry.value = Number.parseFloat(value);
       entriesToBeCreated.push(entry);
@@ -118,6 +129,15 @@ saveRecurrentEntry( value: string,
 
     return entriesToBeCreated;
 
+  }
+
+  private getEntryDescription(userDescription: string, recurrentEntryId: number): string {
+    if (recurrentEntryId != null && recurrentEntryId !== 0) {
+      const now = this.datepipe.transform(new Date(), 'MM-yy');
+      return userDescription + ' - ' + now;
+    } else {
+      return userDescription;
+    }
   }
 
 
@@ -193,6 +213,31 @@ saveRecurrentEntry( value: string,
     }
   }
 
+  public loadRecurrentEntries(): Observable<RecurrentEntry[]> {
+    if (this.isOnline()) {
+      return this.onlineFinancialService.loadRecurrentEntries();
+    } else {
+      return this.offlineFinancialService.loadRecurrentEntries();
+    }
+  }
+
+  public loadRecurrentEntry(id: number): Observable<RecurrentEntry> {
+    if (this.isOnline()) {
+      return this.onlineFinancialService.loadRecurrentEntry(id);
+    } else {
+      return this.offlineFinancialService.loadRecurrentEntry(id);
+    }
+  }
+
+  public loadRecurrentEntryGroup(id: number): Observable<RecurrentEntryGroup> {
+    if (this.isOnline()) {
+      return this.onlineFinancialService.loadRecurrentEntryGroup(id);
+    } else {
+      return this.offlineFinancialService.loadRecurrentEntryGroup(id);
+    }
+  }
+
+
   public saveEntryClass(entryClass: EntryClass): Observable<EntryClass> {
     if (this.isOnline()) {
       return this.onlineFinancialService.saveEntryClass(entryClass);
@@ -214,6 +259,14 @@ saveRecurrentEntry( value: string,
       return this.onlineFinancialService.deleteEntry(id);
     } else {
       return this.offlineFinancialService.deleteEntry(id);
+    }
+  }
+
+  public deleteRecurrentEntry(id: number): Observable<RecurrentEntry> {
+    if (this.isOnline()) {
+      return this.onlineFinancialService.deleteRecurrentEntry(id);
+    } else {
+      return this.offlineFinancialService.deleteRecurrentEntry(id);
     }
   }
 
@@ -260,7 +313,7 @@ saveRecurrentEntry( value: string,
         this.onlineFinancialService.loadAllEntries().subscribe(entries => {
           this.storageService.saveAllEntries(entries);
         });
-        this.onlineFinancialService.loadAllRecurrentEntries().subscribe(recurrentEntries => {
+        this.onlineFinancialService.loadRecurrentEntries().subscribe(recurrentEntries => {
           this.storageService.saveAllRecurrentEntries(recurrentEntries);
         });
       }
@@ -271,15 +324,28 @@ saveRecurrentEntry( value: string,
 
   // Adm
   updateEntriesOnStorage(entriesJson: string) {
-    this.storageService.saveAllEntries(JSON.parse(entriesJson));
+    if (entriesJson.length === 0) {
+      this.storageService.clearEntries();
+    } else {
+      this.storageService.saveAllEntries(JSON.parse(entriesJson));
+    }
   }
 
   updateEntryClassesOnStorage(entryClasses: string) {
-    this.storageService.saveAllEntryClasses(JSON.parse(entryClasses));
+
+    if (entryClasses.length === 0) {
+      this.storageService.clearEntryClasses();
+    } else {
+      this.storageService.saveAllEntryClasses(JSON.parse(entryClasses));
+    }
   }
 
   updateRecurrentEntryClassesOnStorage(recurrentEntries: string) {
-    this.storageService.saveAllRecurrentEntries(JSON.parse(recurrentEntries));
+    if (recurrentEntries.length === 0) {
+      this.storageService.clearRecurrentEntries();
+    } else {
+      this.storageService.saveAllRecurrentEntries(JSON.parse(recurrentEntries));
+    }
   }
 
   loadEntriesFromStorage(): Observable<string> {

@@ -6,6 +6,7 @@ import { ExpenseReport } from '../entities/expense-report';
 import { Entry } from '../entities/entry';
 import { EntryClass } from '../entities/entry-class';
 import { RecurrentEntry } from '../entities/recurrent-entry';
+import { RecurrentEntryGroup } from '../entities/recurrent-entry-group';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class OnlineFinancialService {
   expenseReportPath = '/api/v1/expense-report';
   entryPath = '/api/v1/entries';
   recurrentEntryPath = '/api/v1/recurrent-entries';
+  recurrentEntryGroupPath = '/api/v1/recurrent-entries/groups';
   batchPatch = '/batch';
   entryClassesPath = '/api/v1/classes';
   syncPath = '/sync';
@@ -27,13 +29,13 @@ export class OnlineFinancialService {
   constructor(private httpClient: HttpClient) { }
 
   // ExpenseReport
-  public loadExpenseReport(startDate: string, endDate: string): Observable<ExpenseReport> {
+  public loadExpenseReport(startDate: Date, endDate: Date): Observable<ExpenseReport> {
     let filterParams = new HttpParams();
     if (startDate != null) {
-      filterParams = filterParams.set('startDate', startDate);
+      filterParams = filterParams.set('startDate', startDate.toISOString());
     }
     if (endDate != null) {
-      filterParams = filterParams.set('endDate', endDate);
+      filterParams = filterParams.set('endDate', endDate.toISOString());
     }
     this.httpOptions.params = filterParams;
     return this.httpClient.get<ExpenseReport>(
@@ -49,6 +51,14 @@ export class OnlineFinancialService {
     return this.httpClient.post<RecurrentEntry>(this.baseUrl + this.recurrentEntryPath, JSON.stringify(recurrentEntryPath));
   }
 
+  public updateRecurrentEntry(recurrentEntryPath: RecurrentEntry): Observable<RecurrentEntry> {
+    return this.httpClient.put<RecurrentEntry>(this.baseUrl + this.recurrentEntryPath, JSON.stringify(recurrentEntryPath));
+  }
+
+  public deleteRecurrentEntry(id: number): Observable<RecurrentEntry> {
+    return this.httpClient.delete<RecurrentEntry>(this.baseUrl + this.recurrentEntryPath + '/' + id);
+  }
+
   public saveEntries(entry: Entry[]): Observable<Entry[]> {
     return this.httpClient.post<Entry[]>(this.baseUrl + this.entryPath + this.batchPatch, JSON.stringify(entry));
   }
@@ -59,10 +69,6 @@ export class OnlineFinancialService {
 
   public loadAllEntries(): Observable<Entry[]> {
     return this.httpClient.get<Entry[]>(this.baseUrl + this.entryPath);
-  }
-
-  public loadAllRecurrentEntries(): Observable<RecurrentEntry[]> {
-    return this.httpClient.get<RecurrentEntry[]>(this.baseUrl + this.recurrentEntryPath);
   }
 
   // EntryClass
@@ -77,6 +83,18 @@ export class OnlineFinancialService {
       this.httpOptions.params = filterParams;
     }
     return this.httpClient.get<EntryClass[]>(this.baseUrl + this.entryClassesPath, this.httpOptions);
+  }
+
+  public loadRecurrentEntry(id: number): Observable<RecurrentEntry> {
+    return this.httpClient.get<RecurrentEntry>(this.baseUrl + this.recurrentEntryPath + '/' + id, this.httpOptions);
+  }
+
+  public loadRecurrentEntryGroup(id: number): Observable<RecurrentEntryGroup> {
+    return this.httpClient.get<RecurrentEntryGroup>(this.baseUrl + this.recurrentEntryGroupPath + '/' + id, this.httpOptions);
+  }
+
+  public loadRecurrentEntries(): Observable<RecurrentEntry[]> {
+    return this.httpClient.get<RecurrentEntry[]>(this.baseUrl + this.recurrentEntryPath, this.httpOptions);
   }
 
   public saveEntryClass(entryClass: EntryClass): Observable<EntryClass> {

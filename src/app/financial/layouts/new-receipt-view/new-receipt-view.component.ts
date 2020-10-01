@@ -63,11 +63,9 @@ export class NewReceiptViewComponent implements OnInit {
       const clickedRecurrentEntry: RecurrentEntry = JSON.parse(sessionStorage.getItem('recurrentEntry'));
       if (clickedRecurrentEntry != null) {
         this.recurrentEntryId = clickedRecurrentEntry.id;
-        this.group.controls['value'].setValue(clickedRecurrentEntry.value);
-        this.group.controls['entryClass'].setValue(clickedRecurrentEntry.entryClass.id);
-        this.group.controls['description'].setValue(clickedRecurrentEntry.description);
-        this.group.controls['date'].setValue(new Date(clickedRecurrentEntry.dueDate));
-        this.group.controls['date'].setValue(new Date(clickedRecurrentEntry.dueDate));
+        this.group.controls.value.setValue(clickedRecurrentEntry.value);
+        this.group.controls.entryClass.setValue(clickedRecurrentEntry.entryClass.id);
+        this.group.controls.description.setValue(clickedRecurrentEntry.description);
       }
       sessionStorage.removeItem('recurrentEntry');
     }

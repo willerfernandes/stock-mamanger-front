@@ -47,7 +47,6 @@ export class LoginViewComponent implements OnInit {
   }
 
   public isOffline() {
-    console.log(this.loginForm.value.offlineModeControl);
     return this.loginForm.value.offlineModeControl === 'true';
   }
 

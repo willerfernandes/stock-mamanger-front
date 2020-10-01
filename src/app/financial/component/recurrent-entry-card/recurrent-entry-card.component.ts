@@ -17,6 +17,9 @@ export class RecurrentEntryCardComponent implements OnInit {
   @Input()
   public isOk = false;
 
+  @Input()
+  public hideTag = false;
+
   public remainingDaysText: string = null;
 
   public tagText = 'NOT';
@@ -55,8 +58,8 @@ export class RecurrentEntryCardComponent implements OnInit {
     }
 
     if (numberOfDaysBeforeDueDatedifference < 0) {
-      this.tagClass = 'tag-red';
-      this.tagText = 'VENCIDO';
+      this.tagClass = 'tag-dark-red';
+      this.tagText = 'ATRAS.';
     }
   }
 

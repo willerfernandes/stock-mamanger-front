@@ -29,7 +29,8 @@ import { EntryListViewComponent } from './financial/layouts/entry-list-view/entr
 import { EntryClassListViewComponent } from './financial/layouts/entry-class-list-view/entry-class-list-view.component';
 import { EntryClassEditViewComponent } from './financial/layouts/entry-class-edit-view/entry-class-edit-view.component';
 import { AdmViewComponent } from './financial/layouts/adm-view/adm-view.component';
-import { RecurrentEntryViewComponent } from './financial/layouts/recurrent-entry-view/recurrent-entry-view.component';
+import { RecurrentEntryListViewComponent } from './financial/layouts/recurrent-entry-list-view/recurrent-entry-list-view.component';
+import { RecurrentEntryEditViewComponent } from './financial/layouts/recurrent-entry-edit-view/recurrent-entry-edit-view.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -38,7 +39,7 @@ const routes: Routes = [
   { path: 'home', component: HomeViewComponent, canActivate: [AuthGuard] },
   { path: 'expense-dashboard', component: ExpenseDashboardComponent , canActivate: [AuthGuard]},
   { path: 'entries', component: EntryListViewComponent },
-  { path: 'recurrent-entries', component: RecurrentEntryViewComponent },
+  { path: 'recurrent-entries', component: RecurrentEntryListViewComponent },
   { path: 'classes', component: EntryClassListViewComponent },
   { path: 'classes/:id', component: EntryClassEditViewComponent },
   { path: 'adm', component: AdmViewComponent },
@@ -58,6 +59,8 @@ const routes: Routes = [
   { path: 'category', component: ExpenseCategoryFilterComponent },
   { path: 'category/new', component: ExpenseCategoryNewComponent },
   { path: 'category/:id', component: ExpenseCategoryDetailComponent },
+  { path: 'recurrent-entries/new', component: RecurrentEntryEditViewComponent },
+  { path: 'recurrent-entries/:id', component: RecurrentEntryEditViewComponent },
   { path: 'under-construction', component: UnderConstructionComponent }
 ];
 
