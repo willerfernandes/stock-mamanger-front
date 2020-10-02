@@ -20,7 +20,7 @@ export class NewExpenseViewComponent implements OnInit {
   public isNewEntryGroup = false;
   private recurrentEntryId: number;
   public entryClasses: EntryClass[];
-  plots = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
+  plots = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
   color: ThemePalette = 'primary';
   group: FormGroup;
   title = 'Despesas';
@@ -50,7 +50,7 @@ export class NewExpenseViewComponent implements OnInit {
         date: [new Date(), Validators.required ],
         dateToogless: [false],
         installmentPurchase: [false, Validators.required ],
-        numberOfPlots: [false, Validators.required ],
+        numberOfPlots: [2, Validators.required ],
         recurrentEntry: [false, Validators.required ],
         recurrentDate: [new Date(2030, 11, 1)]
       });

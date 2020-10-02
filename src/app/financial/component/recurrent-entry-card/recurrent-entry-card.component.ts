@@ -64,6 +64,7 @@ export class RecurrentEntryCardComponent implements OnInit {
   }
 
   getRemainingDaysText(): string {
+    return null;
     const difference = this.getNumberOfDaysBeforeDueDate();
     if (difference > 0) {
       return 'Vence em ' + difference + ' dias';
@@ -76,11 +77,17 @@ export class RecurrentEntryCardComponent implements OnInit {
     }
   }
 
+  public getDueDateToThisMonth(): Date {
+    const dueDateToThisMonth: Date = new Date(this.entryGroup.recurrentEntry.dueDate);
+    dueDateToThisMonth.setMonth(new Date().getMonth());
+    return dueDateToThisMonth;
+  }
+
 
   private getNumberOfDaysBeforeDueDate(): number {
     const dueDate: Date = new Date(this.entryGroup.recurrentEntry.dueDate);
     const now: Date = new Date();
-    const difference = dueDate.getDay() - now.getDay();
+    const difference = dueDate.getDate() - now.getDate();
     return difference;
   }
 }

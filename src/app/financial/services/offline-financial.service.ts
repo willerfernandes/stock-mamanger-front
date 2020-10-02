@@ -115,8 +115,7 @@ export class OfflineFinancialService {
   private getIsCheckedForPeriod(associatedEntries: Entry[], dueDate: Date): boolean {
     for (const entry of associatedEntries) {
       const entryMonthNumber = new Date(entry.date).getMonth();
-      const recurrentEntryMonthNumber = new Date(dueDate).getMonth();
-      if ( entryMonthNumber === recurrentEntryMonthNumber) {
+      if ( entryMonthNumber === new Date().getMonth()) {
         return true;
       }
     }

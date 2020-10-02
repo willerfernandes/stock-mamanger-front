@@ -63,32 +63,40 @@
           [color]="color"
           >
         </mat-slide-toggle>
-        <select formControlName="numberOfPlots" [hidden]="!group.value.installmentPurchase" #numberOfPlots  style="display: inline;">
-          <option *ngFor="let plot of plots" [value]="plot">{{plot.toString() + 'x'}}</option>
-        </select>
+        <div style="display: inline;" [hidden]="!group.value.installmentPurchase">
+          <select formControlName="numberOfPlots"  #numberOfPlots  style="display: inline;">
+            <option *ngFor="let plot of plots" [value]="plot">{{plot.toString() + 'x'}}</option>
+          </select>
+          <div style="margin-top: 20px;" class="observationText">
+            <p >
+              O valor total da despesa será divido em {{group.value.numberOfPlots}} vezes e será lançado neste e nos próximos meses de acordo com o número de parcelas.
+            </p>
+          </div>
+        </div>
       </div>
       <hr>
       <!-- Recurrent entry group-->
       <div class="container">
         <img src='/assets/img/question-icon.png' class="mandatory-item" matTooltip="As despesas recorrentes são lançados todos os meses com o mesmo valor, incluindo lembretes para pagamento">
-        <label class="color-primary input-label">Recorrente? </label>
+        <label class="color-primary input-label">Lembrete? </label>
         <mat-slide-toggle formControlName="recurrentEntry"
           [color]="color"
           >
         </mat-slide-toggle>
         <div [hidden]="!group.value.recurrentEntry">
-          <p style="margin-top: 20px; margin-bottom: 0px; font-weight: bolder;">
-            Lançar todos os meses até:
-          </p>
-          <mat-form-field style="max-width: 150px;">
-            <input #date class="color-primary input-label" matInput [matDatepicker]="picker2" formControlName="recurrentDate">
-            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-            <mat-datepicker id="recurrentDateInput" #picker2></mat-datepicker>
-          </mat-form-field>
-          <p class="observationText">
-            Despesas recorrentes serão lançadas todos os meses até <strong>{{group.value.recurrentDate | date: 'dd/MM/yyyy'}}</strong>. Para alterações, acessar o menu<span (click)="openRecurrentEntries()" class="color-primary"> Lançamentos Recorrentes</span>
-          </p>
-
+          <div style="margin-top: 20px;" class="observationText">
+            <p>
+              Lembretes aparecerão na tela incial todos os meses até que aquela despesa seja lançada naquele mês.
+            </p>
+            <br>
+            <p>
+              Use para registrar despesas/receitas mensais como ”Aluguel”, ”Conta de Luz”, ”Salário”.
+            </p>
+            <br>
+            <p>
+              Para alterações, acessar o menu<span (click)="openRecurrentEntries()" class="color-primary"> Lembretes</span>
+            </p>
+          </div>
         </div>
       </div>
 
