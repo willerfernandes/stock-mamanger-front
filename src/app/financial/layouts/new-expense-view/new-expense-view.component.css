@@ -142,6 +142,10 @@ input:active {
   left: 5px;
 }
 
+.input-color {
+  border: none;
+}
+
 .green-text {
   color: #009C19;
 }

@@ -36,6 +36,10 @@
               <label class="red-text">*</label><label class="color-primary input-label-small">Descrição:</label>
               <input formControlName="newEntryClassDescription" #newEntryGroupDescription type="text" maxlength="100" class="input-medium padding-small">
             </div>
+            <div>
+              <label class="red-text">*</label><label class="color-primary input-label-small">Cor:</label>
+              <input type="color" id="colorId" class="input-color" formControlName="newEntryClassColor" value="{{newEntryClassSuggestedColor}}"><br>
+            </div>
             <hr>
         </div>
       </div>

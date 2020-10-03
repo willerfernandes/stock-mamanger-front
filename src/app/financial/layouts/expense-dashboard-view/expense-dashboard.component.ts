@@ -12,6 +12,8 @@ import { NewReceiptViewComponent } from '../new-receipt-view/new-receipt-view.co
 import { FinancialService } from '../../services/financial.service';
 import { RecurrentEntry } from '../../entities/recurrent-entry';
 import { RecurrentEntryGroup } from '../../entities/recurrent-entry-group';
+import { GraphColor } from '../../entities/graph-color';
+
 
 @Component({
   selector: 'app-expense-dashboard',
@@ -28,6 +30,9 @@ export class ExpenseDashboardComponent implements OnInit {
   // Pie
   public pieChartLabels: string[];
   public pieChartData: number[];
+  public pieChartColors: GraphColor[];
+
+
   public pieChartType = 'pie';
   public pieChartTitle = '';
 
@@ -202,9 +207,13 @@ export class ExpenseDashboardComponent implements OnInit {
           this.totalReceipt = res.totalReceiptAmount;
           this.pieChartLabels = res.graphInfo.itens;
           this.pieChartData = res.graphInfo.values;
+          this.pieChartColors = res.graphInfo.colors;
           this.expenseGroups = res.expenseGroups;
           this.receiptGroups = res.receiptGroups;
           this.recurrentEntryGroups = res.recurrentEntryGroups == null ? [] : res.recurrentEntryGroups;
+
+
+
 
           this.expenseGroups.sort((a, b) => {
             if (a.value < b.value) {

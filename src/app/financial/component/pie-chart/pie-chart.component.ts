@@ -34,18 +34,24 @@ export class PieChartComponent implements OnInit {
 
   @Input()
   public pieChartTitle: string;
+
   @Input()
   public pieChartLabels: string[];
+
   @Input()
   public pieChartData: number[];
 
+  @Input()
+  public pieChartInputColors: string[];
+
   pieChartLegend = true;
 
-  public pieChartColors: Array < any > = [{
-    backgroundColor: ['#d4bbfc', '#bbbdfc', '#fcbbbb', '#fcf3bb', '#bbfcbc',
-    '#fcd7bb', '#3644e3', '#9836e3', '#c726af', '#c7c426', '#75c425', '#bf2462', '#a1a1a1'],
-    borderColor: ['white']
- }];
+  /*public pieChartColors: Array < any > = [{
+    backgroundColor: []
+    //backgroundColor: ['#d4bbfc', '#bbbdfc', '#fcbbbb', '#fcf3bb', '#bbfcbc',
+    //'#fcd7bb', '#3644e3', '#9836e3', '#c726af', '#c7c426', '#75c425', '#bf2462', '#a1a1a1'],
+    //borderColor: ['white']
+ }];*/
 
   // events
   public chartClicked(e: any): void {
@@ -55,6 +61,8 @@ export class PieChartComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.pieChartInputColors);
+    //this.pieChartColors = this.pieChartInputColors;
   }
 
 }

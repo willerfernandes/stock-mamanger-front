@@ -24,8 +24,11 @@
 
   <div *ngIf="!isLoading && isSuccess && !isEmptyResult">
     <div style="width: 80%; box-sizing: border-box; margin: auto;">
-      <app-pie-chart [pieChartLabels]="pieChartLabels"
-      [pieChartData]="pieChartData"> </app-pie-chart>
+      <app-pie-chart
+        [pieChartLabels]="pieChartLabels"
+        [pieChartData]="pieChartData"
+        [pieChartInputColors]="pieChartColors">
+      </app-pie-chart>
     </div>
 
     <div class="financial-statement-container">

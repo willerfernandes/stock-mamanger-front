@@ -8,6 +8,7 @@ import { GraphInfo } from '../entities/graph-info';
 import { StorageService } from '../../common/services/storage.service';
 import { RecurrentEntry } from '../entities/recurrent-entry';
 import { RecurrentEntryGroup } from '../entities/recurrent-entry-group';
+import { GraphColor } from '../entities/graph-color';
 
 @Injectable({
   providedIn: 'root'
@@ -48,6 +49,7 @@ export class OfflineFinancialService {
         const newEntryGroup: EntryGroup = new EntryGroup();
         newEntryGroup.entries = entriesOfThisClass;
         newEntryGroup.entryClassName = entryClass.name;
+        newEntryGroup.color = entryClass.color;
         let totalGroupValue = 0;
         entriesOfThisClass.forEach(entryOfThiClass => {
           totalGroupValue += entryOfThiClass.value;
@@ -69,10 +71,14 @@ export class OfflineFinancialService {
 
     const graphInfoNames: string[] = [];
     const graphInfoValues: number[] = [];
+    const graphInfoColors = new GraphColor();
+    graphInfoColors.backgroundColor = [];
+
     entryGroupExpenseList.forEach(entryGroup => {
       entryGroup.percentage = entryGroup.value / totalValueExpenses;
       graphInfoNames.push(entryGroup.entryClassName);
       graphInfoValues.push(entryGroup.value);
+      graphInfoColors.backgroundColor.push(entryGroup.color ? entryGroup.color : '#e8e8e8');
     });
 
 
@@ -86,6 +92,7 @@ export class OfflineFinancialService {
     report.graphInfo = new GraphInfo();
     report.graphInfo.itens = graphInfoNames;
     report.graphInfo.values = graphInfoValues;
+    report.graphInfo.colors = [graphInfoColors];
 
     // --------- EMPTY EXPENSE REPORT ------------
     return of(report);
@@ -159,6 +166,7 @@ export class OfflineFinancialService {
       newEntryClass.name = entry.entryClass.name;
       newEntryClass.description = entry.entryClass.description;
       newEntryClass.type = entry.entryClass.type;
+      newEntryClass.color = entry.entryClass.color;
 
       entry.entryClass = newEntryClass;
 

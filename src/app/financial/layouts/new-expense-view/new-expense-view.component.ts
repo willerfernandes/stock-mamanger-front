@@ -21,6 +21,10 @@ export class NewExpenseViewComponent implements OnInit {
   private recurrentEntryId: number;
   public entryClasses: EntryClass[];
   plots = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
+  colors = ['#d4bbfc', '#bbbdfc', '#fcbbbb', '#fcf3bb', '#bbfcbc',
+  '#fcd7bb', '#3644e3', '#9836e3', '#c726af', '#c7c426', '#75c425', '#bf2462', '#a1a1a1',
+  '#dcd7bb', '#e644e3', '#a836e3', '#b726af', '#a7c426', '#b5c425', '#ff2462', '#e1a1a1'];
+  newEntryClassSuggestedColor = '';
   color: ThemePalette = 'primary';
   group: FormGroup;
   title = 'Despesas';
@@ -46,6 +50,7 @@ export class NewExpenseViewComponent implements OnInit {
         entryClass: [null, Validators.required ],
         newEntryClassName: ['', Validators.required ],
         newEntryClassDescription: ['', Validators.required ],
+        newEntryClassColor: [Validators.required],
         description: [''],
         date: [new Date(), Validators.required ],
         dateToogless: [false],
@@ -74,6 +79,7 @@ export class NewExpenseViewComponent implements OnInit {
       const entryClassId = this.group.value.entryClass;
       const newEntryClassName = this.group.value.newEntryClassName;
       const newEntryClassDescription = this.group.value.newEntryClassDescription;
+      const newEntryClassColor = document.getElementById('colorId').value;
       const description = this.group.value.description;
       const date = this.group.value.date;
       const installmentPurchase = this.group.value.installmentPurchase;
@@ -89,7 +95,7 @@ export class NewExpenseViewComponent implements OnInit {
           date, recurrentDate, this.entryType).subscribe(async (newRecurrentEntry) => {
 
             this.financialService.saveEntry(value,
-              entryClassId, newEntryClassName, newEntryClassDescription, description,
+              entryClassId, newEntryClassName, newEntryClassDescription, newEntryClassColor, description,
               date, installmentPurchase, numberOfPlots, newRecurrentEntry.id, this.entryType).subscribe(async () => {
                 this.messageService.openMessageBar('Salvo com sucesso', 2000);
                 this.entrySaved.emit();
@@ -99,7 +105,7 @@ export class NewExpenseViewComponent implements OnInit {
         });
       } else {
         this.financialService.saveEntry(value,
-          entryClassId, newEntryClassName, newEntryClassDescription, description,
+          entryClassId, newEntryClassName, newEntryClassDescription, newEntryClassColor, description,
           date, installmentPurchase, numberOfPlots, this.recurrentEntryId, this.entryType).subscribe(async () => {
             this.messageService.openMessageBar('Salvo com sucesso', 2000);
             this.entrySaved.emit();
@@ -153,6 +159,9 @@ export class NewExpenseViewComponent implements OnInit {
       this.entryClasses = await this.financialService.loadEntryClasses(this.entryType)
       .toPromise()
       .then(resp => resp as EntryClass[]);
+      //this.newEntryClassSuggestedColor = '#030091';
+      this.newEntryClassSuggestedColor = this.colors[this.entryClasses.length];
+      this.group.value.newEntryClassColor = this.colors[this.entryClasses.length];
   }
 
   public openRecurrentEntries(): void {

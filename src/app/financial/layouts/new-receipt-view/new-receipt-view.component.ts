@@ -91,7 +91,7 @@ export class NewReceiptViewComponent implements OnInit {
           date, recurrentDate, this.entryType).subscribe(async (newRecurrentEntry) => {
 
             this.financialService.saveEntry(value,
-              entryClassId, newEntryClassName, newEntryClassDescription, description,
+              entryClassId, newEntryClassName, newEntryClassDescription, '#cccccc', description,
               date, installmentPurchase, numberOfPlots, newRecurrentEntry.id, this.entryType).subscribe(async () => {
                 this.messageService.openMessageBar('Salvo com sucesso', 2000);
                 this.entrySaved.emit();
@@ -101,7 +101,7 @@ export class NewReceiptViewComponent implements OnInit {
         });
       } else {
         this.financialService.saveEntry(value,
-          entryClassId, newEntryClassName, newEntryClassDescription, description,
+          entryClassId, newEntryClassName, newEntryClassDescription, '#cccccc', description,
           date, installmentPurchase, numberOfPlots, this.recurrentEntryId, this.entryType).subscribe(async () => {
             this.messageService.openMessageBar('Salvo com sucesso', 2000);
             this.entrySaved.emit();

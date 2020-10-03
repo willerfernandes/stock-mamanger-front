@@ -41,6 +41,7 @@ export class FinancialService {
             entryClassId: string,
             newEntryClassName: string,
             newEntryClassDescription: string,
+            newEntryClassColor: string,
             description: string,
             date: any,
             installmentPurchase: boolean,
@@ -49,7 +50,7 @@ export class FinancialService {
             entryType: string) {
 
     const newEntries: Entry[] = this.createEntries(value,
-      entryClassId, newEntryClassName, newEntryClassDescription, description,
+      entryClassId, newEntryClassName, newEntryClassDescription, newEntryClassColor, description,
       date, installmentPurchase, numberOfPlots, recurrentEntryId, entryType);
 
 
@@ -93,6 +94,7 @@ saveRecurrentEntry( value: string,
                 entryClassId: string,
                 newEntryClassName: string,
                 newEntryClassDescription: string,
+                newEntryClassColor: string,
                 description: string,
                 date: any,
                 installmentPurchase: boolean,
@@ -108,6 +110,7 @@ saveRecurrentEntry( value: string,
       entryClass.name = newEntryClassName;
       entryClass.description = newEntryClassDescription;
       entryClass.type = entryClassType;
+      entryClass.color = newEntryClassColor;
     } else {
       entryClass.id = Number.parseInt(entryClassId, 10);
     }
