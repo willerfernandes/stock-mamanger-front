@@ -1,0 +1,56 @@
+<link href='https://fonts.googleapis.com/css?family=Roboto Condensed' rel='stylesheet'>
+<app-main-nav-bar></app-main-nav-bar>
+<div style="height: 40px; width: 90%; box-sizing: border-box; margin: 10px auto auto auto;">
+  <img src='/assets/img/arrow-backward.svg' style="float: left;" (click)="goBack()">
+  <p style="display: block; text-align: center;  font-weight: bold; padding-top: 7px;">Laçamentos Recorrentes</p>
+</div>
+<div *ngIf="!isNewRecurrentEntry" style="margin-top: 10px;">
+  <app-recurrent-entry-card [hideTag]=true [entryGroup]="entryGroup"></app-recurrent-entry-card>
+</div>
+
+<div [formGroup]="formGroup" class="container">
+  <div style="margin-top: 40px;">
+    <label class="input-label  color-primary">Descrição:</label>
+    <input formControlName="description" type="text" maxlength="40" class="input-medium padding-medium" #name />
+  </div>
+  <div>
+    <label class="input-label color-primary">Valor:</label>
+    <input formControlName="value" id="input-currency" class="input-medium padding-small" style="font-size: 18px;" #amount placeholder="R$ 000,00" currencyMask type="tel"  [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"/>
+  </div>
+  <div>
+    <label class="input-label color-primary">Data alvo:</label>
+    <mat-form-field style="max-width: 150px;">
+      <input #dueDate class="color-primary input-label" matInput [matDatepicker]="picker1" formControlName="dueDate">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker id="dueDateInput" #picker1></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div>
+    <label class="input-label color-primary">Lançar até:</label>
+    <mat-form-field style="max-width: 150px;">
+      <input #maxDate class="color-primary input-label" matInput [matDatepicker]="picker2" formControlName="maxDate">
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker id="maxDateInput" #picker2></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div [hidden]="!isNewRecurrentEntry">
+    <label class="input-label color-primary">Categoria:</label>
+    <select formControlName="entryClass"  #entryGroupSelect  class="input-medium padding-small" #entryGroupSelect>
+      <option value='---'>---</option>
+      <option *ngFor="let entryClass of entryClasses" [value]="entryClass.id">{{entryClass.name}}</option>
+    </select>
+  </div>
+  <div style="width: 100%; margin: 40px auto;">
+    <btn-primary-blue style="float: left;" [text]="'SALVAR'" (click)="save()"></btn-primary-blue>
+    <btn-secondary-blue [hidden]="isNewRecurrentEntry" style="float: right;"  [text]="'EXCLUIR'" (click)="deleteRecurrentEntry()" ></btn-secondary-blue>
+  </div>
+</div>
+<br>
+<br>
+<div style="margin-top: 20px;" *ngIf="!isNewRecurrentEntry && entryGroup.associatedEntries.length > 0">
+  <p style="display: block; text-align: center;  font-weight: bold; padding-top: 7px;">Lançamentos</p>
+  <div>
+    <app-expense-row [expenses]="entryGroup.associatedEntries" (deleteRowEvent)="onDelete($event)"></app-expense-row>
+  </div>
+</div>
+

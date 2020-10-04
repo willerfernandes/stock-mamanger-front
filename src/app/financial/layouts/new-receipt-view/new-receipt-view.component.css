@@ -1,3 +1,11 @@
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: x-large;
+  font-weight: bold;
+}
+
 .top-label {
   width: 268px;
   height: 21px;
@@ -14,13 +22,17 @@
   color: #797676;
 }
 
+.mandatory-item {
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
 .container-wraper {
   display: inline;
   vertical-align: middle;
 }
 
 .container {
-  padding: 0px;
   vertical-align: middle;
   width: 100%;
 }
@@ -32,39 +44,6 @@
 .padding-large {
   padding-left: 30px;
 }
-
-.input-label-large {
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: bold;
-  font-size: 24px;
-  line-height: 28px;
-  max-width: 150px;
-  min-width: 100px;
-}
-
-.input-label {
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: bolder;
-  font-size: 18px;
-  margin: 0px;
-  vertical-align: middle;
-  max-width: 150px;
-  min-width: 100px;
-}
-
-.input-label-small {
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  margin: 0px;
-  vertical-align: middle;
-  max-width: 150px;
-  min-width: 100px;
-}
-
 
 .hint-text {
   font-family: 'Roboto';
@@ -78,7 +57,17 @@
   color: #7A7A7A;
 }
 
+.new-expense-text {
+  padding-left: 150px;
+  max-width: 300px;
+}
 
+.button-save {
+  margin-top: 40px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
 
 
 .color-gray {
@@ -105,23 +94,22 @@
   color: #1d1d1d;
 }
 
-textarea, select, input[type=text], input[type=number], input[type=tel], input[type=password] {
-  padding-left: 12px;
-  padding: 02px 05px;
-  background-color: white;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-bottom: 1px ridge #030091;
-  font-size: 16px;
-
-}
 
 input:active {
   border-top: none;
   border-left: none;
   border-right: none;
 	border-bottom: 1px ridge #030091;
+}
+
+
+
+
+.grid {
+  width: 100%;
+  display: grid;
+  grid: auto / auto auto;
+  gap: 5px;
 }
 
 
@@ -148,6 +136,10 @@ input:active {
   font-size: 16px;
   line-height: 19px;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+  position: absolute;
+  top: 5px;
+  left: 5px;
 }
 
 .green-text {

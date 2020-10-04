@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Entry } from '../../financial/entities/entry';
 import { EntryClass } from '../../financial/entities/entry-class';
 import { UserAuth } from 'src/app/common/entities/user-auth';
+import { RecurrentEntry } from 'src/app/financial/entities/recurrent-entry';
 
 @Injectable({
   providedIn: 'root'
@@ -56,6 +57,26 @@ export class StorageService {
 
   public saveAllEntries(entries: Entry[]) {
     localStorage.setItem('entries', JSON.stringify(entries));
+  }
+
+  public clearEntries(): void {
+    localStorage.removeItem('entries');
+  }
+
+  public clearEntryClasses(): void {
+    localStorage.removeItem('entryClasses');
+  }
+
+  public clearRecurrentEntries(): void {
+    localStorage.removeItem('recurrentEntries');
+  }
+
+  findAllRecurrentEntries(): RecurrentEntry[] {
+    return JSON.parse(localStorage.getItem('recurrentEntries'));
+  }
+
+  public saveAllRecurrentEntries(entryClasses: RecurrentEntry[]) {
+    localStorage.setItem('recurrentEntries', JSON.stringify(entryClasses));
   }
 
   public setIsDirty(isDirty: boolean): void {

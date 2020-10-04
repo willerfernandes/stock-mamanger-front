@@ -5,5 +5,6 @@ export class EntryGroup {
   entryType: string;
   value: number;
   percentage: number;
+  color: string;
   entries: Entry[];
 }

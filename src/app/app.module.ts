@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { CurrencyPipe} from '@angular/common';
+import { DatePipe } from '@angular/common'
 import { MatDatepickerModule } from '@angular/material';
 import { NewExpenseViewComponent } from './financial/layouts/new-expense-view/new-expense-view.component';
 import { NewReceiptViewComponent } from './financial/layouts/new-receipt-view/new-receipt-view.component';
@@ -30,7 +31,9 @@ import { SharedModule } from './common/shared.module';
     MatDatepickerModule,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    CurrencyPipe
+    CurrencyPipe,
+    DatePipe
+
   ],
   bootstrap: [AppComponent]
 })

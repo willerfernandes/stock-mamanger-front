@@ -4,4 +4,5 @@ export class EntryClass {
   type: string;
   name: string;
   description: string;
+  color: string;
 }

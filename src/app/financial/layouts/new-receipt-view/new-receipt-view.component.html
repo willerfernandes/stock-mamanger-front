@@ -1,53 +1,91 @@
-<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-
-
 <div>
-  <label (click)="closeButtonClicked()" style="position: absolute; top: 15px; right: 15px; font-size: x-large; font-weight: bold;">x</label>
-  <div style="position: absolute; top: 5px; left: 5px;">
-    <label class = "menu-item-text green-text">Receitas</label> <img [src]="'./assets/img/add-menu-receipt.svg'">
+  <label (click)="closeButtonClicked()" class="close-button">x</label>
+  <div class = "menu-item-text green-text">
+    <label >{{title}}</label> <img [src]="menuItem">
   </div>
 </div>
 
-<div [formGroup]="group" class="container containter-wraper" style="margin-top: 70px;">
-  <img  [src]="'./assets/img/piggy-bank-icon.png'" style="margin-right: 10px; vertical-align: middle;"><label class="red-text">*</label><label class="color-primary input-label">Valor:</label>
-  <input id="input-currency" class="input-medium padding-small" style="font-size: 24px; font-weight: bold;" #amount placeholder="R$ 000,00" currencyMask type="tel" formControlName="value"  [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"/>
-</div>
-<hr>
-<div class="container" (click)="doNothing()">
-  <img [src]="'./assets/img/piggy-bank-icon.png'" style="margin-right: 10px; vertical-align: middle;"> <label class="red-text">*</label><label class="color-primary input-label">Categoria:</label>
-  <select #entryGroupSelect (change)="selectValueChanged(entryGroupSelect)" class="input-medium" #entryGroupSelect>
-    <option value='---'>---</option>
-    <option *ngFor="let entryClass of entryClasses" [value]="entryClass.id">{{entryClass.name}}</option>
-    <option style="font-weight: bold;" value="new">*Criar Nova*</option>
-  </select>
-  <span [hidden]="!isNewEntryGroup" class="hint-text" style="padding-left: 150px; max-width: 300px;">*Uma nova categoria será criada com as informações</span>
-  <div [hidden]="!isNewEntryGroup">
-    <span class="hint-text">Nova Categoria</span>
-      <div>
-        <label class="red-text">*</label><label class="color-primary input-label-small">Nome:</label>
-        <input #newEntryGroupName type="text" maxlength="40" class="input-medium">
+<div style="margin-top: 70px;">
+  <div [formGroup]="group" class="container">
+    <!-- Amount group-->
+    <div style="margin-top: 10px;">
+      <img  [src]="inputIcon" class="mandatory-item"><label class="red-text">*</label><label class="color-primary input-label">Valor:</label>
+      <input formControlName="value" id="input-currency" class="input-medium padding-small" style="font-size: 24px; font-weight: bold;" #amount placeholder="R$ 000,00" currencyMask type="tel"  [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"/>
+    </div>
+    <hr>
+    <!-- Entry Class group-->
+    <div>
+      <img [src]="inputIcon" class="mandatory-item"> <label class="red-text">*</label><label class="color-primary input-label">Categoria:</label>
+      <select formControlName="entryClass"  #entryGroupSelect (change)="selectValueChanged(entryGroupSelect)" class="input-medium" #entryGroupSelect>
+        <option value='---'>---</option>
+        <option *ngFor="let entryClass of entryClasses" [value]="entryClass.id">{{entryClass.name}}</option>
+        <option style="font-weight: bold;" value="new">*Criar Nova*</option>
+      </select>
+    </div>
+    <hr>
+    <!-- New Entry Class group-->
+    <div>
+      <span [hidden]="!isNewEntryGroup" class="hint-text new-expense-text ">*Uma nova categoria será criada com as informações</span>
+      <div [hidden]="!isNewEntryGroup">
+        <span class="hint-text">Nova Categoria</span>
+          <div>
+            <label class="red-text">*</label><label class="color-primary input-label-small">Nome:</label>
+            <input formControlName="newEntryClassName" #newEntryGroupName type="text" maxlength="40" class="input-medium">
+          </div>
+          <div>
+            <label class="red-text">*</label><label class="color-primary input-label-small">Descrição:</label>
+            <input formControlName="newEntryClassDescription" #newEntryGroupDescription type="text" maxlength="100" class="input-medium padding-small">
+          </div>
+          <hr>
       </div>
-      <div>
-        <label class="red-text">*</label><label class="color-primary input-label-small">Descrição:</label>
-        <input #newEntryGroupDescription type="text" maxlength="100"  class="input-medium padding-small">
+    </div>
+    <!-- Description group-->
+    <div>
+      <img [src]="inputIcon" class="mandatory-item"><label class="color-primary input-label">Descrição:</label>
+      <input formControlName="description" #description class= "input-medium" type="text" maxlength="100">
+    </div>
+    <hr>
+    <!-- Date group-->
+    <div>
+      <img [src]="inputIcon" class="mandatory-item"> <label class="red-text">*</label><label class="color-primary input-label">Data:</label>
+      <mat-form-field class="datePicker" style="max-width: 150px;">
+        <input #date class="color-primary input-label" matInput [matDatepicker]="picker1" formControlName="date">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker id="dateInput" #picker1></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <hr>
+    <!-- Recurrent entry group-->
+    <div class="container">
+      <img src='/assets/img/question-icon.png' class="mandatory-item" matTooltip="As despesas recorrentes são lançados todos os meses com o mesmo valor, incluindo lembretes para pagamento">
+      <label class="color-primary input-label">Lembrete? </label>
+      <mat-slide-toggle formControlName="recurrentEntry"
+        [color]="color"
+        >
+      </mat-slide-toggle>
+      <div [hidden]="!group.value.recurrentEntry">
+        <div style="margin-top: 20px;" class="observationText">
+          <p>
+            Lembretes aparecerão na tela incial todos os meses até que aquela despesa seja lançada naquele mês.
+          </p>
+          <br>
+          <p>
+            Use para registrar despesas/receitas mensais como ”Aluguel”, ”Conta de Luz”, ”Salário”.
+          </p>
+          <br>
+          <p>
+            Para alterações, acessar o menu<span (click)="openRecurrentEntries()" class="color-primary"> Lembretes</span>
+          </p>
+        </div>
       </div>
-  </div>
+    </div>
+
+    <!-- Button save -->
+    <div  class="button-save">
+      <btn-primary-blue [text]="'OK'" (click)="saveExpense($event)" ></btn-primary-blue>
+    </div>
+
 </div>
-<hr>
-<div class="container">
-  <img [src]="'./assets/img/piggy-bank-icon.png'" style="margin-right: 10px; vertical-align: middle;"><label class="color-primary input-label">Descrição:</label>
-  <input #description class= "input-medium" type="text" maxlength="100">
 </div>
-<hr>
-<div class="container">
-  <img [src]="'./assets/img/piggy-bank-icon.png'" style="margin-right: 10px; vertical-align: middle;"> <label class="red-text">*</label><label class="color-primary input-label">Data:</label>
-    <mat-form-field class="datePicker" style="max-width: 150px;">
-      <input  #date class="color-primary input-label" matInput [matDatepicker]="picker1" [formControl]="initialDate">
-      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-      <mat-datepicker id="dateInput" #picker1></mat-datepicker>
-    </mat-form-field>
-  </div>
-<hr>
-<div style="display: flex; justify-content: center;" class="container">
-  <btn-primary-blue [text]="'OK'" (click)="saveReceipt($event, entryGroupSelect?.value, newEntryGroupName?.value, newEntryGroupDescription?.value, picker1, description?.value, amount?.value)" ></btn-primary-blue>
-</div>
+
+

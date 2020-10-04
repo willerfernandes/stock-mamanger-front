@@ -24,8 +24,11 @@
 
   <div *ngIf="!isLoading && isSuccess && !isEmptyResult">
     <div style="width: 80%; box-sizing: border-box; margin: auto;">
-      <app-pie-chart [pieChartLabels]="pieChartLabels"
-      [pieChartData]="pieChartData"> </app-pie-chart>
+      <app-pie-chart
+        [pieChartLabels]="pieChartLabels"
+        [pieChartData]="pieChartData"
+        [pieChartInputColors]="pieChartColors">
+      </app-pie-chart>
     </div>
 
     <div class="financial-statement-container">
@@ -43,34 +46,42 @@
       <label>LANÇAMENTOS</label>
     </div>
     <div>
-    <p *ngIf="expenseGroups.length > 0" class="category-title">Despesas</p>
-      <div>
-        <app-expense-group *ngIf="isSuccess" [expenseGroups]="expenseGroups" (deleteRowEvent)="entryDeleted()"></app-expense-group>
-      </div>
-      <br>
-    <p *ngIf="receiptGroups.length > 0" class="category-title">Receitas</p>
-      <div>
-        <app-expense-group *ngIf="isSuccess" [expenseGroups]="receiptGroups" (deleteRowEvent)="entryDeleted()"></app-expense-group>
-      </div>
-      <br>
+        <p *ngIf="expenseGroups.length > 0" class="category-title">Despesas</p>
+        <div>
+          <app-expense-group *ngIf="isSuccess" [expenseGroups]="expenseGroups" (deleteRowEvent)="entryDeleted()"></app-expense-group>
+        </div>
+        <br>
+        <p *ngIf="receiptGroups.length > 0" class="category-title">Receitas</p>
+        <div>
+          <app-expense-group *ngIf="isSuccess" [expenseGroups]="receiptGroups" (deleteRowEvent)="entryDeleted()"></app-expense-group>
+        </div>
+        <br>
+        <p *ngIf="recurrentEntryGroups.length > 0" class="category-title">Lembretes</p>
+        <div *ngIf="isSuccess">
+          <div style="margin-top: 5px;" *ngFor=" let  entryGroup of recurrentEntryGroups">
+            <app-recurrent-entry-card [entryGroup]="entryGroup" [isOk]="entryGroup.isCheckedForThisPeriod" (click)="createEntryForRecurrent(entryGroup.recurrentEntry)"></app-recurrent-entry-card>
+          </div>
+        </div>
+        <br>
     </div>
+
     <p *ngIf="expenseGroups.length > 0" class="category-title">Últimos lançamentos</p>
     <div *ngIf="expenseGroups.length > 0">
       <app-entry-table [entries]="allEntries"></app-entry-table>
     </div>
     <p *ngIf="expenseGroups.length > 0" class="show-more-text"
       (click)="onShowMoreClicked()">MOSTRAR MAIS</p>
+    </div>
+    <div *ngIf="isLoading" class="loading-container">
+      <img src='/assets/img/loading.gif' class="loading-gif">
+    </div>
+    <div *ngIf="!isLoading && !isSuccess">
+      <app-expense-error-screen></app-expense-error-screen>
+    </div>
+    <div *ngIf="!isLoading && isSuccess && isEmptyResult">
+      <app-expense-no-results-found></app-expense-no-results-found>
+    </div>
   </div>
-  <div *ngIf="isLoading" class="loading-container">
-    <img src='/assets/img/loading.gif' class="loading-gif">
-  </div>
-  <div *ngIf="!isLoading && !isSuccess">
-    <app-expense-error-screen></app-expense-error-screen>
-  </div>
-  <div *ngIf="!isLoading && isSuccess && isEmptyResult">
-    <app-expense-no-results-found></app-expense-no-results-found>
-  </div>
-</div>
 <br>
 <br>
 <br>

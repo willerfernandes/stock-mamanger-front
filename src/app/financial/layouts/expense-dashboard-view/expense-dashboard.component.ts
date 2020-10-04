@@ -10,6 +10,10 @@ import { EntryGroup } from '../../entities/entry-group';
 import { Entry } from '../../entities/entry';
 import { NewReceiptViewComponent } from '../new-receipt-view/new-receipt-view.component';
 import { FinancialService } from '../../services/financial.service';
+import { RecurrentEntry } from '../../entities/recurrent-entry';
+import { RecurrentEntryGroup } from '../../entities/recurrent-entry-group';
+import { GraphColor } from '../../entities/graph-color';
+
 
 @Component({
   selector: 'app-expense-dashboard',
@@ -26,6 +30,9 @@ export class ExpenseDashboardComponent implements OnInit {
   // Pie
   public pieChartLabels: string[];
   public pieChartData: number[];
+  public pieChartColors: GraphColor[];
+
+
   public pieChartType = 'pie';
   public pieChartTitle = '';
 
@@ -36,6 +43,8 @@ export class ExpenseDashboardComponent implements OnInit {
 
   public expenseGroups: EntryGroup[] = [];
   public receiptGroups: EntryGroup[] = [];
+  public recurrentEntryGroups: RecurrentEntryGroup[] = [];
+
   public tableTitle = 'RESUMO DESPESAS';
 
   public isSuccess = false;
@@ -153,10 +162,13 @@ export class ExpenseDashboardComponent implements OnInit {
   setCurrentTile() {
     const startDate: Date = new Date(this.startDate.value.toISOString());
     const endDate: Date = new Date(this.endDate.value.toISOString());
-    if (startDate.getMonth() === endDate.getMonth() &&
-      startDate.getFullYear() === endDate.getFullYear()) {
+    startDate.setHours(0, 0, 0);
+    endDate.setHours(0, 0, 0);
+
+    if (this.isStartAndEndDateAtTheSameMonth(startDate, endDate)) {
       const consideredStartDate = new Date(startDate.getFullYear(), startDate.getMonth(), 1);
       const consideredEndDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0);
+
       if (startDate.getTime() === consideredStartDate.getTime()
         && endDate.getTime() === consideredEndDate.getTime()) {
         this.pieChartTitle = this.monthNames[startDate.getMonth()];
@@ -166,21 +178,42 @@ export class ExpenseDashboardComponent implements OnInit {
     } else {
       this.pieChartTitle = 'Personalizado';
     }
+  }
+
+
+  private isStartAndEndDateAtTheSameMonth(startDate: Date, endDate: Date) {
+    return startDate.getMonth() === endDate.getMonth() &&
+      startDate.getFullYear() === endDate.getFullYear();
+  }
+
+  public createEntryForRecurrent(recurrentEntry: RecurrentEntry) {
+    sessionStorage.setItem('recurrentEntry', JSON.stringify(recurrentEntry));
+    if (recurrentEntry.entryType === 'DESPESA') {
+      this.openBottomSheetExpense();
+    }
+    if (recurrentEntry.entryType === 'RECEITA') {
+      this.openBottomSheetReceipt();
+    }
 
   }
 
-  getExpenseReport(startDate: any, endDate: any) {
+  public getExpenseReport(startDate: any, endDate: any): void {
     this.setCurrentTile();
     this.isLoading = true;
-    this.financialService.loadExpenseReport(startDate.toISOString(), endDate.toISOString())
+    this.financialService.loadExpenseReport(startDate, endDate)
       .subscribe(async res => {
         if (res) {
           this.totalExpenses = res.totalExpenseAmount;
           this.totalReceipt = res.totalReceiptAmount;
           this.pieChartLabels = res.graphInfo.itens;
           this.pieChartData = res.graphInfo.values;
+          this.pieChartColors = res.graphInfo.colors;
           this.expenseGroups = res.expenseGroups;
           this.receiptGroups = res.receiptGroups;
+          this.recurrentEntryGroups = res.recurrentEntryGroups == null ? [] : res.recurrentEntryGroups;
+
+
+
 
           this.expenseGroups.sort((a, b) => {
             if (a.value < b.value) {

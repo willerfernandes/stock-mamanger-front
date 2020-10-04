@@ -1,7 +1,7 @@
 <div>
     <label (click)="closeButtonClicked()" class="close-button">x</label>
     <div class = "menu-item-text red-text">
-      <label >Despesas</label> <img [src]="'./assets/img/add-menu-expense.svg'">
+      <label >{{title}}</label> <img [src]="menuItem">
     </div>
   </div>
 
@@ -9,13 +9,13 @@
     <div [formGroup]="group" class="container">
       <!-- Amount group-->
       <div style="margin-top: 10px;">
-        <img  [src]="'./assets/img/credit-card-icon.svg'" class="mandatory-item"><label class="red-text">*</label><label class="color-primary input-label">Valor:</label>
+        <img  [src]="inputIcon" class="mandatory-item"><label class="red-text">*</label><label class="color-primary input-label">Valor:</label>
         <input formControlName="value" id="input-currency" class="input-medium padding-small" style="font-size: 24px; font-weight: bold;" #amount placeholder="R$ 000,00" currencyMask type="tel"  [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"/>
       </div>
       <hr>
       <!-- Entry Class group-->
       <div>
-        <img [src]="'./assets/img/credit-card-icon.svg'" class="mandatory-item"> <label class="red-text">*</label><label class="color-primary input-label">Categoria:</label>
+        <img [src]="inputIcon" class="mandatory-item"> <label class="red-text">*</label><label class="color-primary input-label">Categoria:</label>
         <select formControlName="entryClass"  #entryGroupSelect (change)="selectValueChanged(entryGroupSelect)" class="input-medium" #entryGroupSelect>
           <option value='---'>---</option>
           <option *ngFor="let entryClass of entryClasses" [value]="entryClass.id">{{entryClass.name}}</option>
@@ -36,18 +36,22 @@
               <label class="red-text">*</label><label class="color-primary input-label-small">Descrição:</label>
               <input formControlName="newEntryClassDescription" #newEntryGroupDescription type="text" maxlength="100" class="input-medium padding-small">
             </div>
+            <div>
+              <label class="red-text">*</label><label class="color-primary input-label-small">Cor:</label>
+              <input type="color" id="colorId" class="input-color" formControlName="newEntryClassColor" value="{{newEntryClassSuggestedColor}}"><br>
+            </div>
             <hr>
         </div>
       </div>
       <!-- Description group-->
       <div>
-        <img [src]="'./assets/img/credit-card-icon.svg'" class="mandatory-item"><label class="color-primary input-label">Descrição:</label>
+        <img [src]="inputIcon" class="mandatory-item"><label class="color-primary input-label">Descrição:</label>
         <input formControlName="description" #description class= "input-medium" type="text" maxlength="100">
       </div>
       <hr>
       <!-- Date group-->
       <div>
-        <img [src]="'./assets/img/credit-card-icon.svg'" class="mandatory-item"> <label class="red-text">*</label><label class="color-primary input-label">Data:</label>
+        <img [src]="inputIcon" class="mandatory-item"> <label class="red-text">*</label><label class="color-primary input-label">Data:</label>
         <mat-form-field class="datePicker" style="max-width: 150px;">
           <input #date class="color-primary input-label" matInput [matDatepicker]="picker1" formControlName="date">
           <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
@@ -58,15 +62,48 @@
       <!-- Installment Purchase group-->
       <div class="container">
         <img src='/assets/img/question-icon.png' class="mandatory-item" matTooltip="Ao selecionar a compra parcelada serão realizados lançamentos nos meses subsequentes com os valores da parcela.">
-        <label class="color-primary input-label">Compra<br>parcelada?</label>
+        <label class="color-primary input-label">Parcelada?</label>
         <mat-slide-toggle formControlName="installmentPurchase"
           [color]="color"
           >
         </mat-slide-toggle>
-        <select formControlName="numberOfPlots" [hidden]="!group.value.installmentPurchase" #numberOfPlots  style="display: inline;">
-          <option *ngFor="let plot of plots" [value]="plot">{{plot.toString() + 'x'}}</option>
-        </select>
+        <div style="display: inline;" [hidden]="!group.value.installmentPurchase">
+          <select formControlName="numberOfPlots"  #numberOfPlots  style="display: inline;">
+            <option *ngFor="let plot of plots" [value]="plot">{{plot.toString() + 'x'}}</option>
+          </select>
+          <div style="margin-top: 20px;" class="observationText">
+            <p >
+              O valor total da despesa será divido em {{group.value.numberOfPlots}} vezes e será lançado neste e nos próximos meses de acordo com o número de parcelas.
+            </p>
+          </div>
+        </div>
       </div>
+      <hr>
+      <!-- Recurrent entry group-->
+      <div class="container">
+        <img src='/assets/img/question-icon.png' class="mandatory-item" matTooltip="As despesas recorrentes são lançados todos os meses com o mesmo valor, incluindo lembretes para pagamento">
+        <label class="color-primary input-label">Lembrete? </label>
+        <mat-slide-toggle formControlName="recurrentEntry"
+          [color]="color"
+          >
+        </mat-slide-toggle>
+        <div [hidden]="!group.value.recurrentEntry">
+          <div style="margin-top: 20px;" class="observationText">
+            <p>
+              Lembretes aparecerão na tela incial todos os meses até que aquela despesa seja lançada naquele mês.
+            </p>
+            <br>
+            <p>
+              Use para registrar despesas/receitas mensais como ”Aluguel”, ”Conta de Luz”, ”Salário”.
+            </p>
+            <br>
+            <p>
+              Para alterações, acessar o menu<span (click)="openRecurrentEntries()" class="color-primary"> Lembretes</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
       <!-- Button save -->
       <div  class="button-save">
         <btn-primary-blue [text]="'OK'" (click)="saveExpense($event)" ></btn-primary-blue>

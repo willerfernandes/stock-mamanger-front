@@ -67,24 +67,28 @@ private currentUserSubject: BehaviorSubject<UserAuth>;
     entryGroup1.name = 'Alimentação';
     entryGroup1.description = 'Despesas com alimentação';
     entryGroup1.type = 'DESPESA';
+    entryGroup1.color = '#d4bbfc';
 
     const entryGroup2 = new EntryClass();
     entryGroup2.id = 2;
     entryGroup2.name = 'Transporte';
     entryGroup2.description = 'Despesas com transporte';
     entryGroup2.type = 'DESPESA';
+    entryGroup2.color = '#bbbdfc';
 
     const entryGroup3 = new EntryClass();
     entryGroup3.id = 3;
     entryGroup3.name = 'Lazer';
     entryGroup3.description = 'Despesas com lazer';
     entryGroup3.type = 'DESPESA';
+    entryGroup3.color = '#fcbbbb';
 
     const entryGroup4 = new EntryClass();
     entryGroup4.id = 4;
     entryGroup4.name = 'Salário';
     entryGroup4.description = 'Recebimento do salário';
     entryGroup4.type = 'RECEITA';
+    entryGroup4.color = '#fcf3bb';
 
     const allEntryClasses = [entryGroup1, entryGroup2, entryGroup3, entryGroup4];
 

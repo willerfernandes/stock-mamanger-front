@@ -12,6 +12,7 @@ export class AdmViewComponent implements OnInit {
 
   public entries = '';
   public entryClasses = '';
+  public recurrentEntries = '';
 
   constructor(private financialService: FinancialService, private messageService: MessageService) { }
 
@@ -23,11 +24,16 @@ export class AdmViewComponent implements OnInit {
     this.financialService.loadEntryClassesFromStorage().subscribe( res => {
       this.entryClasses = res;
     });
+
+    this.financialService.loadRecurrentEntriesFromStorage().subscribe( res => {
+      this.recurrentEntries = res;
+    });
   }
 
-  public updateLocalStorage(entries: string, entryClasses: string) {
+  public updateLocalStorage(entries: string, entryClasses: string, recurrentEntries: string) {
     this.financialService.updateEntriesOnStorage(entries);
     this.financialService.updateEntryClassesOnStorage(entryClasses);
+    this.financialService.updateRecurrentEntryClassesOnStorage(recurrentEntries);
     this.messageService.openMessageBar('Atualizado com sucesso', 1000);
     this.ngOnInit();
   }

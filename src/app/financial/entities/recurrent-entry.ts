@@ -1,12 +1,13 @@
 import { EntryClass as EntryClass } from './entry-class';
 
-export class Entry {
+export class RecurrentEntry {
   id: number;
   userId: number;
-  recurrentEntryId?: number;
   entryType: string;
   entryClass: EntryClass;
   value: number;
-  date: string;
+  creationDate: Date;
+  dueDate: Date;
+  maxDate: Date;
   description: string;
 }
