@@ -79,7 +79,8 @@ export class NewExpenseViewComponent implements OnInit {
       const entryClassId = this.group.value.entryClass;
       const newEntryClassName = this.group.value.newEntryClassName;
       const newEntryClassDescription = this.group.value.newEntryClassDescription;
-      const newEntryClassColor = document.getElementById('colorId').value;
+      const input = document.getElementById('colorId') as (HTMLInputElement);
+      const newEntryClassColor = input.value;
       const description = this.group.value.description;
       const date = this.group.value.date;
       const installmentPurchase = this.group.value.installmentPurchase;
