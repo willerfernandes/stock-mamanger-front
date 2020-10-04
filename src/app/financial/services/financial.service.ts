@@ -65,13 +65,14 @@ saveRecurrentEntry( value: string,
                     entryClassId: string,
                     newEntryClassName: string,
                     newEntryClassDescription: string,
+                    newEntryClassColor: string,
                     description: string,
                     date: any,
                     recurrentDate: any,
                     entryType: string): Observable<RecurrentEntry> {
 
     const newRecurrentEntry: RecurrentEntry = this.createRecurrentEntry(value,
-    entryClassId, newEntryClassName, newEntryClassDescription, description,
+    entryClassId, newEntryClassName, newEntryClassDescription, newEntryClassColor, description,
     date, recurrentDate, entryType);
 
     if (this.isOnline()) {
@@ -136,7 +137,7 @@ saveRecurrentEntry( value: string,
 
   private getEntryDescription(userDescription: string, recurrentEntryId: number): string {
     if (recurrentEntryId != null && recurrentEntryId !== 0) {
-      const now = this.datepipe.transform(new Date(), 'MM-yy');
+      const now = this.datepipe.transform(new Date(), 'MM/yyyy');
       return userDescription + ' - ' + now;
     } else {
       return userDescription;
@@ -148,6 +149,7 @@ saveRecurrentEntry( value: string,
                           entryClassId: string,
                           newEntryClassName: string,
                           newEntryClassDescription: string,
+                          newEntryClassColor: string,
                           description: string,
                           date: any,
                           maxDate: Date,
@@ -155,12 +157,13 @@ saveRecurrentEntry( value: string,
 
     const entryClass = new EntryClass();
     if (entryClassId === 'new') {
-    entryClass.userId = this.authenticationService.getCurrentUser().id;
-    entryClass.name = newEntryClassName;
-    entryClass.description = newEntryClassDescription;
-    entryClass.type = entryClassType;
+      entryClass.userId = this.authenticationService.getCurrentUser().id;
+      entryClass.name = newEntryClassName;
+      entryClass.description = newEntryClassDescription;
+      entryClass.type = entryClassType;
+      entryClass.color = newEntryClassColor;
     } else {
-    entryClass.id = Number.parseInt(entryClassId, 10);
+      entryClass.id = Number.parseInt(entryClassId, 10);
     }
 
     const recurrentEntry = new RecurrentEntry();

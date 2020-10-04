@@ -87,7 +87,7 @@ export class NewReceiptViewComponent implements OnInit {
 
       if (recurrentEntry)  {
         this.financialService.saveRecurrentEntry(value,
-          entryClassId, newEntryClassName, newEntryClassDescription, description,
+          entryClassId, newEntryClassName, newEntryClassDescription, '#cccccc', description,
           date, recurrentDate, this.entryType).subscribe(async (newRecurrentEntry) => {
 
             this.financialService.saveEntry(value,
@@ -112,7 +112,6 @@ export class NewReceiptViewComponent implements OnInit {
 
       event.preventDefault();
       this.bottomSheetRef.dismiss();
-      console.log(localStorage);
     }
 
   public doNothing() {

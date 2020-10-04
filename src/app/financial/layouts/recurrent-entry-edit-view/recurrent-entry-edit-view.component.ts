@@ -52,7 +52,6 @@ createForm() {
       this.formGroup.controls.description.setValue(this.entryGroup.recurrentEntry.description);
       this.formGroup.controls.dueDate.setValue(new Date(this.entryGroup.recurrentEntry.dueDate));
       this.formGroup.controls.maxDate.setValue(new Date(this.entryGroup.recurrentEntry.maxDate));
-      // this.formGroup.controls.maxDate.setValue(new Date(this.entryGroup.recurrentEntry.entryClass.name));
     }
   }
 
@@ -85,7 +84,7 @@ createForm() {
     const entryType: string = this.entryClasses.find(recurrentEntry => recurrentEntry.id === entryClassId).type;
 
     this.financialService.saveRecurrentEntry(value,
-      entryClassId.toString(), null, null, description,
+      entryClassId.toString(), null, null, '#cccccc', description,
       dueDate, maxDate, entryType).subscribe(res => {
         this.messageService.openMessageBar('Criado com sucesso', 2000);
         this.financialService.updateLocalStorageFromDatabase();

@@ -91,7 +91,7 @@ export class NewExpenseViewComponent implements OnInit {
 
       if (recurrentEntry)  {
         this.financialService.saveRecurrentEntry(value,
-          entryClassId, newEntryClassName, newEntryClassDescription, description,
+          entryClassId, newEntryClassName, newEntryClassDescription, newEntryClassColor, description,
           date, recurrentDate, this.entryType).subscribe(async (newRecurrentEntry) => {
 
             this.financialService.saveEntry(value,
@@ -159,7 +159,6 @@ export class NewExpenseViewComponent implements OnInit {
       this.entryClasses = await this.financialService.loadEntryClasses(this.entryType)
       .toPromise()
       .then(resp => resp as EntryClass[]);
-      //this.newEntryClassSuggestedColor = '#030091';
       this.newEntryClassSuggestedColor = this.colors[this.entryClasses.length];
       this.group.value.newEntryClassColor = this.colors[this.entryClasses.length];
   }

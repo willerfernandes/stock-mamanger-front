@@ -114,11 +114,6 @@ export class EntryListViewComponent implements OnInit {
   }
 
   public filterByDate(startDate: any, endDate: any): void {
-    /*const initialFilterDate = new Date(startDate.toISOString());
-    const endFilterDate = new Date(endDate.toISOString());
-    const today = new Date();
-    this.filteredEntries = this.allEntries.filter(entry => today > initialFilterDate && today < endFilterDate);
-    */
     this.getExpenseReport2(startDate, endDate);
     this.filteredEntries = this.allEntries;
     this.isEmptyResult = this.filteredEntries.length < 0;
