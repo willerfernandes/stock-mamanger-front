@@ -13,16 +13,12 @@
     <label class="input-label color-primary">Descrição:</label>
     <input type="text" maxlength="100"  class="input-medium padding-medium" #description value={{entryClass.description}}/>
   </div>
-  <!--div TODO: set entry type select to load value from object>
-    <form [formGroup]="entryForm">
-      <label class="input-label color-primary">Tipo</label>
-      <select formControlName="typeControl" class="input-medium padding-medium">
-
-      </select>
-    </form>
-  </div-->
+  <div>
+    <label class="red-text">*</label><label class="color-primary input-label-small">Cor:</label>
+    <input type="color" id="colorId" class="input-color" #color value="{{entryClass.color}}"><br>
+  </div>
   <div style="width: 100%; margin: 40px auto;">
-    <btn-primary-blue style="float: left;" [text]="'SALVAR'" (click)="save(name.value, description.value)"></btn-primary-blue>
+    <btn-primary-blue style="float: left;" [text]="'SALVAR'" (click)="save(name.value, description.value, color.value)"></btn-primary-blue>
     <btn-secondary-blue style="float: right;"  [text]="'EXCLUIR'" (click)="deleteEntryClass()" ></btn-secondary-blue>
   </div>
 

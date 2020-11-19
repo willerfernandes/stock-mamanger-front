@@ -23,6 +23,7 @@ import { MatCheckboxModule, MatButtonModule, MatInputModule, MatAutocompleteModu
 import { ChartsModule } from 'ng2-charts-x';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxCurrencyModule } from 'ngx-currency';
+import { InfoMessageComponent } from './uikit/info-message/info-message.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { NgxCurrencyModule } from 'ngx-currency';
     BtnPrimaryBlueLargeComponent,
     UnderConstructionComponent,
     AlertOnScreenComponent,
-    DateRangeComponent
+    DateRangeComponent,
+    InfoMessageComponent
   ],
   imports: [
     CommonModule,
